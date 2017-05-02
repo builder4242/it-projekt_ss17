@@ -1,6 +1,6 @@
 package de.hdm.it_projekt.shared.bo;
 
-public class Bewertung {
+public class Bewertung extends BusinessObject {
 	
 	private String stellungnahme;
 	private float wert;

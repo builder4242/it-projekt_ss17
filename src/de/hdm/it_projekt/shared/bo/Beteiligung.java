@@ -2,7 +2,7 @@ package de.hdm.it_projekt.shared.bo;
 
 import java.util.*;
 
-public class Beteiligung {
+public class Beteiligung extends BusinessObject {
 	
 	private int personentage;
 	private Date startdatum;

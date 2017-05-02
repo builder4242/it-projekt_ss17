@@ -2,7 +2,7 @@ package de.hdm.it_projekt.shared.bo;
 
 import java.util.*;
 
-public class Bewerbung {
+public class Bewerbung extends BusinessObject {
 	
 	private Date erstelldatum;
 	private String bewerbungstext;

@@ -2,7 +2,7 @@ package de.hdm.it_projekt.shared.bo;
 
 import java.util.*;
 
-public class Ausschreibung {
+public class Ausschreibung extends BusinessObject {
 
 	private String bezeichnung;
 	private Date bewerbungsfrist;
