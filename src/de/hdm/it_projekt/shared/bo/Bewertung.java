@@ -1,4 +1,4 @@
-package de.hdm.it_projekt.client;
+package de.hdm.it_projekt.shared.bo;
 
 public class Bewertung {
 	
