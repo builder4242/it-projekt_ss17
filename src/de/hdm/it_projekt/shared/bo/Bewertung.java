@@ -7,6 +7,10 @@ package de.hdm.it_projekt.shared.bo;
  */
 public class Bewertung extends BusinessObject {
 	
+	/**
+	 * Serializable
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Stellungnahme der Bewertung

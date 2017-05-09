@@ -10,6 +10,11 @@ import java.util.Date;
 public class Bewerbung extends BusinessObject {
 	
 	/**
+	 * Serializable
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
 	 * Erstelldatum der Bewerbung
 	 */
 	private Date erstelldatum;
