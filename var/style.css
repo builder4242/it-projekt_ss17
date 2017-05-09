@@ -1,0 +1,50 @@
+
+.header {
+    padding: 15px;
+}
+
+
+.sitename{
+    padding: 5px;
+    float: left;    /* nach links rücken  */
+    width: 5%;     /* 5% der Breite nutzen */
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+
+    background-color: #bfeeb3;
+    padding: 5px 20px 5px 20px;
+    font-size: larger;
+}
+
+
+.menue{
+    padding: 2px;
+    float: left;    /* nach links rücken  */
+    width: 30%;     /* 30% der Breite nutzen */
+    margin-left: auto;
+    margin-right: auto;
+
+    background-color: #bfeeb3;
+    padding: 5px 20px 5px 20px;
+    font-size: larger;
+}
+
+
+
+
+
+#navigation{
+
+
+
+}
+
+
+#navigation li {
+    display: inline; /* li nebeneinander anzeigen (Menüpunkte) */
+    list-style-type: none; /* ohne Aufzählungspunkte */
+
+    margin-left: auto;   /* zentrieren */
+    margin-right: auto;
+}
