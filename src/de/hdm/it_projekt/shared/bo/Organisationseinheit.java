@@ -18,6 +18,11 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * E-Mail Adresse der Organisationseinheit
 	 */
 	private String email;
+	
+	/**
+	 * Partnerprofil zur Organisationseinheit
+	 */
+	private Partnerprofil partnerprofil = null;
 
 	/**
 	 * Rückgabe des Namens der Organisationseinheit
@@ -49,6 +54,22 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/**
+	 * Rückgabe des Partnerprofils
+	 * @return the partnerprofil
+	 */
+	public Partnerprofil getPartnerprofil() {
+		return partnerprofil;
+	}
+
+	/**
+	 *  Setzen des Partnerprofils
+	 * @param partnerprofil the partnerprofil to set
+	 */
+	public void setPartnerprofil(Partnerprofil partnerprofil) {
+		this.partnerprofil = partnerprofil;
 	}
 	
 }
