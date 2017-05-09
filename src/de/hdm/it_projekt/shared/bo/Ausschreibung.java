@@ -9,6 +9,11 @@ import java.util.Date;
  *
  */
 public class Ausschreibung extends BusinessObject {
+	
+	/**
+	 * Serializable
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Bezeichnung der Ausschreibung
