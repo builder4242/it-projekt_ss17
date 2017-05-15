@@ -10,6 +10,11 @@ import java.util.Date;
 public class Bewerbung extends BusinessObject {
 	
 	/**
+	 * Serializable
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
 	 * Erstelldatum der Bewerbung
 	 */
 	private Date erstelldatum;
@@ -19,6 +24,11 @@ public class Bewerbung extends BusinessObject {
 	 */
 	private String bewerbungstext;
 	
+	/**
+	 * Bewertung der Bewerbung 
+	 */
+	private Bewertung bewertung = null;
+
 	/**
 	 * Auslesen des Erstelldatums
 	 * @return erstelldatum
@@ -50,5 +60,20 @@ public class Bewerbung extends BusinessObject {
 	public void setBewerbungstext(String bewerbungstext) {
 		this.bewerbungstext = bewerbungstext;
 	}
+	
+	/**
+	 *  Rückgabe der Bewertung
+	 * @return the bewertung
+	 */
+	public Bewertung getBewertung() {
+		return bewertung;
+	}
 
+	/**
+	 *  Setzen der Bewertung
+	 * @param bewertung the bewertung to set
+	 */
+	public void setBewertung(Bewertung bewertung) {
+		this.bewertung = bewertung;
+	}
 }
