@@ -2,7 +2,14 @@
  * 
  */
 package de.hdm.it_projekt.server.db;
-	
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Vector;
+
+import de.hdm.thies.bankProjekt.shared.bo.Account;
+
 /**
  * Mapper-Klasse, die <code>Projekt</code>-Objekte auf eine relationale
  * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur VerfÃ¼gung
@@ -56,7 +63,42 @@ public class ProjektMapper {
     return projektMapper;
   }
 	 
+  /** 
+	 * Diese Methode ermÃ¶glicht es ein Projekt in der Datenbank anzulegen.
+	 * 
+	 * @param projekt
+	 * @return
+	 * @throws Exception
+	 */
+	public Vector<Projekt> insert(Projekt pr) 
+			throws Exception {
+		
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		  
+		try {
+			
+				// Leeres SQL-Statement (JDBC) anlegen
+				Statement stmt = con.createStatement();
+				
+				// Momentan höchsten Primärschlüsselwert prüfen
+				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM prs ");
+
+				if (rs.next()) {
 	
-	
-	
+					/*
+					 * pr erhält den bisher maximalen, nun um 1
+					 * inkrementierten Primärschlüssel.
+					 */	
+					pr.setId(rs.getInt("maxid") + 1);
+
+					stmt = con.createStatement();
+
+					
+				}
+		}
+	}
 }
+	
+	
+
