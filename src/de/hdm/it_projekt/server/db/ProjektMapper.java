@@ -1,6 +1,8 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -60,7 +62,7 @@ import java.sql.Statement;
 	 * Diese Methode ermÃ¶glicht es ein Projekt in der Datenbank anzulegen.
 	 * 
 	 * @param Projekt
-	 * @return
+	 * @return pr
 	 */
 	public Projekt insert(Projekt pr){
 		
@@ -72,14 +74,14 @@ import java.sql.Statement;
 				// Leeres SQL-Statement (JDBC) anlegen
 				Statement stmt = con.createStatement();
 				
-				// Momentan höchsten Primärschlüsselwert prüfen
+				// Momentan hoechsten Primaerschluesselwert pruefen
 				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM projekte ");
 
 				if (rs.next()) {
 	
 					/*
-					 * pr erhält den bisher maximalen, nun um 1
-					 * inkrementierten Primärschlüssel.
+					 * pr erhaelt den bisher maximalen, nun um 1
+					 * inkrementierten Primaerschluessel.
 					 */	
 					
 					pr.setId(rs.getInt("maxid") + 1);
@@ -88,7 +90,7 @@ import java.sql.Statement;
 
 			        // Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation.
 			        stmt.executeUpdate("INSERT INTO projekte (name, startDatum, endDatum, beschreibung) "
-			            + "VALUES (" + pr.getName() + ",'" + pr.getstartDatum() + "','" + pr.getendDatum() + "','" + pr.beschreibung() + "')");
+			            + "VALUES (" + pr.getName() + ",'" + pr.getStartDatum() + "','" + pr.getEndDatum() + "','" + pr.beschreibung() + "')");
 			      }
 			    }
 			    catch (SQLException e) {
@@ -120,8 +122,8 @@ import java.sql.Statement;
 				 Statement stmt = con.createStatement();
 				 
 				 stmt.executeUpdate("UPDATE projekte " + "SET name=\""
-			     + pr.getname() + "\", " + "startDatum=\"" + pr.getstartDatum() 
-			     + "\", " + "endDatum=\"" + pr.getendDatum() 
+			     + pr.getName() + "\", " + "startDatum=\"" + pr.getStartDatum() 
+			     + "\", " + "endDatum=\"" + pr.getEndDatum() 
 			     + "\", " + "beschreibung=\"" + pr.getBeschreibung() + "\" "
 			     + "WHERE id=" + pr.getID());
 			 
@@ -137,10 +139,10 @@ import java.sql.Statement;
 	
 		 
 		 /**
-			 * Löschen der Daten eines <code>Projekt</code>-Objekts aus der Datenbank.
+			 * Loeschen der Daten eines <code>Projekt</code>-Objekts aus der Datenbank.
 			 * 
 			 * @param projekt
-			 *            das aus der DB zu löschende Objekt
+			 *            das aus der DB zu loeschende Objekt
 			 */
 		 
 		 
@@ -160,4 +162,53 @@ import java.sql.Statement;
 				 e3.printStackTrace();
 			 }
 		 }
-		}
+		 
+		 /**
+			 * Auslesen aller Projekte.
+			 * 
+			 * @return Ein Vektor mit Projekt-Objekten, die saemtliche
+			 *         Projekte repraesentieren. Bei evtl. Exceptions wird eine
+			 *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
+			 */
+		 	
+		 	 public Vector<Projekt> findAll(){
+		 		 
+		 		 //DB-Verbindung herstellen
+		 		 Connection con = DBConnection.connection();
+		 		 
+		 		 //Ergebnisvektor vorbereiten
+		 		 Vector<Projekt> result = new Vector<Projekt>();
+		 		 
+		 		 try{
+		 			
+		 			 //Leeres SQL-Statement (JDBC) anlegen
+		 			 Statement stmt = con.createStatement();
+		 			 
+		 			 ResultSet rs = stmt.executeQuery("SELECT id, name, startDatum, endDatum, beschreibung "
+		 				+ "FROM projekte " + " ORDER BY name");
+		 			 
+		 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
+		 			 // Projekt-Objekt erstellt.
+		 		 
+		 			 while (rs.next()) {
+		 				 Projekt pr = new Projekt();
+		 				 pr.setId(rs.getInt("id"));
+		 				 pr.setName(rs.getString("name"));
+		 				 pr.setStartDatum(rs.getDate("startDatum"));
+		 				 pr.setEndDatum(rs.getDate("endDatum"));
+		 				 pr.setBeschreibung(rs.getString("beschreibung"));
+		 			 
+		 			// HinzufÃ¼gen des neuen Objekts zum Ergebnisvektor
+		 		       result.addElement(pr);
+		 		      		}
+		 		 		}
+		 		    catch (SQLException e4) {
+		 		    e4.printStackTrace();
+		 		    		}	
+
+		 		   	// Ergebnisvektor zurÃ¼ckgeben
+		 		   	return result;
+		 	 		}
+		 			 
+		 			 }
+		 		 
