@@ -120,5 +120,22 @@ public class ProjektMarktplatzMapper {
 		    return pm;
 		  }
 		
-	
+		
+		/***
+		 * 
+		 * @param pm - das aus der DB zu löschende "Objekt"
+		 */
+		public void delete(ProjektMarktplatz pm){ 
+			Connection con = DBConnection.connection();
+			Statement stmt = null;
+			try {
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM Projektmarktplatz " + "WHERE ID=" + Projektmarktplatz.getId());
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+
 }
