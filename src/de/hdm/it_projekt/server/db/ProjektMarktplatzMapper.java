@@ -5,17 +5,19 @@ package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.it_projekt.client.ProjektMarktplatz;
 
 /**
 	 * Mapper-Klasse, die <code>Projektmarktplatz</code>-Objekte auf eine relationale
-	 * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+	 * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
 	 * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
-	 * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+	 * geloescht werden koennen. Das Mapping ist bidirektional. D.h., Objekte koennen
 	 * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
 	 * <p>
 	 * 
@@ -30,24 +32,28 @@ public class ProjektMarktplatzMapper {
 	 * von einem sogenannten <b>Singleton</b>.
 	 * <p>
 	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
-	 * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	 * saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	 * einzige Instanz dieser Klasse.
 	 * 
 	 */
 	  private static ProjektMarktplatzMapper projektMarktplatzMapper = null;
 	  
+	  
+	  
 	  /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit new neue
+	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit new neue
 	   * Instanzen dieser Klasse zu erzeugen.
 	   * 
 	   */
 	  protected ProjektMarktplatzMapper() {
 	  }
 	  
+	  
+	  
 	  /**
 	   * Diese statische Methode kann aufgrufen werden durch
 	   * <code>ProjektMarktplatzMapper.projektmarktplatzMapper()</code>. Sie stellt die
-	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Singleton-Eigenschaft sicher, indem Sie dafuer sorgt, dass nur eine einzige
 	   * Instanz von <code>ProjektMarktplatzMapper</code> existiert.
 	   * <p>
 	   * 
@@ -65,8 +71,10 @@ public class ProjektMarktplatzMapper {
 	    return projektMarktplatzMapper;
 	  }
 	  
+	  
+	  
 		/** 
-		 * Diese Methode ermöglicht es einen Projektmarktplatz in der Datenbank anzulegen.
+		 * Diese Methode ermoeglicht es einen Projektmarktplatz in der Datenbank anzulegen.
 		 * 
 		 * @param projektMarktplatz
 		 * @return
@@ -97,6 +105,7 @@ public class ProjektMarktplatzMapper {
 		}
   
 		
+		
 		/***
 		 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 		 * 
@@ -121,9 +130,10 @@ public class ProjektMarktplatzMapper {
 		  }
 		
 		
+		
 		/***
 		 * 
-		 * @param pm - das aus der DB zu löschende "Objekt"
+		 * @param pm - das aus der DB zu loeschende "Objekt"
 		 */
 		public void delete(ProjektMarktplatz pm){ 
 			Connection con = DBConnection.connection();
@@ -137,5 +147,47 @@ public class ProjektMarktplatzMapper {
 			}
 		}
 
+
+		/***
+		 * Auslesen aller ProjektMarktplaetze.
+		 * 
+		 * @return Ein Vektor mit Projektmarktplatz-Objekten, die saemtliche
+		 *         Projektmarktplaetze repraesentieren. Bei evtl. Exceptions wird eine
+		 *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
+		 */
+		public Vector<ProjektMarktplatz> findAll() {
+	
+			// DB-Verbindung herstellen
+			Connection con = DBConnection.connection();
+	
+			// Ergebnisvektor vorbereiten
+			Vector<ProjektMarktplatz> result = new Vector<ProjektMarktplatz>();
+	
+			try {
+	
+				// Leeres SQL-Statement (JDBC) anlegen
+				Statement stmt = con.createStatement();
+	
+				ResultSet rs = stmt.executeQuery("SELECT ID, bezeichnung " + "FROM Projektmarktplatz" + " ORDER BY ID");
+	
+				// Fuer jeden Eintrag im Suchergebnis wird nun ein
+				// Projektmarktplatz-Objekt erstellt.
+	
+				while (rs.next()) {
+					ProjektMarktplatz pm = new ProjektMarktplatz();
+					pm.setId(rs.getInt("ID"));
+					pm.setBezeichnung(rs.getString("bezeichnung"));
+	
+					// Hinzufügen des neuen Objekts zum Ergebnisvektor
+					result.addElement(pm);
+				}
+			}
+			catch (SQLException e4) {
+				e4.printStackTrace();
+			}
+	
+			// Ergebnisvektor zurückgeben
+			return result;
+		}
 
 }
