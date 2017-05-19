@@ -100,6 +100,46 @@ import java.sql.Connection;
 			  }
 
 		
+		/**	
+		 * Wiederholtes Schreiben eines Projekt-Objekts in die Datenbank.
+		 * 
+		 * @param pr
+		 * 		das Objekt, das in die DB geschrieben werden soll
+		 * @return das als Parameter uebergebene Objekt	
+		 */
+
+		 public Vector<Projekt> update(Projekt pr){
+			 
+			 //DB-Verbindung holen
+			 Connection con= DBConnection.connection();
+			 
+			 try{
+				 
+				 // Leeres SQL-Statement(JDBC) anlegen
+				 Statement stmt = con.createStatement();
+				 
+				 stmt.executeUpdate("UPDATE prs " + "SET name=\""
+			     + pr.getname() + "\", " + "startDatum=\"" + pr.getstartDatum() 
+			     + "\", " + "endDatum=\"" + pr.getendDatum() 
+			     + "\", " + "beschreibung=\"" + pr.getBeschreibung() + "\" "
+			     + "WHERE id=" + pr.getID());
+			 
+		 }
+		 catch (SQLException e2){
+			 e2.printStackTrace();
+		 }
+		 
+		//Rueckgabe des evtl. korrigierten Projekts
+		return pr;
+		
+		 }
+		 
+	}
+
+	
+	
+
+
 	
 					
 								
