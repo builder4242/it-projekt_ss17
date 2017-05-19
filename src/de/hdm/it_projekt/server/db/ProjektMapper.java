@@ -1,6 +1,7 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
+import java.sql.Statement;
 
 /**
  * Mapper-Klasse, die <code>Projekt</code>-Objekte auf eine relationale
@@ -72,7 +73,7 @@ import java.sql.Connection;
 				Statement stmt = con.createStatement();
 				
 				// Momentan höchsten Primärschlüsselwert prüfen
-				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM prs ");
+				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM projekte ");
 
 				if (rs.next()) {
 	
@@ -86,7 +87,7 @@ import java.sql.Connection;
 					stmt = con.createStatement();
 
 			        // Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation.
-			        stmt.executeUpdate("INSERT INTO prs (name, startDatum, endDatum, beschreibung) "
+			        stmt.executeUpdate("INSERT INTO projekte (name, startDatum, endDatum, beschreibung) "
 			            + "VALUES (" + pr.getName() + ",'" + pr.getstartDatum() + "','" + pr.getendDatum() + "','" + pr.beschreibung() + "')");
 			      }
 			    }
@@ -118,7 +119,7 @@ import java.sql.Connection;
 				 // Leeres SQL-Statement(JDBC) anlegen
 				 Statement stmt = con.createStatement();
 				 
-				 stmt.executeUpdate("UPDATE prs " + "SET name=\""
+				 stmt.executeUpdate("UPDATE projekte " + "SET name=\""
 			     + pr.getname() + "\", " + "startDatum=\"" + pr.getstartDatum() 
 			     + "\", " + "endDatum=\"" + pr.getendDatum() 
 			     + "\", " + "beschreibung=\"" + pr.getBeschreibung() + "\" "
@@ -133,19 +134,30 @@ import java.sql.Connection;
 		return pr;
 		
 		 }
+	
 		 
-	}
-
-	
-	
-
-
-	
-					
-								
-		
-	}
-
-	
-	
-
+		 /**
+			 * Löschen der Daten eines <code>Projekt</code>-Objekts aus der Datenbank.
+			 * 
+			 * @param projekt
+			 *            das aus der DB zu löschende Objekt
+			 */
+		 
+		 
+		 public void delete (Projekt pr){
+			 
+			 //DB-Verbindung herstellen
+			 Connection con = DBConnection.connection();
+			 
+			 try{
+				 
+				 //Leeres SQL-Statement (JDBC) anlegen
+				 Statement stmt = con.createStatement();
+				 
+				 stmt.executeUpdate("DELETE FROM projekte" + "WHERE id=" + pr.getId());
+			 }
+			 catch (SQLException e3){
+				 e3.printStackTrace();
+			 }
+		 }
+		}
