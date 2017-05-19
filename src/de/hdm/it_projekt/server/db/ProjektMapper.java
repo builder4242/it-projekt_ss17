@@ -1,14 +1,6 @@
-/**
- * 
- */
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Vector;
-
-import de.hdm.thies.bankProjekt.shared.bo.Account;
 
 /**
  * Mapper-Klasse, die <code>Projekt</code>-Objekte auf eine relationale
@@ -21,7 +13,7 @@ import de.hdm.thies.bankProjekt.shared.bo.Account;
  * Anlehnung an @author Thies
  * @author ElifY
  */
-public class ProjektMapper {
+	public class ProjektMapper {
 
   /**
    * Die Klasse ProjektMapper wird nur einmal instantiiert. Man spricht hierbei
@@ -33,7 +25,7 @@ public class ProjektMapper {
    * 
    * @see projektMapper()
    */
-  private static ProjektMapper projektMapper = null;
+	private static ProjektMapper projektMapper = null;
 
   /**
    * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
@@ -66,12 +58,10 @@ public class ProjektMapper {
   /** 
 	 * Diese Methode ermöglicht es ein Projekt in der Datenbank anzulegen.
 	 * 
-	 * @param projekt
+	 * @param Projekt
 	 * @return
-	 * @throws Exception
 	 */
-	public Vector<Projekt> insert(Projekt pr) 
-			throws Exception {
+	public Projekt insert(Projekt pr){
 		
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -90,15 +80,32 @@ public class ProjektMapper {
 					 * pr erh�lt den bisher maximalen, nun um 1
 					 * inkrementierten Prim�rschl�ssel.
 					 */	
+					
 					pr.setId(rs.getInt("maxid") + 1);
 
 					stmt = con.createStatement();
 
+			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation.
+			        stmt.executeUpdate("INSERT INTO prs (name, startDatum, endDatum, beschreibung) "
+			            + "VALUES (" + pr.getName() + ",'" + pr.getstartDatum() + "','" + pr.getendDatum() + "','" + pr.beschreibung() + "')");
+			      }
+			    }
+			    catch (SQLException e) {
+			      e.printStackTrace();
+			    }
+			
+				
+			//Rückgabe, des evtl. korrigierten Projekts.
+			    return pr;
+			  }
+
+		
+	
 					
-				}
-		}
+								
+		
 	}
-}
+
 	
 	
 
