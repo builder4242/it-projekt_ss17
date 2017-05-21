@@ -297,5 +297,42 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 		 		 //Ergebnisvektor zurueckgeben
 		 		 return result;
 				 		 }
-				 		 	 		 
-	} 
+				 		
+		 	 /**
+		 	  *Diese Methode ermoeglicht eine Ausgabe ueber Ausschreibung in der DB
+		 	  *anhand deren Beschreibung.
+		 	  *
+		 	  * @param beschreibung
+		 	  * @return
+		 	  */
+		 	 public Vector<Projekt> findByBeschreibung(String beschreibung){
+		 		Connection con = DBConnection.connection();
+		 		
+		 	    try {
+		 	    
+		 	      Statement stmt = con.createStatement();
+		 	      ResultSet rs= stmt.executeQuery("SELECT id, beschreibung" + "FROM projekte " + "WHERE beschreibung =" 
+					 		 + beschreibung + " ORDER BY beschreibung");
+		 	      Vector<Projekt> result = new Vector<Projekt>();
+		 	     
+					 		 //Fuer jeden Eintrag im Suchergebnis wird nun ein 
+					 	     //Projekt-Objekt erstellt.
+					 		 while (rs.next()){
+					 			 Projekt pr = new Projekt();
+					 			 pr.setId(rs.getInt("id"));
+					 			 pr.setBeschreibung(rs.getString("beschreibung"));
+					 			 
+					 			//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+					 			 result.addElement(pr);
+					 		 } 
+					 	}
+			 		 	catch (SQLException e6){
+			 		 		e6.printStackTrace();
+			 		 	}
+					 			 
+					//Ergebnisvektor zurueckgeben
+			 		 return result;
+
+		 	 }
+		 	     	 
+ }
