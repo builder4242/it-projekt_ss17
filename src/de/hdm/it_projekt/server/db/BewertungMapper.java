@@ -5,8 +5,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
+import java.util.Date;
 
 import de.hdm.it_projekt.shared.bo.Bewertung;
+
 
 /**
  * Anlehnung an @author Thies
@@ -161,5 +164,56 @@ public class BewertungMapper {
 	 				 e3.printStackTrace();
 	 			 }
 	 		 }
+	 		
+	 		 	/**
+				 * Auslesen aller Bewertungen.
+				 * 
+				 * @return Ein Vektor mit Bewertung-Objekten, die saemtliche
+				 *         Projekte repraesentieren. Bei evtl. Exceptions wird eine
+				 *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
+				 */
+			 	
+			 	 public Vector<Bewertung> findAll(){
+			 		 
+			 		 //DB-Verbindung herstellen
+			 		 Connection con = DBConnection.connection();
+			 		 
+			 		 //Ergebnisvektor vorbereiten
+			 		 Vector<Bewertung> result = new Vector<Bewertung>();
+			 		 
+			 		 try{
+			 			
+			 			 //Leeres SQL-Statement (JDBC) anlegen
+			 			 Statement stmt = con.createStatement();
+			 			 
+			 			 ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum "
+			 				+ "FROM  bewertungs" + " ORDER BY wert");
+			 			 
+			 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
+			 			// Projekt-Objekt erstellt.
+			 		 
+			 			 while (rs.next()) {
+			 				 Bewertung bt = new Bewertung();
+			 				 bt.setId(rs.getInt("id"));
+			 				 bt.setWert(rs.getFloat("wert"));
+			 				 bt.setStellungnahme(rs.getString("Stellungnahme"));
+			 				 bt.setErstelldatum(rs.getDate("erstelldatum"));
+			 				
+			 				 
+			 			 
+			 			// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+			 		       result.addElement(bt);
+			 		      		}
+			 		 		}
+			 		    catch (SQLException e4) {
+			 		    e4.printStackTrace();
+			 		    		}	
+
+			 		   	// Ergebnisvektor zurueckgeben
+			 		   	return result;
+			 	 		}
+			 	 
+	 		 
+	 		 
 	 		 
 }
