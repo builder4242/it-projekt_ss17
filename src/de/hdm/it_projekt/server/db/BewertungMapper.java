@@ -101,7 +101,7 @@ public class BewertungMapper {
 		   			 e.printStackTrace();
 		   		 	}
 		   
-			     // Rückgabe, der evtl. korrigierten Bewertung.
+			     // Rueckgabe, der evtl. korrigierten Bewertung.
 			     return bt;
 		}
 	  
@@ -135,5 +135,31 @@ public class BewertungMapper {
 	  				 // Um Analogie zu insert(Bewertung bt) zu wahren, geben wir bt zurÃ¼ck
 	  			     return bt;
 	  			  }
-	     
+	  			 
+	  			 
+	  			 /**
+	 			 * Loeschen der Daten eines <code>Bewertung</code>-Objekts aus der Datenbank.
+	 			 * 
+	 			 * @param bt
+	 			 *            das aus der DB zu loeschende Objekt
+	 			 */
+	 		 
+	 		 
+	 		 public void delete (Bewertung bt){
+	 			 
+	 			 //DB-Verbindung herstellen
+	 			 Connection con = DBConnection.connection();
+	 			 
+	 			 try{
+	 				 
+	 				 //Leeres SQL-Statement (JDBC) anlegen
+	 				 Statement stmt = con.createStatement();
+	 				 
+	 				 stmt.executeUpdate("DELETE FROM bewertungs" + "WHERE id=" + bt.getId());
+	 			 }
+	 			 catch (SQLException e3){
+	 				 e3.printStackTrace();
+	 			 }
+	 		 }
+	 		 
 }
