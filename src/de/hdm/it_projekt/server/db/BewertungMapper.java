@@ -1,6 +1,13 @@
 
 package de.hdm.it_projekt.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import de.hdm.it_projekt.shared.bo.Bewertung;
+
 /**
  * Anlehnung an @author Thies
  * @author ElifY
@@ -51,5 +58,50 @@ public class BewertungMapper {
 	    return bewertungMapper;
 	  }
 
-}
+	  /**
+	   * Einfügen eines <code>Bewertung</code>-Objekts in die Datenbank. Dabei
+	   * wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
+	   * berichtigt.
+	   * 
+	   * @param bt das zu speichernde Objekt
+	   * @return das bereits übergebene Objekt, jedoch mit ggf. korrigierter
+	   *         <code>id</code>.
+	   */ 
+	  
+	  public Bewertung insert(Bewertung bt){
+		   
+		   //DB-Verbindung herstellen
+		   Connection con = DBConnection.connection();
+		   
+		   try {
+			   //Leeres SQL-Statement (JDBC) anlegen
+			   Statement stmt = con.createStatement();
+			   
+			   //Momentan hoechsten Primaerschluessel pruefen
+			   ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM bewertungs");
+		   
+			   if (rs.next()){
+				   
+				   /*
+				    * bt erhaelt den bisher maximalen, nun um 1
+				    * inkrementierten Primaerschluessel
+				    */
+				   
+				   bt.setId(rs.getInt("maxid") + 1);
+				   
+				   stmt = con.createStatement();
+				   
+				   // Jetzt erst erfolgt die tatsächliche Einfügeoperation.
+				   stmt.executeUpdate("INSERT INTO bewertungs (id, wert, stellungnahme, erstelldatum)" + "VALUES ( "bt.getId()
+				   + "," + bt.getWert() + "," + bt.getStellungnahme() + "," + bt.getErstelldatum() + ")");
+				   
+			   	 }
+		   		 	} catch (SQLException e) {
+		   			 e.printStackTrace();
+		   		 	}
+			     // R�ckgabe, der evtl. korrigierten Bewertung.
+			     return bt;
+		}
 
+			   
+}
