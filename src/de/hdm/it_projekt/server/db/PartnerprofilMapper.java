@@ -6,6 +6,7 @@ package de.hdm.it_projekt.server.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.client.ProjektMarktplatz;
@@ -100,4 +101,54 @@ public class PartnerprofilMapper {
 		return pp;
 	}
 	
+	
+	
+	/**
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+	 * 
+	 * @param pp - das Objekt, das in die DB geschrieben werden soll
+	 * @return das als Parameter übergebene Objekt
+	 */
+	public Partnerprofil update(Partnerprofil pp){
+	    
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+	    try {
+	      Statement stmt = con.createStatement();
+
+	      stmt.executeUpdate("UPDATE Projektmarktplatz " + "SET erstelldatum=\""
+	          + Partnerprofil.getErstelldatum() + "\" " + "SET aenderungsdatum=\"" + Partnerprofil.getAenderungsdatum()
+	          + "\" "+ "WHERE ID=" + Partnerprofil.getID());
+	    }
+	    catch (SQLException e) {
+	      e.printStackTrace();
+	    }
+
+	    // Um Analogie zu insert(Partnerprofil pp) zu wahren, geben wir pm zurueck
+	    return pp;
+	}
+
+	
+	
+	/**
+	 * Löschen der Daten eines <code>Partnerprofil</code>-Objekts aus der Datenbank.
+
+	 * @param pp
+	 */
+	public void delete(Partnerprofil pp){ 
+		
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Statement stmt = null;
+		
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM Partnerprofil " + "WHERE ID=" + Partnerprofil.getID());
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
