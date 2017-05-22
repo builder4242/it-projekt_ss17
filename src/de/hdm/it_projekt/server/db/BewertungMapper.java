@@ -9,7 +9,6 @@ import java.util.Vector;
 import java.util.Date;
 
 import de.hdm.it_projekt.shared.bo.Bewertung;
-import de.hdm.it_projekt.shared.bo.BusinessObject;
 
 /**
  * Anlehnung an @author Thies
@@ -33,6 +32,7 @@ public class BewertungMapper {
 	   * 
 	   */
 	  private static BewertungMapper bewertungMapper = null;
+	private Vector<Bewertung> result;
 
 	  /**
 	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
@@ -265,5 +265,51 @@ public class BewertungMapper {
 			 		 
 			 		 return null;
 			 	 	}
- 		 
+			 	 
+			 	 /**
+			 	  * Suchen einer Bewertung anhand einer Stellungnahme.
+			 	  * @param stellungnahme
+			 	  * @return result
+			 	  */
+				 	
+			 	 
+				public Vector<Bewertung> findByStellungnahme (String stellungnahme){
+					
+			 		 //DB-Verbindung herstellen
+			 		 Connection con = DBConnection.connection();
+			 		 
+			 		 result = null;
+			 		 
+					try{
+			 			 //Leeres SQL-Statement (JDBC) anlegen
+			 			 Statement stmt = con.createStatement();
+			 			 
+			 			 //Statement ausfuellen und als Query an die DB schicken
+			 			 ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum FROM bewertungs "
+			 					 + "WHERE stellungnahme=" + stellungnahme + " ORDER BY stellungnahme");
+			 		 
+			 			 
+			 			  //Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
+			 			  //erstellt
+			 			  while (rs.next()){
+			 				  Bewertung bt= new Bewertung();
+			 				  bt.setId(rs.getInt("id"));
+			 				  bt.setWert(rs.getFloat("wert"));
+			 				  bt.setStellungnahme(rs.getString("stellungnahme"));
+			 				  bt.setErstelldatum(rs.getDate("erstelldatum"));
+			 				  
+			 				  //Hinzufuegen des neuen Objekts zum Ergebnisvektor
+			 				  result.addElement(bt);
+			 			  }
+			 		   }
+			 		 catch (SQLException e6){
+			 			 e6.printStackTrace();
+			 		 }
+			 		 
+			 		 //Ergebnisvektor zurueckgeben
+			 		 return result;
+			 				  
+			 			  }
+			 			
+
 }
