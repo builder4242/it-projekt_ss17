@@ -98,5 +98,10 @@ public class Partnerprofil extends BusinessObject {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void setID(int ID) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

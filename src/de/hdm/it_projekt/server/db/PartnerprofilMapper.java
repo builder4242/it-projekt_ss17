@@ -5,6 +5,7 @@ package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
@@ -132,7 +133,7 @@ public class PartnerprofilMapper {
 	
 	
 	/**
-	 * Löschen der Daten eines <code>Partnerprofil</code>-Objekts aus der Datenbank.
+	 * Loeschen der Daten eines <code>Partnerprofil</code>-Objekts aus der Datenbank.
 
 	 * @param pp
 	 */
@@ -149,6 +150,51 @@ public class PartnerprofilMapper {
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	
+	/***
+	 * Auslesen aller Partnerprofile.
+	 * 
+	 * @return Ein Vektor mit Partnerprofil-Objekten, die saemtliche
+	 *         Partnerprofile repraesentieren. Bei evtl. Exceptions wird eine
+	 *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
+	 */
+	
+	public Vector<Partnerprofil> findAll() {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		// Ergebnisvektor vorbereiten
+		Vector<Partnerprofil> result = new Vector<Partnerprofil>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT ID, erstelldatum, aenderungsdatum " + "FROM Partnerprofil" + " ORDER BY ID");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Partnerprofil-Objekt erstellt.
+
+			while (rs.next()) {
+				Partnerprofil pp = new Partnerprofil();
+				pp.setID(rs.getInt("ID"));
+				pp.setErstelldatum(rs.getDate("erstelldatum"));
+				pp.setAenderungsdatum(rs.getDate("aenderungsdatum"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(pp);
+			}
+		}
+		catch (SQLException e4) {
+			e4.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
 	}
 
 }
