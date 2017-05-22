@@ -92,8 +92,8 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 					stmt = con.createStatement();
 
 			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation.
-			        stmt.executeUpdate("INSERT INTO projekte (name, startdatum, enddatum, beschreibung) "
-			            + "VALUES (" + Projekt.getName() + ",'" + Projekt.getStartdatum() + "','" + Projekt.getEnddatum() + "','" + Projekt.getBeschreibung() + "')");
+			        stmt.executeUpdate("INSERT INTO projekte (id, name, startdatum, enddatum, beschreibung) "
+			            + "VALUES (" + Projekt.getId() + "','" + Projekt.getName() + ",'" + Projekt.getStartdatum() + "','" + Projekt.getEnddatum() + "','" + Projekt.getBeschreibung() + "')");
 			      }
 			    }
 			    catch (SQLException e) {
@@ -158,7 +158,7 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 				 //Leeres SQL-Statement (JDBC) anlegen
 				 Statement stmt = con.createStatement();
 				 
-				 stmt.executeUpdate("DELETE FROM projekte" + "WHERE id=" + pr.getId());
+				 stmt.executeUpdate("DELETE FROM projekte" + "WHERE id=" + Projekt.getId());
 			 }
 			 catch (SQLException e3){
 				 e3.printStackTrace();
@@ -186,7 +186,7 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 		 			 //Leeres SQL-Statement (JDBC) anlegen
 		 			 Statement stmt = con.createStatement();
 		 			 
-		 			 ResultSet rs = stmt.executeQuery("SELECT id, name, startDatum, endDatum, beschreibung "
+		 			 ResultSet rs = stmt.executeQuery("SELECT id, name, startdatum, enddatum, beschreibung "
 		 				+ "FROM projekte " + " ORDER BY name");
 		 			 
 		 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -216,13 +216,13 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 		 	  * Suchen eines Projekts mit vorgegebener ID. Da diese eindeutig ist,
 		 	  * wird genau ein Objekt zurueckgegeben.
 		 	  * 
-		 	  * @param prId
+		 	  * @param id
 		 	  * 	Primaerschluesselattribut in DB
 		 	  * @return Projekt-Objekt, das dem uebergebenen Schluessel entspricht,
 		 	  * null bei nicht vorhandenem DB-Tupel.
 		 	  */
 		 	 
-		 	 public Vector<Projekt> findById(int prId){
+		 	 public Vector<Projekt> findById(int id){
 		 		 
 		 		 //DB-Verbindung herstellen
 		 		 Connection con = DBConnection.connection();
@@ -233,8 +233,8 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 		 		  Statement stmt = con.createStatement();
 		 			 
 		 		 //Statement ausfuellen und als Query an die DB schicken
-		 		 ResultSet rs= stmt.executeQuery("SELECT * FROM projekte " + "WHERE pr=" 
-		 		 + prId + " ORDER BY id");
+		 		 ResultSet rs= stmt.executeQuery("SELECT * FROM projekte " + "WHERE id=" 
+		 		 + id + " ORDER BY id");
 		 		 
 		 		 /*
 		 		  * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -302,16 +302,20 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 		 	  *anhand deren Beschreibung.
 		 	  *
 		 	  * @param beschreibung
-		 	  * @return
+		 	  * @return pr
 		 	  */
 		 	 public Vector<Projekt> findByBeschreibung(String beschreibung){
-		 		Connection con = DBConnection.connection();
+		 		//DB-Verbindung herstellen
+		 		 Connection con = DBConnection.connection();
 		 		
 		 	    try {
-		 	    
+		 	      //Leeres SQL-Statement (JDBC) anlegen
 		 	      Statement stmt = con.createStatement();
+		 	      
+		 	      //Statement ausfuellen und als Query an die DB schicken
 		 	      ResultSet rs= stmt.executeQuery("SELECT id, beschreibung" + "FROM projekte " + "WHERE beschreibung =" 
 					 		 + beschreibung + " ORDER BY beschreibung");
+		 	      
 		 	      Vector<Projekt> result = new Vector<Projekt>();
 		 	     
 					 		 //Fuer jeden Eintrag im Suchergebnis wird nun ein 
