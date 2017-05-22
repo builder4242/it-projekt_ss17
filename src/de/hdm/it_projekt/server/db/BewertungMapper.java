@@ -9,7 +9,7 @@ import java.util.Vector;
 import java.util.Date;
 
 import de.hdm.it_projekt.shared.bo.Bewertung;
-
+import de.hdm.it_projekt.shared.bo.BusinessObject;
 
 /**
  * Anlehnung an @author Thies
@@ -196,7 +196,7 @@ public class BewertungMapper {
 			 				 Bewertung bt = new Bewertung();
 			 				 bt.setId(rs.getInt("id"));
 			 				 bt.setWert(rs.getFloat("wert"));
-			 				 bt.setStellungnahme(rs.getString("Stellungnahme"));
+			 				 bt.setStellungnahme(rs.getString("stellungnahme"));
 			 				 bt.setErstelldatum(rs.getDate("erstelldatum"));
 			 				
 			 				 
@@ -214,6 +214,56 @@ public class BewertungMapper {
 			 	 		}
 			 	 
 	 		 
-	 		 
-	 		 
+			 	
+			 	/** Suchen einer Bewertung mit vorgegebener ID. Da diese eindeutig ist,
+			 	  * wird genau ein Objekt zurueckgegeben.
+			 	  * 
+			 	  * @param id
+			 	  * 	Primaerschluesselattribut in DB
+			 	  * @return Bewertung-Objekt, das dem uebergebenen Schluessel entspricht,
+			 	  * null bei nicht vorhandenem DB-Tupel.
+			 	  */
+			 	 
+			 	 public Vector<Bewertung> findById(int id){
+			 		 
+			 		 //DB-Verbindung herstellen
+			 		 Connection con = DBConnection.connection();
+			 		 
+			 		 try{
+			 			 
+			 		  //Leeres SQL-Statement (JDBC) anlegen
+			 		  Statement stmt = con.createStatement();
+			 			 
+			 		 //Statement ausfuellen und als Query an die DB schicken
+			 		 ResultSet rs= stmt.executeQuery("SELECT id, wert, stellungnahme, ertselldatum FROM bewertungs "
+			 				 + "WHERE id=" + id + "ORDER BY id");
+			 		 		
+			 		 /*
+			 		  * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
+			 		  * zurueckgegeben werden.
+			 		  * Pruefung, ob ein Ergebnis vorliegt.
+			 		  */
+			
+			 			 if (rs.next()){
+			 				 
+			 				 //Umwandlung des Ergebnis-Tupel in ein Objekt und
+			 				 //Ausgabe des Ergebnis-Objekts.
+			 				 
+			 				 Bewertung bt = new Bewertung();
+			 				 bt.setId(rs.getInt("id"));
+			 				 bt.setWert(rs.getFloat("wert"));
+			 				 bt.setStellungnahme(rs.getString("stellungnahme"));
+			 				 bt.setErstelldatum(rs.getDate("erstelldatum"));
+			 				 
+			 				 return bt;
+			 			 }
+			 		 } 
+			 		 	catch (SQLException e5){
+			 		 		e5.printStackTrace();
+			 		 		return null;
+			 		 	}
+			 		 
+			 		 return null;
+			 	 	}
+ 		 
 }
