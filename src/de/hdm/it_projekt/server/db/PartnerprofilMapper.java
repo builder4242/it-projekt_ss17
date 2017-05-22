@@ -3,6 +3,14 @@
  */
 package de.hdm.it_projekt.server.db;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Vector;
+
+import de.hdm.it_projekt.client.ProjektMarktplatz;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
+
 /**
  * Mapper-Klasse, die <code>Partnerprofil</code>-Objekte auf eine relationale
  * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
@@ -63,4 +71,33 @@ public class PartnerprofilMapper {
 	    return partnerprofilMapper;
 	  }
 
+	
+	
+	/**
+	 * Diese Methode ermoeglicht es ein Partnerprofil in der Datenbank anzulegen.
+	 * 
+	 * @param pp
+	 * @return
+	 * @throws Exception
+	 */
+	public Partnerprofil insert(Partnerprofil pp)
+			throws Exception {
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		PreparedStatement preStmt = null;
+
+		try {
+			String sql = "INSERT INTO `Partnerprofil`(`ID`) VALUES (NULL)";
+			
+			preStmt = con.prepareStatement(sql);
+			preStmt.executeUpdate();
+			preStmt.close();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new IllegalArgumentException("Datenbank fehler!" + e.toString());
+		}
+		return pp;
+	}
+	
 }
