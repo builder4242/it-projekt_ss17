@@ -93,7 +93,7 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 
 			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation.
 			        stmt.executeUpdate("INSERT INTO projekte (name, startdatum, enddatum, beschreibung) "
-			            + "VALUES (" + pr.getName() + ",'" + pr.getStartdatum() + "','" + pr.getEnddatum() + "','" + pr.getBeschreibung() + "')");
+			            + "VALUES (" + Projekt.getName() + ",'" + Projekt.getStartdatum() + "','" + Projekt.getEnddatum() + "','" + Projekt.getBeschreibung() + "')");
 			      }
 			    }
 			    catch (SQLException e) {
@@ -114,7 +114,7 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 		 * @return das als Parameter uebergebene Objekt	
 		 */
 
-		 public Projekt update(Projekt pr){
+		 public Vector<Projekt> update(Vector<Projekt> pr){
 			 
 			 //DB-Verbindung holen
 			 Connection con= DBConnection.connection();
@@ -124,11 +124,10 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 				 // Leeres SQL-Statement(JDBC) anlegen
 				 Statement stmt = con.createStatement();
 				 
-				 stmt.executeUpdate("UPDATE projekte " + "SET startdatum=\""
-			     + pr.getStartdatum() 
-			     + "\", " + "enddatum=\"" + pr.getEnddatum() 
-			     + "\", " + "beschreibung=\"" + pr.getBeschreibung() + "\" "
-			     + "WHERE name=" + pr.getName());
+				 stmt.executeUpdate("UPDATE projekts " + "SET startdatum=\""
+				 + Projekt.getStartdatum() + "\", " + "enddatum=\"" + Projekt.getEnddatum() 
+			     + "\", " + "beschreibung=\"" + Projekt.getBeschreibung() + "\" "
+			     + "WHERE name=" + Projekt.getName());
 				 
 		 }
 		 catch (SQLException e2){
