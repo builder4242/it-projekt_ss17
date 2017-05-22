@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Beteiligung;
 
@@ -157,5 +158,51 @@ public Beteiligung insert(Beteiligung bet){
 		 }
 		 
 		 
+	 /**
+	  * Auslesen aller Projekte
+	  * @return Ein Vektor mit Projekt-Objekten, die saemtliche
+	  *         Projekte repraesentieren. Bei evtl. Exceptions wird eine
+	  *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert
+	  */
 		 
+	 public Vector<Beteiligung> findAll(){
+			 
+			//DB-Verbindung herstellen
+	 		 Connection con = DBConnection.connection();
+	 		 
+	 		 //Ergebnisvektor vorbereiten
+	 		 Vector<Beteiligung> result = new Vector<Beteiligung>();
+	 		 
+	 		 try{
+	 			
+	 			 //Leeres SQL-Statement (JDBC) anlegen
+	 			 Statement stmt = con.createStatement();
+	 			 
+	 			 ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum "
+	 				+ "FROM beteiligungs " + " ORDER BY id");
+	 			 
+	 			 
+	 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
+	 			 //Projekt-Objekt erstellt.
+	 		 
+	 			 while (rs.next()) {
+	 				 Beteiligung bet = new Beteiligung();
+	 				 bet.setId(rs.getInt("id"));
+	 				 bet.setPersonentage(rs.getInt("personentage"));
+	 				 bet.setEnddatum(rs.getDate("enddatum"));
+	 				 bet.setEnddatum(rs.getDate("startdatum"));
+	 				 
+	 			 
+	 			 //Hinzufuegen des neuen Objekts zum Ergebnisvektor
+	 		       result.addElement(bet);
+	 		      		}
+	 		 		}
+	 		    catch (SQLException e4) {
+	 		    e4.printStackTrace();
+	 		    		}	
+
+	 		   	// Ergebnisvektor zurueckgeben
+	 		   	return result;
+	 	 		}
+	 
 }
