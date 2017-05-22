@@ -282,9 +282,8 @@ public class ProjektMarktplatzMapper {
 
 		
 		
-		public Vector<Person> getByPerson (Person p){
+		public Vector <Person> getByPerson (Person p){
 			
 		}
-		
-		
+				
 }
