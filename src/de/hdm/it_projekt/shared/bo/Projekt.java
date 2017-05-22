@@ -46,7 +46,7 @@ public class Projekt extends BusinessObject {
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
-		this.name = name;
+		Projekt.name = name;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class Projekt extends BusinessObject {
 	 * @param startdatum the startdatum to set
 	 */
 	public void setStartdatum(Date startdatum) {
-		this.startdatum = startdatum;
+		Projekt.startdatum = startdatum;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class Projekt extends BusinessObject {
 	 * @param enddatum the enddatum to set
 	 */
 	public void setEnddatum(Date enddatum) {
-		this.enddatum = enddatum;
+		Projekt.enddatum = enddatum;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class Projekt extends BusinessObject {
 	 * @param beschreibung the beschreibung to set
 	 */
 	public void setBeschreibung(String beschreibung) {
-		this.beschreibung = beschreibung;
+		Projekt.beschreibung = beschreibung;
 	}
 	
 	
