@@ -248,7 +248,7 @@ public class ProjektMarktplatzMapper {
 			//DB-Verbindung herstellen
 			Connection con = DBConnection.connection();
 			ProjektMarktplatz result = new ProjektMarktplatz();
-			
+						
 			try {
 
 				// Leeres SQL-Statement (JDBC) anlegen
@@ -267,6 +267,9 @@ public class ProjektMarktplatzMapper {
 				        ProjektMarktplatz pm = new  ProjektMarktplatz();
 				        pm.setID(rs.getInt("ID"));
 				        pm.setBezeichnung(rs.getString("bezeichnung"));
+				        
+				        // Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				        result.addElement(pm);
 					}
 				}
 				catch (SQLException e2) {
@@ -277,4 +280,11 @@ public class ProjektMarktplatzMapper {
 			return result;
 			}
 
+		
+		
+		public Vector<Person> getByPerson (Person p){
+			
+		}
+		
+		
 }
