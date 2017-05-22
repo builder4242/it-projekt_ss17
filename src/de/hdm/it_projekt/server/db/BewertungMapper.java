@@ -96,7 +96,7 @@ public class BewertungMapper {
 				   
 				   // Jetzt erst erfolgt die tatsächliche Einfügeoperation.
 				   stmt.executeUpdate("INSERT INTO bewertungs (id, wert, stellungnahme, erstelldatum)"
-				   + "VALUES (" + bt.getId() + "," + bt.getWert() + ","
+				   + "VALUES (" + Bewertung.getId() + "," + bt.getWert() + ","
 				   + bt.getStellungnahme() + "," + bt.getErstelldatum() + ")");
 				   
 			   	 	}
@@ -128,7 +128,7 @@ public class BewertungMapper {
 	  					 stmt.executeUpdate("UPDATE bewertungs " + "SET wert=\""
 	  				     + bt.getWert() + "\"," + "stellungnahme=\"" + bt.getStellungnahme()
 	  				     + "\", " + "erstelldatum=\"" + bt.getErstelldatum() + "\" "
-	  				     + "WHERE id=" + bt.getId());
+	  				     + "WHERE id=" + Bewertung.getId());
 	  				 
 	  				 }
 	  				 catch (SQLException e2){
@@ -158,7 +158,7 @@ public class BewertungMapper {
 	 				 //Leeres SQL-Statement (JDBC) anlegen
 	 				 Statement stmt = con.createStatement();
 	 				 
-	 				 stmt.executeUpdate("DELETE FROM bewertungs" + "WHERE id=" + bt.getId());
+	 				 stmt.executeUpdate("DELETE FROM bewertungs" + "WHERE id=" + Bewertung.getId());
 	 			 }
 	 			 catch (SQLException e3){
 	 				 e3.printStackTrace();
@@ -311,5 +311,52 @@ public class BewertungMapper {
 			 				  
 			 			  }
 			 			
-
-}
+				
+				/**
+				 * Suchen einer Bewertung anhand eines Wertes.
+				 * @param wert
+				 * @return result
+				 */
+				public Vector<Bewertung> findByWert(float wert){
+					
+					//DB-Verbindung herstellen
+					Connection con = DBConnection.connection();
+					
+					try {
+						//Leeres SQL-Statement (JDBC) anlegen
+						Statement stmt = con.createStatement();
+						
+						//Statement ausfuellen und als Query an die DB schicken
+						ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum "
+								+ "WHERE wert=" + wert + " ORDER BY wert");
+					
+						
+						//Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
+			 			//erstellt
+			 			  while (rs.next()){
+			 				  Bewertung bt= new Bewertung();
+			 				  bt.setId(rs.getInt("id"));
+			 				  bt.setWert(rs.getFloat("wert"));
+			 				  bt.setStellungnahme(rs.getString("stellungnahme"));
+			 				  bt.setErstelldatum(rs.getDate("erstelldatum"));
+			 				  
+			 				  //Hinzufuegen des neuen Objekts zum Ergebnisvektor
+			 				  result.addElement(bt);
+			 			  }
+			 		   }
+			 		 catch (SQLException e7){
+			 			 e7.printStackTrace();
+			 		 }
+			 		 
+			 		 //Ergebnisvektor zurueckgeben
+			 		 return result;
+			 				  
+					
+					
+					
+					}
+					
+					
+					
+					
+				}
