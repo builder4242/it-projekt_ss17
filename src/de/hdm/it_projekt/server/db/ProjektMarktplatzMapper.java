@@ -237,4 +237,45 @@ public class ProjektMarktplatzMapper {
 
 		
 		
+		/***
+		 * Auslesen eines Projektmarktplatzes mit einer bestimmten Bezeichnung
+		 * 
+		 * @param bezeichnung
+		 * @return Projektmarktplatz-Objekt, das der uebergebenen Bezeichnung entspricht, null
+		 * bei nicht vorhandenem DB-Tupel.
+		 */
+		public <Vector>ProjektMarktplatz findByBezeichnung (String bezeichnung){
+			//DB-Verbindung herstellen
+			Connection con = DBConnection.connection();
+			ProjektMarktplatz result = new ProjektMarktplatz();
+			
+			
+			try {
+
+				// Leeres SQL-Statement (JDBC) anlegen
+				Statement stmt = con.createStatement();
+
+				// Statement ausfuellen und als Query an die DB schicken
+				ResultSet rs = stmt.executeQuery("SELECT ID, bezeichnung FROM Projektmarktplatz" +
+				"WHERE bezeichnung=" + bezeichnung + " ORDER BY bezeichnung");
+
+					// Fuer jeden Eintrag im Suchergebnis wird nun ein ProjektMarktplatz-Objekt
+			      	// erstellt.
+					while (rs.next()) {
+						
+						// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+						// Ergebnis-Objekts
+				        ProjektMarktplatz pm = new  ProjektMarktplatz();
+				        pm.setID(rs.getInt("ID"));
+				        pm.setBezeichnung(rs.getString("bezeichnung"));
+					}
+				}
+				catch (SQLException e2) {
+				e2.printStackTrace();
+				}
+
+			// Ergebnisvektor zurueckgeben
+			return result;
+			}
+
 }
