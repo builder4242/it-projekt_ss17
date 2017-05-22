@@ -34,7 +34,7 @@ public class EigenschaftMapper {
 
   /**
    * Diese statische Methode kann aufgrufen werden durch
-   * <code>EigenschaftMapper.customerMapper()</code>. Sie stellt die
+   * <code>EigenschaftMapper.eigenschaftMapper()</code>. Sie stellt die
    * Singleton-Eigenschaft sicher, indem Sie dafuer sorgt, dass nur eine einzige
    * Instanz von <code>EigenschaftMapper</code> existiert.
    * <p>
