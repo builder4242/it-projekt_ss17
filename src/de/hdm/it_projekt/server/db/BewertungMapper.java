@@ -9,6 +9,7 @@ import java.util.Vector;
 import java.util.Date;
 
 import de.hdm.it_projekt.shared.bo.Bewertung;
+import de.hdm.it_projekt.shared.bo.Person;
 
 /**
  * Anlehnung an @author Thies
@@ -350,8 +351,16 @@ public class BewertungMapper {
 			 		 
 			 		 //Ergebnisvektor zurueckgeben
 			 		 return result;
-			 				  
+				}	  
 					
+				/**
+				 * Das Erhalten der Bewertung von einer Person.
+				 * @param p
+				 * @return
+				 */
+				
+				public Vector<Person> getByPerson(Person p){
+			 			 
 					
 					
 					}
