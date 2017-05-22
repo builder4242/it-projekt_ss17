@@ -16,28 +16,28 @@ public class Projekt extends BusinessObject {
 	/**
 	 * Name des Projektes
 	 */
-	private String name;
+	private static String name;
 	
 	/**
 	 *  Startdatum des Projektes
 	 */
-	private Date startdatum;
+	private static Date startdatum;
 	
 	/**
 	 * Enddatum des Projektes
 	 */
-	private Date enddatum;
+	private static Date enddatum;
 	
 	/**
 	 * Erweiterte Beschreibung des Projektes
 	 */
-	private String beschreibung;
+	private static String beschreibung;
 
 	/**
 	 * Rückgabe des Namens
 	 * @return the name
 	 */
-	public String getName() {
+	public static String getName() {
 		return name;
 	}
 
@@ -53,7 +53,7 @@ public class Projekt extends BusinessObject {
 	 * Rückgabe des Startdatums
 	 * @return the startdatum
 	 */
-	public Date getStartdatum() {
+	public static Date getStartdatum() {
 		return startdatum;
 	}
 
@@ -69,7 +69,7 @@ public class Projekt extends BusinessObject {
 	 * Rückgabe des Enddatums
 	 * @return the enddatum
 	 */
-	public Date getEnddatum() {
+	public static Date getEnddatum() {
 		return enddatum;
 	}
 
@@ -85,7 +85,7 @@ public class Projekt extends BusinessObject {
 	 * Rückgabe der Beschreibung
 	 * @return the beschreibung
 	 */
-	public String getBeschreibung() {
+	public static String getBeschreibung() {
 		return beschreibung;
 	}
 
