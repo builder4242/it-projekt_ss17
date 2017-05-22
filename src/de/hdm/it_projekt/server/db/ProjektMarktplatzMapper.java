@@ -14,7 +14,7 @@ import java.util.Vector;
 import de.hdm.it_projekt.client.ProjektMarktplatz;
 
 /**
-	 * Mapper-Klasse, die <code>Projektmarktplatz</code>-Objekte auf eine relationale
+	 * Mapper-Klasse, die <code>ProjektMarktplatz</code>-Objekte auf eine relationale
 	 * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
 	 * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
 	 * geloescht werden koennen. Das Mapping ist bidirektional. D.h., Objekte koennen
