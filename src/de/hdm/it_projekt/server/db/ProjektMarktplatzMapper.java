@@ -109,7 +109,9 @@ public class ProjektMarktplatzMapper {
 		 * @return das als Parameter übergebene Objekt
 		 */
 		public Vector <ProjektMarktplatz> update(Vector<ProjektMarktplatz> pm){
-		    Connection con = DBConnection.connection();
+		    
+			// DB-Verbindung herstellen
+			Connection con = DBConnection.connection();
 
 		    try {
 		      Statement stmt = con.createStatement();
@@ -132,8 +134,11 @@ public class ProjektMarktplatzMapper {
 		 * @param pm - das aus der DB zu loeschende "Objekt"
 		 */
 		public void delete(ProjektMarktplatz pm){ 
+			
+			// DB-Verbindung herstellen
 			Connection con = DBConnection.connection();
 			Statement stmt = null;
+			
 			try {
 				stmt = con.createStatement();
 				stmt.executeUpdate("DELETE FROM Projektmarktplatz " + "WHERE ID=" + ProjektMarktplatz.getID());
