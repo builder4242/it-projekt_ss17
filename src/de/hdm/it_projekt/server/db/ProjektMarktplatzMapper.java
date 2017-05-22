@@ -123,7 +123,7 @@ public class ProjektMarktplatzMapper {
 		      e.printStackTrace();
 		    }
 
-		    // Um Analogie zu insert(Vector<ProjektMarktplatz> pm) zu wahren, geben wir pm zurück
+		    // Um Analogie zu insert(Vector<ProjektMarktplatz> pm) zu wahren, geben wir pm zurueck
 		    return pm;
 		  }
 		
@@ -241,8 +241,8 @@ public class ProjektMarktplatzMapper {
 		 * Auslesen eines Projektmarktplatzes mit einer bestimmten Bezeichnung
 		 * 
 		 * @param bezeichnung
-		 * @return Projektmarktplatz-Objekt, das der uebergebenen Bezeichnung entspricht, null
-		 * bei nicht vorhandenem DB-Tupel.
+		 * @return Projektmarktplatz-Objekt, das der uebergebenen Bezeichnung entspricht,
+		 * null bei nicht vorhandenem DB-Tupel.
 		 */
 		public <Vector>ProjektMarktplatz findByBezeichnung (String bezeichnung){
 			//DB-Verbindung herstellen
