@@ -27,4 +27,14 @@ public class ProjektMarktplatz {
 		// TODO Auto-generated method stub
 	}
 
+
+	/***
+	 * Setzen der Bezeichnung
+	 * @param bz
+	 */
+	public void setBezeichnung(String bz) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
