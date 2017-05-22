@@ -22,7 +22,7 @@ import de.hdm.it_projekt.client.ProjektMarktplatz;
 	 * <p>
 	 * 
 	 * Anlehnung an @author Thies
-	 * @author Tugba
+	 * @author Tugba Bulat
 	 *
 	 */
 public class ProjektMarktplatzMapper {
@@ -97,10 +97,6 @@ public class ProjektMarktplatzMapper {
 				e.printStackTrace();
 				throw new IllegalArgumentException("Datenbank fehler!" + e.toString());
 			}
-			finally {
-				DBConnection.closeAll(null, preStmt, con);
-			}
-
 			return pm;
 		}
   
@@ -113,13 +109,15 @@ public class ProjektMarktplatzMapper {
 		 * @return das als Parameter übergebene Objekt
 		 */
 		public Vector <ProjektMarktplatz> update(Vector<ProjektMarktplatz> pm){
-		    Connection con = DBConnection.connection();
+		    
+			// DB-Verbindung herstellen
+			Connection con = DBConnection.connection();
 
 		    try {
 		      Statement stmt = con.createStatement();
 
 		      stmt.executeUpdate("UPDATE Projektmarktplatz " + "SET bezeichnung=\""
-		          + pm.getBezeichnung() + "\" " + "WHERE id=" + pm.getId();
+		          + ProjektMarktplatz.getBezeichnung() + "\" " + "WHERE id=" + ProjektMarktplatz.getID());
 		    }
 		    catch (SQLException e) {
 		      e.printStackTrace();
@@ -136,11 +134,14 @@ public class ProjektMarktplatzMapper {
 		 * @param pm - das aus der DB zu loeschende "Objekt"
 		 */
 		public void delete(ProjektMarktplatz pm){ 
+			
+			// DB-Verbindung herstellen
 			Connection con = DBConnection.connection();
 			Statement stmt = null;
+			
 			try {
 				stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM Projektmarktplatz " + "WHERE ID=" + Projektmarktplatz.getId());
+				stmt.executeUpdate("DELETE FROM Projektmarktplatz " + "WHERE ID=" + ProjektMarktplatz.getID());
 			}
 			catch (SQLException e) {
 				e.printStackTrace();
@@ -175,10 +176,10 @@ public class ProjektMarktplatzMapper {
 	
 				while (rs.next()) {
 					ProjektMarktplatz pm = new ProjektMarktplatz();
-					pm.setId(rs.getInt("ID"));
+					pm.setID(rs.getInt("ID"));
 					pm.setBezeichnung(rs.getString("bezeichnung"));
 	
-					// Hinzufügen des neuen Objekts zum Ergebnisvektor
+					// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 					result.addElement(pm);
 				}
 			}
@@ -186,8 +187,54 @@ public class ProjektMarktplatzMapper {
 				e4.printStackTrace();
 			}
 	
-			// Ergebnisvektor zurückgeben
+			// Ergebnisvektor zurueckgeben
 			return result;
 		}
 
+		
+		/***
+		 * Suchen eines Projektmarktplatzes mit vorgegebener ID.
+		 * Da diese eindeutig ist, wird genau ein Objekt zurueckgegeben.
+		 * @param ID - Primaerschluesselattribut in DB
+		 * @return Projektmarktplatz-Objekt, das dem uebergebenen Schluessel entspricht, null
+	 *         bei nicht vorhandenem DB-Tupel.
+		 */
+		public Vector<ProjektMarktplatz> findByID (int ID){
+			// DB-Verbindung herstellen
+			Connection con = DBConnection.connection();
+			
+			try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, bezeichnung FROM Projektmarktplatz" +
+			"WHERE id=" + ID + " ORDER BY ID");
+
+				/*
+				 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
+				 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+				 */
+				if (rs.next()) {
+					// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+					// Ergebnis-Objekts
+	
+			        ProjektMarktplatz pm = new  ProjektMarktplatz();
+			        pm.setID(rs.getInt("ID"));
+			        pm.setBezeichnung(rs.getString("bezeichnung"));
+	
+			        return pm;
+				}
+			}
+			catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+			}
+
+		return null;
+		}
+
+		
+		
 }
