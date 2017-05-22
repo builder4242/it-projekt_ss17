@@ -72,14 +72,14 @@ public class ProjektMarktplatzMapper {
 	  }
 	  
 	  
-	  
-		/** 
-		 * Diese Methode ermoeglicht es einen Projektmarktplatz in der Datenbank anzulegen.
-		 * 
-		 * @param projektMarktplatz
-		 * @return
-		 * @throws Exception
-		 */
+	  	  
+	  	/***
+	  	 * Diese Methode ermoeglicht es einen Projektmarktplatz in der Datenbank anzulegen.
+	  	 * 
+	  	 * @param pm
+	  	 * @return
+	  	 * @throws Exception
+	  	 */
 		public Vector <ProjektMarktplatz> insert(Vector<ProjektMarktplatz> pm)
 				throws Exception {
 			// DB-Verbindung herstellen
