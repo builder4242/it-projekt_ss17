@@ -92,8 +92,8 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 					stmt = con.createStatement();
 
 			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation.
-			        stmt.executeUpdate("INSERT INTO projekte (name, startDatum, endDatum, beschreibung) "
-			            + "VALUES (" + pr.getName() + ",'" + pr.getStartDatum() + "','" + pr.getEndDatum() + "','" + pr.getBeschreibung() + "')");
+			        stmt.executeUpdate("INSERT INTO projekte (name, startdatum, enddatum, beschreibung) "
+			            + "VALUES (" + pr.getName() + ",'" + pr.getStartdatum() + "','" + pr.getEnddatum() + "','" + pr.getBeschreibung() + "')");
 			      }
 			    }
 			    catch (SQLException e) {
@@ -124,12 +124,12 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 				 // Leeres SQL-Statement(JDBC) anlegen
 				 Statement stmt = con.createStatement();
 				 
-				 stmt.executeUpdate("UPDATE projekte " + "SET name=\""
-			     + pr.getName() + "\", " + "startDatum=\"" + pr.getStartDatum() 
-			     + "\", " + "endDatum=\"" + pr.getEndDatum() 
+				 stmt.executeUpdate("UPDATE projekte " + "SET startdatum=\""
+			     + pr.getStartdatum() 
+			     + "\", " + "enddatum=\"" + pr.getEnddatum() 
 			     + "\", " + "beschreibung=\"" + pr.getBeschreibung() + "\" "
-			     + "WHERE id=" + pr.getID());
-			 
+			     + "WHERE name=" + pr.getName());
+				 
 		 }
 		 catch (SQLException e2){
 			 e2.printStackTrace();
@@ -197,8 +197,8 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 		 				 Projekt pr = new Projekt();
 		 				 pr.setId(rs.getInt("id"));
 		 				 pr.setName(rs.getString("name"));
-		 				 pr.setStartDatum(rs.getDate("startDatum"));
-		 				 pr.setEndDatum(rs.getDate("endDatum"));
+		 				 pr.setStartdatum(rs.getDate("startDatum"));
+		 				 pr.setEnddatum(rs.getDate("endDatum"));
 		 				 pr.setBeschreibung(rs.getString("beschreibung"));
 		 			 
 		 			// Hinzufügen des neuen Objekts zum Ergebnisvektor
@@ -330,8 +330,9 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 			 		 		e6.printStackTrace();
 			 		 	}
 					 			 
+					Vector<Projekt> pr = null;
 					//Ergebnisvektor zurueckgeben
-			 		 return result;
+			 		 return pr;
 
 		 	 }
 		 	     	 
