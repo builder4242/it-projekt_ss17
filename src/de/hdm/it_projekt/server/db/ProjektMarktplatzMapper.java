@@ -22,7 +22,7 @@ import de.hdm.it_projekt.client.ProjektMarktplatz;
 	 * <p>
 	 * 
 	 * Anlehnung an @author Thies
-	 * @author Tugba
+	 * @author Tugba Bulat
 	 *
 	 */
 public class ProjektMarktplatzMapper {
@@ -97,10 +97,6 @@ public class ProjektMarktplatzMapper {
 				e.printStackTrace();
 				throw new IllegalArgumentException("Datenbank fehler!" + e.toString());
 			}
-			finally {
-				DBConnection.closeAll(null, preStmt, con);
-			}
-
 			return pm;
 		}
   
@@ -119,7 +115,7 @@ public class ProjektMarktplatzMapper {
 		      Statement stmt = con.createStatement();
 
 		      stmt.executeUpdate("UPDATE Projektmarktplatz " + "SET bezeichnung=\""
-		          + pm.getBezeichnung() + "\" " + "WHERE id=" + pm.getId();
+		          + ProjektMarktplatz.getBezeichnung() + "\" " + "WHERE id=" + ProjektMarktplatz.getID());
 		    }
 		    catch (SQLException e) {
 		      e.printStackTrace();
@@ -140,7 +136,7 @@ public class ProjektMarktplatzMapper {
 			Statement stmt = null;
 			try {
 				stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM Projektmarktplatz " + "WHERE ID=" + Projektmarktplatz.getId());
+				stmt.executeUpdate("DELETE FROM Projektmarktplatz " + "WHERE ID=" + ProjektMarktplatz.getID());
 			}
 			catch (SQLException e) {
 				e.printStackTrace();
@@ -175,7 +171,7 @@ public class ProjektMarktplatzMapper {
 	
 				while (rs.next()) {
 					ProjektMarktplatz pm = new ProjektMarktplatz();
-					pm.setId(rs.getInt("ID"));
+					pm.setID(rs.getInt("ID"));
 					pm.setBezeichnung(rs.getString("bezeichnung"));
 	
 					// Hinzufügen des neuen Objekts zum Ergebnisvektor
