@@ -6,18 +6,6 @@ package de.hdm.it_projekt.client;
 	 *
 	 */
 public class ProjektMarktplatz {
-
-	
-	/***
-	 * Auslesen der ID
-	 * @return
-	 */
-	public static String getID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 	
 	/***
 	 * Setzen der ID
@@ -28,6 +16,18 @@ public class ProjektMarktplatz {
 	}
 
 
+	
+	/***
+	 * Auslesen der ID
+	 * @return
+	 */
+	public static String getID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
 	/***
 	 * Setzen der Bezeichnung
 	 * @param bz
@@ -35,6 +35,17 @@ public class ProjektMarktplatz {
 	public void setBezeichnung(String bz) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	/***
+	 * Auslesen der Bezeichnung
+	 * @return
+	 */
+	public static String getBezeichnung() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
