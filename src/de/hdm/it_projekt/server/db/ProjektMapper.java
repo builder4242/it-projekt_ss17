@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
+
+import de.hdm.it_projekt.shared.bo.Projekt;
 
 /**
  * Mapper-Klasse, die <code>Projekt</code>-Objekte auf eine relationale
@@ -90,7 +93,7 @@ import java.sql.Statement;
 
 			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation.
 			        stmt.executeUpdate("INSERT INTO projekte (name, startDatum, endDatum, beschreibung) "
-			            + "VALUES (" + pr.getName() + ",'" + pr.getStartDatum() + "','" + pr.getEndDatum() + "','" + pr.beschreibung() + "')");
+			            + "VALUES (" + pr.getName() + ",'" + pr.getStartDatum() + "','" + pr.getEndDatum() + "','" + pr.getBeschreibung() + "')");
 			      }
 			    }
 			    catch (SQLException e) {
@@ -111,7 +114,7 @@ import java.sql.Statement;
 		 * @return das als Parameter uebergebene Objekt	
 		 */
 
-		 public Vector<Projekt> update(Projekt pr){
+		 public Projekt update(Projekt pr){
 			 
 			 //DB-Verbindung holen
 			 Connection con= DBConnection.connection();
@@ -209,6 +212,127 @@ import java.sql.Statement;
 		 		   	// Ergebnisvektor zurückgeben
 		 		   	return result;
 		 	 		}
-		 			 
-		 			 }
+		 	 
+		 	 /**
+		 	  * Suchen eines Projekts mit vorgegebener ID. Da diese eindeutig ist,
+		 	  * wird genau ein Objekt zurueckgegeben.
+		 	  * 
+		 	  * @param prId
+		 	  * 	Primaerschluesselattribut in DB
+		 	  * @return Projekt-Objekt, das dem uebergebenen Schluessel entspricht,
+		 	  * null bei nicht vorhandenem DB-Tupel.
+		 	  */
+		 	 
+		 	 public Vector<Projekt> findById(int prId){
 		 		 
+		 		 //DB-Verbindung herstellen
+		 		 Connection con = DBConnection.connection();
+		 		 
+		 		 try{
+		 			 
+		 		  //Leeres SQL-Statement (JDBC) anlegen
+		 		  Statement stmt = con.createStatement();
+		 			 
+		 		 //Statement ausfuellen und als Query an die DB schicken
+		 		 ResultSet rs= stmt.executeQuery("SELECT * FROM projekte " + "WHERE pr=" 
+		 		 + prId + " ORDER BY id");
+		 		 
+		 		 /*
+		 		  * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
+		 		  * zurueckgegeben werden.
+		 		  * Pruefung, ob ein Ergebnis vorliegt.
+		 		  */
+		
+		 			 if (rs.next()){
+		 				 //Umwandlung des Ergebnis-Tupel in ein Objekt und
+		 				 //Ausgabe des Ergebnis-Objekts.
+		 				 return Element(rs);
+		 			 }
+		 		 } 
+		 		 	catch (SQLException e4){
+		 		 		e4.printStackTrace();
+		 		 		return null;
+		 		 	}
+		 		 
+		 		 return null;
+		 	 	}
+		 	 
+			private Vector<Projekt> Element(ResultSet rs) {
+				return null;
+			}
+
+			/**
+		 	 * Diese Methode ermoeglicht eine Ausgabe ueber Nutzer in der DB
+		 	 * anhand deren Namen.
+		 	 * 
+		 	 * @param name
+		 	 * @return result
+		 	 */
+		 	 
+		 	 public Vector <Projekt> findByName(String name){
+		 		 Connection con = DBConnection.connection(); 
+		 		 Vector<Projekt> result= new Vector<Projekt>();
+		 		 
+		 		 try{
+		 		      Statement stmt = con.createStatement();
+		 		      
+				 	  ResultSet rs= stmt.executeQuery("SELECT id, name" + "FROM projekte " + "WHERE name LIKE=" 
+				 		 + name + " ORDER BY name");
+		 		  
+				 		 //Fuer jeden Eintrag im Suchergebnis wird nun ein 
+				 	     //Projekt-Objekt erstellt.
+				 		 while (rs.next()){
+				 			 Projekt pr = new Projekt();
+				 			 pr.setId(rs.getInt("id"));
+				 			 pr.setName(rs.getString("name"));
+				 			 
+				 			//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				 			 result.addElement(pr);
+				 		 } 
+				 	}
+		 		 	catch (SQLException e5){
+		 		 		e5.printStackTrace();
+		 		 	}
+				 			 
+		 		 //Ergebnisvektor zurueckgeben
+		 		 return result;
+				 		 }
+				 		
+		 	 /**
+		 	  *Diese Methode ermoeglicht eine Ausgabe ueber Ausschreibung in der DB
+		 	  *anhand deren Beschreibung.
+		 	  *
+		 	  * @param beschreibung
+		 	  * @return
+		 	  */
+		 	 public Vector<Projekt> findByBeschreibung(String beschreibung){
+		 		Connection con = DBConnection.connection();
+		 		
+		 	    try {
+		 	    
+		 	      Statement stmt = con.createStatement();
+		 	      ResultSet rs= stmt.executeQuery("SELECT id, beschreibung" + "FROM projekte " + "WHERE beschreibung =" 
+					 		 + beschreibung + " ORDER BY beschreibung");
+		 	      Vector<Projekt> result = new Vector<Projekt>();
+		 	     
+					 		 //Fuer jeden Eintrag im Suchergebnis wird nun ein 
+					 	     //Projekt-Objekt erstellt.
+					 		 while (rs.next()){
+					 			 Projekt pr = new Projekt();
+					 			 pr.setId(rs.getInt("id"));
+					 			 pr.setBeschreibung(rs.getString("beschreibung"));
+					 			 
+					 			//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+					 			 result.addElement(pr);
+					 		 } 
+					 	}
+			 		 	catch (SQLException e6){
+			 		 		e6.printStackTrace();
+			 		 	}
+					 			 
+					//Ergebnisvektor zurueckgeben
+			 		 return result;
+
+		 	 }
+		 	     	 
+ }
