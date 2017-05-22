@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Beteiligung;
+import de.hdm.thies.bankProjekt.shared.bo.Customer;
 
 /**
  * Mapper-Klasse, die <code>Beteiligung</code>-Objekte auf eine relationale
@@ -205,4 +206,52 @@ public Beteiligung insert(Beteiligung bet){
 	 		   	return result;
 	 	 		}
 	 
+	 /**
+	   * Suchen einer Beteiligung mit vorgegebener Nummer. Da diese eindeutig ist,
+	   * wird genau ein Objekt zurueckgegeben.
+	   * 
+	   * @param id Primaerschluesselattribut (->DB)
+	   * @return Bewerber-Objekt, das dem uebergebenen Schluessel entspricht, null bei
+	   *         nicht vorhandenem DB-Tupel.
+	   */
+	 
+	 public Vector<Beteiligung> findByID (int id){
+	 
+		 //DB-Verbindung herstellen
+		 Connection con = DBConnection.connection();
+		 
+		 try {
+		      // Leeres SQL-Statement (JDBC) anlegen
+		      Statement stmt = con.createStatement();
+
+		      //Statement ausfuellen und als Query an die DB schicken
+		      ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
+		      + "WHERE id=" + id + "ORDER BY personentage");
+	 
+		      /*
+		       * Da id Primäerschluessel ist, kann max. nur ein Tupel zurueckgegeben
+		       * werden. Pruefe, ob ein Ergebnis vorliegt
+		       */
+		      
+		      if (rs.next()){
+		    	
+		    	  // Ergebnis-Tupel in Objekt umwandeln
+		    	  Beteiligung bet = new Beteiligung();
+		    	  bet.setId(rs.getInt("id"));
+		          bet.setPersonentage(rs.getInt("personentage"));
+		          bet.setEnddatum(rs.getDate("enddatum"));
+		          bet.setStartdatum(rs.getDate("startdatum"));
+			 
+		          return bet;
+		      }
+		    }
+		    catch (SQLException e) {
+		      e.printStackTrace();
+		      return null;
+		    }
+
+		    return null;
+		  
+	 }
+		      
 }
