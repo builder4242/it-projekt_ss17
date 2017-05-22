@@ -130,7 +130,8 @@ public class ProjektMarktplatzMapper {
 		
 		
 		/***
-		 * 
+		 * Löschen der Daten eines <code>ProjektMarktplatz</code>-Objekts aus der Datenbank.
+
 		 * @param pm - das aus der DB zu loeschende "Objekt"
 		 */
 		public void delete(ProjektMarktplatz pm){ 
