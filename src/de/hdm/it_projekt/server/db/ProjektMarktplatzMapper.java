@@ -249,7 +249,6 @@ public class ProjektMarktplatzMapper {
 			Connection con = DBConnection.connection();
 			ProjektMarktplatz result = new ProjektMarktplatz();
 			
-			
 			try {
 
 				// Leeres SQL-Statement (JDBC) anlegen
