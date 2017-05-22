@@ -179,7 +179,7 @@ public class ProjektMarktplatzMapper {
 					pm.setID(rs.getInt("ID"));
 					pm.setBezeichnung(rs.getString("bezeichnung"));
 	
-					// Hinzufügen des neuen Objekts zum Ergebnisvektor
+					// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 					result.addElement(pm);
 				}
 			}
@@ -187,8 +187,54 @@ public class ProjektMarktplatzMapper {
 				e4.printStackTrace();
 			}
 	
-			// Ergebnisvektor zurückgeben
+			// Ergebnisvektor zurueckgeben
 			return result;
 		}
 
+		
+		/***
+		 * Suchen eines Projektmarktplatzes mit vorgegebener ID.
+		 * Da diese eindeutig ist, wird genau ein Objekt zurueckgegeben.
+		 * @param ID - Primaerschluesselattribut in DB
+		 * @return Projektmarktplatz-Objekt, das dem uebergebenen Schluessel entspricht, null
+	 *         bei nicht vorhandenem DB-Tupel.
+		 */
+		public Vector<ProjektMarktplatz> findByID (int ID){
+			// DB-Verbindung herstellen
+			Connection con = DBConnection.connection();
+			
+			try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, bezeichnung FROM Projektmarktplatz" +
+			"WHERE id=" + ID + " ORDER BY ID");
+
+				/*
+				 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
+				 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+				 */
+				if (rs.next()) {
+					// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+					// Ergebnis-Objekts
+	
+			        ProjektMarktplatz pm = new  ProjektMarktplatz();
+			        pm.setID(rs.getInt("ID"));
+			        pm.setBezeichnung(rs.getString("bezeichnung"));
+	
+			        return pm;
+				}
+			}
+			catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+			}
+
+		return null;
+		}
+
+		
+		
 }
