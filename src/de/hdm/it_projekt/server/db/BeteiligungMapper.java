@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import de.hdm.it_projekt.shared.bo.Beteiligung;
-import de.hdm.it_projekt.shared.bo.Bewertung;
 
 /**
  * Mapper-Klasse, die <code>Beteiligung</code>-Objekte auf eine relationale
@@ -132,4 +131,31 @@ public Beteiligung insert(Beteiligung bet){
 	     return bet;
 	  }
 	 
+	 
+	 /**
+	  * Loeschen der Daten eines <code>Beteiligung</code>-Objekts aus der DB
+	  * @param bet
+	  * 		das aus der DB zu loeschende Objekt
+	 * @return 
+	  */
+	 
+	 public void delete (Beteiligung bet){
+			 
+			 //DB-Verbindung herstellen
+			 Connection con = DBConnection.connection();
+			 
+			 try{
+				 
+				 //Leeres SQL-Statement (JDBC) anlegen
+				 Statement stmt = con.createStatement();
+				 
+				 stmt.executeUpdate("DELETE FROM beteiligungs" + "WHERE id=" + Beteiligung.getId());
+			 }
+			 catch (SQLException e3){
+				 e3.printStackTrace();
+			 }
+		 }
+		 
+		 
+		 
 }
