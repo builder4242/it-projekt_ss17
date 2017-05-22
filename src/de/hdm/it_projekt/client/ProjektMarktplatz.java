@@ -6,7 +6,7 @@ package de.hdm.it_projekt.client;
 	 *
 	 */
 public class ProjektMarktplatz {
-	
+
 	/***
 	 * Setzen der ID
 	 * @param ID
@@ -32,7 +32,7 @@ public class ProjektMarktplatz {
 	 * Setzen der Bezeichnung
 	 * @param bz
 	 */
-	public void setBezeichnung(String bz) {
+	public void setBezeichnung(String bezeichnung) {
 		// TODO Auto-generated method stub
 		
 	}

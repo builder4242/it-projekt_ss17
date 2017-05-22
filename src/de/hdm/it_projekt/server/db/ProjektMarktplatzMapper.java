@@ -14,7 +14,7 @@ import java.util.Vector;
 import de.hdm.it_projekt.client.ProjektMarktplatz;
 
 /**
-	 * Mapper-Klasse, die <code>Projektmarktplatz</code>-Objekte auf eine relationale
+	 * Mapper-Klasse, die <code>ProjektMarktplatz</code>-Objekte auf eine relationale
 	 * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
 	 * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
 	 * geloescht werden koennen. Das Mapping ist bidirektional. D.h., Objekte koennen
@@ -72,14 +72,14 @@ public class ProjektMarktplatzMapper {
 	  }
 	  
 	  
-	  
-		/** 
-		 * Diese Methode ermoeglicht es einen Projektmarktplatz in der Datenbank anzulegen.
-		 * 
-		 * @param projektMarktplatz
-		 * @return
-		 * @throws Exception
-		 */
+	  	  
+	  	/***
+	  	 * Diese Methode ermoeglicht es einen Projektmarktplatz in der Datenbank anzulegen.
+	  	 * 
+	  	 * @param pm
+	  	 * @return
+	  	 * @throws Exception
+	  	 */
 		public Vector <ProjektMarktplatz> insert(Vector<ProjektMarktplatz> pm)
 				throws Exception {
 			// DB-Verbindung herstellen
@@ -123,14 +123,15 @@ public class ProjektMarktplatzMapper {
 		      e.printStackTrace();
 		    }
 
-		    // Um Analogie zu insert(Vector<ProjektMarktplatz> pm) zu wahren, geben wir pm zurück
+		    // Um Analogie zu insert(Vector<ProjektMarktplatz> pm) zu wahren, geben wir pm zurueck
 		    return pm;
 		  }
 		
 		
 		
 		/***
-		 * 
+		 * Löschen der Daten eines <code>ProjektMarktplatz</code>-Objekts aus der Datenbank.
+
 		 * @param pm - das aus der DB zu loeschende "Objekt"
 		 */
 		public void delete(ProjektMarktplatz pm){ 
@@ -237,4 +238,53 @@ public class ProjektMarktplatzMapper {
 
 		
 		
+		/***
+		 * Auslesen eines Projektmarktplatzes mit einer bestimmten Bezeichnung
+		 * 
+		 * @param bezeichnung
+		 * @return Projektmarktplatz-Objekt, das der uebergebenen Bezeichnung entspricht,
+		 * null bei nicht vorhandenem DB-Tupel.
+		 */
+		public <Vector>ProjektMarktplatz findByBezeichnung (String bezeichnung){
+			//DB-Verbindung herstellen
+			Connection con = DBConnection.connection();
+			ProjektMarktplatz result = new ProjektMarktplatz();
+						
+			try {
+
+				// Leeres SQL-Statement (JDBC) anlegen
+				Statement stmt = con.createStatement();
+
+				// Statement ausfuellen und als Query an die DB schicken
+				ResultSet rs = stmt.executeQuery("SELECT ID, bezeichnung FROM Projektmarktplatz" +
+				"WHERE bezeichnung=" + bezeichnung + " ORDER BY bezeichnung");
+
+					// Fuer jeden Eintrag im Suchergebnis wird nun ein ProjektMarktplatz-Objekt
+			      	// erstellt.
+					while (rs.next()) {
+						
+						// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+						// Ergebnis-Objekts
+				        ProjektMarktplatz pm = new  ProjektMarktplatz();
+				        pm.setID(rs.getInt("ID"));
+				        pm.setBezeichnung(rs.getString("bezeichnung"));
+				        
+				        // Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				        result.addElement(pm);
+					}
+				}
+				catch (SQLException e2) {
+				e2.printStackTrace();
+				}
+
+			// Ergebnisvektor zurueckgeben
+			return result;
+			}
+
+		
+		
+		public Vector <Person> getByPerson (Person p){
+			
+		}
+				
 }
