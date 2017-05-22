@@ -3,6 +3,13 @@
  */
 package de.hdm.it_projekt.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import de.hdm.it_projekt.shared.bo.Beteiligung;
+
 /**
  * Mapper-Klasse, die <code>Beteiligung</code>-Objekte auf eine relationale
  * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
@@ -53,4 +60,44 @@ public class BeteiligungMapper {
 
     return beteiligungMapper;
   }
+
+public Beteiligung insert(Beteiligung bet){
+	
+	//DB-Verbindung herstellen
+	Connection con = DBConnection.connection();
+
+	try {
+		    //Leeres SQL-Statement (JDBC) anlegen
+	    	Statement stmt = con.createStatement();
+
+	       //Momentan hoechsten Primaerschluesselwert pruefen
+	       ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
+	          + "FROM transactions ");
+
+	      // Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
+	      if (rs.next()) {
+	        
+	    	/*
+	         * bet erhaelt den bisher maximalen, nun um 1 inkrementierten
+	         * Primaerschluessel.
+	         */
+	        bet.setId(rs.getInt("maxid") + 1);
+
+	        stmt = con.createStatement();
+
+	        // Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+	        stmt.executeUpdate("INSERT INTO beteiligungs (id, personentage, enddatum, startdatum) "
+	            + "VALUES (" + Beteiligung.getId() + ","
+	            + bet.getPersonentage() + ","
+	            + bet.getEnddatum() + "," + bet.getStartdatum() + ")");
+	      }
+	    }
+	    catch (SQLException e1) {
+	      e1.printStackTrace();
+	    }
+	
+	    //Rueckgabe, der evtl. korrigierten Beteiligung.
+	    return bet;
+	  }
+
 }
