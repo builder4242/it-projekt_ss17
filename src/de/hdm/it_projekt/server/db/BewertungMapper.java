@@ -8,9 +8,7 @@ import java.sql.Statement;
 import java.util.Vector;
 import java.util.Date;
 
-import de.hdm.it_projekt.shared.bo.Beteiligung;
 import de.hdm.it_projekt.shared.bo.Bewertung;
-import de.hdm.it_projekt.shared.bo.Person;
 
 /**
  * Anlehnung an @author Thies
@@ -171,7 +169,7 @@ public class BewertungMapper {
 				 * Auslesen aller Bewertungen.
 				 * 
 				 * @return Ein Vektor mit Bewertung-Objekten, die saemtliche
-				 *         Projekte repraesentieren. Bei evtl. Exceptions wird eine
+				 *         Bewertungen repraesentieren. Bei evtl. Exceptions wird eine
 				 *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
 				 */
 			 	
@@ -193,7 +191,7 @@ public class BewertungMapper {
 			 				
 			 			 
 			 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
-			 			// Projekt-Objekt erstellt.
+			 			// Bewertung-Objekt erstellt.
 			 		 
 			 			 while (rs.next()) {
 			 				 Bewertung bt = new Bewertung();
