@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
-
 /**
  * Mapper-Klasse, die <code>Eigenschaft</code>-Objekte auf eine relationale
  * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
@@ -255,7 +254,50 @@ public class EigenschaftMapper {
 			 		    return result;
 			 		  }
 
+  				
+  			/**
+  			 * Auslesen aller Eigenschaften mit gegebenem Wert
+  			 * @param wert 
+  			 * @return Ein Vektor mit Eigenschaft-Objekten, die saemtliche Eigenschaften mit dem
+  			 * gesuchten Wert repraesentieren. Bei evtl. Exceptions wird ein
+  			 * partiell gefuellter oder ggf. auch leerer Vetor zurueckgeliefert.
+  			 */
+  				
+  			public Vector<Eigenschaft> findByWert(String wert){
+  				
+  				//DB-Verbindung herstellen
+  				Connection con = DBConnection.connection();
+  				Vector<Eigenschaft> result = new Vector<Eigenschaft>();
+  				
+  				 try {
+  				      // Leeres SQL-Statement (JDBC) anlegen
+  				      Statement stmt = con.createStatement();
+  				      
+  				      // Statement ausfüllen und als Query an die DB schicken
+  				      ResultSet rs = stmt
+  				          .executeQuery("SELECT id, name, wert FROM eigenschaften "
+  				            + "FROM eigenschaften " + "WHERE wert LIKE '" + wert
+  				        	+ "' ORDER BY wert");
 
+  				      // Fuer jeden Eintrag im Suchergebnis wird nun ein Eigenschhaft-Objekt
+  				      // erstellt.
+  				      while (rs.next()) {
+  				        Eigenschaft e = new Eigenschaft();
+  				        e.setId(rs.getInt("id"));
+  				        e.setName(rs.getString("name"));
+  				        e.setWert(rs.getFloat("wert"));
+
+  				        // Hinzufuegen des neuen Objekts zum Ergebnisvektor
+  				        result.addElement(e);
+  				      }
+  				    }
+  				    catch (SQLException e6) {
+  				      e6.printStackTrace();
+  				    }
+
+  				    // Ergebnisvektor zurueckgeben
+  				    return result;
+  			}
   				}
 
 
