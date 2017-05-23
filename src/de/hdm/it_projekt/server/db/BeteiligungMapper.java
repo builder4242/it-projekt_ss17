@@ -159,9 +159,9 @@ public Beteiligung insert(Beteiligung bet){
 		 
 		 
 	 /**
-	  * Auslesen aller Projekte
-	  * @return Ein Vektor mit Projekt-Objekten, die saemtliche
-	  *         Projekte repraesentieren. Bei evtl. Exceptions wird eine
+	  * Auslesen aller Beteiligungen
+	  * @return Ein Vektor mit Beteiligung-Objekten, die saemtliche
+	  *         Beteiligungen repraesentieren. Bei evtl. Exceptions wird eine
 	  *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert
 	  */
 		 
@@ -183,7 +183,7 @@ public Beteiligung insert(Beteiligung bet){
 	 			 
 	 			 
 	 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
-	 			 //Projekt-Objekt erstellt.
+	 			 //Beteiligung-Objekt erstellt.
 	 		 
 	 			 while (rs.next()) {
 	 				 Beteiligung bet = new Beteiligung();
