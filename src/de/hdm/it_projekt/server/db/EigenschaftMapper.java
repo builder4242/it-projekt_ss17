@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
@@ -103,7 +104,7 @@ public class EigenschaftMapper {
   					catch (SQLException e1) {
   						e1.printStackTrace();
   					}
-  					//Rueckgabe, der evtl. korrigierten Beteiligung.
+  					//Rueckgabe, der evtl. korrigierten Eigenschaft.
   					return e;
   		  }
   		
@@ -127,14 +128,14 @@ public class EigenschaftMapper {
   				//Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
   				 stmt.executeUpdate("UPDATE eigenschaften " + "SET name=\""
   				 + e.getName() + "\"," + "wert=\"" + e.getWert()
-  			     + "WHERE id=" + Beteiligung.getId());		
+  			     + "WHERE id=" + Eigenschaft.getId());		
   		     
   			}	    				 
   			 	catch (SQLException e2){
   				 e2.printStackTrace();
   			 }
   			
-  				// Um Analogie zu insert(Bewertung bet) zu wahren, geben wir e zurueck
+  				// Um Analogie zu insert(Eigenschaft e) zu wahren, geben wir e zurueck
   				return e;
   		  }
   		 
@@ -163,6 +164,53 @@ public class EigenschaftMapper {
   			 }
  
   			
- }
+  			/**
+  			 * Auslesen aller Eigenschaften
+  			 * @return Ein Vektor mit Eigenschaft-Objekten, die saemtliche
+  			 * Projekte repraesentieren. Bei evtl. Exceptions wird eine
+  			 * partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert
+  			 */
+  			 
+  			
+  				public Vector<Eigenschaft> findAll(){
+  				
+  					//DB-Verbindung herstellen
+  					Connection con = DBConnection.connection();
+  		 		 
+  					//Ergebnisvektor vorbereiten
+  					Vector<Eigenschaft> result = new Vector<Eigenschaft>();
+  		 		 
+  					try{
+  			 			
+  			 			 //Leeres SQL-Statement (JDBC) anlegen
+  			 			 Statement stmt = con.createStatement();
+  			 			 
+  			 			 ResultSet rs = stmt.executeQuery("SELECT id, name, wert "
+  			 				+ "FROM eigenschaften " + " ORDER BY id");
+  			 			 
+
+  			 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
+  			 			 //Eigenschaft-Objekt erstellt.
+  			 			 while (rs.next()) {
+  			 				 Eigenschaft e = new Eigenschaft();
+  			 				 e.setId(rs.getInt("id"));
+  			 				 e.setName(rs.getString("name"));
+  			 				 e.setWert(rs.getFloat("wert"));
+  			 				 
+  			 			//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+  			 		       result.addElement(e);
+  			 		      		}
+  			 		 		}
+  			 		    catch (SQLException e4) {
+  			 		    e4.printStackTrace();
+  			 		    		}	
+
+  			 		   	// Ergebnisvektor zurueckgeben
+  			 		   	return result;
+  			 	 		}
+  			 
+  			 			 
+  				
+  			}
 
 
