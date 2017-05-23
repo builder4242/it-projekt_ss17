@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.client.ProjektMarktplatz;
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 /**
@@ -23,11 +24,9 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
  * 
  * Anlehnung an @author Thies
  * @author Tugba Bulat
- *
  */
 public class PartnerprofilMapper {
 
-	
 	
 	/**
 	 * Die Klasse PartnerprofilMapper wird nur einmal instantiiert.
@@ -50,7 +49,6 @@ public class PartnerprofilMapper {
 	}
 	
 	
-	
 	/**
 	 * Diese statische Methode kann aufgrufen werden durch
 	 * <code>PartnerprofilMapper.partnerprofilMapper()</code>.
@@ -63,7 +61,6 @@ public class PartnerprofilMapper {
 	 * instantiiert werden, sondern stets durch Aufruf dieser statischen Methode.
 
 	 * @return DAS <code>PartnerprofilMapper</code>-Objekt
-
 	 */
 	public static PartnerprofilMapper partnerprofilMapper() {
 	    if (partnerprofilMapper == null) {
@@ -73,7 +70,6 @@ public class PartnerprofilMapper {
 	    return partnerprofilMapper;
 	  }
 
-	
 	
 	/**
 	 * Diese Methode ermoeglicht es ein Partnerprofil in der Datenbank anzulegen.
@@ -102,65 +98,59 @@ public class PartnerprofilMapper {
 		return pp;
 	}
 	
-	
-	
+
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 * 
 	 * @param pp - das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter übergebene Objekt
 	 */
-	public Partnerprofil update(Partnerprofil pp){
-	    
+	public Partnerprofil update(Partnerprofil pp) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 
-	    try {
-	      Statement stmt = con.createStatement();
+		try {
+			Statement stmt = con.createStatement();
 
-	      stmt.executeUpdate("UPDATE Projektmarktplatz " + "SET erstelldatum=\""
-	          + Partnerprofil.getErstelldatum() + "\" " + "SET aenderungsdatum=\"" + Partnerprofil.getAenderungsdatum()
-	          + "\" "+ "WHERE ID=" + Partnerprofil.getID());
-	    }
-	    catch (SQLException e) {
-	      e.printStackTrace();
-	    }
+			stmt.executeUpdate("UPDATE Partnerprofil " + "SET erstelldatum=\"" + Partnerprofil.getErstelldatum() + "\" "
+					+ "SET aenderungsdatum=\"" + Partnerprofil.getAenderungsdatum() + "\" " + "WHERE ID="
+					+ Partnerprofil.getID());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    // Um Analogie zu insert(Partnerprofil pp) zu wahren, geben wir pm zurueck
-	    return pp;
+		// Um Analogie zu insert(Partnerprofil pp) zu wahren,
+		// geben wir pp zurueck
+		return pp;
 	}
 
-	
-	
 	/**
 	 * Loeschen der Daten eines <code>Partnerprofil</code>-Objekts aus der Datenbank.
 
 	 * @param pp
 	 */
-	public void delete(Partnerprofil pp){ 
-		
+	public void delete(Partnerprofil pp) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Statement stmt = null;
-		
+
 		try {
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM Partnerprofil " + "WHERE ID=" + Partnerprofil.getID());
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
-	/***
+	/**
 	 * Auslesen aller Partnerprofile.
 	 * 
 	 * @return Ein Vektor mit Partnerprofil-Objekten, die saemtliche
 	 *         Partnerprofile repraesentieren. Bei evtl. Exceptions wird eine
 	 *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
 	 */
-	
 	public Vector<Partnerprofil> findAll() {
 
 		// DB-Verbindung herstellen
@@ -188,13 +178,77 @@ public class PartnerprofilMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pp);
 			}
-		}
-		catch (SQLException e4) {
+		} catch (SQLException e4) {
 			e4.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
 		return result;
+	}
+
+	/**
+	 * Suchen eines Partnerprofils mit vorgegebener ID. Da diese eindeutig ist,
+	 * wird genau ein Objekt zurueckgegeben.
+	 * 
+	 * @param ID - Primaerschluesselattribut in DB
+	 * @return Partnerprofil-Objekt, das dem uebergebenen Schluessel
+	 *         entspricht, null bei nicht vorhandenem DB-Tupel.
+	 */
+	public Vector<Partnerprofil> findByID(int ID) {
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, erstelldatum, aenderungsdatum FROM Partnerprofil" + "WHERE ID=" + ID + " ORDER BY ID");
+
+			/*
+			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
+			 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+
+				Partnerprofil pp = new Partnerprofil();
+				pp.setID(rs.getInt("ID"));
+				pp.setErstelldatum(rs.getDate("erstelldatum"));
+				pp.setAenderungsdatum(rs.getDate("aenderungsdatum"));
+
+				return pp;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+
+	
+	/**
+	 * Erhalten des Partnerprofil anhand einer Ausschreibung.
+	 * 
+	 * @param as
+	 * @return
+	 */
+	public Vector<Partnerprofil> getByMatch(Ausschreibung as){
+
+	}
+	
+	
+	/**
+	 * Erhalten des Partnerprofils anhand einer Person.
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public Vector<Partnerprofil> getByPerson(Person p){
+		
 	}
 
 }
