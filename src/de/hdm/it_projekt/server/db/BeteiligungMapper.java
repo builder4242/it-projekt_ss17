@@ -396,6 +396,16 @@ public Beteiligung insert(Beteiligung bet){
 
 	 	public Vector<Projekt> getByProjektmarktplatz(Projektmarktplatz pm){
 	 		
+	 	}
+
+	 	
+	 	/**
+	 	 * Das Erhalten des Projektes von einem Projektleiter, der eine Person ist
+	 	 * @param p
+	 	 * @return
+	 	 */
+	 	public Vector<Projekt> getByProjektleiter(Person p){
 	 		
 	 	}
+
 }
