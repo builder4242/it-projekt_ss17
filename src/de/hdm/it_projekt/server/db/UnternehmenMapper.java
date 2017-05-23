@@ -145,46 +145,121 @@ public class UnternehmenMapper {
 	}
 	
 	
-	public Vector<Unternehmen> findByName(String name){
+	/**
+	 * Auslesen eines Unternehmens mit einem bestimmten Namen.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Vector<Unternehmen> findByName(String name) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Unternehmen> result = new Vector<Unternehmen>();
 
 		try {
 
-		// Leeres SQL-Statement (JDBC) anlegen
-		Statement stmt = con.createStatement();
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
 
-		// Statement ausfuellen und als Query an die DB schicken
-		ResultSet rs = stmt.executeQuery("SELECT ID, name, email, strasse, plz, ort, tel, googleID FROM Unternehmen" + "WHERE name="
-		+ name + " ORDER BY name");
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, name, email, strasse, plz, ort, tel, googleID FROM Organisationseinheit"
+					+ "WHERE name=" + name + " ORDER BY name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
 			while (rs.next()) {
-	
-			// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
-			// Ergebnis-Objekts
-			Unternehmen u = new Unternehmen();
-			u.setID(rs.getInt("ID"));
-			u.setName(rs.getString("name"));
-			u.setEmail(rs.getString("email"));
-			u.setStrasse(rs.getString("strasse"));
-			u.setPlz(rs.getInt("plz"));
-			u.setOrt(rs.getString("ort"));
-			u.setTel(rs.getString("tel"));
-			u.setGoogleID(rs.getString("googleID"));
-	
-			// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-			result.addElement(u);
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				Unternehmen u = new Unternehmen();
+				u.setID(rs.getInt("ID"));
+				u.setName(rs.getString("name"));
+				u.setEmail(rs.getString("email"));
+				u.setStrasse(rs.getString("strasse"));
+				u.setPlz(rs.getInt("plz"));
+				u.setOrt(rs.getString("ort"));
+				u.setTel(rs.getString("tel"));
+				u.setGoogleID(rs.getString("googleID"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(u);
 			}
-		}
-		catch (SQLException e2) {
-		e2.printStackTrace();
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
 		return result;
 	}
+
+	/**
+	 * Auslesen eines Unternehmens mit einer bestimmten Email.
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public Vector<Unternehmen> findByMail(String email) {
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Unternehmen> result = new Vector<Unternehmen>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, name, email, strasse, plz, ort, tel, googleID FROM Organisationseinheit"
+					+ "WHERE email=" + email + " ORDER BY email");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Unternehmen-Objekt erstellt.
+			while (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				Unternehmen u = new Unternehmen();
+				u.setID(rs.getInt("ID"));
+				u.setName(rs.getString("name"));
+				u.setEmail(rs.getString("email"));
+				u.setStrasse(rs.getString("strasse"));
+				u.setPlz(rs.getInt("plz"));
+				u.setOrt(rs.getString("ort"));
+				u.setTel(rs.getString("tel"));
+				u.setGoogleID(rs.getString("googleID"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(u);
+			}
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
+	
+	/**
+	 * Erhalten des Unternehmens anhand eines Projekts.
+	 * 
+	 * @param pr
+	 * @return
+	 */
+	public Vector<Unternehmen> getByProjekt(Projekt pr){
 		
+	}
+	
+	
+	/**
+	 * Erhalten des Unternehmens anhand eines ProjektMarktplatzes.
+	 * 
+	 * @param pm
+	 * @return
+	 */
+	public Vector<Unternehmen> getByProjektMarktplatz(ProjektMarktplatz pm){
+		
+	}
+	
 }
