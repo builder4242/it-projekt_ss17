@@ -79,7 +79,7 @@ public class EigenschaftMapper {
   				
   				//Momentan hoechsten Primaerschluesselwert pruefen
   				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
-  			          + "FROM transactions ");
+  			          + "FROM eigenschaften ");
   				
   				// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
   				if (rs.next()) {
