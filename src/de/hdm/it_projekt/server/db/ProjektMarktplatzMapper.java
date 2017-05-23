@@ -103,8 +103,7 @@ public class ProjektMarktplatzMapper {
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 * 
-	 * @param pm
-	 *            - das Objekt, das in die DB geschrieben werden soll
+	 * @param pm - das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter übergebene Objekt
 	 */
 	public Vector<ProjektMarktplatz> update(Vector<ProjektMarktplatz> pm) {
@@ -258,8 +257,7 @@ public class ProjektMarktplatzMapper {
 					+ bezeichnung + " ORDER BY bezeichnung");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
-			// ProjektMarktplatz-Objekt
-			// erstellt.
+			// ProjektMarktplatz-Objekt erstellt.
 			while (rs.next()) {
 
 				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
