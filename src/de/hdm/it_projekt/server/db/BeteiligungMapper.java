@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Beteiligung;
+import de.hdm.it_projekt.shared.bo.Projekt;
 
 /**
  * Mapper-Klasse, die <code>Beteiligung</code>-Objekte auf eine relationale
@@ -385,5 +386,16 @@ public Beteiligung insert(Beteiligung bet){
 	 		return result;
 	 	}
 	 	
-	 	
+	 	/**
+	 	 * Auslesen des zugehoerigen <code>Projekt</code>-Objekts zu einem gegebenen
+	 	 * Projektmarktplatzes.
+	 	 * 
+	 	 * @param pm
+	 	 * @return
+	 	 */
+
+	 	public Vector<Projekt> getByProjektmarktplatz(Projektmarktplatz pm){
+	 		
+	 		
+	 	}
 }
