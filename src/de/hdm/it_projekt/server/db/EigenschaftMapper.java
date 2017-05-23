@@ -167,7 +167,7 @@ public class EigenschaftMapper {
   			/**
   			 * Auslesen aller Eigenschaften
   			 * @return Ein Vektor mit Eigenschaft-Objekten, die saemtliche
-  			 * Projekte repraesentieren. Bei evtl. Exceptions wird eine
+  			 * Eigenschaften repraesentieren. Bei evtl. Exceptions wird eine
   			 * partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert
   			 */
   			 
@@ -209,8 +209,53 @@ public class EigenschaftMapper {
   			 		   	return result;
   			 	 		}
   			 
-  			 			 
+  			 			
+  				/**
+  				 * Auslesen aller Eigenschaft-Objekte mit gegebenem Namen
+  				 * @param name
+  				 * @return Ein Vektor mit Eigenschaft-Objekten, die saemtliche Eigenschaften mit dem
+  				 * gesuchten Namen repraesentieren. Bei evtl. Exceptions wird ein
+  				 * partiell gefuellter oder ggf. auch leerer Vetor zurueckgeliefert.
+  				 */
   				
-  			}
+  				public Vector<Eigenschaft> findByName(String name){
+  					
+  					//DB-Verbindung herstellen
+  					Connection con = DBConnection.connection();
+  					
+  					//Ergebnisvektor vorbereiten
+  					Vector<Eigenschaft> result = new Vector<Eigenschaft>();
+  					
+  					try{
+			 			 //Leeres SQL-Statement (JDBC) anlegen
+			 			 Statement stmt = con.createStatement();
+			 			 
+			 			//Statement ausfuellen und als Query an die DB schicken
+			 			 ResultSet rs = stmt.executeQuery("SELECT id, name, wert FROM eigenschaften "
+			 					 + "WHERE name LIKE '" + name
+			 					 + "'ORDER BY name");
+			 			
+			 			// Fuer jeden Eintrag im Suchergebnis wird nun ein Eigenschaft-Objekt
+			 		    // erstellt.
+			 		      while (rs.next()) {
+			 		        Eigenschaft e = new Eigenschaft();
+			 		        e.setId(rs.getInt("id"));
+			 		        e.setName(rs.getString("name"));
+			 		        e.setWert(rs.getFloat("wert"));
+			 		        
+			 		    // Hinzufuegen des neuen Eigenschafts zum Ergebnisvektor
+			 		        result.addElement(e);
+			 		      }
+			 		    }
+			 		    catch (SQLException e5) {
+			 		      e5.printStackTrace();
+			 		    }
+
+			 		    // Ergebnisvektor zurueckgeben
+			 		    return result;
+			 		  }
+
+
+  				}
 
 
