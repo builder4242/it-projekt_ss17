@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.client.ProjektMarktplatz;
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 /**
@@ -23,11 +24,9 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
  * 
  * Anlehnung an @author Thies
  * @author Tugba Bulat
- *
  */
 public class PartnerprofilMapper {
 
-	
 	
 	/**
 	 * Die Klasse PartnerprofilMapper wird nur einmal instantiiert.
@@ -50,7 +49,6 @@ public class PartnerprofilMapper {
 	}
 	
 	
-	
 	/**
 	 * Diese statische Methode kann aufgrufen werden durch
 	 * <code>PartnerprofilMapper.partnerprofilMapper()</code>.
@@ -63,7 +61,6 @@ public class PartnerprofilMapper {
 	 * instantiiert werden, sondern stets durch Aufruf dieser statischen Methode.
 
 	 * @return DAS <code>PartnerprofilMapper</code>-Objekt
-
 	 */
 	public static PartnerprofilMapper partnerprofilMapper() {
 	    if (partnerprofilMapper == null) {
@@ -73,7 +70,6 @@ public class PartnerprofilMapper {
 	    return partnerprofilMapper;
 	  }
 
-	
 	
 	/**
 	 * Diese Methode ermoeglicht es ein Partnerprofil in der Datenbank anzulegen.
@@ -103,7 +99,6 @@ public class PartnerprofilMapper {
 	}
 	
 	
-	
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 * 
@@ -131,7 +126,6 @@ public class PartnerprofilMapper {
 	}
 
 	
-	
 	/**
 	 * Loeschen der Daten eines <code>Partnerprofil</code>-Objekts aus der Datenbank.
 
@@ -153,14 +147,13 @@ public class PartnerprofilMapper {
 	}
 
 	
-	/***
+	/**
 	 * Auslesen aller Partnerprofile.
 	 * 
 	 * @return Ein Vektor mit Partnerprofil-Objekten, die saemtliche
 	 *         Partnerprofile repraesentieren. Bei evtl. Exceptions wird eine
 	 *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
 	 */
-	
 	public Vector<Partnerprofil> findAll() {
 
 		// DB-Verbindung herstellen
@@ -198,7 +191,14 @@ public class PartnerprofilMapper {
 	}
 
 	
-	
+	/**
+	 * Suchen eines Partnerprofils mit vorgegebener ID. Da diese eindeutig ist,
+	 * wird genau ein Objekt zurueckgegeben.
+	 * 
+	 * @param ID - Primaerschluesselattribut in DB
+	 * @return Partnerprofil-Objekt, das dem uebergebenen Schluessel
+	 *         entspricht, null bei nicht vorhandenem DB-Tupel.
+	 */
 	public Vector<Partnerprofil> findByID (int ID){
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -236,5 +236,26 @@ public class PartnerprofilMapper {
 	return null;
 	}
 
+	
+	/**
+	 * Erhalten des Partnerprofil anhand einer Ausschreibung.
+	 * 
+	 * @param as
+	 * @return
+	 */
+	public Vector<Partnerprofil> getByMatch(Ausschreibung as){
+
+	}
+	
+	
+	/**
+	 * Erhalten des Partnerprofils anhand einer Person.
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public Vector<Partnerprofil> getByPerson(Person p){
+		
+	}
 	
 }
