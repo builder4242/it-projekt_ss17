@@ -209,7 +209,7 @@ public class BewerbungMapper {
 
 	    			 		   	// Ergebnisvektor zurueckgeben
 	    			 		   	return result;
-	  			 			 
+	  				}
 	    			 		   	
 	    			 		    /** Suchen einer Bewerbung mit vorgegebener ID. Da diese eindeutig ist,
 	    					 	  * wird genau ein Objekt zurueckgegeben.
@@ -259,8 +259,49 @@ public class BewerbungMapper {
 	    				 		 
 	    					 		 	return null;
 	    				 	 	}
+	    			 		   	
+	    			 		   	/**
+	    			 		   	 * Suchen einer Bewerbung anhand des Erstelldatums
+	    			 		   	 * @param erstelldatum
+	    			 		   	 * @return result
+	    			 		   	 */
 	    					 		
+	    			 		   	public Vector<Bewerbung> findByErstelldatum(date erstelldatum){
 	    			 		   	
+	    			 		   		//DB-Verbindung herstellen
+	    					 		 Connection con = DBConnection.connection();
+	    					 		 
+	    					 		//Ergebnisvektor vorbereiten
+	    					 		 Vector<Bewerbung> result = new Vector<Bewerbung>();
+	    			 		   		
+	    					 		try{
+	    					 			 //Leeres SQL-Statement (JDBC) anlegen
+	    					 			 Statement stmt = con.createStatement();
+	    					 			 
+	    					 			 //Statement ausfuellen und als Query an die DB schicken
+	    					 			 ResultSet rs = stmt.executeQuery("SELECT id, erstelldatum, bewerbungstext FROM bewerbungs "
+	    					 					 + "WHERE erstelldatum=" + erstelldatum + " ORDER BY erstelldatum");
+	    			 		   		
+	    					 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein Bewerbung-Objekt
+	    					 			 //erstellt
+	    					 			  while (rs.next()){
+	    					 				  Bewerbung bw= new Bewerbung();
+	    					 				  bw.setId(rs.getInt("id"));
+	    					 				  bw.setErstelldatum(rs.getDate("erstelldatum"));
+	    					 				  bw.setBewerbungstext(rs.getString("bewerbungstext"));
+	    					 		
+	    					 			//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+	    					 				  result.addElement(bw);
+	    					 			  }
+	    					 		  }
+	    					 		 catch (SQLException e6){
+	    					 			 e6.printStackTrace();
+	    					 		 }
+	    					 		 
+	    					 		 //Ergebnisvektor zurueckgeben
+	    					 		 return result;
+	    					 				  
+	    					 			  }
+	    			 		   	}
 	    			 		   	
-	  					}
-	  				}
+	  				
