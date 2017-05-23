@@ -341,4 +341,49 @@ public Beteiligung insert(Beteiligung bet){
 	 		return result;
 	 	}
 	 		
+	 	/**
+	 	 * Suchen einer Beteiligung anhand des Startdatums.
+	 	 * @param <date>
+	 	 * @param enddatum
+	 	 * @return result
+	 	 */
+	 		
+	 	public <date> Vector <Beteiligung> findByEnddatum (date enddatum){
+	 		
+	 		//DB-Verbindung herstellen
+	 		Connection con = DBConnection.connection();
+		
+	 		//Ergebnisvektor vorbereiten
+	 		Vector<Beteiligung> result = new Vector<Beteiligung>();
+		
+	 		try{
+	 			//Leeres SQL-Statement (JDBC) anlegen
+	 			Statement stmt = con.createStatement();
+			
+	 			//Statement ausfuellen und als Query an die Datenbank schicken
+	 			ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
+					+ "WHERE enddatum=" + enddatum + " ORDER BY enddatum"); 
+				
+			
+	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
+	 			while (rs.next()){
+				Beteiligung bet = new Beteiligung();
+				bet.setId(rs.getInt("id"));
+				bet.setPersonentage(rs.getInt("personentage"));
+				bet.setEnddatum(rs.getDate("enddatum"));
+				bet.setStartdatum(rs.getDate("startdatum"));
+				
+				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(bet);
+	 			}
+	 		}
+	 			catch (SQLException e7) {
+	 				e7.printStackTrace();
+	 			}
+		
+	 		//Ergebnisvektor zurueckgeben
+	 		return result;
+	 	}
+	 	
+	 	
 }
