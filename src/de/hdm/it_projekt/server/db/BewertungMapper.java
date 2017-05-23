@@ -9,7 +9,6 @@ import java.util.Vector;
 import java.util.Date;
 
 import de.hdm.it_projekt.shared.bo.Bewertung;
-import de.hdm.it_projekt.shared.bo.Person;
 
 /**
  * Anlehnung an @author Thies
@@ -170,7 +169,7 @@ public class BewertungMapper {
 				 * Auslesen aller Bewertungen.
 				 * 
 				 * @return Ein Vektor mit Bewertung-Objekten, die saemtliche
-				 *         Projekte repraesentieren. Bei evtl. Exceptions wird eine
+				 *         Bewertungen repraesentieren. Bei evtl. Exceptions wird eine
 				 *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
 				 */
 			 	
@@ -187,11 +186,12 @@ public class BewertungMapper {
 			 			 //Leeres SQL-Statement (JDBC) anlegen
 			 			 Statement stmt = con.createStatement();
 			 			 
-			 			 ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum "
-			 				+ "FROM  bewertungs" + " ORDER BY wert");
+			 			 ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum FROM bewertungs "
+			 				+ "ORDER BY wert");
+			 				
 			 			 
 			 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
-			 			// Projekt-Objekt erstellt.
+			 			// Bewertung-Objekt erstellt.
 			 		 
 			 			 while (rs.next()) {
 			 				 Bewertung bt = new Bewertung();
@@ -278,8 +278,10 @@ public class BewertungMapper {
 					
 			 		 //DB-Verbindung herstellen
 			 		 Connection con = DBConnection.connection();
-			 		 
-			 		 result = null;
+			 		
+			 		 //Ergebnisvektor vorbereiten
+			 		 Vector<Bewertung> result = new Vector<Bewertung>();
+			 		
 			 		 
 					try{
 			 			 //Leeres SQL-Statement (JDBC) anlegen
@@ -328,7 +330,7 @@ public class BewertungMapper {
 						Statement stmt = con.createStatement();
 						
 						//Statement ausfuellen und als Query an die DB schicken
-						ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum "
+						ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum FROM bewertungs "
 								+ "WHERE wert=" + wert + " ORDER BY wert");
 					
 						
