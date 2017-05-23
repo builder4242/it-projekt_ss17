@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import de.hdm.it_projekt.shared.bo.Beteiligung;
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
 /**
@@ -107,6 +108,39 @@ public class EigenschaftMapper {
   					return e;
   		  }
   		
-}
+  		/**
+  		 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+  		 * 
+  		 * @param e 
+  		 * 		das Objekt, das in die DB geschrieben werden soll
+  		 * @return das als Parameter uebergebene Objekt
+  		 */
+  		
+  		public Eigenschaft update(Eigenschaft e){
+  			
+  			//DB-Verbindung herstellen
+  			Connection con = DBConnection.connection();
+  			
+  			try{
+  				//Leeres SQL-Statement (JDBC) anlegen
+  				Statement stmt = con.createStatement();
+  				
+  				//Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+  				 stmt.executeUpdate("UPDATE eigenschaften " + "SET name=\""
+  				 + e.getName() + "\"," + "wert=\"" + e.getWert()
+  			     + "WHERE id=" + Beteiligung.getId());		
+  		     
+  			}	    				 
+  			 	catch (SQLException e2){
+  				 e2.printStackTrace();
+  			 }
+  			
+  				// Um Analogie zu insert(Bewertung bet) zu wahren, geben wir bt zurueck
+  				return e;
+  		  }
+  		 
+  			
+  			
+ }
 
 
