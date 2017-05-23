@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Beteiligung;
-import de.hdm.thies.bankProjekt.shared.bo.Customer;
 
 /**
  * Mapper-Klasse, die <code>Beteiligung</code>-Objekte auf eine relationale
@@ -297,5 +296,49 @@ public Beteiligung insert(Beteiligung bet){
 	 		return result;
 	 	}
 	 
-	 
+
+	 	/**
+	 	 * Suchen einer Beteiligung anhand des Startdatums.
+	 	 * @param <date>
+	 	 * @param startdatum
+	 	 * @return result
+	 	 */
+	 		
+	 	public <date> Vector <Beteiligung> findByStartdatum (date startdatum){
+	 		
+	 		//DB-Verbindung herstellen
+	 		Connection con = DBConnection.connection();
+		
+	 		//Ergebnisvektor vorbereiten
+	 		Vector<Beteiligung> result = new Vector<Beteiligung>();
+		
+	 		try{
+	 			//Leeres SQL-Statement (JDBC) anlegen
+	 			Statement stmt = con.createStatement();
+			
+	 			//Statement ausfuellen und als Query an die Datenbank schicken
+	 			ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
+					+ "WHERE startdatum=" + startdatum + " ORDER BY startdatum"); 
+				
+			
+	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
+	 			while (rs.next()){
+				Beteiligung bet = new Beteiligung();
+				bet.setId(rs.getInt("id"));
+				bet.setPersonentage(rs.getInt("personentage"));
+				bet.setEnddatum(rs.getDate("enddatum"));
+				bet.setStartdatum(rs.getDate("startdatum"));
+				
+				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(bet);
+	 			}
+	 		}
+	 			catch (SQLException e6) {
+	 				e6.printStackTrace();
+	 			}
+		
+	 		//Ergebnisvektor zurueckgeben
+	 		return result;
+	 	}
+	 		
 }
