@@ -229,4 +229,26 @@ public class PartnerprofilMapper {
 		return null;
 	}
 
+	
+	/**
+	 * Erhalten des Partnerprofil anhand einer Ausschreibung.
+	 * 
+	 * @param as
+	 * @return
+	 */
+	public Vector<Partnerprofil> getByMatch(Ausschreibung as){
+
+	}
+	
+	
+	/**
+	 * Erhalten des Partnerprofils anhand einer Person.
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public Vector<Partnerprofil> getByPerson(Person p){
+		
+	}
+
 }
