@@ -110,5 +110,36 @@ public class BewerbungMapper {
 	  					//Rueckgabe, der evtl. korrigierten Bewerbung.
 						return bw;
 	  					}
-	  					
+	  				
+	  		/**
+	  		 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+	  		 * 
+	  		 * @param bw
+	  		 * 		das Objekt, das in die DB geschrieben werden soll
+	  		 * @return das als Parameter uebergebene Objekt
+	  		 */
+	  		
+	  		public Bewerbung update(Bewerbung bw){
+	  			
+	  			//DB-Verbindung herstellen
+	  			Connection con = DBConnection.connection();
+	  			
+	  			try{
+	  				//Leeres SQL-Statement (JDBC) anlegen
+	  				Statement stmt = con.createStatement();
+	  				
+	  				//Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+	  				 stmt.executeUpdate("UPDATE bewerbungs" + "SET erstelldatum=\""
+	  				 + bw.getErstelldatum() + "\"," + "bewerbungstext=\"" + bw.getBewerbungstext()
+	  			     + "WHERE id=" + Bewerbung.getId());		
+	  				}
+	  				
+	  					catch (SQLException e2){
+	  						e2.printStackTrace();
+	  					}
+	  		
+	  					//Um Analogie zu insert(Bewerbung bw) zu wahren, geben wir bw zurueck
+	  					return bw;
+	  		}
+	  		
 	  		}
