@@ -193,8 +193,48 @@ public class PartnerprofilMapper {
 			e4.printStackTrace();
 		}
 
-		// Ergebnisvektor zurueckgeben
+		// Ergebnisvektor zurueckgeben 
 		return result;
 	}
 
+	
+	
+	public Vector<Partnerprofil> findByID (int ID){
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		
+		try {
+
+		// Leeres SQL-Statement (JDBC) anlegen
+		Statement stmt = con.createStatement();
+
+		// Statement ausfuellen und als Query an die DB schicken
+		ResultSet rs = stmt.executeQuery("SELECT ID, erstelldatum, aenderungsdatum FROM Partnerprofil" +
+		"WHERE ID=" + ID + " ORDER BY ID");
+
+			/*
+			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
+			 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+
+				Partnerprofil pp = new  Partnerprofil();
+		        pp.setID(rs.getInt("ID"));
+		        pp.setErstelldatum(rs.getDate("erstelldatum"));
+		        pp.setAenderungsdatum(rs.getDate("aenderungsdatum"));
+
+		        return pp;
+			}
+		}
+		catch (SQLException e2) {
+		e2.printStackTrace();
+		return null;
+		}
+
+	return null;
+	}
+
+	
 }
