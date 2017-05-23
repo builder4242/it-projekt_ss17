@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
 /**
  * Mapper-Klasse, die <code>Bewerbung</code>-Objekte auf eine relationale
@@ -140,6 +141,32 @@ public class BewerbungMapper {
 	  		
 	  					//Um Analogie zu insert(Bewerbung bw) zu wahren, geben wir bw zurueck
 	  					return bw;
-	  		}
+	  					}
+	  		
+	  			/**
+	  			  * Loeschen der Daten eines <code>Bewerbung</code>-Objekts aus der DB
+	  			  * @param bw
+	  			  * 		das aus der DB zu loeschende Objekt
+	  			  * @return 
+	  			  */
+	  		
+	  				public void delete(Bewerbung bw){
+  				
+	  					//DB-Verbindung herstellen
+	  					Connection con = DBConnection.connection();
+	  					
+	  					try{
+	  	  					//Leeres SQL-Statement (JDBC) anlegen
+	  	  					Statement stmt = con.createStatement();
+  				
+	  	  					stmt.executeUpdate("DELETE FROM bewerbungs" + "WHERE id=" + Bewerbung.getId());
+	  	  					}
+	  					
+	  						catch (SQLException e3){
+	  	  					 e3.printStackTrace();
+	  						}
+	  	  			 	}
+	  		 
+	  		
 	  		
 	  		}
