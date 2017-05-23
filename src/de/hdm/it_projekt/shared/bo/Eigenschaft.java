@@ -18,7 +18,7 @@ public class Eigenschaft extends BusinessObject {
 	/**
 	 * Eigenschaftswert
 	 */
-	private String wert;
+	private float wert;
 
 	/**
 	 * Default Konstruktor
@@ -47,15 +47,15 @@ public class Eigenschaft extends BusinessObject {
 	 * Setzen Rückgabe des Eigenschaftswertes
 	 * @return Wert
 	 */
-	public String getWert() {
+	public float getWert() {
 		return wert;
 	}
 
 	/**
 	 * Setzen des Eigenschaftswertes
-	 * @param wert the wert to set
+	 * @param f the wert to set
 	 */
-	public void setWert(String wert) {
-		this.wert = wert;
+	public void setWert(float f) {
+		this.wert = f;
 	}
 }

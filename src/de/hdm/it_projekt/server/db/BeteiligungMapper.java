@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Beteiligung;
-import de.hdm.thies.bankProjekt.shared.bo.Customer;
+import de.hdm.it_projekt.shared.bo.Projekt;
 
 /**
  * Mapper-Klasse, die <code>Beteiligung</code>-Objekte auf eine relationale
@@ -74,7 +74,7 @@ public Beteiligung insert(Beteiligung bet){
 
 	       //Momentan hoechsten Primaerschluesselwert pruefen
 	       ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
-	          + "FROM transactions ");
+	          + "FROM beteiligungs ");
 
 	      // Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
@@ -160,9 +160,9 @@ public Beteiligung insert(Beteiligung bet){
 		 
 		 
 	 /**
-	  * Auslesen aller Projekte
-	  * @return Ein Vektor mit Projekt-Objekten, die saemtliche
-	  *         Projekte repraesentieren. Bei evtl. Exceptions wird eine
+	  * Auslesen aller Beteiligungen
+	  * @return Ein Vektor mit Beteiligung-Objekten, die saemtliche
+	  *         Beteiligungen repraesentieren. Bei evtl. Exceptions wird eine
 	  *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert
 	  */
 		 
@@ -184,7 +184,7 @@ public Beteiligung insert(Beteiligung bet){
 	 			 
 	 			 
 	 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
-	 			 //Projekt-Objekt erstellt.
+	 			 //Beteiligung-Objekt erstellt.
 	 		 
 	 			 while (rs.next()) {
 	 				 Beteiligung bet = new Beteiligung();
@@ -254,4 +254,158 @@ public Beteiligung insert(Beteiligung bet){
 		  
 	 }
 		      
+	 	
+	 /**
+	  * Suchen einer Beteiligung anhand der Personentage.
+	  * @param personentage
+	  * @return result
+	  */
+	 	
+	 	public Vector <Beteiligung> findByPersonentage(int personentage){
+	 		//DB-Verbindung herstellen
+	 		Connection con = DBConnection.connection();
+		
+	 		//Ergebnisvektor vorbereiten
+	 		Vector<Beteiligung> result = new Vector<Beteiligung>();
+		
+	 		try{
+	 			//Leeres SQL-Statement (JDBC) anlegen
+	 			Statement stmt = con.createStatement();
+			
+	 			//Statement ausfuellen und als Query an die Datenbank schicken
+	 			ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
+					+ "WHERE personentage=" + personentage + " ORDER BY personentage"); 
+				
+			
+	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
+	 			while (rs.next()){
+				Beteiligung bet = new Beteiligung();
+				bet.setId(rs.getInt("id"));
+				bet.setPersonentage(rs.getInt("personentage"));
+				bet.setEnddatum(rs.getDate("enddatum"));
+				bet.setStartdatum(rs.getDate("startdatum"));
+				
+				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(bet);
+	 			}
+	 		}
+	 			catch (SQLException e5) {
+	 				e5.printStackTrace();
+	 			}
+		
+	 		//Ergebnisvektor zurueckgeben
+	 		return result;
+	 	}
+	 
+
+	 	/**
+	 	 * Suchen einer Beteiligung anhand des Startdatums.
+	 	 * @param <date>
+	 	 * @param startdatum
+	 	 * @return result
+	 	 */
+	 		
+	 	public <date> Vector <Beteiligung> findByStartdatum (date startdatum){
+	 		
+	 		//DB-Verbindung herstellen
+	 		Connection con = DBConnection.connection();
+		
+	 		//Ergebnisvektor vorbereiten
+	 		Vector<Beteiligung> result = new Vector<Beteiligung>();
+		
+	 		try{
+	 			//Leeres SQL-Statement (JDBC) anlegen
+	 			Statement stmt = con.createStatement();
+			
+	 			//Statement ausfuellen und als Query an die Datenbank schicken
+	 			ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
+					+ "WHERE startdatum=" + startdatum + " ORDER BY startdatum"); 
+				
+			
+	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
+	 			while (rs.next()){
+				Beteiligung bet = new Beteiligung();
+				bet.setId(rs.getInt("id"));
+				bet.setPersonentage(rs.getInt("personentage"));
+				bet.setEnddatum(rs.getDate("enddatum"));
+				bet.setStartdatum(rs.getDate("startdatum"));
+				
+				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(bet);
+	 			}
+	 		}
+	 			catch (SQLException e6) {
+	 				e6.printStackTrace();
+	 			}
+		
+	 		//Ergebnisvektor zurueckgeben
+	 		return result;
+	 	}
+	 		
+	 	/**
+	 	 * Suchen einer Beteiligung anhand des Startdatums.
+	 	 * @param <date>
+	 	 * @param enddatum
+	 	 * @return result
+	 	 */
+	 		
+	 	public <date> Vector <Beteiligung> findByEnddatum (date enddatum){
+	 		
+	 		//DB-Verbindung herstellen
+	 		Connection con = DBConnection.connection();
+		
+	 		//Ergebnisvektor vorbereiten
+	 		Vector<Beteiligung> result = new Vector<Beteiligung>();
+		
+	 		try{
+	 			//Leeres SQL-Statement (JDBC) anlegen
+	 			Statement stmt = con.createStatement();
+			
+	 			//Statement ausfuellen und als Query an die Datenbank schicken
+	 			ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
+					+ "WHERE enddatum=" + enddatum + " ORDER BY enddatum"); 
+				
+			
+	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
+	 			while (rs.next()){
+				Beteiligung bet = new Beteiligung();
+				bet.setId(rs.getInt("id"));
+				bet.setPersonentage(rs.getInt("personentage"));
+				bet.setEnddatum(rs.getDate("enddatum"));
+				bet.setStartdatum(rs.getDate("startdatum"));
+				
+				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(bet);
+	 			}
+	 		}
+	 			catch (SQLException e7) {
+	 				e7.printStackTrace();
+	 			}
+		
+	 		//Ergebnisvektor zurueckgeben
+	 		return result;
+	 	}
+	 	
+	 	/**
+	 	 * Auslesen des zugehoerigen <code>Projekt</code>-Objekts zu einem gegebenen
+	 	 * Projektmarktplatzes.
+	 	 * 
+	 	 * @param pm
+	 	 * @return
+	 	 */
+
+	 	public Vector<Projekt> getByProjektmarktplatz(Projektmarktplatz pm){
+	 		
+	 	}
+
+	 	
+	 	/**
+	 	 * Das Erhalten des Projektes von einem Projektleiter, der eine Person ist
+	 	 * @param p
+	 	 * @return
+	 	 */
+	 	public Vector<Projekt> getByProjektleiter(Person p){
+	 		
+	 	}
+
 }
