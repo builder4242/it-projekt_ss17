@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import de.hdm.it_projekt.shared.bo.Beteiligung;
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
 /**
@@ -135,11 +134,34 @@ public class EigenschaftMapper {
   				 e2.printStackTrace();
   			 }
   			
-  				// Um Analogie zu insert(Bewertung bet) zu wahren, geben wir bt zurueck
+  				// Um Analogie zu insert(Bewertung bet) zu wahren, geben wir e zurueck
   				return e;
   		  }
   		 
   			
+  		/**
+  		  * Loeschen der Daten eines <code>Eigenschaft</code>-Objekts aus der DB
+  		  * @param e
+  		  * 		das aus der DB zu loeschende Objekt
+  		 * @return 
+  		  */
+  		 
+  			public void delete(Eigenschaft e){
+  				
+  				//DB-Verbindung herstellen
+  				Connection con = DBConnection.connection();
+  				
+  				try{
+  					//Leeres SQL-Statement (JDBC) anlegen
+  					Statement stmt = con.createStatement();
+  					
+  					stmt.executeUpdate("DELETE FROM eigenschaften" + "WHERE id=" + Eigenschaft.getId());
+  				}
+  				 catch (SQLException e3){
+  					 e3.printStackTrace();
+  				 }
+  			 }
+ 
   			
  }
 
