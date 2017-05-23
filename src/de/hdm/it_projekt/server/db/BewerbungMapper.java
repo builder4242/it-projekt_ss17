@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 
+
 /**
  * Mapper-Klasse, die <code>Bewerbung</code>-Objekte auf eine relationale
  * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
@@ -302,6 +303,50 @@ public class BewerbungMapper {
 	    					 		 return result;
 	    					 				  
 	    					 			  }
-	    			 		   	}
+	    			 		   	/**
+	    			 		   	 * Suchen einer Bewerbung anhand des Bewerbungstextes
+	    			 		   	 * @param bewerbungstext
+	    			 		   	 * @return
+	    			 		   	 */
 	    			 		   	
-	  				
+	    			 		   	public Vector<Bewerbung> findByBewerbungstext(String bewerbungstext){
+	    			 		   		
+	    			 		   		//DB-Verbindung herstellen
+	    			 		   		Connection con = DBConnection.connection();
+	    			 		   		
+	    			 		   		//Ergebnisvektor vorbereiten
+	    					 		 Vector<Bewerbung> result = new Vector<Bewerbung>();
+	    					 		
+	    					 		 
+	    							try{
+	    					 			 //Leeres SQL-Statement (JDBC) anlegen
+	    					 			 Statement stmt = con.createStatement();
+	    					 			 
+	    					 			 
+	    					 			//Statement ausfuellen und als Query an die DB schicken
+	    					 			 ResultSet rs = stmt.executeQuery("SELECT id, erstelldatum, bewerbungstext FROM bewerbungs "
+	    					 					 + "WHERE bewerbungstext=" + bewerbungstext + " ORDER BY bewerbungstext");
+	    					 			 
+	    					 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein Bewerbung-Objekt
+	    					 			 //erstellt
+	    					 			  while (rs.next()){
+	    					 				  Bewerbung bw= new Bewerbung();
+	    					 				  bw.setId(rs.getInt("id"));
+	    					 				  bw.setErstelldatum(rs.getDate("erstelldatum"));
+	    					 				  bw.setBewerbungstext(rs.getString("bewerbungstext"));
+	    					 				  
+	    					 				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+	    					 				  result.addElement(bw);
+	    					 			  }
+	    					 		   }
+	    					 		 catch (SQLException e6){
+	    					 			 e6.printStackTrace();
+	    					 		 }
+	    					 		 
+	    					 		 //Ergebnisvektor zurueckgeben
+	    					 		 return result;
+	    					 				  
+	    					 			  }
+	    					 			
+	    						
+}
