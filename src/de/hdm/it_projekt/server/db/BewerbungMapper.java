@@ -7,9 +7,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Bewerbung;
-import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
 /**
  * Mapper-Klasse, die <code>Bewerbung</code>-Objekte auf eine relationale
@@ -167,6 +167,48 @@ public class BewerbungMapper {
 	  						}
 	  	  			 	}
 	  		 
-	  		
-	  		
-	  		}
+	  				
+	  				/**
+	  				 * Auslesen aller Bewerbungen
+	  				 * @return Ein Vektor mit Bewerbung-Objekten, die saemtliche
+	  				 * Bewerber repraesentieren. Bei evtl. Exceptions wird eine
+	  				 * partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert
+	  				 * @return
+	  				 */
+	  				
+	  				public Vector<Bewerbung> findAll(){
+	  					
+	  					//DB-Verbindung herstellen
+	  					Connection con = DBConnection.connection();
+	  					
+	  					//Ergebnisvektor vorbereiten
+	  					Vector<Bewerbung> result = new Vector<Bewerbung>();
+	  					
+	  					try{
+	  						//Leeres SQL-Statement (JDBC) anlegen
+	  						Statement stmt = con.createStatement();
+	  			 			 
+	  			 			 ResultSet rs = stmt.executeQuery("SELECT id, erstelldatum, bewerbungstext "
+	  			 				+ "FROM bewerbungs " + " ORDER BY id");
+	  			 			 
+	  			 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
+	  			 			 //Bewerbung-Objekt erstellt.
+	  			 			 while (rs.next()) {
+	  			 				 Bewerbung bw = new Bewerbung();
+	  			 				 bw.setId(rs.getInt("id"));
+	  			 				 bw.setErstelldatum(rs.getDate("erstelldatum"));
+	  			 				 bw.setBewerbungstext(rs.getString("bewerbungstext"));
+	  			 			 
+	  			 			//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+	    			 		     result.addElement(bw);
+	    			 		      		}
+	    			 		 		}
+	    			 		    catch (SQLException e4) {
+	    			 		    e4.printStackTrace();
+	    			 		    		}	
+
+	    			 		   	// Ergebnisvektor zurueckgeben
+	    			 		   	return result;
+	  			 			 
+	  					}
+	  				}
