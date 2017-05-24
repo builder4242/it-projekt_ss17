@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
 /**
  * Mapper-Klasse, die <code>Ausschreibung</code>-Objekte auf eine relationale
@@ -108,8 +109,45 @@ public class AusschreibungMapper {
 	  						catch (SQLException e1){
 	  						   e1.printStackTrace();
 	  						}
-						//Rueckgabe, der evtl. korrigierten Eigenschaft.
+						//Rueckgabe, der evtl. korrigierten Ausschreibung.
 						return as;
+						
+						/**
+				  		 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+				  		 * 
+				  		 * @param as
+				  		 * 		das Objekt, das in die DB geschrieben werden soll
+				  		 * @return das als Parameter uebergebene Objekt
+				  		 */
+					
+						public Ausschreibung update(Ausschreibung as){
+							
+							//DB-Verbindung herstellen
+							Connection con = DBConnection.connection();
+				  			
+				  			try{
+				  				//Leeres SQL-Statement (JDBC) anlegen
+				  				Statement stmt = con.createStatement();
+				  				
+				  				//Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+				  				 stmt.executeUpdate("UPDATE ausschreibungen " + "SET bezeichnung=\""
+				  				 + as.getBezeichnung() + "\"," + "ausschreibungstext=\"" + as.getAusschreibungstext()
+				  				 + "bewerbungsfrist=\"" + as.getBewerbungsfrist()
+				  			     + "WHERE id=" + Ausschreibung.getId());		
+				  				 
+				  			  }	
+			  			 	
+				  			catch (SQLException e2){
+			  				 e2.printStackTrace();
+			  			 }
+				  		
+				  			// Um Analogie zu insert(Ausschreibung as) zu wahren, geben wir as zurueck
+			  				return as;
+			  		  }
+				  				
+							
+							
+							
 	  }
 	
 	
