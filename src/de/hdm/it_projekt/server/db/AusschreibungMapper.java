@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
-import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
 /**
  * Mapper-Klasse, die <code>Ausschreibung</code>-Objekte auf eine relationale
@@ -145,9 +144,33 @@ public class AusschreibungMapper {
 			  				return as;
 			  		  }
 				  				
+						/**
+				  		  * Loeschen der Daten eines <code>Ausschreibung</code>-Objekts aus der DB
+				  		  * @param as
+				  		  * 		das aus der DB zu loeschende Objekt
+				  		  * @return 
+				  		  */
+						
+						public void delete(Ausschreibung as){
 							
+							//DB-Verbindung herstellen
+			  				Connection con = DBConnection.connection();
 							
-							
+			  				try{
+			  					//Leeres SQL-Statement (JDBC) anlegen
+			  					Statement stmt = con.createStatement();
+			  					
+			  					stmt.executeUpdate("DELETE FROM ausschreibungen" + "WHERE id=" + Ausschreibung.getId());
+			  				}
+			  				 catch (SQLException e3){
+			  					 e3.printStackTrace();
+			  				 }
+			  			 }
+			 
+			  					
+			  					
+			  					
+			  					
 	  }
 	
 	
