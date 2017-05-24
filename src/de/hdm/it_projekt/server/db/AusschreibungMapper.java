@@ -1,6 +1,13 @@
 
 package de.hdm.it_projekt.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
+
 /**
  * Mapper-Klasse, die <code>Ausschreibung</code>-Objekte auf eine relationale
  * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
@@ -54,9 +61,56 @@ public class AusschreibungMapper {
 
 	    return ausschreibungMapper;
 	  }
+	  
+	  /**
+	   * Einfuegen eines <code>Ausschreibung</code>-Objekts in die Datenbank. Dabei
+	   * wird auch der Primaerschluessel des uebergebenen Objekts geprueft und ggf.
+	   * berichtigt.
+	   * 
+	   * @param as das zu speichernde Objekt
+	   * @return das bereits uebergeben Objekt, jedoch mit ggf. korrigierter
+	   * 		<code>id</id>
+	   */
 	
-	
-	
+	  	public Ausschreibung insert(Ausschreibung as){
+	  		
+	  		//DB-Verbindung herstellen
+	  		Connection con = DBConnection.connection();
+	  		
+	  		try{
+	  			//Leeres SQL-Statement (JDBC) anlegen
+	  			Statement stmt = con.createStatement();
+	  			
+	  			//Momentan hoechsten Primaerschluesselwert pruefen
+  				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
+  			          + "FROM ausschreibungen ");
+	  		
+  				// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
+  				if (rs.next()) {
+  					
+  					  /*
+    		    	   * as erhaelt den bisher maximalen, nun um 1 inkrementierten
+    		    	   * Primaerschluessel.
+    		    	   */
+    		    	  
+    		    	  	as.setId(rs.getInt("maxid") + 1);
+    		    	  	
+    		    	  	stmt = con.createStatement();
+    		    	  	
+    		    	 // Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+      			        stmt.executeUpdate("INSERT INTO ausschreibungen (id, bezeichnung, ausschreibungstext, bewerbungsfrist) "
+      			            + "VALUES (" + Ausschreibung.getId() + ","
+      			            + as.getBezeichnung() + ","
+      			            + as.getAusschreibungstext() + ","
+      			            + as.getBewerbungsfrist() + ")");
+  						}	  	
+  				}
+	  						catch (SQLException e1){
+	  						   e1.printStackTrace();
+	  						}
+						//Rueckgabe, der evtl. korrigierten Eigenschaft.
+						return as;
+	  }
 	
 	
 }
