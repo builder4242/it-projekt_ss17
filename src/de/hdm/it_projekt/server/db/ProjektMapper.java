@@ -339,4 +339,27 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 
 		 	 }
 		 	     	 
+		 	 
+		  	
+			 	/**
+			 	 * Auslesen des zugehoerigen <code>Projekt</code>-Objekts zu einem gegebenen
+			 	 * Projektmarktplatzes.
+			 	 * 
+			 	 * @param pm
+			 	 * @return
+			 	 */
+
+			 	public Vector<Projekt> getByProjektmarktplatz(Projektmarktplatz pm){
+			 		
+			 	}
+			 	
+			 	/**
+			 	 * Das Erhalten des Projektes von einem Projektleiter, der eine Person ist
+			 	 * @param p
+			 	 * @return
+			 	 */
+			 	public Vector<Projekt> getByProjektleiter(Person p){
+			 		
+			 	}	 	 
  }
+	
