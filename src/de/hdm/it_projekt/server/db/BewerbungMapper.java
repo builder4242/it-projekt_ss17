@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.shared.bo.Person;
 
 
 /**
@@ -348,5 +349,13 @@ public class BewerbungMapper {
 	    					 				  
 	    					 			  }
 	    					 			
+	    			 		  
+	    			 		   	/**
+	    			 		   	 * Auslesen der Bewerbung von einer Person
+	    			 		   	 * @param p
+	    			 		   	 * @return
+	    			 		   	 */
+	    			 		   	public Vector<Person> getByPerson(Person p){
+	    			 		  }
 	    						
 }
