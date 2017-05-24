@@ -305,7 +305,51 @@ public class AusschreibungMapper {
     					 		return result;
 					 				  
 					 			  }
-			  					
+		
+	    			 		
+	    			 		/**
+	    			 		 * Suchen einer Ausschreibung durch eine Bewerbungsfrist
+	    			 		 * @param bewerbungsfrist
+	    			 		 * @return
+	    			 		 */
+	    			 		
+	    			 			public Vector <Ausschreibung>findByBewerbungsfrist(date bewerbungsfrist){
+	    			 		
+	    			 				//DB-Verbindung herstellen
+	    			 		   		Connection con = DBConnection.connection();
+	    			 		   		
+	    			 		   		//Ergebnisvektor vorbereiten
+	    					 		 Vector<Ausschreibung> result = new Vector<Ausschreibung>();
+				  					
+	    					 		try{
+	   					 			 //Leeres SQL-Statement (JDBC) anlegen
+	   					 			 Statement stmt = con.createStatement();
+	   					 			 
+	   					 			 //Statement ausfuellen und als Query an die DB schicken
+						 			 ResultSet rs = stmt.executeQuery("SELECT id, bezeichnung, ausschreibungstext, bewerbungsfrist FROM ausschreibungen "
+						 					 + "WHERE bewerbungsfrist=" + bewerbungsfrist + " ORDER BY bewerbungsfrist");
+						 			 
+						 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein Ausschreibung-Objekt
+						 			 //erstellt
+						 			  while (rs.next()){
+						 				  Ausschreibung as = new Ausschreibung();
+						 				  as.setId(rs.getInt("id"));
+						 				  as.setBezeichnung(rs.getString("bezeichnung"));
+						 				  as.setAusschreibungstext(rs.getString("ausschreibungstext"));
+						 				  as.setBewerbungsfrist(rs.getDate("bewerbungsfrist"));
+						 				  
+						 				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+						 				  result.addElement(as);
+						 			  }
+						 		   }
+	    					 			catch (SQLException e7){
+	    					 				e7.printStackTrace();
+						 		 }
+						 		 
+	    					 		//Ergebnisvektor zurueckgeben
+	    					 		return result;
+						 				  
+						 			  }
 	  }
 	
 	
