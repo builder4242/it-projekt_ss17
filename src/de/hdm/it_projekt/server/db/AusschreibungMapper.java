@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 
@@ -167,7 +168,54 @@ public class AusschreibungMapper {
 			  				 }
 			  			 }
 			 
-			  					
+						/**
+			  			 * Auslesen aller Ausschreibungen
+			  			 * @return Ein Vektor mit Ausschreibung-Objekten, die saemtliche
+			  			 * Ausschreibungen repraesentieren. Bei evtl. Exceptions wird eine
+			  			 * partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert
+			  			 */
+						
+						public Vector<Ausschreibung> findAll(){
+							
+							//DB-Verbindung herstellen
+		  					Connection con = DBConnection.connection();
+		  		 		 
+		  					//Ergebnisvektor vorbereiten
+		  					Vector<Ausschreibung> result = new Vector<Ausschreibung>();
+							
+		  					try{
+		  			 			
+		  			 			 //Leeres SQL-Statement (JDBC) anlegen
+		  			 			 Statement stmt = con.createStatement();
+		  			 			 
+		  			 			 ResultSet rs = stmt.executeQuery("SELECT id, bezeichnung, ausschreibungstext, bewerbungsfrist "
+		  			 				+ "FROM ausschreibungen " + " ORDER BY id");
+		  			 			 
+		  			 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
+		  			 			 //Ausschreibung-Objekt erstellt.
+		  			 			 while (rs.next()) {
+		  			 				 Ausschreibung as = new Ausschreibung();
+		  			 				 as.setId(rs.getInt("id"));
+		  			 				 as.setBezeichnung(rs.getString("bezeichnung"));
+		  			 				 as.setAusschreibungstext(rs.getString("ausschreibungstext"));
+		  			 				 as.setBewerbungsfrist(rs.getDate("bewerbungsfrist"));
+		  			 			 
+		  			 			//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+		    			 		       result.addElement(as);
+		    			 		      		}
+		    			 		 		}
+		    			 		    catch (SQLException e4) {
+		    			 		    e4.printStackTrace();
+		    			 		    		}	
+
+		    			 		   	// Ergebnisvektor zurueckgeben
+		    			 		   	return result;
+		    			 	 		}
+		    			 
+		    			 			
+		  			 			 
+		  			 			 
+						
 			  					
 			  					
 			  					
