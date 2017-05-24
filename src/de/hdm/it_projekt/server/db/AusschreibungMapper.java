@@ -406,6 +406,13 @@ public class AusschreibungMapper {
 	    			 		
 	    			 	}	 	 
 	    			 	
+	    			 	/**
+	    			 	 * Erhalten einer Ausschreibung anhand eines Projektes 
+	    			 	 * @param pr
+	    			 	 * @return
+	    			 	 */
+	    			 	
+	    			 	public Vector<Ausschreibung> getByProjekt(Projekt pr){
 	
 	    			 	}
 	
