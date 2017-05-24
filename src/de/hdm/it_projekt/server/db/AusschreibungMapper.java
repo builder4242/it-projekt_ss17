@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.shared.bo.Projekt;
 
 /**
  * Mapper-Klasse, die <code>Ausschreibung</code>-Objekte auf eine relationale
@@ -396,7 +397,14 @@ public class AusschreibungMapper {
 				 				  
 				 			  }
 	    			 	
-	    			 	
+	    			 	/**
+	    			 	 * Das Erhalten einer Ausschreibung von einer Person
+	    			 	 * @param p
+	    			 	 * @return
+	    			 	 */
+	    			 	public Vector<Ausschreibung> getByPerson(Person p){
+	    			 		
+	    			 	}	 	 
 	    			 	
 	
 	    			 	}
