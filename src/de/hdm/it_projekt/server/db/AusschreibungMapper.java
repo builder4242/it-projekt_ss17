@@ -213,9 +213,56 @@ public class AusschreibungMapper {
 		    			 	 		}
 		    			 
 		    			 			
+					    /** Suchen einer Ausschreibung mit vorgegebener ID. Da diese eindeutig ist,
+					 	  * wird genau ein Objekt zurueckgegeben.
+					 	  * 
+					 	  * @param id
+					 	  * 	Primaerschluesselattribut in DB
+					 	  * @return Ausschreibung-Objekt, das dem uebergebenen Schluessel entspricht,
+					 	  * null bei nicht vorhandenem DB-Tupel.
+					 	  */
+		  			 			 public Vector<Ausschreibung> findById(int id){
 		  			 			 
-		  			 			 
+		  			 				 //DB-Verbindung herstellen
+		  			 				 Connection con = DBConnection.connection();
+		  			 				 
+		  			 				try{
+	    					 		  //Leeres SQL-Statement (JDBC) anlegen
+		    					 		Statement stmt = con.createStatement();
+		    					 		
+		    					 	  //Statement ausfuellen und als Query an die DB schicken
+		    					 		ResultSet rs= stmt.executeQuery("SELECT id, bezeichnung, ausschreibunstext, bewerbungsfrist FROM ausschreibungen "
+		    						 				 + "WHERE id=" + id + "ORDER BY id");
 						
+		    					 		/*
+	    						 		  * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
+	    						 		  * zurueckgegeben werden.
+	    						 		  * Pruefung, ob ein Ergebnis vorliegt.
+	    						 		  */
+	    					 		  		if (rs.next()){
+	    						
+	    					 		  		//Umwandlung des Ergebnis-Tupel in ein Objekt und
+	    						 			//Ausgabe des Ergebnis-Objekts.
+	    						 				 
+	    						 				 Ausschreibung as = new Ausschreibung();
+	    						 				 as.setId(rs.getInt("id"));
+	    						 				 as.setBezeichnung(rs.getString("bezeichnung"));
+	    						 				 as.setAusschreibungstext(rs.getString("ausschreibungstext"));
+	    						 				 as.setBewerbungsfrist(rs.getDate("bewerbungsfrist"));
+	    						 				 
+	    						 				return as;
+	    						 			 }
+	    						 		 } 
+	    					 		 			catch (SQLException e5){
+	    					 		 			   e5.printStackTrace();
+	    					 		 			   return null;
+	    					 		 		}
+	    				 		 
+	    					 		 	return null;
+	    				 	 	}
+	    			 		   	
+	    			 		  
+	    			 		
 			  					
 			  					
 			  					
