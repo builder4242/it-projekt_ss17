@@ -416,5 +416,11 @@ public class AusschreibungMapper {
 	
 	    			 	}
 	
-	
+	    			 	/**
+	    			 	 * Erhalten einer Ausschreibung durch ein Partnerprofil
+	    			 	 * @param pp
+	    			 	 * @return
+	    			 	 */
+	    			 	public Vector<Ausschreibung> getByPartnerprofil(Partnerprofil pp){
+}
 }
