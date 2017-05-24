@@ -357,5 +357,15 @@ public class BewerbungMapper {
 	    			 		   	 */
 	    			 		   	public Vector<Person> getByPerson(Person p){
 	    			 		  }
+	    			 		   	
+	    			 		   	/**
+	    			 		   	 * Auslesen der Bewerbung anhand der Ausschreibung
+	    			 		   	 * @param as
+	    			 		   	 * @return
+	    			 		   	 */
+	    			 		   	public Vector<Bewerbung> getByAusschreibung (Ausschreibung as){
+	    			 		   		
+	    			 		   	}
+	    			 		   	
 	    						
 }
