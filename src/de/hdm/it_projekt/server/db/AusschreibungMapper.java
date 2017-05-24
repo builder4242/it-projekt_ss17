@@ -350,7 +350,56 @@ public class AusschreibungMapper {
 	    					 		return result;
 						 				  
 						 			  }
-	  }
+	    			 			
+	    			 	
+	    			 	/**
+	    			 	 * Auslesen einer Ausschreibung durch den Ausschreibungstext		
+	    			 	 * @param ausschreibungstext
+	    			 	 * @return
+	    			 	 */
+	    			 	
+	    			 	public Vector<Ausschreibung> findByAusschreibungstext(String ausschreibungstext){
+	  
+	    			 		//DB-Verbindung herstellen
+			 		   		Connection con = DBConnection.connection();
+			 		   		
+			 		   		//Ergebnisvektor vorbereiten
+					 		 Vector<Ausschreibung> result = new Vector<Ausschreibung>();
+		  					
+					 		try{
+					 			 //Leeres SQL-Statement (JDBC) anlegen
+					 			 Statement stmt = con.createStatement();
+					 			 
+					 			 //Statement ausfuellen und als Query an die DB schicken
+				 			 ResultSet rs = stmt.executeQuery("SELECT id, bezeichnung, ausschreibungstext, bewerbungsfrist FROM ausschreibungen "
+				 					 + "WHERE ausschreibungstext=" + ausschreibungstext + " ORDER BY ausschreibungstext");
+				 			 
+				 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein Ausschreibung-Objekt
+				 			 //erstellt
+				 			  while (rs.next()){
+				 				  Ausschreibung as = new Ausschreibung();
+				 				  as.setId(rs.getInt("id"));
+				 				  as.setBezeichnung(rs.getString("bezeichnung"));
+				 				  as.setAusschreibungstext(rs.getString("ausschreibungstext"));
+				 				  as.setBewerbungsfrist(rs.getDate("bewerbungsfrist"));
+				 				  
+				 				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				 				  result.addElement(as);
+				 			  }
+				 		   }
+					 			catch (SQLException e8){
+					 				e8.printStackTrace();
+				 		 }
+				 		 
+					 		//Ergebnisvektor zurueckgeben
+					 		return result;
+				 				  
+				 			  }
+	    			 	
+	    			 	
+	    			 	
+	
+	    			 	}
 	
 	
 }
