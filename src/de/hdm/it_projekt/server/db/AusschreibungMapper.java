@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
 /**
@@ -113,6 +114,7 @@ public class AusschreibungMapper {
 	  						}
 						//Rueckgabe, der evtl. korrigierten Ausschreibung.
 						return as;
+	  	}
 						
 						/**
 				  		 * Wiederholtes Schreiben eines Objekts in die Datenbank.
