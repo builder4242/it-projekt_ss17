@@ -138,12 +138,58 @@ public class UnternehmenMapper {
 		try {
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM Unternehmen " + "WHERE ID=" + Organisationseinheit.getID());
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
 	
+	/**
+	 * Auslesen aller Unternehmen.
+	 * 
+	 * @return
+	 */
+	public Vector<Unternehmen> findAll() {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		// Ergebnisvektor vorbereiten
+		Vector<Unternehmen> result = new Vector<Unternehmen>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT ID, name, email, strasse, plz, ort, tel, googleID "
+			+ "FROM Organisationseinheit" + " ORDER BY ID");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Partnerprofil-Objekt erstellt.
+
+			while (rs.next()) {
+				Unternehmen u = new Unternehmen();
+				u.setID(rs.getInt("ID"));
+				u.setName(rs.getString("name"));
+				u.setEmail(rs.getString("email"));
+				u.setStrasse(rs.getString("strasse"));
+				u.setPlz(rs.getInt("plz"));
+				u.setOrt(rs.getString("ort"));
+				u.setTel(rs.getString("tel"));
+				u.setGoogleID(rs.getString("googleID"));
+				
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(u);
+			}
+		} catch (SQLException e4) {
+			e4.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
 	
 	/**
 	 * Auslesen eines Unternehmens mit einem bestimmten Namen.
