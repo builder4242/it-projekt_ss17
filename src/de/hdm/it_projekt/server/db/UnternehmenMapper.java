@@ -166,7 +166,7 @@ public class UnternehmenMapper {
 			+ "FROM Organisationseinheit" + " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
-			// Partnerprofil-Objekt erstellt.
+			// Unternehmen-Objekt erstellt.
 
 			while (rs.next()) {
 				Unternehmen u = new Unternehmen();
