@@ -78,7 +78,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Auslesen der PLZ der Organisationseinheit
 	 * @return
 	 */
-	public String getPLZ() {
+	public String getPlz() {
 		// TODO Auto-generated method stub
 		return null;
 	}

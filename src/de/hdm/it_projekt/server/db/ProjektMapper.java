@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
+import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 /**
  * Mapper-Klasse, die <code>Projekt</code>-Objekte auf eine relationale
@@ -347,7 +348,7 @@ public class ProjektMapper {
 	 * @return
 	 */
 
-	public Vector<Projekt> getByProjektmarktplatz(Projektmarktplatz pm) {
+	public Vector<Projekt> getByProjektmarktplatz(ProjektMarktplatz pm) {
 		return null;
 	}
 
