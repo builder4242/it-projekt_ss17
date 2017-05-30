@@ -93,15 +93,5 @@ public class Partnerprofil extends BusinessObject {
 	public boolean deleteEigenschaft(Eigenschaft e) {
 		return this.eigenschaften.remove(e);
 	}
-
-	public static String getID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setID(int ID) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

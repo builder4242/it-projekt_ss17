@@ -27,7 +27,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	/**
 	 * ID der Organisationseinheit
 	 */
-	private int ID;
+	private int id;
 	
 	/**
 	 * Strasse der Organisationseinheit
@@ -57,20 +57,12 @@ public abstract class Organisationseinheit extends BusinessObject {
 
 	/**
 	 * Setzen der ID der Organisationseinheit
-	 * @param ID
+	 * @param id
 	 */
-	public void setID(int ID) {
-		ID = ID;
+	public void setId(int id) {
+		id = id;
 	}
 
-	/**
-	 * Auslesen der ID der Organisationseinheit
-	 * @return
-	 */
-	public static String getID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	/**
 	 * Setzen der Strasse der Organisationseinheit
@@ -80,14 +72,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 		this.strasse = strasse;
 	}
 
-	/**
-	 * Auslesen der Strasse der Organisationseinheit
-	 * @return
-	 */
-	public static String getStrasse() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	/**
 	 * Setzen der PLZ der Organisationseinheit
@@ -98,15 +82,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	}
 
 	/**
-	 * Auslesen der PLZ der Organisationseinheit
-	 * @return
-	 */
-	public static String getPLZ() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
 	 * Setzen des Orts der Organisationseinheit
 	 * @param ort
 	 */
@@ -114,14 +89,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 		this.ort = ort;
 	}
 
-	/**
-	 * Auslesen des Orts der Organisationseinheit
-	 * @return
-	 */
-	public static String getOrt() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * Setzen der Telefonnummer der Organisationseinheit
@@ -132,15 +99,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	}
 
 	/**
-	 * Auslesen der Telefonnummer der Organisationseinheit
-	 * @return
-	 */
-	public static String getTel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
 	 * Setzen der GoogleID der Organisationseinheit
 	 * @param googleID
 	 */
@@ -148,14 +106,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 		this.googleID = googleID;
 	}
 
-	/**
-	 * Auslesen der GoogleID der Organisationseinheit
-	 * @return
-	 */
-	public static String getGoogleID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * R�ckgabe des Namens der Organisationseinheit
