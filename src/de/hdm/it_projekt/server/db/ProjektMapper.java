@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
 /**
@@ -347,7 +348,7 @@ public class ProjektMapper {
 	 */
 
 	public Vector<Projekt> getByProjektmarktplatz(Projektmarktplatz pm) {
-
+		return null;
 	}
 
 	/**
@@ -357,6 +358,7 @@ public class ProjektMapper {
 	 * @return
 	 */
 	public Vector<Projekt> getByProjektleiter(Person p) {
+		return null;
 
 	}
 }
