@@ -24,7 +24,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 */
 	private Partnerprofil partnerprofil = null;
 
-	/**
+  /**
 	 * Strasse der Organisationseinheit
 	 */
 	private String strasse;
@@ -57,7 +57,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 		this.strasse = strasse;
 	}
 
-	/**
+/**
 	 * Auslesen der Strasse der Organisationseinheit
 	 * @return
 	 */
@@ -65,7 +65,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
 	 * Setzen der PLZ der Organisationseinheit
 	 * @param plz
@@ -91,7 +91,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 		this.ort = ort;
 	}
 
-	/**
+/**
 	 * Auslesen des Orts der Organisationseinheit
 	 * @return
 	 */
