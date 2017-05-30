@@ -128,9 +128,9 @@ public class UnternehmenMapper {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("UPDATE Organisationseinheit " + "SET name=\"" + u.getName() + "\" " + "SET email=\""
-					+ u.getEmail() + "\" " + "SET strasse=\"" + u.getStrasse() + "\" " + "SET plz=\"" + u.getPLZ()
+					+ u.getEmail() + "\" " + "SET strasse=\"" + u.getStrasse() + "\" " + "SET plz=\"" + u.getPlz()
 					+ "\" " + "SET ort=\"" + u.getOrt() + "\" " + "SET tel=\"" + u.getTel() + "\" " + "SET googleID=\""
-					+ u.getGoogleID() + "\" " + "WHERE ID=" + u.getID());
+					+ u.getGoogleID() + "\" " + "WHERE ID=" + u.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

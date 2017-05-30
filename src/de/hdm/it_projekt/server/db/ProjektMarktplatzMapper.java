@@ -106,7 +106,7 @@ public class ProjektMarktplatzMapper {
 	 * @param pm - das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter übergebene Objekt
 	 */
-	public Vector<ProjektMarktplatz> update(Vector<ProjektMarktplatz> pm) {
+	public ProjektMarktplatz update(ProjektMarktplatz pm) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -114,8 +114,8 @@ public class ProjektMarktplatzMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE Projektmarktplatz " + "SET bezeichnung=\"" + ProjektMarktplatz.getBezeichnung()
-					+ "\" " + "WHERE id=" + ProjektMarktplatz.getID());
+			stmt.executeUpdate("UPDATE Projektmarktplatz " + "SET bezeichnung=\"" + pm.getBezeichnung()
+					+ "\" " + "WHERE id=" + pm.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -141,7 +141,7 @@ public class ProjektMarktplatzMapper {
 
 		try {
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Projektmarktplatz " + "WHERE ID=" + ProjektMarktplatz.getID());
+			stmt.executeUpdate("DELETE FROM Projektmarktplatz " + "WHERE ID=" + pm.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -176,7 +176,7 @@ public class ProjektMarktplatzMapper {
 
 			while (rs.next()) {
 				ProjektMarktplatz pm = new ProjektMarktplatz();
-				pm.setID(rs.getInt("ID"));
+				pm.setId(rs.getInt("ID"));
 				pm.setBezeichnung(rs.getString("bezeichnung"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
@@ -221,7 +221,7 @@ public class ProjektMarktplatzMapper {
 				// Ergebnis-Objekts
 
 				ProjektMarktplatz pm = new ProjektMarktplatz();
-				pm.setID(rs.getInt("ID"));
+				pm.setId(rs.getInt("ID"));
 				pm.setBezeichnung(rs.getString("bezeichnung"));
 
 				return pm;
@@ -242,10 +242,11 @@ public class ProjektMarktplatzMapper {
 	 * @return Projektmarktplatz-Objekt, das der uebergebenen Bezeichnung
 	 *         entspricht, null bei nicht vorhandenem DB-Tupel.
 	 */
-	public <Vector> ProjektMarktplatz findByBezeichnung(String bezeichnung) {
+	public Vector<ProjektMarktplatz> findByBezeichnung(String bezeichnung) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
-		ProjektMarktplatz result = new ProjektMarktplatz();
+		
+		Vector<ProjektMarktplatz> result = new Vector<ProjektMarktplatz>();
 
 		try {
 
@@ -263,7 +264,7 @@ public class ProjektMarktplatzMapper {
 				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
 				// Ergebnis-Objekts
 				ProjektMarktplatz pm = new ProjektMarktplatz();
-				pm.setID(rs.getInt("ID"));
+				pm.setId(rs.getInt("ID"));
 				pm.setBezeichnung(rs.getString("bezeichnung"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
