@@ -11,8 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import de.hdm.it_projekt.client.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Person;
+import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 /**
  * Mapper-Klasse, die <code>ProjektMarktplatz</code>-Objekte auf eine
