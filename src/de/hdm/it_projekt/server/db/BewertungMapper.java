@@ -15,9 +15,9 @@ import de.hdm.it_projekt.shared.bo.Bewertung;
  * @author ElifY
  * 
  * Mapper-Klasse, die <code>Bewertung</code>-Objekte auf eine relationale
- * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+ * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
  * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+ * geloescht werden koennen. Das Mapping ist bidirektional. D.h., Objekte koennen
  * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  */
 public class BewertungMapper {
@@ -26,16 +26,16 @@ public class BewertungMapper {
 	   * Die Klasse BewertungMapper wird nur einmal instantiiert. Man spricht
 	   * hierbei von einem sogenannten <b>Singleton</b>.
 	   * <p>
-	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
-	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal fuer
+	   * saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	   * einzige Instanz dieser Klasse.
 	   * 
 	   */
 	  private static BewertungMapper bewertungMapper = null;
-	private Vector<Bewertung> result;
+	  private Vector<Bewertung> result;
 
 	  /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen. 
 	   */
 	  protected BewertungMapper() {
@@ -44,7 +44,7 @@ public class BewertungMapper {
 	  /**
 	   * Diese statische Methode kann aufgrufen werden durch
 	   * <code>BewertungMapper.bewertungMapper()</code>. Sie stellt die
-	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Singleton-Eigenschaft sicher, indem Sie dafuer sorgt, dass nur eine einzige
 	   * Instanz von <code>BewertungMapper</code> existiert.
 	   * <p>
 	   * 
@@ -62,12 +62,12 @@ public class BewertungMapper {
 	  }
 
 	  /**
-	   * Einfügen eines <code>Bewertung</code>-Objekts in die Datenbank. Dabei
-	   * wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
+	   * Einfuegen eines <code>Bewertung</code>-Objekts in die Datenbank. Dabei
+	   * wird auch der Primaerschluessel des uebergebenen Objekts geprueft und ggf.
 	   * berichtigt.
 	   * 
 	   * @param bt das zu speichernde Objekt
-	   * @return das bereits übergebene Objekt, jedoch mit ggf. korrigierter
+	   * @return das bereits uebergebene Objekt, jedoch mit ggf. korrigierter
 	   *         <code>id</code>.
 	   */ 
 	  
@@ -81,7 +81,7 @@ public class BewertungMapper {
 			   Statement stmt = con.createStatement();
 			   
 			   //Momentan hoechsten Primaerschluessel pruefen
-			   ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM bewertungs");
+			   ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM bewertung");
 		   
 			   if (rs.next()){
 				   
@@ -94,9 +94,9 @@ public class BewertungMapper {
 				   
 				   stmt = con.createStatement();
 				   
-				   // Jetzt erst erfolgt die tatsächliche Einfügeoperation.
-				   stmt.executeUpdate("INSERT INTO bewertungs (id, wert, stellungnahme, erstelldatum)"
-				   + "VALUES (" + Bewertung.getId() + "," + bt.getWert() + ","
+				   // Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
+				   stmt.executeUpdate("INSERT INTO bewertung (Id, Wert, Stellungnahme, Erstelldatum)"
+				   + "VALUES (" + bt.getId() + "," + bt.getWert() + ","
 				   + bt.getStellungnahme() + "," + bt.getErstelldatum() + ")");
 				   
 			   	 	}
@@ -125,17 +125,17 @@ public class BewertungMapper {
 	  					 Statement stmt = con.createStatement();
 	  					 
 	  				     // Jetzt erst erfolgt die tatsächliche Einfügeoperation.
-	  					 stmt.executeUpdate("UPDATE bewertungs " + "SET wert=\""
-	  				     + bt.getWert() + "\"," + "stellungnahme=\"" + bt.getStellungnahme()
-	  				     + "\", " + "erstelldatum=\"" + bt.getErstelldatum() + "\" "
-	  				     + "WHERE id=" + Bewertung.getId());
+	  					 stmt.executeUpdate("UPDATE bewertung " + "SET Wert=\""
+	  				     + bt.getWert() + "\"," + "Stellungnahme=\"" + bt.getStellungnahme()
+	  				     + "\", " + "Erstelldatum=\"" + bt.getErstelldatum() + "\" "
+	  				     + "WHERE id=" + bt.getId());
 	  				 
 	  				 }
 	  				 catch (SQLException e2){
 	  					 e2.printStackTrace();
 	  				 }
 	  				 
-	  				 // Um Analogie zu insert(Bewertung bt) zu wahren, geben wir bt zurück
+	  				 // Um Analogie zu insert(Bewertung bt) zu wahren, geben wir bt zurueck
 	  			     return bt;
 	  			  }
 	  			 
@@ -158,7 +158,7 @@ public class BewertungMapper {
 	 				 //Leeres SQL-Statement (JDBC) anlegen
 	 				 Statement stmt = con.createStatement();
 	 				 
-	 				 stmt.executeUpdate("DELETE FROM bewertungs" + "WHERE id=" + Bewertung.getId());
+	 				 stmt.executeUpdate("DELETE FROM bewertung" + "WHERE Id=" + bt.getId());
 	 			 }
 	 			 catch (SQLException e3){
 	 				 e3.printStackTrace();
@@ -186,8 +186,8 @@ public class BewertungMapper {
 			 			 //Leeres SQL-Statement (JDBC) anlegen
 			 			 Statement stmt = con.createStatement();
 			 			 
-			 			 ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum FROM bewertungs "
-			 				+ "ORDER BY wert");
+			 			 ResultSet rs = stmt.executeQuery("SELECT Id, Wert, Stellungnahme, Erstelldatum FROM bewertung "
+			 				+ "ORDER BY Wert");
 			 				
 			 			 
 			 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -195,10 +195,10 @@ public class BewertungMapper {
 			 		 
 			 			 while (rs.next()) {
 			 				 Bewertung bt = new Bewertung();
-			 				 bt.setId(rs.getInt("id"));
-			 				 bt.setWert(rs.getFloat("wert"));
-			 				 bt.setStellungnahme(rs.getString("stellungnahme"));
-			 				 bt.setErstelldatum(rs.getDate("erstelldatum"));
+			 				 bt.setId(rs.getInt("Id"));
+			 				 bt.setWert(rs.getFloat("Wert"));
+			 				 bt.setStellungnahme(rs.getString("Stellungnahme"));
+			 				 bt.setErstelldatum(rs.getDate("Erstelldatum"));
 			 				
 			 				 
 			 			 
@@ -225,7 +225,7 @@ public class BewertungMapper {
 			 	  * null bei nicht vorhandenem DB-Tupel.
 			 	  */
 			 	 
-			 	 public Vector<Bewertung> findById(int id){
+			 	 public Bewertung findById(int id){
 			 		 
 			 		 //DB-Verbindung herstellen
 			 		 Connection con = DBConnection.connection();
@@ -236,8 +236,8 @@ public class BewertungMapper {
 			 		  Statement stmt = con.createStatement();
 			 			 
 			 		 //Statement ausfuellen und als Query an die DB schicken
-			 		 ResultSet rs= stmt.executeQuery("SELECT id, wert, stellungnahme, ertselldatum FROM bewertungs "
-			 				 + "WHERE id=" + id + "ORDER BY id");
+			 		 ResultSet rs= stmt.executeQuery("SELECT Id, Wert, Stellungnahme, Ertselldatum FROM bewertung "
+			 				 + "WHERE Id=" + id + "ORDER BY Id");
 			 		 		
 			 		 /*
 			 		  * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -251,10 +251,10 @@ public class BewertungMapper {
 			 				 //Ausgabe des Ergebnis-Objekts.
 			 				 
 			 				 Bewertung bt = new Bewertung();
-			 				 bt.setId(rs.getInt("id"));
-			 				 bt.setWert(rs.getFloat("wert"));
-			 				 bt.setStellungnahme(rs.getString("stellungnahme"));
-			 				 bt.setErstelldatum(rs.getDate("erstelldatum"));
+			 				 bt.setId(rs.getInt("Id"));
+			 				 bt.setWert(rs.getFloat("Wert"));
+			 				 bt.setStellungnahme(rs.getString("Stellungnahme"));
+			 				 bt.setErstelldatum(rs.getDate("Erstelldatum"));
 			 				 
 			 				 return bt;
 			 			 }
@@ -288,18 +288,18 @@ public class BewertungMapper {
 			 			 Statement stmt = con.createStatement();
 			 			 
 			 			 //Statement ausfuellen und als Query an die DB schicken
-			 			 ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum FROM bewertungs "
-			 					 + "WHERE stellungnahme=" + stellungnahme + " ORDER BY stellungnahme");
+			 			 ResultSet rs = stmt.executeQuery("SELECT Id, Wert, Stellungnahme, Erstelldatum FROM bewertung "
+			 					 + "WHERE Stellungnahme=" + stellungnahme + " ORDER BY Stellungnahme");
 			 		 
 			 			 
 			 			  //Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
 			 			  //erstellt
 			 			  while (rs.next()){
 			 				  Bewertung bt= new Bewertung();
-			 				  bt.setId(rs.getInt("id"));
-			 				  bt.setWert(rs.getFloat("wert"));
-			 				  bt.setStellungnahme(rs.getString("stellungnahme"));
-			 				  bt.setErstelldatum(rs.getDate("erstelldatum"));
+			 				  bt.setId(rs.getInt("Id"));
+			 				  bt.setWert(rs.getFloat("Wert"));
+			 				  bt.setStellungnahme(rs.getString("Stellungnahme"));
+			 				  bt.setErstelldatum(rs.getDate("Erstelldatum"));
 			 				  
 			 				  //Hinzufuegen des neuen Objekts zum Ergebnisvektor
 			 				  result.addElement(bt);
@@ -330,18 +330,18 @@ public class BewertungMapper {
 						Statement stmt = con.createStatement();
 						
 						//Statement ausfuellen und als Query an die DB schicken
-						ResultSet rs = stmt.executeQuery("SELECT id, wert, stellungnahme, erstelldatum FROM bewertungs "
-								+ "WHERE wert=" + wert + " ORDER BY wert");
+						ResultSet rs = stmt.executeQuery("SELECT Id, Wert, Stellungnahme, Erstelldatum FROM bewertung "
+								+ "WHERE Wert=" + wert + " ORDER BY Wert");
 					
 						
 						//Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
 			 			//erstellt
 			 			  while (rs.next()){
 			 				  Bewertung bt= new Bewertung();
-			 				  bt.setId(rs.getInt("id"));
-			 				  bt.setWert(rs.getFloat("wert"));
-			 				  bt.setStellungnahme(rs.getString("stellungnahme"));
-			 				  bt.setErstelldatum(rs.getDate("erstelldatum"));
+			 				  bt.setId(rs.getInt("Id"));
+			 				  bt.setWert(rs.getFloat("Wert"));
+			 				  bt.setStellungnahme(rs.getString("Stellungnahme"));
+			 				  bt.setErstelldatum(rs.getDate("Erstelldatum"));
 			 				  
 			 				  //Hinzufuegen des neuen Objekts zum Ergebnisvektor
 			 				  result.addElement(bt);
@@ -361,7 +361,7 @@ public class BewertungMapper {
 				 * @return
 				 */
 				
-				public Vector<Person> getByPerson(Person p){
+	public Vector<Person> getByPerson(Person p){
 			 			 
 					
 					
