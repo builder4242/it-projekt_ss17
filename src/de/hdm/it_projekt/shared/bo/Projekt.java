@@ -16,28 +16,28 @@ public class Projekt extends BusinessObject {
 	/**
 	 * Name des Projektes
 	 */
-	private static String name;
+	private String name;
 	
 	/**
 	 *  Startdatum des Projektes
 	 */
-	private static Date startdatum;
+	private Date startdatum;
 	
 	/**
 	 * Enddatum des Projektes
 	 */
-	private static Date enddatum;
+	private Date enddatum;
 	
 	/**
 	 * Erweiterte Beschreibung des Projektes
 	 */
-	private static String beschreibung;
+	private String beschreibung;
 
 	/**
 	 * Rückgabe des Namens
 	 * @return the name
 	 */
-	public static String getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -46,14 +46,14 @@ public class Projekt extends BusinessObject {
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
-		Projekt.name = name;
+		this.name = name;
 	}
 
 	/**
 	 * Rückgabe des Startdatums
 	 * @return the startdatum
 	 */
-	public static Date getStartdatum() {
+	public Date getStartdatum() {
 		return startdatum;
 	}
 
@@ -62,14 +62,14 @@ public class Projekt extends BusinessObject {
 	 * @param startdatum the startdatum to set
 	 */
 	public void setStartdatum(Date startdatum) {
-		Projekt.startdatum = startdatum;
+		this.startdatum = startdatum;
 	}
 
 	/**
 	 * Rückgabe des Enddatums
 	 * @return the enddatum
 	 */
-	public static Date getEnddatum() {
+	public Date getEnddatum() {
 		return enddatum;
 	}
 
@@ -78,14 +78,14 @@ public class Projekt extends BusinessObject {
 	 * @param enddatum the enddatum to set
 	 */
 	public void setEnddatum(Date enddatum) {
-		Projekt.enddatum = enddatum;
+		this.enddatum = enddatum;
 	}
 
 	/**
 	 * Rückgabe der Beschreibung
 	 * @return the beschreibung
 	 */
-	public static String getBeschreibung() {
+	public String getBeschreibung() {
 		return beschreibung;
 	}
 
@@ -94,7 +94,7 @@ public class Projekt extends BusinessObject {
 	 * @param beschreibung the beschreibung to set
 	 */
 	public void setBeschreibung(String beschreibung) {
-		Projekt.beschreibung = beschreibung;
+		this.beschreibung = beschreibung;
 	}
 	
 	

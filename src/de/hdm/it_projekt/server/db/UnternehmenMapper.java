@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.it_projekt.client.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
+import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**

@@ -4,6 +4,7 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -63,6 +64,12 @@ public class BeteiligungMapper {
     return beteiligungMapper;
   }
 
+   /** 
+	 * Diese Methode ermoeglicht es eine Beteiligung in der Datenbank anzulegen.
+	 * 
+	 * @param bet
+	 * @return 
+	 */
 public Beteiligung insert(Beteiligung bet){
 	
 	//DB-Verbindung herstellen
@@ -74,7 +81,7 @@ public Beteiligung insert(Beteiligung bet){
 
 	       //Momentan hoechsten Primaerschluesselwert pruefen
 	       ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
-	          + "FROM beteiligungs ");
+	          + "FROM beteiligung ");
 
 	      // Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
@@ -88,8 +95,8 @@ public Beteiligung insert(Beteiligung bet){
 	        stmt = con.createStatement();
 
 	        // Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-	        stmt.executeUpdate("INSERT INTO beteiligungs (id, personentage, enddatum, startdatum) "
-	            + "VALUES (" + Beteiligung.getId() + ","
+	        stmt.executeUpdate("INSERT INTO beteiligung (Id, Personentage, Enddatum, Startdatum) "
+	            + "VALUES (" + bet.getId() + ","
 	            + bet.getPersonentage() + ","
 	            + bet.getEnddatum() + "," + bet.getStartdatum() + ")");
 	      }
@@ -119,10 +126,10 @@ public Beteiligung insert(Beteiligung bet){
 			 Statement stmt = con.createStatement();
 			 
 		     // Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-			 stmt.executeUpdate("UPDATE beteiligungs " + "SET peronentage=\""
-		     + bet.getPersonentage() + "\"," + "enddatum=\"" + bet.getEnddatum()
-		     + "\", " + "startdatum=\"" + bet.getStartdatum() + "\" "
-		     + "WHERE id=" + Beteiligung.getId());
+			 stmt.executeUpdate("UPDATE beteiligung " + "SET Peronentage=\""
+		     + bet.getPersonentage() + "\"," + "Enddatum=\"" + bet.getEnddatum()
+		     + "\", " + "Startdatum=\"" + bet.getStartdatum() + "\" "
+		     + "WHERE Id=" + bet.getId());
 		 
 		 }
 		 catch (SQLException e2){
@@ -151,7 +158,7 @@ public Beteiligung insert(Beteiligung bet){
 				 //Leeres SQL-Statement (JDBC) anlegen
 				 Statement stmt = con.createStatement();
 				 
-				 stmt.executeUpdate("DELETE FROM beteiligungs" + "WHERE id=" + Beteiligung.getId());
+				 stmt.executeUpdate("DELETE FROM beteiligung" + "WHERE Id=" + bet.getId());
 			 }
 			 catch (SQLException e3){
 				 e3.printStackTrace();
@@ -179,8 +186,8 @@ public Beteiligung insert(Beteiligung bet){
 	 			 //Leeres SQL-Statement (JDBC) anlegen
 	 			 Statement stmt = con.createStatement();
 	 			 
-	 			 ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum "
-	 				+ "FROM beteiligungs " + " ORDER BY id");
+	 			 ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum "
+	 				+ "FROM beteiligung " + " ORDER BY Id");
 	 			 
 	 			 
 	 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -188,10 +195,10 @@ public Beteiligung insert(Beteiligung bet){
 	 		 
 	 			 while (rs.next()) {
 	 				 Beteiligung bet = new Beteiligung();
-	 				 bet.setId(rs.getInt("id"));
-	 				 bet.setPersonentage(rs.getInt("personentage"));
-	 				 bet.setEnddatum(rs.getDate("enddatum"));
-	 				 bet.setEnddatum(rs.getDate("startdatum"));
+	 				 bet.setId(rs.getInt("Id"));
+	 				 bet.setPersonentage(rs.getInt("Personentage"));
+	 				 bet.setEnddatum(rs.getDate("Enddatum"));
+	 				 bet.setEnddatum(rs.getDate("Startdatum"));
 	 				 
 	 			 
 	 			 //Hinzufuegen des neuen Objekts zum Ergebnisvektor
@@ -215,7 +222,7 @@ public Beteiligung insert(Beteiligung bet){
 	   *         nicht vorhandenem DB-Tupel.
 	   */
 	 
-	 public Vector<Beteiligung> findByID (int id){
+	 public Beteiligung findByID (int id){
 	 
 		 //DB-Verbindung herstellen
 		 Connection con = DBConnection.connection();
@@ -225,8 +232,8 @@ public Beteiligung insert(Beteiligung bet){
 		      Statement stmt = con.createStatement();
 
 		      //Statement ausfuellen und als Query an die DB schicken
-		      ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
-		      + "WHERE id=" + id + "ORDER BY personentage");
+		      ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
+		      + "WHERE Id=" + id + "ORDER BY Personentage");
 	 
 		      /*
 		       * Da id Primäerschluessel ist, kann max. nur ein Tupel zurueckgegeben
@@ -237,10 +244,10 @@ public Beteiligung insert(Beteiligung bet){
 		    	
 		    	  // Ergebnis-Tupel in Objekt umwandeln
 		    	  Beteiligung bet = new Beteiligung();
-		    	  bet.setId(rs.getInt("id"));
-		          bet.setPersonentage(rs.getInt("personentage"));
-		          bet.setEnddatum(rs.getDate("enddatum"));
-		          bet.setStartdatum(rs.getDate("startdatum"));
+		    	  bet.setId(rs.getInt("Id"));
+		          bet.setPersonentage(rs.getInt("Personentage"));
+		          bet.setEnddatum(rs.getDate("Enddatum"));
+		          bet.setStartdatum(rs.getDate("Startdatum"));
 			 
 		          return bet;
 		      }
@@ -273,17 +280,17 @@ public Beteiligung insert(Beteiligung bet){
 	 			Statement stmt = con.createStatement();
 			
 	 			//Statement ausfuellen und als Query an die Datenbank schicken
-	 			ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
-					+ "WHERE personentage=" + personentage + " ORDER BY personentage"); 
+	 			ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
+					+ "WHERE Personentage=" + personentage + " ORDER BY Personentage"); 
 				
 			
 	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
 	 			while (rs.next()){
 				Beteiligung bet = new Beteiligung();
-				bet.setId(rs.getInt("id"));
-				bet.setPersonentage(rs.getInt("personentage"));
-				bet.setEnddatum(rs.getDate("enddatum"));
-				bet.setStartdatum(rs.getDate("startdatum"));
+				bet.setId(rs.getInt("Id"));
+				bet.setPersonentage(rs.getInt("Personentage"));
+				bet.setEnddatum(rs.getDate("Enddatum"));
+				bet.setStartdatum(rs.getDate("Startdatum"));
 				
 				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bet);
@@ -300,12 +307,11 @@ public Beteiligung insert(Beteiligung bet){
 
 	 	/**
 	 	 * Suchen einer Beteiligung anhand des Startdatums.
-	 	 * @param <date>
 	 	 * @param startdatum
 	 	 * @return result
 	 	 */
 	 		
-	 	public <date> Vector <Beteiligung> findByStartdatum (date startdatum){
+	 	public Vector<Beteiligung> findByStartdatum (Date startdatum){
 	 		
 	 		//DB-Verbindung herstellen
 	 		Connection con = DBConnection.connection();
@@ -318,17 +324,17 @@ public Beteiligung insert(Beteiligung bet){
 	 			Statement stmt = con.createStatement();
 			
 	 			//Statement ausfuellen und als Query an die Datenbank schicken
-	 			ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
-					+ "WHERE startdatum=" + startdatum + " ORDER BY startdatum"); 
+	 			ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
+					+ "WHERE Startdatum=" + startdatum + " ORDER BY Startdatum"); 
 				
 			
 	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
 	 			while (rs.next()){
 				Beteiligung bet = new Beteiligung();
-				bet.setId(rs.getInt("id"));
-				bet.setPersonentage(rs.getInt("personentage"));
-				bet.setEnddatum(rs.getDate("enddatum"));
-				bet.setStartdatum(rs.getDate("startdatum"));
+				bet.setId(rs.getInt("Id"));
+				bet.setPersonentage(rs.getInt("Personentage"));
+				bet.setEnddatum(rs.getDate("Enddatum"));
+				bet.setStartdatum(rs.getDate("Startdatum"));
 				
 				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bet);
@@ -344,12 +350,11 @@ public Beteiligung insert(Beteiligung bet){
 	 		
 	 	/**
 	 	 * Suchen einer Beteiligung anhand des Startdatums.
-	 	 * @param <date>
 	 	 * @param enddatum
 	 	 * @return result
 	 	 */
 	 		
-	 	public <date> Vector <Beteiligung> findByEnddatum (date enddatum){
+	 	public Vector<Beteiligung> findByEnddatum (Date enddatum){
 	 		
 	 		//DB-Verbindung herstellen
 	 		Connection con = DBConnection.connection();
@@ -362,17 +367,17 @@ public Beteiligung insert(Beteiligung bet){
 	 			Statement stmt = con.createStatement();
 			
 	 			//Statement ausfuellen und als Query an die Datenbank schicken
-	 			ResultSet rs = stmt.executeQuery("SELECT id, personentage, enddatum, startdatum FROM beteiligungs "
-					+ "WHERE enddatum=" + enddatum + " ORDER BY enddatum"); 
+	 			ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
+					+ "WHERE Enddatum=" + enddatum + " ORDER BY Enddatum"); 
 				
 			
 	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
 	 			while (rs.next()){
 				Beteiligung bet = new Beteiligung();
-				bet.setId(rs.getInt("id"));
-				bet.setPersonentage(rs.getInt("personentage"));
-				bet.setEnddatum(rs.getDate("enddatum"));
-				bet.setStartdatum(rs.getDate("startdatum"));
+				bet.setId(rs.getInt("Id"));
+				bet.setPersonentage(rs.getInt("Personentage"));
+				bet.setEnddatum(rs.getDate("Enddatum"));
+				bet.setStartdatum(rs.getDate("Startdatum"));
 				
 				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bet);
@@ -383,7 +388,7 @@ public Beteiligung insert(Beteiligung bet){
 	 			}
 		
 	 		//Ergebnisvektor zurueckgeben
-	 		return result;
-	 	}
+		return result;
+	}
 
 }
