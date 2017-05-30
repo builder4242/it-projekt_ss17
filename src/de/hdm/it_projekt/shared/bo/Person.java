@@ -21,7 +21,7 @@ public class Person extends Organisationseinheit {
 	 * R�ckgabe des Vornamens
 	 * @return
 	 */
-	public static String getVorname() {
+	public String getVorname() {
 		return null;
 	}
 

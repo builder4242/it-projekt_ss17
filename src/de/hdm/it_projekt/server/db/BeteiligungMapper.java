@@ -89,7 +89,7 @@ public Beteiligung insert(Beteiligung bet){
 
 	        // Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 	        stmt.executeUpdate("INSERT INTO beteiligungs (id, personentage, enddatum, startdatum) "
-	            + "VALUES (" + Beteiligung.getId() + ","
+	            + "VALUES (" + bet.getId() + ","
 	            + bet.getPersonentage() + ","
 	            + bet.getEnddatum() + "," + bet.getStartdatum() + ")");
 	      }
@@ -122,7 +122,7 @@ public Beteiligung insert(Beteiligung bet){
 			 stmt.executeUpdate("UPDATE beteiligungs " + "SET peronentage=\""
 		     + bet.getPersonentage() + "\"," + "enddatum=\"" + bet.getEnddatum()
 		     + "\", " + "startdatum=\"" + bet.getStartdatum() + "\" "
-		     + "WHERE id=" + Beteiligung.getId());
+		     + "WHERE id=" + bet.getId());
 		 
 		 }
 		 catch (SQLException e2){
@@ -151,7 +151,7 @@ public Beteiligung insert(Beteiligung bet){
 				 //Leeres SQL-Statement (JDBC) anlegen
 				 Statement stmt = con.createStatement();
 				 
-				 stmt.executeUpdate("DELETE FROM beteiligungs" + "WHERE id=" + Beteiligung.getId());
+				 stmt.executeUpdate("DELETE FROM beteiligungs" + "WHERE id=" + bet.getId());
 			 }
 			 catch (SQLException e3){
 				 e3.printStackTrace();
@@ -215,7 +215,7 @@ public Beteiligung insert(Beteiligung bet){
 	   *         nicht vorhandenem DB-Tupel.
 	   */
 	 
-	 public Vector<Beteiligung> findByID (int id){
+	 public Beteiligung findByID (int id){
 	 
 		 //DB-Verbindung herstellen
 		 Connection con = DBConnection.connection();

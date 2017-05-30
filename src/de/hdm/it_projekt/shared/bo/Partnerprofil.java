@@ -41,7 +41,7 @@ public class Partnerprofil extends BusinessObject {
 	 * R�ckgabe des Erstelldatums
 	 * @return the erstelldatum
 	 */
-	public static Date getErstelldatum() {
+	public Date getErstelldatum() {
 		return null;
 	}
 
@@ -57,7 +57,7 @@ public class Partnerprofil extends BusinessObject {
 	 * R�ckgabe des �nderungsdatums
 	 * @return the aenderungsdatum
 	 */
-	public static Date getAenderungsdatum() {
+	public Date getAenderungsdatum() {
 		return null;
 	}
 
@@ -92,16 +92,5 @@ public class Partnerprofil extends BusinessObject {
 	 */
 	public boolean deleteEigenschaft(Eigenschaft e) {
 		return this.eigenschaften.remove(e);
-	}
-
-	public static String getID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setID(int ID) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	}	
 }

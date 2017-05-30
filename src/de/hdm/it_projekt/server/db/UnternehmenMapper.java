@@ -108,12 +108,12 @@ public class UnternehmenMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE Unternehmen " + "SET name=\"" + Organisationseinheit.getName() + "\" " + "SET email=\""
-					+ Organisationseinheit.getEmail() + "\" " + "SET strasse=\"" + Organisationseinheit.getStrasse()
-					+ "\" " + "SET plz=\"" + Organisationseinheit.getPLZ() + "\" " + "SET ort=\""
-					+ Organisationseinheit.getOrt() + "\" " + "SET tel=\"" + Organisationseinheit.getTel() + "\" "
-					+ "SET googleID=\"" + Organisationseinheit.getGoogleID() + "\" " + "WHERE ID="
-					+ Organisationseinheit.getID());
+			stmt.executeUpdate("UPDATE Unternehmen " + "SET name=\"" + u.getName() + "\" " + "SET email=\""
+					+ u.getEmail() + "\" " + "SET strasse=\"" + u.getStrasse()
+					+ "\" " + "SET plz=\"" + u.getPLZ() + "\" " + "SET ort=\""
+					+ u.getOrt() + "\" " + "SET tel=\"" + u.getTel() + "\" "
+					+ "SET googleID=\"" + u.getGoogleID() + "\" " + "WHERE ID="
+					+ u.getID());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -137,7 +137,7 @@ public class UnternehmenMapper {
 
 		try {
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Unternehmen " + "WHERE ID=" + Organisationseinheit.getID());
+			stmt.executeUpdate("DELETE FROM Unternehmen " + "WHERE ID=" + u.getID());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
