@@ -25,11 +25,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	private Partnerprofil partnerprofil = null;
 
 	/**
-	 * ID der Organisationseinheit
-	 */
-	private int ID;
-	
-	/**
 	 * Strasse der Organisationseinheit
 	 */
 	private String strasse;
@@ -54,24 +49,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 */
 	private String googleID;
 	
-
-	/**
-	 * Setzen der ID der Organisationseinheit
-	 * @param ID
-	 */
-	public void setID(int ID) {
-		ID = ID;
-	}
-
-	/**
-	 * Auslesen der ID der Organisationseinheit
-	 * @return
-	 */
-	public static String getID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	/**
 	 * Setzen der Strasse der Organisationseinheit
 	 * @param strasse
@@ -84,7 +61,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Auslesen der Strasse der Organisationseinheit
 	 * @return
 	 */
-	public static String getStrasse() {
+	public String getStrasse() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -101,7 +78,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Auslesen der PLZ der Organisationseinheit
 	 * @return
 	 */
-	public static String getPLZ() {
+	public String getPLZ() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -118,7 +95,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Auslesen des Orts der Organisationseinheit
 	 * @return
 	 */
-	public static String getOrt() {
+	public String getOrt() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -135,7 +112,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Auslesen der Telefonnummer der Organisationseinheit
 	 * @return
 	 */
-	public static String getTel() {
+	public String getTel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -152,7 +129,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Auslesen der GoogleID der Organisationseinheit
 	 * @return
 	 */
-	public static String getGoogleID() {
+	public String getGoogleID() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -177,7 +154,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * R�ckgabe der E-Mail Adresse
 	 * @return the email
 	 */
-	public static String getEmail() {
+	public String getEmail() {
 		return null;
 	}
 
@@ -203,6 +180,5 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 */
 	public void setPartnerprofil(Partnerprofil partnerprofil) {
 		this.partnerprofil = partnerprofil;
-	}
-	
+	}	
 }
