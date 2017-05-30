@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Person;
 
@@ -352,6 +353,7 @@ public class BewerbungMapper {
 	 * @return
 	 */
 	public Vector<Person> getByPerson(Person p) {
+		return null;
 	}
 
 	/**
@@ -361,7 +363,7 @@ public class BewerbungMapper {
 	 * @return
 	 */
 	public Vector<Bewerbung> getByAusschreibung(Ausschreibung as) {
-
+		return null;
 	}
 
 }

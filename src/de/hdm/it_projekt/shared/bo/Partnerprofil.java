@@ -93,4 +93,5 @@ public class Partnerprofil extends BusinessObject {
 	public boolean deleteEigenschaft(Eigenschaft e) {
 		return this.eigenschaften.remove(e);
 	}	
+
 }
