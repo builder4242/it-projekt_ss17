@@ -81,7 +81,7 @@ public class ProjektMarktplatzMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	public Vector<ProjektMarktplatz> insert(Vector<ProjektMarktplatz> pm) throws Exception {
+	public ProjektMarktplatz insert(ProjektMarktplatz pm) throws Exception {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		PreparedStatement preStmt = null;
@@ -199,7 +199,7 @@ public class ProjektMarktplatzMapper {
 	 * @return Projektmarktplatz-Objekt, das dem uebergebenen Schluessel
 	 *         entspricht, null bei nicht vorhandenem DB-Tupel.
 	 */
-	public Vector<ProjektMarktplatz> findByID(int ID) {
+	public ProjektMarktplatz findByID(int ID) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 
@@ -285,7 +285,7 @@ public class ProjektMarktplatzMapper {
 	 * @return
 	 */
 	public Vector<Person> getByPerson(Person p) {
-
+		return null;
 	}
 
 }
