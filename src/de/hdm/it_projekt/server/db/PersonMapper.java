@@ -129,7 +129,7 @@ public class PersonMapper {
 			stmt.executeUpdate("UPDATE organisationseinheit " + "SET Vorname=\"" + p.getVorname() + "SET Name=\""
 					+ p.getName() + "\" " + "SET Email=\"" + p.getEmail() + "\" " + "SET Strasse=\"" + p.getStrasse()
 					+ "\" " + "SET PLZ=\"" + p.getPlz() + "\" " + "SET Ort=\"" + p.getOrt() + "\" " + "SET Tel=\""
-					+ p.getTel() + "\" " + "SET GoogleID=\"" + p.getGoogleID() + "\" " + "WHERE ID=" + p.getID());
+					+ p.getTel() + "\" " + "SET GoogleID=\"" + p.getGoogleID() + "\" " + "WHERE ID=" + p.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
