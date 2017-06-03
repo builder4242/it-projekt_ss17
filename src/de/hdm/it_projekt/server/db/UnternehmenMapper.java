@@ -274,7 +274,7 @@ public class UnternehmenMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + "WHERE name=" + name + " ORDER BY name");
+					+ "FROM organisationseinheit" + "WHERE Name=" + name + " ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
@@ -321,7 +321,7 @@ public class UnternehmenMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + "WHERE email=" + email + " ORDER BY email");
+					+ "FROM organisationseinheit" + "WHERE Email=" + email + " ORDER BY Email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
