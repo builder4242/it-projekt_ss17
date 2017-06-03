@@ -11,7 +11,6 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
-import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Team;
@@ -368,7 +367,7 @@ public class TeamMapper {
 
 	/**
 	 * Auslesen des zugehoerigen <code>Team</code>-Objekts zu einem gegebenen
-	 * Projektmarktplatzes.
+	 * Projektmarktplatz.
 	 * 
 	 * @param pm
 	 * @return
