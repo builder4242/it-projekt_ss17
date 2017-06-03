@@ -202,7 +202,7 @@ public class ProjektMarktplatzMapper {
 	 * Suchen eines Projektmarktplatzes mit vorgegebener ID. Da diese eindeutig
 	 * ist, wird genau ein Objekt zurueckgegeben.
 	 * 
-	 * @param ID
+	 * @param id
 	 *            - Primaerschluesselattribut in DB
 	 * @return Projektmarktplatz-Objekt, das dem uebergebenen Schluessel
 	 *         entspricht, null bei nicht vorhandenem DB-Tupel.

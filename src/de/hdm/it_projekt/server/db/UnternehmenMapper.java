@@ -209,9 +209,11 @@ public class UnternehmenMapper {
 	}
 
 	/**
-	 * Suchen eines Teams mit vorgegebener ID. Da diese eindeutig
-	 * ist, wird genau ein Objekt zurueckgegeben.
+	 * Suchen eines Unternehmens mit vorgegebener ID. Da diese eindeutig ist,
+	 * wird genau ein Objekt zurueckgegeben.
+	 * 
 	 * @param id
+	 *            - Primaerschluesselattribut in DB
 	 * @return
 	 */
 	public Unternehmen findById(int id) {
