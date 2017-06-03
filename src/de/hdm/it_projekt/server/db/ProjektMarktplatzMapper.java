@@ -207,7 +207,7 @@ public class ProjektMarktplatzMapper {
 	 * @return Projektmarktplatz-Objekt, das dem uebergebenen Schluessel
 	 *         entspricht, null bei nicht vorhandenem DB-Tupel.
 	 */
-	public ProjektMarktplatz findByID(int ID) {
+	public ProjektMarktplatz findById(int id) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -219,7 +219,7 @@ public class ProjektMarktplatzMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz" + "WHERE ID=" + ID + " ORDER BY ID");
+					.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz" + "WHERE ID=" + id + " ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel

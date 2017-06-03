@@ -208,6 +208,12 @@ public class UnternehmenMapper {
 		return result;
 	}
 
+	/**
+	 * Suchen eines Teams mit vorgegebener ID. Da diese eindeutig
+	 * ist, wird genau ein Objekt zurueckgegeben.
+	 * @param id
+	 * @return
+	 */
 	public Unternehmen findById(int id) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
