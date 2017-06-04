@@ -34,7 +34,7 @@ public class PartnerprofilMapper {
 	 * hierbei von einem sogenannten <b>Singleton</b>.
 	 * <p>
 	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal
-	 * für saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
+	 * fuer saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
 	 * speichert die einzige Instanz dieser Klasse.
 	 * 
 	 */
@@ -125,7 +125,7 @@ public class PartnerprofilMapper {
 	 * 
 	 * @param pp
 	 *            - das Objekt, das in die DB geschrieben werden soll
-	 * @return das als Parameter übergebene Objekt
+	 * @return das als Parameter uebergebene Objekt
 	 */
 	public Partnerprofil update(Partnerprofil pp) {
 
@@ -141,7 +141,7 @@ public class PartnerprofilMapper {
 			e.printStackTrace();
 		}
 
-		// Um Analogie zu insert(Partnerprofil pp) zu wahren,
+		// Um die Analogie zu insert(Partnerprofil pp) zu wahren,
 		// geben wir pp zurueck
 		return pp;
 	}
