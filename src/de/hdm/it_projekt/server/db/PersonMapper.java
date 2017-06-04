@@ -12,7 +12,8 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
-import de.hdm.it_projekt.shared.bo.Unternehmen;
+import de.hdm.it_projekt.shared.bo.Projekt;
+import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 /**
  * Mapper-Klasse, die <code>Person</code>-Objekte auf eine relationale Datenbank
@@ -33,7 +34,7 @@ public class PersonMapper {
 	 * von einem sogenannten <b>Singleton</b>.
 	 * <p>
 	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal
-	 * für saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
+	 * fuer saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
 	 * speichert die einzige Instanz dieser Klasse.
 	 * 
 	 */
@@ -116,7 +117,7 @@ public class PersonMapper {
 	 * 
 	 * @param p
 	 *            - das Objekt, das in die Datenbank geschrieben werden soll
-	 * @return das als Parameter übergebene Objekt
+	 * @return das als Parameter uebergebene Objekt
 	 */
 	public Person update(Person p) {
 
@@ -126,8 +127,8 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE organisationseinheit " + "SET Vorname=\"" + p.getVorname() + "SET Name=\""
-					+ p.getName() + "\" " + "SET Email=\"" + p.getEmail() + "\" " + "SET Strasse=\"" + p.getStrasse()
+			stmt.executeUpdate("UPDATE organisationseinheit " + "SET Name=\""
+					+ p.getName() + "SET Vorname=\"" + p.getVorname() + "\" " + "SET Email=\"" + p.getEmail() + "\" " + "SET Strasse=\"" + p.getStrasse()
 					+ "\" " + "SET PLZ=\"" + p.getPlz() + "\" " + "SET Ort=\"" + p.getOrt() + "\" " + "SET Tel=\""
 					+ p.getTel() + "\" " + "SET GoogleID=\"" + p.getGoogleID() + "\" " + "WHERE ID=" + p.getId());
 		} catch (SQLException e) {
@@ -185,9 +186,9 @@ public class PersonMapper {
 
 			while (rs.next()) {
 				Person p = new Person();
-				p.setVorname(rs.getString("Vorname"));
 				p.setId(rs.getInt("ID"));
 				p.setName(rs.getString("Name"));
+				p.setVorname(rs.getString("Vorname"));
 				p.setEmail(rs.getString("Email"));
 				p.setStrasse(rs.getString("Strasse"));
 				p.setPlz(rs.getInt("PLZ"));
@@ -204,6 +205,216 @@ public class PersonMapper {
 
 		// Ergebnisvektor zurueckgeben
 		return result;
+	}
+
+	public Person findById(int id) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
+					+ "FROM organisationseinheit" + " ORDER BY ID");
+
+			/*
+			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
+			 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+
+				Person p = new Person();
+				p.setId(rs.getInt("ID"));
+				p.setName(rs.getString("Name"));
+				p.setVorname(rs.getString("Vorname"));
+				p.setEmail(rs.getString("Email"));
+				p.setStrasse(rs.getString("Strasse"));
+				p.setPlz(rs.getInt("PLZ"));
+				p.setOrt(rs.getString("Ort"));
+				p.setTel(rs.getString("Tel"));
+				p.setGoogleID(rs.getString("GoogleID"));
+
+				return p;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+
+	/**
+	 * Auslesen einer Person anhand eines bestimmten Namens.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Vector<Person> findByLastName(String name) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Person> result = new Vector<Person>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
+					+ "FROM organisationseinheit" + "WHERE Name=" + name + " ORDER BY Name");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Person-Objekt erstellt.
+			while (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				Person p = new Person();
+				p.setId(rs.getInt("ID"));
+				p.setName(rs.getString("Name"));
+				p.setEmail(rs.getString("Email"));
+				p.setStrasse(rs.getString("Strasse"));
+				p.setPlz(rs.getInt("PLZ"));
+				p.setOrt(rs.getString("Ort"));
+				p.setTel(rs.getString("Tel"));
+				p.setGoogleID(rs.getString("GoogleID"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(p);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+
+	}
+
+	/**
+	 * Auslesen einer Person anhand eines bestimmten Vornamens.
+	 * 
+	 * @param vorname
+	 * @return
+	 */
+	public Vector<Person> findBySurName(String vorname) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Person> result = new Vector<Person>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID "
+					+ "FROM organisationseinheit" + "WHERE Vorname=" + vorname + " ORDER BY Vorname");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Person-Objekt erstellt.
+			while (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				Person p = new Person();
+				p.setId(rs.getInt("ID"));
+				p.setName(rs.getString("Name"));
+				p.setVorname(rs.getString("Vorname"));
+				p.setEmail(rs.getString("Email"));
+				p.setStrasse(rs.getString("Strasse"));
+				p.setPlz(rs.getInt("PLZ"));
+				p.setOrt(rs.getString("Ort"));
+				p.setTel(rs.getString("Tel"));
+				p.setGoogleID(rs.getString("GoogleID"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(p);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+
+	}
+
+	/**
+	 * Auslesen einer Person anhand einer bestimmten Email-Adresse.
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public Vector<Person> findByMail(String email) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Person> result = new Vector<Person>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
+					+ "FROM organisationseinheit" + "WHERE Email=" + email + " ORDER BY Email");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Person-Objekt erstellt.
+			while (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				Person p = new Person();
+				p.setId(rs.getInt("ID"));
+				p.setName(rs.getString("Name"));
+				p.setEmail(rs.getString("Email"));
+				p.setStrasse(rs.getString("Strasse"));
+				p.setPlz(rs.getInt("PLZ"));
+				p.setOrt(rs.getString("Ort"));
+				p.setTel(rs.getString("Tel"));
+				p.setGoogleID(rs.getString("GoogleID"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(p);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+
+	}
+
+	/**
+	 * Auslesen des zugehoerigen <code>Person</code>-Objekts zu einem gegebenen
+	 * Projekt.
+	 * 
+	 * @param pr
+	 * @return
+	 */
+	public Vector<Person> getByProjekt(Projekt pr) {
+		return null;
+	}
+
+	/**
+	 * Auslesen des zugehoerigen <code>Person</code>-Objekts zu einem gegebenen
+	 * Projektmarktplatz.
+	 * 
+	 * @param pm
+	 * @return
+	 */
+	public Vector<Person> getByProjektmarktplatz(ProjektMarktplatz pm) {
+		return null;
 	}
 
 }
