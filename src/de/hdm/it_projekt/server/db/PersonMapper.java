@@ -425,8 +425,8 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("select * "
-					+ "from organisationseinheit "
+			ResultSet rs = stmt.executeQuery("select o.ID as ID "
+					+ "from organisationseinheit as o"
 					+ "inner join projektmarktplatz_has_organisationseinheit on organisationseinheit.ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
 					+ "where Projektmarktplatz_ID="+pm.getId()+" AND Typ='P'");
 
@@ -434,20 +434,8 @@ public class PersonMapper {
 			// Person-Objekt erstellt.
 			while (rs.next()) {
 
-				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
-				// Ergebnis-Objekts
-				Person p = new Person();
-				p.setId(rs.getInt("ID"));
-				p.setName(rs.getString("Name"));
-				p.setEmail(rs.getString("Email"));
-				p.setStrasse(rs.getString("Strasse"));
-				p.setPlz(rs.getInt("PLZ"));
-				p.setOrt(rs.getString("Ort"));
-				p.setTel(rs.getString("Tel"));
-				p.setGoogleID(rs.getString("GoogleID"));
-
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(p);
+				result.addElement(findById(rs.getInt("ID")));
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
