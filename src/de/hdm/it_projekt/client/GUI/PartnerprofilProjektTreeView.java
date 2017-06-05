@@ -28,7 +28,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 	private Partnerprofil selectedPartnerprofil = null;
 	private Projekt selectedProjekt = null;
 
-	private BankAdministrationAsync bankVerwaltung = null;
+	private BankAdministrationAsync bankVerwaltung = null; //warten auf anlage Async
 	private ListDataProvider<Partnerprofil> PartnerprofilDataProvider = null;
 	
 	private Map<Partnerprofil, ListDataProvider<Projekt>> ProjektDataProviders = null;
