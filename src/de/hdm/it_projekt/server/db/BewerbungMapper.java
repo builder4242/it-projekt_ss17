@@ -12,7 +12,7 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
-import de.hdm.it_projekt.shared.bo.Person;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 
 /**
  * Mapper-Klasse, die <code>Bewerbung</code>-Objekte auf eine relationale
@@ -24,7 +24,8 @@ import de.hdm.it_projekt.shared.bo.Person;
  * 
  * Anlehnung an @author Thies
  * 
- * @author ElifY
+ * @author Elif Yavuz
+ * @author Tugba Bulat
  */
 
 public class BewerbungMapper {
@@ -347,22 +348,47 @@ public class BewerbungMapper {
 	}
 
 	/**
-	 * Auslesen der Bewerbung von einer Person
-	 * 
-	 * @param p
-	 * @return
-	 */
-	public Vector<Person> getByPerson(Person p) {
-		return null;
-	}
-
-	/**
-	 * Auslesen der Bewerbung anhand der Ausschreibung
+	 * Auslesen der Bewerbung anhand der Ausschreibung.
 	 * 
 	 * @param as
 	 * @return
 	 */
 	public Vector<Bewerbung> getByAusschreibung(Ausschreibung as) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Bewerbung> result = new Vector<Bewerbung>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM ausschreibung WHERE ausschreibung.ID=" + as.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Bewerbungs-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
+			}
+		} catch (SQLException e7) {
+			e7.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
+	/**
+	 * Auslesen der Bewerbung von einer Person
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public Vector<Bewerbung> getByOrganisationseinheit(Organisationseinheit o) {
 		return null;
 	}
 
