@@ -423,8 +423,36 @@ public class PersonMapper {
 	 * @param pm
 	 * @return
 	 */
-	public Vector<Person> getByProjektmarktplatz(ProjektMarktplatz pm) {
-		return null;
+	public Vector<Person> getByProjektMarktplatz(ProjektMarktplatz pm) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Person> result = new Vector<Person>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("select o.ID as ID "
+					+ "from organisationseinheit as o"
+					+ "inner join projektmarktplatz_has_organisationseinheit on organisationseinheit.ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
+					+ "where Projektmarktplatz_ID="+pm.getId()+" AND Typ='P'");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Person-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
 	}
 
 }

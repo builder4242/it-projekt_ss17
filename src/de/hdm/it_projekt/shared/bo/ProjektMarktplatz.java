@@ -28,5 +28,11 @@ public class ProjektMarktplatz extends BusinessObject {
 		Bezeichnung = bezeichnung;
 	}
 	
+	/**
+	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
+	 */
+	public String toString() {
+	return super.toString() + " " + this.Bezeichnung;
+	  }
 
 }
