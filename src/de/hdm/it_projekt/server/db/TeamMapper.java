@@ -375,7 +375,7 @@ public class TeamMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT o.ID AS ID FROM organisationseinheit AS o "
 					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit.ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
-					+ "WHERE Projektmarktplatz_ID=" + pm.getId() + " AND Typ='P'");
+					+ "WHERE Projektmarktplatz_ID=" + pm.getId() + " AND Typ='T'");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.
