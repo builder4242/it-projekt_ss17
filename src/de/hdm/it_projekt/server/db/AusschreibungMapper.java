@@ -286,8 +286,8 @@ public class AusschreibungMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT Id, Bezeichnung, Ausschreibungstext, Bewerbungsfrist FROM ausschreibung "
-							+ "WHERE Bezeichnung=" + bezeichnung + " ORDER BY Bezeichnung");
-
+							+ "WHERE Bezeichnung='" + bezeichnung + "' ORDER BY Bezeichnung");
+			
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Ausschreibung-Objekt
 			// erstellt
@@ -378,8 +378,8 @@ public class AusschreibungMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT Id, Bezeichnung, Ausschreibungstext, Bewerbungsfrist FROM ausschreibung "
-							+ "WHERE Ausschreibungstext=" + ausschreibungstext + " ORDER BY Ausschreibungstext");
-
+							+ "WHERE Ausschreibungstext='" + ausschreibungstext + "' ORDER BY Ausschreibungstext");
+	
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Ausschreibung-Objekt
 			// erstellt
