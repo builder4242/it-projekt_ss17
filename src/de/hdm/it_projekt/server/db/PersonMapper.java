@@ -413,8 +413,48 @@ public class PersonMapper {
 	 * @param pm
 	 * @return
 	 */
-	public Vector<Person> getByProjektmarktplatz(ProjektMarktplatz pm) {
-		return null;
+	public Vector<Person> getByProjektMarktplatz(ProjektMarktplatz pm) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Person> result = new Vector<Person>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("select * "
+					+ "from organisationseinheit "
+					+ "inner join projektmarktplatz_has_organisationseinheit on organisationseinheit.ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
+					+ "where Projektmarktplatz_ID="+pm.getId()+" AND Typ='P'");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Person-Objekt erstellt.
+			while (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				Person p = new Person();
+				p.setId(rs.getInt("ID"));
+				p.setName(rs.getString("Name"));
+				p.setEmail(rs.getString("Email"));
+				p.setStrasse(rs.getString("Strasse"));
+				p.setPlz(rs.getInt("PLZ"));
+				p.setOrt(rs.getString("Ort"));
+				p.setTel(rs.getString("Tel"));
+				p.setGoogleID(rs.getString("GoogleID"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(p);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
 	}
 
 }
