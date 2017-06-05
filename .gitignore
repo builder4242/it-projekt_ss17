@@ -56,3 +56,4 @@ war/WEB-INF/classes/
 
 *.js
 *.rpc
+*.DS_Store
