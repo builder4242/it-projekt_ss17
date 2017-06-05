@@ -18,11 +18,11 @@ public class Person extends Organisationseinheit {
 	private String vorname;
 
 	/**
-	 * Rückgabe des Vornamens
-	 * @return the vorname
+	 * Rï¿½ckgabe des Vornamens
+	 * @return
 	 */
 	public String getVorname() {
-		return vorname;
+		return null;
 	}
 
 	/**

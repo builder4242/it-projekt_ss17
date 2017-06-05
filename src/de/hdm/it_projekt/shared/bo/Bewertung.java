@@ -1,5 +1,6 @@
 package de.hdm.it_projekt.shared.bo;
 
+
 /**
  * Klasse Bewertung (Unterklasse von BusinessObject)
  * @author Sid Heiland
@@ -53,5 +54,13 @@ public class Bewertung extends BusinessObject {
 	public void setWert(float wert) {
 		this.wert = wert;
 	}
+	
+	/**
+	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
+	 */
+	public String toString() {
+	return super.toString() + " " + this.stellungnahme + " " + this.wert;
+	}
+
 
 }

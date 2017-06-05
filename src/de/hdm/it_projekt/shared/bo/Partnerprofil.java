@@ -18,7 +18,7 @@ public class Partnerprofil extends BusinessObject {
 	private Date erstelldatum;
 	
 	/**
-	 *  Letzte Änderung am Projekt
+	 *  Letzte ï¿½nderung am Projekt
 	 */
 	private Date aenderungsdatum;
 	
@@ -30,7 +30,7 @@ public class Partnerprofil extends BusinessObject {
 	public Partnerprofil () {
 		
 		/**
-		 * Prüfen ob der Vector Eigenschaften
+		 * Prï¿½fen ob der Vector Eigenschaften
 		 */
 		if(eigenschaften == null) {
 			this.eigenschaften = new Vector<Eigenschaft>();
@@ -38,11 +38,11 @@ public class Partnerprofil extends BusinessObject {
 	}
 
 	/**
-	 * Rückgabe des Erstelldatums
+	 * Rï¿½ckgabe des Erstelldatums
 	 * @return the erstelldatum
 	 */
 	public Date getErstelldatum() {
-		return erstelldatum;
+		return null;
 	}
 
 	/**
@@ -54,15 +54,15 @@ public class Partnerprofil extends BusinessObject {
 	}
 
 	/**
-	 * Rückgabe des Änderungsdatums
+	 * Rï¿½ckgabe des ï¿½nderungsdatums
 	 * @return the aenderungsdatum
 	 */
 	public Date getAenderungsdatum() {
-		return aenderungsdatum;
+		return null;
 	}
 
 	/**
-	 * Setzen des Änderungsdatums
+	 * Setzen des ï¿½nderungsdatums
 	 * @param aenderungsdatum the aenderungsdatum to set
 	 */
 	public void setAenderungsdatum(Date aenderungsdatum) {
@@ -70,7 +70,7 @@ public class Partnerprofil extends BusinessObject {
 	}
 
 	/**
-	 * Rückgabe des Vectors Eigenschaften
+	 * Rï¿½ckgabe des Vectors Eigenschaften
 	 * @return the eigenschaften
 	 */
 	public Vector<Eigenschaft> getEigenschaften() {
@@ -78,7 +78,7 @@ public class Partnerprofil extends BusinessObject {
 	}
 
 	/**
-	 * Eien weitere Eigenschaft hinzufügen
+	 * Eien weitere Eigenschaft hinzufï¿½gen
 	 * @param e
 	 */
 	public void addEigenschaft(Eigenschaft e) {
@@ -86,12 +86,12 @@ public class Partnerprofil extends BusinessObject {
 	}
 	
 	/**
-	 * Eine Eigenschaft löschen
+	 * Eine Eigenschaft lï¿½schen
 	 * @param Eigenschaft e
-	 * @return true wenn das Objekt erfolgreich gelöscht wurde.
+	 * @return true wenn das Objekt erfolgreich gelï¿½scht wurde.
 	 */
 	public boolean deleteEigenschaft(Eigenschaft e) {
 		return this.eigenschaften.remove(e);
-	}
-	
+	}	
+
 }
