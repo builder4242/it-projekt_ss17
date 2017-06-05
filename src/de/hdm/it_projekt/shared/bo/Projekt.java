@@ -34,7 +34,7 @@ public class Projekt extends BusinessObject {
 	private String beschreibung;
 
 	/**
-	 * Rückgabe des Namens
+	 * Rueckgabe des Namens
 	 * @return the name
 	 */
 	public String getName() {
@@ -50,7 +50,7 @@ public class Projekt extends BusinessObject {
 	}
 
 	/**
-	 * Rückgabe des Startdatums
+	 * Rï¿½ckgabe des Startdatums
 	 * @return the startdatum
 	 */
 	public Date getStartdatum() {
@@ -66,7 +66,7 @@ public class Projekt extends BusinessObject {
 	}
 
 	/**
-	 * Rückgabe des Enddatums
+	 * Rueckgabe des Enddatums
 	 * @return the enddatum
 	 */
 	public Date getEnddatum() {
@@ -82,7 +82,7 @@ public class Projekt extends BusinessObject {
 	}
 
 	/**
-	 * Rückgabe der Beschreibung
+	 * Rueckgabe der Beschreibung
 	 * @return the beschreibung
 	 */
 	public String getBeschreibung() {
@@ -96,6 +96,13 @@ public class Projekt extends BusinessObject {
 	public void setBeschreibung(String beschreibung) {
 		this.beschreibung = beschreibung;
 	}
+	
+	/**
+	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
+	 */
+	public String toString() {
+	return super.toString() + " " + this.beschreibung + " " + this.name + " " + this.enddatum + " " + this.startdatum;
+	  }
 	
 	
 }
