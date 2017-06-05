@@ -127,8 +127,8 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE organisationseinheit " + "SET Name=\""
-					+ p.getName() + "SET Vorname=\"" + p.getVorname() + "\" " + "SET Email=\"" + p.getEmail() + "\" " + "SET Strasse=\"" + p.getStrasse()
+			stmt.executeUpdate("UPDATE organisationseinheit " + "SET Name=\"" + p.getName() + "SET Vorname=\""
+					+ p.getVorname() + "\" " + "SET Email=\"" + p.getEmail() + "\" " + "SET Strasse=\"" + p.getStrasse()
 					+ "\" " + "SET PLZ=\"" + p.getPlz() + "\" " + "SET Ort=\"" + p.getOrt() + "\" " + "SET Tel=\""
 					+ p.getTel() + "\" " + "SET GoogleID=\"" + p.getGoogleID() + "\" " + "WHERE ID=" + p.getId());
 		} catch (SQLException e) {
@@ -265,8 +265,8 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + "WHERE Name=" + name + " ORDER BY Name");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID"
+					+ "FROM organisationseinheit WHERE Name='" + name + "' AND Typ='P' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
