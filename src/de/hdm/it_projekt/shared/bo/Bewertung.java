@@ -1,5 +1,5 @@
 package de.hdm.it_projekt.shared.bo;
-
+import java.util.Date;
 
 /**
  * Klasse Bewertung (Unterklasse von BusinessObject)
@@ -23,6 +23,25 @@ public class Bewertung extends BusinessObject {
 	 */
 	private float wert;
 	
+	/**
+	 * Erstelldatum der Bewertung
+	 */
+	private Date erstelldatum;
+	
+	/**
+	 * @return the erstelldatum
+	 */
+	public Date getErstelldatum() {
+		return erstelldatum;
+	}
+
+	/**
+	 * @param erstelldatum the erstelldatum to set
+	 */
+	public void setErstelldatum(Date erstelldatum) {
+		this.erstelldatum = erstelldatum;
+	}
+
 	/**
 	 * Auslesen der Stellungnahme
 	 * @return stellungnahme
