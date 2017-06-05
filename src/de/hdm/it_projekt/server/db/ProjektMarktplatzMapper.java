@@ -4,11 +4,9 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Person;
@@ -102,8 +100,8 @@ public class ProjektMarktplatzMapper {
 				stmt.executeUpdate("INSERT INTO projektmarktplatz (ID, Bezeichnung) " + "VALUES (" + pm.getId() + ","
 						+ pm.getBezeichnung() + ")");
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return pm;
@@ -126,8 +124,8 @@ public class ProjektMarktplatzMapper {
 
 			stmt.executeUpdate("UPDATE projektmarktplatz " + "SET Bezeichnung=\"" + pm.getBezeichnung() + "\" "
 					+ "WHERE ID=" + pm.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
 
 		// Um Analogie zu insert(ProjektMarktplatz pm) zu wahren, geben
@@ -151,8 +149,8 @@ public class ProjektMarktplatzMapper {
 		try {
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM projektmarktplatz " + "WHERE ID=" + pm.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e3) {
+			e3.printStackTrace();
 		}
 	}
 
@@ -235,8 +233,8 @@ public class ProjektMarktplatzMapper {
 
 				return pm;
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e5) {
+			e5.printStackTrace();
 			return null;
 		}
 
@@ -262,7 +260,7 @@ public class ProjektMarktplatzMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz" + "WHERE Bezeichnung="
+			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz" + "WHERE Bezeichnung='"
 					+ bezeichnung + " ORDER BY Bezeichnung");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -278,8 +276,8 @@ public class ProjektMarktplatzMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pm);
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e6) {
+			e6.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben

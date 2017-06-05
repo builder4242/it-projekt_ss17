@@ -53,3 +53,7 @@ war/WEB-INF/classes/
 /.settings
 /.gwt
 /build/
+
+*.js
+*.rpc
+*.DS_Store

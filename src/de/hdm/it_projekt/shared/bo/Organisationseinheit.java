@@ -48,94 +48,8 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * GoogleID der Organisationseinheit
 	 */
 	private String googleID;
-	
-	/**
-	 * Setzen der Strasse der Organisationseinheit
-	 * @param strasse
-	 */
-	public void setStrasse(String strasse) {
-		this.strasse = strasse;
-	}
-
-/**
-	 * Auslesen der Strasse der Organisationseinheit
-	 * @return
-	 */
-	public String getStrasse() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
-	 * Setzen der PLZ der Organisationseinheit
-	 * @param plz
-	 */
-	public void setPlz(int plz) {
-		this.plz = plz;
-	}
-
-	/**
-	 * Auslesen der PLZ der Organisationseinheit
-	 * @return
-	 */
-	public String getPlz() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * Setzen des Orts der Organisationseinheit
-	 * @param ort
-	 */
-	public void setOrt(String ort) {
-		this.ort = ort;
-	}
-
-/**
-	 * Auslesen des Orts der Organisationseinheit
-	 * @return
-	 */
-	public String getOrt() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * Setzen der Telefonnummer der Organisationseinheit
-	 * @param tel
-	 */
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-
-	/**
-	 * Auslesen der Telefonnummer der Organisationseinheit
-	 * @return
-	 */
-	public String getTel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * Setzen der GoogleID der Organisationseinheit
-	 * @param googleID
-	 */
-	public void setGoogleID(String googleID) {
-		this.googleID = googleID;
-	}
-
-	/**
-	 * Auslesen der GoogleID der Organisationseinheit
-	 * @return
-	 */
-	public String getGoogleID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * R�ckgabe des Namens der Organisationseinheit
 	 * @return the name
 	 */
 	public String getName() {
@@ -143,7 +57,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	}
 
 	/**
-	 * Setzen des Namens der Organisationseinheit
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -151,15 +64,13 @@ public abstract class Organisationseinheit extends BusinessObject {
 	}
 
 	/**
-	 * R�ckgabe der E-Mail Adresse
 	 * @return the email
 	 */
 	public String getEmail() {
-		return null;
+		return email;
 	}
 
 	/**
-	 * Setzen der E-Mail Adresse
 	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
@@ -167,7 +78,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	}
 
 	/**
-	 * R�ckgabe des Partnerprofils
 	 * @return the partnerprofil
 	 */
 	public Partnerprofil getPartnerprofil() {
@@ -175,10 +85,88 @@ public abstract class Organisationseinheit extends BusinessObject {
 	}
 
 	/**
-	 *  Setzen des Partnerprofils
 	 * @param partnerprofil the partnerprofil to set
 	 */
 	public void setPartnerprofil(Partnerprofil partnerprofil) {
 		this.partnerprofil = partnerprofil;
-	}	
+	}
+
+	/**
+	 * @return the strasse
+	 */
+	public String getStrasse() {
+		return strasse;
+	}
+
+	/**
+	 * @param strasse the strasse to set
+	 */
+	public void setStrasse(String strasse) {
+		this.strasse = strasse;
+	}
+
+	/**
+	 * @return the plz
+	 */
+	public int getPlz() {
+		return plz;
+	}
+
+	/**
+	 * @param plz the plz to set
+	 */
+	public void setPlz(int plz) {
+		this.plz = plz;
+	}
+
+	/**
+	 * @return the ort
+	 */
+	public String getOrt() {
+		return ort;
+	}
+
+	/**
+	 * @param ort the ort to set
+	 */
+	public void setOrt(String ort) {
+		this.ort = ort;
+	}
+
+	/**
+	 * @return the tel
+	 */
+	public String getTel() {
+		return tel;
+	}
+
+	/**
+	 * @param tel the tel to set
+	 */
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	/**
+	 * @return the googleID
+	 */
+	public String getGoogleID() {
+		return googleID;
+	}
+
+	/**
+	 * @param googleID the googleID to set
+	 */
+	public void setGoogleID(String googleID) {
+		this.googleID = googleID;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+
 }

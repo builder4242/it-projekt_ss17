@@ -113,7 +113,7 @@ public class BewertungMapper {
 				 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 				 * 
 				 * @param bt das Objekt, das in die DB geschrieben werden soll
-				 * @return das als Parameter übergebene Objekt
+				 * @return das als Parameter uebergebene Objekt
 				 */
 
 	  			 public Bewertung update(Bewertung bt){
@@ -290,8 +290,8 @@ public class BewertungMapper {
 			 			 
 			 			 //Statement ausfuellen und als Query an die DB schicken
 			 			 ResultSet rs = stmt.executeQuery("SELECT Id, Wert, Stellungnahme, Erstelldatum FROM bewertung "
-			 					 + "WHERE Stellungnahme=" + stellungnahme + " ORDER BY Stellungnahme");
-			 		 
+			 					 + "WHERE Stellungnahme='" + stellungnahme + "' ORDER BY Stellungnahme");
+			 			 
 			 			 
 			 			  //Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
 			 			  //erstellt

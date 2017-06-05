@@ -4,15 +4,12 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
-import de.hdm.it_projekt.shared.bo.Partnerprofil;
-import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Unternehmen;
@@ -106,8 +103,8 @@ public class UnternehmenMapper {
 								+ "VALUES (" + u.getId() + "," + u.getName() + "," + u.getEmail() + "," + u.getStrasse()
 								+ "," + u.getPlz() + "," + u.getOrt() + "," + u.getTel() + "," + u.getGoogleID() + ")");
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return u;
@@ -132,8 +129,8 @@ public class UnternehmenMapper {
 					+ u.getEmail() + "\" " + "SET Strasse=\"" + u.getStrasse() + "\" " + "SET Plz=\"" + u.getPlz()
 					+ "\" " + "SET Ort=\"" + u.getOrt() + "\" " + "SET Tel=\"" + u.getTel() + "\" " + "SET GoogleID=\""
 					+ u.getGoogleID() + "\" " + "WHERE ID=" + u.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
 
 		// Um die Analogie zu insert(Unternehmen u) zu wahren,
@@ -157,8 +154,8 @@ public class UnternehmenMapper {
 		try {
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM organisationseinheit " + "WHERE ID=" + u.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e3) {
+			e3.printStackTrace();
 		}
 	}
 
@@ -249,8 +246,8 @@ public class UnternehmenMapper {
 
 				return u;
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e5) {
+			e5.printStackTrace();
 			return null;
 		}
 		return null;
@@ -273,8 +270,9 @@ public class UnternehmenMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + "WHERE Name=" + name + " ORDER BY Name");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE Name='"
+							+ name + "' AND Typ='U' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
@@ -295,8 +293,8 @@ public class UnternehmenMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(u);
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e6) {
+			e6.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
@@ -320,8 +318,9 @@ public class UnternehmenMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + "WHERE Email=" + email + " ORDER BY Email");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE Email='"
+							+ email + "' AND Typ='U' ORDER BY Email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
@@ -342,8 +341,8 @@ public class UnternehmenMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(u);
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e7) {
+			e7.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben

@@ -12,10 +12,10 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 /**
  * Mapper-Klasse, die <code>Projekt</code>-Objekte auf eine relationale
- * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+ * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
  * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte
- * können in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
+ * geloescht werden koennen. Das Mapping ist bidirektional. D.h., Objekte
+ * koennen in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * 
  *
  * Anlehnung an @author Thies
@@ -29,7 +29,7 @@ public class ProjektMapper {
 	 * hierbei von einem sogenannten <b>Singleton</b>.
 	 * <p>
 	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal
-	 * für sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
+	 * fuer saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
 	 * speichert die einzige Instanz dieser Klasse.
 	 * 
 	 * @see projektMapper()
@@ -46,7 +46,7 @@ public class ProjektMapper {
 	/**
 	 * Diese statische Methode kann aufgrufen werden durch
 	 * <code>ProjektMapper.projektMapper()</code>. Sie stellt die
-	 * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine
+	 * Singleton-Eigenschaft sicher, indem Sie dafuer sorgt, dass nur eine
 	 * einzige Instanz von <code>ProjektMapper</code> existiert.
 	 * <p>
 	 * 
@@ -66,7 +66,7 @@ public class ProjektMapper {
 	}
 
 	/**
-	 * Diese Methode ermöglicht es ein Projekt in der Datenbank anzulegen.
+	 * Diese Methode ermoeglicht es ein Projekt in der Datenbank anzulegen.
 	 * 
 	 * @param Projekt
 	 * @return pr
@@ -185,8 +185,8 @@ public class ProjektMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery(
-					"SELECT Id, Name, Startdatum, Enddatum, Beschreibung " + "FROM projekt " + " ORDER BY Name");
+			ResultSet rs = stmt.executeQuery("SELECT Id, Name, Startdatum, Enddatum, Beschreibung " 
+			+ "FROM projekt " + " ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
@@ -205,7 +205,7 @@ public class ProjektMapper {
 			e4.printStackTrace();
 		}
 
-		// Ergebnisvektor zurückgeben
+		// Ergebnisvektor zurueckgeben
 		return result;
 	}
 
@@ -273,7 +273,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("SELECT Id, Name, Startdatum, Enddatum, Beschreibung" + "FROM projekt "
-					+ "WHERE Name LIKE=" + name + " ORDER BY Name");
+					+ "WHERE Name LIKE='" + name + "' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
@@ -315,7 +315,7 @@ public class ProjektMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT Id, Name, Startdatum, Enddatum, Beschreibung" + "FROM projekt "
-					+ "WHERE Beschreibung =" + beschreibung + " ORDER BY Beschreibung");
+					+ "WHERE Beschreibung ='" + beschreibung + "' ORDER BY Beschreibung");
 
 			result = new Vector<Projekt>();
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
