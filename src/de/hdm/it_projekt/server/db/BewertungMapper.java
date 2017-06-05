@@ -346,6 +346,12 @@ public class BewertungMapper {
 		return result;
 	}
 
+	/**
+	 * Auslesen einer Bewertung anhand einer Bewerbung.
+	 * 
+	 * @param bw
+	 * @return
+	 */
 	public Vector<Bewertung> getByBewerbung(Bewerbung bw) {
 
 		// DB-Verbindung herstellen
