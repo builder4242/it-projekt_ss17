@@ -102,5 +102,13 @@ public class Ausschreibung extends BusinessObject {
 	public void setPartnerprofil(Partnerprofil partnerprofil) {
 		this.partnerprofil = partnerprofil;
 	}
+	
+/**
+ * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die
+ * spezifischen Attribute dieser Klasse aus
+ */
+	public String toString() {
+	    return super.toString() + " " + this.bezeichnung + " " + this.bewerbungsfrist + " " + this.ausschreibungstext;
+	  }
 
 }
