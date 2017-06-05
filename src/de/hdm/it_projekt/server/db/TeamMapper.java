@@ -4,7 +4,6 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -107,8 +106,8 @@ public class TeamMapper {
 								+ "VALUES (" + t.getId() + "," + t.getName() + "," + t.getEmail() + "," + t.getStrasse()
 								+ "," + t.getPlz() + "," + t.getOrt() + "," + t.getTel() + "," + t.getGoogleID() + ")");
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return t;
@@ -133,8 +132,8 @@ public class TeamMapper {
 					+ t.getEmail() + "\" " + "SET Strasse=\"" + t.getStrasse() + "\" " + "SET PLZ=\"" + t.getPlz()
 					+ "\" " + "SET Ort=\"" + t.getOrt() + "\" " + "SET Tel=\"" + t.getTel() + "\" " + "SET GoogleID=\""
 					+ t.getGoogleID() + "\" " + "WHERE ID=" + t.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
 
 		// Um Analogie zu insert(Team t) zu wahren,
@@ -157,8 +156,8 @@ public class TeamMapper {
 		try {
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM organisationseinheit " + "WHERE ID=" + t.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e3) {
+			e3.printStackTrace();
 		}
 
 	}
@@ -226,9 +225,9 @@ public class TeamMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit"
-							+ "WHERE ID=" + id + " ORDER BY ID");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE ID=" + id
+							+ "' AND Typ='T' ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -250,8 +249,8 @@ public class TeamMapper {
 
 				return t;
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e5) {
+			e5.printStackTrace();
 			return null;
 		}
 		return null;
@@ -275,8 +274,9 @@ public class TeamMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + "WHERE name=" + name + " ORDER BY name");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE name='"
+							+ name + "' AND Typ='T' ORDER BY name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.
@@ -297,8 +297,8 @@ public class TeamMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(t);
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e6) {
+			e6.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
@@ -323,8 +323,9 @@ public class TeamMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + "WHERE email=" + email + " ORDER BY email");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE email='"
+							+ email + "' AND Typ='T' ORDER BY email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.
@@ -345,8 +346,8 @@ public class TeamMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(t);
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e7) {
+			e7.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
