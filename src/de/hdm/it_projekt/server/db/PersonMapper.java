@@ -4,7 +4,6 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -105,8 +104,8 @@ public class PersonMapper {
 								+ "," + p.getStrasse() + "," + p.getPlz() + "," + p.getOrt() + "," + p.getTel() + ","
 								+ p.getGoogleID() + ")");
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return p;
@@ -131,8 +130,8 @@ public class PersonMapper {
 					+ p.getVorname() + "\" " + "SET Email=\"" + p.getEmail() + "\" " + "SET Strasse=\"" + p.getStrasse()
 					+ "\" " + "SET PLZ=\"" + p.getPlz() + "\" " + "SET Ort=\"" + p.getOrt() + "\" " + "SET Tel=\""
 					+ p.getTel() + "\" " + "SET GoogleID=\"" + p.getGoogleID() + "\" " + "WHERE ID=" + p.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
 
 		// Um Analogie zu insert(Person p) zu wahren,
@@ -154,9 +153,9 @@ public class PersonMapper {
 
 		try {
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM organisationseinheit " + "WHERE ID=" + p.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+			stmt.executeUpdate("DELETE FROM organisationseinheit WHERE ID=" + p.getId());
+		} catch (SQLException e3) {
+			e3.printStackTrace();
 		}
 	}
 
@@ -207,6 +206,14 @@ public class PersonMapper {
 		return result;
 	}
 
+	/**
+	 * Suchen einer Person mit vorgegebener ID. Da diese eindeutig ist, wird
+	 * genau ein Objekt zurueckgegeben.
+	 * 
+	 * @param id
+	 *            - Primaerschluesselattribut in DB
+	 * @return
+	 */
 	public Person findById(int id) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
@@ -216,8 +223,9 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + " ORDER BY ID");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE ID=" + id
+							+ "' AND Typ='P' ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -240,8 +248,8 @@ public class PersonMapper {
 
 				return p;
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e5) {
+			e5.printStackTrace();
 			return null;
 		}
 		return null;
@@ -287,8 +295,8 @@ public class PersonMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(p);
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e6) {
+			e6.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
@@ -314,8 +322,9 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + "WHERE Vorname=" + vorname + " ORDER BY Vorname");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE Vorname='"
+							+ vorname + "' AND Typ='P' ORDER BY Vorname");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
@@ -337,8 +346,8 @@ public class PersonMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(p);
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e7) {
+			e7.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
@@ -364,8 +373,9 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + "WHERE Email=" + email + " ORDER BY Email");
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit"
+							+ "WHERE Email='" + email + "' AND Typ='P' ORDER BY Email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
@@ -386,8 +396,8 @@ public class PersonMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(p);
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e8) {
+			e8.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
