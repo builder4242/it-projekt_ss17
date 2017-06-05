@@ -18,11 +18,11 @@ public class Person extends Organisationseinheit {
 	private String vorname;
 
 	/**
-	 * R�ckgabe des Vornamens
+	 * Rueckgabe des Vornamens
 	 * @return
 	 */
 	public String getVorname() {
-		return null;
+		return vorname;
 	}
 
 	/**
@@ -33,6 +33,9 @@ public class Person extends Organisationseinheit {
 		this.vorname = vorname;
 	}
 	
+	public String toString() {
+	return super.toString() + " " + this.vorname;
+	  }
 	
 	
 

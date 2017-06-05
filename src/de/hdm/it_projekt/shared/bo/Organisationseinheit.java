@@ -168,5 +168,12 @@ public abstract class Organisationseinheit extends BusinessObject {
 		return serialVersionUID;
 	}
 	
+	/**
+	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
+	 */
+	public String toString() {
+	return super.toString() + " " + this.name + " " + this.email + " " + this.partnerprofil + " " + this.ort + " " + this.plz + " " + this.strasse + " " + this.tel + " " + this.googleID;
+	  }
+	
 
 }

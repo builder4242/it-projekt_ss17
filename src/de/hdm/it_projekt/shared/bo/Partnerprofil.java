@@ -1,6 +1,6 @@
 package de.hdm.it_projekt.shared.bo;
 
-import java.util.Date;
+import java.util.Date; 
 import java.util.Vector;
 
 /**
@@ -18,7 +18,7 @@ public class Partnerprofil extends BusinessObject {
 	private Date erstelldatum;
 	
 	/**
-	 *  Letzte �nderung am Projekt
+	 *  Letzte Änderung am Projekt
 	 */
 	private Date aenderungsdatum;
 	
@@ -30,47 +30,61 @@ public class Partnerprofil extends BusinessObject {
 	public Partnerprofil () {
 		
 		/**
-		 * Pr�fen ob der Vector Eigenschaften
+		 * Pruefen ob der Vector Eigenschaften
 		 */
 		if(eigenschaften == null) {
 			this.eigenschaften = new Vector<Eigenschaft>();
 		}
 	}
 
+
 	/**
-	 * R�ckgabe des Erstelldatums
 	 * @return the erstelldatum
 	 */
 	public Date getErstelldatum() {
-		return null;
+		return erstelldatum;
 	}
 
+
+
 	/**
-	 * Setzen des Erstelldatums
 	 * @param erstelldatum the erstelldatum to set
 	 */
 	public void setErstelldatum(Date erstelldatum) {
 		this.erstelldatum = erstelldatum;
 	}
 
+
+
 	/**
-	 * R�ckgabe des �nderungsdatums
 	 * @return the aenderungsdatum
 	 */
 	public Date getAenderungsdatum() {
-		return null;
+		return aenderungsdatum;
 	}
 
+
+
 	/**
-	 * Setzen des �nderungsdatums
 	 * @param aenderungsdatum the aenderungsdatum to set
 	 */
 	public void setAenderungsdatum(Date aenderungsdatum) {
 		this.aenderungsdatum = aenderungsdatum;
 	}
 
+
+
 	/**
-	 * R�ckgabe des Vectors Eigenschaften
+	 * @param eigenschaften the eigenschaften to set
+	 */
+	public void setEigenschaften(Vector<Eigenschaft> eigenschaften) {
+		this.eigenschaften = eigenschaften;
+	}
+
+
+
+	/**
+	 * Rueckgabe des Vectors Eigenschaften
 	 * @return the eigenschaften
 	 */
 	public Vector<Eigenschaft> getEigenschaften() {
@@ -78,7 +92,7 @@ public class Partnerprofil extends BusinessObject {
 	}
 
 	/**
-	 * Eien weitere Eigenschaft hinzuf�gen
+	 * Eien weitere Eigenschaft hinzufuegen
 	 * @param e
 	 */
 	public void addEigenschaft(Eigenschaft e) {
@@ -86,12 +100,19 @@ public class Partnerprofil extends BusinessObject {
 	}
 	
 	/**
-	 * Eine Eigenschaft l�schen
+	 * Eine Eigenschaft loeschen
 	 * @param Eigenschaft e
-	 * @return true wenn das Objekt erfolgreich gel�scht wurde.
+	 * @return true wenn das Objekt erfolgreich geloescht wurde.
 	 */
 	public boolean deleteEigenschaft(Eigenschaft e) {
 		return this.eigenschaften.remove(e);
 	}	
+	
+	/**
+	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
+	 */
+	public String toString() {
+	return super.toString() + " " + this.aenderungsdatum + " " + this.eigenschaften + " " + this.erstelldatum;
+	  }
 
 }
