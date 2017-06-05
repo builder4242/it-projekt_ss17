@@ -324,7 +324,7 @@ public class BewerbungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT Id, Erstelldatum, Bewerbungstext FROM bewerbung "
-					+ "WHERE Bewerbungstext=" + bewerbungstext + " ORDER BY Bewerbungstext");
+					+ "WHERE Bewerbungstext='" + bewerbungstext + "' ORDER BY Bewerbungstext");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewerbung-Objekt
 			// erstellt
