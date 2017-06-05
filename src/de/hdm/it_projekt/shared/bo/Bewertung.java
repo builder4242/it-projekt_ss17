@@ -1,6 +1,5 @@
 package de.hdm.it_projekt.shared.bo;
 
-import java.sql.Date;
 
 /**
  * Klasse Bewertung (Unterklasse von BusinessObject)
@@ -55,26 +54,12 @@ public class Bewertung extends BusinessObject {
 	public void setWert(float wert) {
 		this.wert = wert;
 	}
-
 	
-	/***
-	 * @author ElifY
-	 * Auslesen des Erstelldatums
-	 * @return
+	/**
+	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
 	 */
-	public String getErstelldatum() {
-		return null;
-	}
-
-	/***
-	 * @author ElifY
-	 * Setzen des Erstelldatums der Bewertung
-	 * @param date
-	 */
-	public void setErstelldatum(Date date) {
-	 
-	
-		
+	public String toString() {
+	return super.toString() + " " + this.stellungnahme + " " + this.wert;
 	}
 
 
