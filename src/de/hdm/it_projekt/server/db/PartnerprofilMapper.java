@@ -4,7 +4,6 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -103,8 +102,8 @@ public class PartnerprofilMapper {
 				stmt.executeUpdate("INSERT INTO partnerprofil (ID, Erstelldatum, Aenderungsdatum) " + "VALUES ("
 						+ pp.getId() + "," + pp.getErstelldatum() + "," + pp.getAenderungsdatum() + ")");
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		/*
@@ -137,8 +136,8 @@ public class PartnerprofilMapper {
 
 			stmt.executeUpdate("UPDATE partnerprofil " + "SET Erstelldatum=\"" + pp.getErstelldatum() + "\" "
 					+ "SET Aenderungsdatum=\"" + pp.getAenderungsdatum() + "\" " + "WHERE ID=" + pp.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
 
 		// Um die Analogie zu insert(Partnerprofil pp) zu wahren,
@@ -161,8 +160,8 @@ public class PartnerprofilMapper {
 		try {
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM partnerprofil " + "WHERE ID=" + pp.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e3) {
+			e3.printStackTrace();
 		}
 	}
 
@@ -247,8 +246,8 @@ public class PartnerprofilMapper {
 
 				return pp;
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e5) {
+			e5.printStackTrace();
 			return null;
 		}
 		return null;
