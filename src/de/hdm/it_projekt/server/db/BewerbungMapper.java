@@ -383,13 +383,40 @@ public class BewerbungMapper {
 	}
 
 	/**
-	 * Auslesen der Bewerbung von einer Person
+	 * Auslesen der Bewerbung von einer Organisationseinheit, die eine Person,
+	 * ein Team oder Unternehmen sein kann.
 	 * 
-	 * @param p
+	 * @param o
 	 * @return
 	 */
 	public Vector<Bewerbung> getByOrganisationseinheit(Organisationseinheit o) {
-		return null;
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Bewerbung> result = new Vector<Bewerbung>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM organisationseinheit WHERE organisationseinheit.ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Bewerbungs-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
 	}
 
 }
