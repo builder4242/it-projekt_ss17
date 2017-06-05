@@ -10,9 +10,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.it_projekt.client.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
+import de.hdm.it_projekt.shared.bo.Person;
+import de.hdm.it_projekt.shared.bo.Projekt;
+import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**
@@ -34,7 +36,7 @@ public class UnternehmenMapper {
 	 * hierbei von einem sogenannten <b>Singleton</b>.
 	 * <p>
 	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal
-	 * für saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
+	 * fuer saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
 	 * speichert die einzige Instanz dieser Klasse.
 	 * 
 	 */
@@ -74,31 +76,49 @@ public class UnternehmenMapper {
 	 * 
 	 * @param u
 	 * @return
-	 * @throws Exception
 	 */
-	public Unternehmen insert(Unternehmen u) throws Exception {
+	public Unternehmen insert(Unternehmen u) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
-		PreparedStatement preStmt = null;
 
 		try {
-			String sql = "INSERT INTO `Unternehmen`(`ID`) VALUES (NULL)";
+			Statement stmt = con.createStatement();
 
-			preStmt = con.prepareStatement(sql);
-			preStmt.executeUpdate();
-			preStmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new IllegalArgumentException("Datenbank fehler!" + e.toString());
+			/*
+			 * Zunaechst schauen wir nach, welches der momentan hoechste
+			 * Primaerschluesselwert ist.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM organisationseinheit ");
+
+			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
+			if (rs.next()) {
+				/*
+				 * u erhaelt den bisher maximalen, nun um 1 inkrementierten
+				 * Primaerschluessel.
+				 */
+				u.setId(rs.getInt("maxid") + 1);
+
+				stmt = con.createStatement();
+
+				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+				stmt.executeUpdate(
+						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID) "
+								+ "VALUES (" + u.getId() + "," + u.getName() + "," + u.getEmail() + "," + u.getStrasse()
+								+ "," + u.getPlz() + "," + u.getOrt() + "," + u.getTel() + "," + u.getGoogleID() + ")");
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
+
 		return u;
 	}
 
-	
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank. 
-	 * @param u - das Objekt, das in die DB geschrieben werden soll
-	 * @return das als Parameter übergebene Objekt
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+	 * 
+	 * @param u
+	 *            - das Objekt, das in die DB geschrieben werden soll
+	 * @return das als Parameter uebergebene Objekt
 	 */
 	public Unternehmen update(Unternehmen u) {
 
@@ -108,26 +128,25 @@ public class UnternehmenMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE Unternehmen " + "SET name=\"" + u.getName() + "\" " + "SET email=\""
-					+ u.getEmail() + "\" " + "SET strasse=\"" + u.getStrasse()
-					+ "\" " + "SET plz=\"" + u.getPLZ() + "\" " + "SET ort=\""
-					+ u.getOrt() + "\" " + "SET tel=\"" + u.getTel() + "\" "
-					+ "SET googleID=\"" + u.getGoogleID() + "\" " + "WHERE ID="
-					+ u.getID());
+			stmt.executeUpdate("UPDATE organisationseinheit " + "SET Name=\"" + u.getName() + "\" " + "SET Email=\""
+					+ u.getEmail() + "\" " + "SET Strasse=\"" + u.getStrasse() + "\" " + "SET Plz=\"" + u.getPlz()
+					+ "\" " + "SET Ort=\"" + u.getOrt() + "\" " + "SET Tel=\"" + u.getTel() + "\" " + "SET GoogleID=\""
+					+ u.getGoogleID() + "\" " + "WHERE ID=" + u.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		// Um Analogie zu insert(Unternehmen u) zu wahren,
+		// Um die Analogie zu insert(Unternehmen u) zu wahren,
 		// geben wir u zurueck.
 		return u;
 	}
 
-	
 	/**
-	 * Loeschen der Daten eines <code>Unternehmen</code>-Objekts aus der Datenbank.
+	 * Loeschen der Daten eines <code>Unternehmen</code>-Objekts aus der
+	 * Datenbank.
 	 * 
-	 * @param u - das Objekt, das aus der DB geloescht werden soll
+	 * @param u
+	 *            - das Objekt, das aus der DB geloescht werden soll
 	 */
 	public void delete(Unternehmen u) {
 
@@ -137,13 +156,12 @@ public class UnternehmenMapper {
 
 		try {
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Unternehmen " + "WHERE ID=" + u.getID());
+			stmt.executeUpdate("DELETE FROM organisationseinheit " + "WHERE ID=" + u.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
 	/**
 	 * Auslesen aller Unternehmen.
 	 * 
@@ -162,23 +180,23 @@ public class UnternehmenMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID, name, email, strasse, plz, ort, tel, googleID "
-			+ "FROM Organisationseinheit" + " ORDER BY ID");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
+					+ "FROM organisationseinheit" + " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
 
 			while (rs.next()) {
 				Unternehmen u = new Unternehmen();
-				u.setID(rs.getInt("ID"));
-				u.setName(rs.getString("name"));
-				u.setEmail(rs.getString("email"));
-				u.setStrasse(rs.getString("strasse"));
-				u.setPlz(rs.getInt("plz"));
-				u.setOrt(rs.getString("ort"));
-				u.setTel(rs.getString("tel"));
-				u.setGoogleID(rs.getString("googleID"));
-				
+				u.setId(rs.getInt("ID"));
+				u.setName(rs.getString("Name"));
+				u.setEmail(rs.getString("Email"));
+				u.setStrasse(rs.getString("Strasse"));
+				u.setPlz(rs.getInt("PLZ"));
+				u.setOrt(rs.getString("Ort"));
+				u.setTel(rs.getString("Tel"));
+				u.setGoogleID(rs.getString("GoogleID"));
+
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(u);
 			}
@@ -190,7 +208,54 @@ public class UnternehmenMapper {
 		return result;
 	}
 
-	
+	/**
+	 * Suchen eines Unternehmens mit vorgegebener ID. Da diese eindeutig ist,
+	 * wird genau ein Objekt zurueckgegeben.
+	 * 
+	 * @param id
+	 *            - Primaerschluesselattribut in DB
+	 * @return
+	 */
+	public Unternehmen findById(int id) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit"
+							+ "WHERE ID=" + id + " ORDER BY ID");
+
+			/*
+			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
+			 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+
+				Unternehmen u = new Unternehmen();
+				u.setId(rs.getInt("ID"));
+				u.setName(rs.getString("Name"));
+				u.setEmail(rs.getString("Email"));
+				u.setStrasse(rs.getString("Strasse"));
+				u.setPlz(rs.getInt("PLZ"));
+				u.setOrt(rs.getString("Ort"));
+				u.setTel(rs.getString("Tel"));
+				u.setGoogleID(rs.getString("GoogleID"));
+
+				return u;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+
 	/**
 	 * Auslesen eines Unternehmens mit einem bestimmten Namen.
 	 * 
@@ -208,8 +273,8 @@ public class UnternehmenMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, name, email, strasse, plz, ort, tel, googleID FROM Organisationseinheit"
-					+ "WHERE name=" + name + " ORDER BY name");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
+					+ "FROM organisationseinheit" + "WHERE Name=" + name + " ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
@@ -218,14 +283,14 @@ public class UnternehmenMapper {
 				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
 				// Ergebnis-Objekts
 				Unternehmen u = new Unternehmen();
-				u.setID(rs.getInt("ID"));
-				u.setName(rs.getString("name"));
-				u.setEmail(rs.getString("email"));
-				u.setStrasse(rs.getString("strasse"));
-				u.setPlz(rs.getInt("plz"));
-				u.setOrt(rs.getString("ort"));
-				u.setTel(rs.getString("tel"));
-				u.setGoogleID(rs.getString("googleID"));
+				u.setId(rs.getInt("ID"));
+				u.setName(rs.getString("Name"));
+				u.setEmail(rs.getString("Email"));
+				u.setStrasse(rs.getString("Strasse"));
+				u.setPlz(rs.getInt("PLZ"));
+				u.setOrt(rs.getString("Ort"));
+				u.setTel(rs.getString("Tel"));
+				u.setGoogleID(rs.getString("GoogleID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(u);
@@ -255,8 +320,8 @@ public class UnternehmenMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, name, email, strasse, plz, ort, tel, googleID FROM Organisationseinheit"
-					+ "WHERE email=" + email + " ORDER BY email");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
+					+ "FROM organisationseinheit" + "WHERE Email=" + email + " ORDER BY Email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
@@ -265,20 +330,19 @@ public class UnternehmenMapper {
 				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
 				// Ergebnis-Objekts
 				Unternehmen u = new Unternehmen();
-				u.setID(rs.getInt("ID"));
-				u.setName(rs.getString("name"));
-				u.setEmail(rs.getString("email"));
-				u.setStrasse(rs.getString("strasse"));
-				u.setPlz(rs.getInt("plz"));
-				u.setOrt(rs.getString("ort"));
-				u.setTel(rs.getString("tel"));
-				u.setGoogleID(rs.getString("googleID"));
+				u.setId(rs.getInt("ID"));
+				u.setName(rs.getString("Name"));
+				u.setEmail(rs.getString("Email"));
+				u.setStrasse(rs.getString("Strasse"));
+				u.setPlz(rs.getInt("PLZ"));
+				u.setOrt(rs.getString("Ort"));
+				u.setTel(rs.getString("Tel"));
+				u.setGoogleID(rs.getString("GoogleID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(u);
 			}
-		}
-		catch (SQLException e2) {
+		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
@@ -286,26 +350,24 @@ public class UnternehmenMapper {
 		return result;
 	}
 
-	
 	/**
 	 * Erhalten des Unternehmens anhand eines Projekts.
 	 * 
 	 * @param pr
 	 * @return
 	 */
-	public Vector<Unternehmen> getByProjekt(Projekt pr){
-		
+	public Vector<Unternehmen> getByProjekt(Projekt pr) {
+		return null;
 	}
-	
-	
+
 	/**
 	 * Erhalten des Unternehmens anhand eines ProjektMarktplatzes.
 	 * 
 	 * @param pm
 	 * @return
 	 */
-	public Vector<Unternehmen> getByProjektMarktplatz(ProjektMarktplatz pm){
-		
+	public Vector<Unternehmen> getByProjektMarktplatz(ProjektMarktplatz pm) {
+		return null;
 	}
-	
+
 }
