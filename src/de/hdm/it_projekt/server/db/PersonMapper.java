@@ -435,10 +435,9 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("select o.ID as ID "
-					+ "from organisationseinheit as o"
-					+ "inner join projektmarktplatz_has_organisationseinheit on organisationseinheit.ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
-					+ "where Projektmarktplatz_ID="+pm.getId()+" AND Typ='P'");
+			ResultSet rs = stmt.executeQuery("SELECT o.ID AS ID FROM organisationseinheit AS o "
+					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit.ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
+					+ "WHERE Projektmarktplatz_ID=" + pm.getId() + " AND Typ='P'");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
@@ -447,8 +446,8 @@ public class PersonMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(findById(rs.getInt("ID")));
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+		} catch (SQLException e9) {
+			e9.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben

@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
-import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Team;
 
@@ -357,24 +356,40 @@ public class TeamMapper {
 
 	/**
 	 * Auslesen des zugehoerigen <code>Team</code>-Objekts zu einem gegebenen
-	 * Projekt.
-	 * 
-	 * @param pr
-	 * @return
-	 */
-	public Vector<Team> getByProjekt(Projekt pr) {
-		return null;
-	}
-
-	/**
-	 * Auslesen des zugehoerigen <code>Team</code>-Objekts zu einem gegebenen
 	 * Projektmarktplatz.
 	 * 
 	 * @param pm
 	 * @return
 	 */
-	public Vector<Team> getByProjektmarktplatz(ProjektMarktplatz pm) {
-		return null;
+	public Vector<Team> getByProjektMarktplatz(ProjektMarktplatz pm) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Team> result = new Vector<Team>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT o.ID AS ID FROM organisationseinheit AS o "
+					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit.ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
+					+ "WHERE Projektmarktplatz_ID=" + pm.getId() + " AND Typ='P'");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Team-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
 	}
 
 }
