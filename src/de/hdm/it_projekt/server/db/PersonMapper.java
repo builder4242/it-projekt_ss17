@@ -11,7 +11,6 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
-import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 /**
@@ -407,17 +406,6 @@ public class PersonMapper {
 
 	/**
 	 * Auslesen des zugehoerigen <code>Person</code>-Objekts zu einem gegebenen
-	 * Projekt.
-	 * 
-	 * @param pr
-	 * @return
-	 */
-	public Vector<Person> getByProjekt(Projekt pr) {
-		return null;
-	}
-
-	/**
-	 * Auslesen des zugehoerigen <code>Person</code>-Objekts zu einem gegebenen
 	 * Projektmarktplatz.
 	 * 
 	 * @param pm
@@ -436,8 +424,8 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT o.ID AS ID FROM organisationseinheit AS o "
-					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit.ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
-					+ "WHERE Projektmarktplatz_ID=" + pm.getId() + " AND Typ='P'");
+					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit_ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
+					+ "WHERE projektmarktplatz_ID=" + pm.getId() + " AND Typ='P'");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.

@@ -367,8 +367,8 @@ public class UnternehmenMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT o.ID AS ID FROM organisationseinheit AS o "
-					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit.ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
-					+ "WHERE Projektmarktplatz_ID=" + pm.getId() + " AND Typ='U'");
+					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit_ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
+					+ "WHERE projektmarktplatz_ID=" + pm.getId() + " AND Typ='U'");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
