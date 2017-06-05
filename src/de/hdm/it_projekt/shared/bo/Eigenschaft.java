@@ -28,7 +28,7 @@ public class Eigenschaft extends BusinessObject {
 	}
 		
 	/**
-	 * Rückgabe des Eigenschaftsnamens
+	 * Rueckgabe des Eigenschaftsnamens
 	 * @return name
 	 */
 	public String getName() {
@@ -44,7 +44,7 @@ public class Eigenschaft extends BusinessObject {
 	}
 
 	/**
-	 * Setzen Rückgabe des Eigenschaftswertes
+	 * Setzen Rueckgabe des Eigenschaftswertes
 	 * @return Wert
 	 */
 	public float getWert() {
@@ -58,4 +58,11 @@ public class Eigenschaft extends BusinessObject {
 	public void setWert(float f) {
 		this.wert = f;
 	}
+	
+	/**
+	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
+	 */
+	public String toString() {
+	return super.toString() + " " + this.name + " " + this.wert;
+		  }
 }

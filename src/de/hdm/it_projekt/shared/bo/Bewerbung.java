@@ -62,7 +62,7 @@ public class Bewerbung extends BusinessObject {
 	}
 	
 	/**
-	 *  Rückgabe der Bewertung
+	 *  Rï¿½ckgabe der Bewertung
 	 * @return the bewertung
 	 */
 	public Bewertung getBewertung() {
@@ -76,4 +76,11 @@ public class Bewerbung extends BusinessObject {
 	public void setBewertung(Bewertung bewertung) {
 		this.bewertung = bewertung;
 	}
+	
+	/**
+	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
+	 */
+	public String toString() {
+	return super.toString() + " " + this.erstelldatum + " " + this.bewerbungstext;
+	  }
 }
