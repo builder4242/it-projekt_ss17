@@ -37,7 +37,7 @@ public class ProjektMapper {
 	private static ProjektMapper projektMapper = null;
 
 	/**
-	 * Geschützter Konstruktor - verhindert die Möglichkeit, mit
+	 * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit
 	 * <code>new</code> neue Instanzen dieser Klasse zu erzeugen.
 	 */
 	protected ProjektMapper() {
@@ -67,10 +67,10 @@ public class ProjektMapper {
 
 	/**
 	 * Diese Methode ermoeglicht es ein Projekt in der Datenbank anzulegen.
-	 * 
-	 * @param Projekt
-	 * @return pr
+	 * @param pr
+	 * @return
 	 */
+	
 	public Projekt insert(Projekt pr) {
 
 		// DB-Verbindung herstellen
