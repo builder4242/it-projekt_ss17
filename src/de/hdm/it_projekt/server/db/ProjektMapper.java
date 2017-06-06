@@ -96,7 +96,7 @@ public class ProjektMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-				stmt.executeUpdate("INSERT INTO projekt (Id, Name, Startdatum, Enddatum, Beschreibung) " + "VALUES ("
+				stmt.executeUpdate("INSERT INTO projekt (ID, Name, Startdatum, Enddatum, Beschreibung) " + "VALUES ("
 						+ pr.getId() + "," + pr.getName() + "," + pr.getStartdatum() + "," + pr.getEnddatum() + ","
 						+ pr.getBeschreibung() + ")");
 			}
@@ -129,7 +129,7 @@ public class ProjektMapper {
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 			stmt.executeUpdate("UPDATE projekt " + "SET Name=\"" + pr.getName() + "\"," + "Startdatum=\""
 					+ pr.getStartdatum() + "\", " + "Enddatum=\"" + pr.getEnddatum() + "\" " + "\", "
-					+ "Beschreibung=\"" + pr.getBeschreibung() + "\" " + "WHERE Id=" + pr.getId());
+					+ "Beschreibung=\"" + pr.getBeschreibung() + "\" " + "WHERE ID=" + pr.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -158,7 +158,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-			stmt.executeUpdate("DELETE FROM projekt" + "WHERE Id=" + pr.getId());
+			stmt.executeUpdate("DELETE FROM projekt" + "WHERE ID=" + pr.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -185,14 +185,14 @@ public class ProjektMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT Id, Name, Startdatum, Enddatum, Beschreibung " 
-			+ "FROM projekt " + " ORDER BY Name");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung " + "FROM projekt " + " ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
 			while (rs.next()) {
 				Projekt pr = new Projekt();
-				pr.setId(rs.getInt("Id"));
+				pr.setId(rs.getInt("ID"));
 				pr.setName(rs.getString("Name"));
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
@@ -230,8 +230,8 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT Id, Name, Startdatum, Enddatum, Beschreibung FROM projekt "
-					+ "WHERE Id=" + id + " ORDER BY Id");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Startdatum, Enddatum, Beschreibung FROM projekt "
+					+ "WHERE ID=" + id + " ORDER BY ID");
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -242,7 +242,7 @@ public class ProjektMapper {
 
 				// Ergebnis-Tupel in Objekt umwandeln
 				Projekt pr = new Projekt();
-				pr.setId(rs.getInt("Id"));
+				pr.setId(rs.getInt("ID"));
 				pr.setName(rs.getString("Name"));
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
@@ -272,14 +272,14 @@ public class ProjektMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT Id, Name, Startdatum, Enddatum, Beschreibung" + "FROM projekt "
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Startdatum, Enddatum, Beschreibung" + "FROM projekt "
 					+ "WHERE Name LIKE='" + name + "' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
 			while (rs.next()) {
 				Projekt pr = new Projekt();
-				pr.setId(rs.getInt("Id"));
+				pr.setId(rs.getInt("ID"));
 				pr.setName(rs.getString("Name"));
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
@@ -314,7 +314,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT Id, Name, Startdatum, Enddatum, Beschreibung" + "FROM projekt "
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Startdatum, Enddatum, Beschreibung" + "FROM projekt "
 					+ "WHERE Beschreibung ='" + beschreibung + "' ORDER BY Beschreibung");
 
 			result = new Vector<Projekt>();
@@ -322,7 +322,7 @@ public class ProjektMapper {
 			// Projekt-Objekt erstellt.
 			while (rs.next()) {
 				Projekt pr = new Projekt();
-				pr.setId(rs.getInt("Id"));
+				pr.setId(rs.getInt("ID"));
 				pr.setName(rs.getString("Name"));
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
@@ -349,7 +349,33 @@ public class ProjektMapper {
 	 */
 
 	public Vector<Projekt> getByProjektmarktplatz(ProjektMarktplatz pm) {
-		return null;
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Projekt> result = new Vector<Projekt>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM projekt WHERE projektmarktplatz_ID=" + pm.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Projekt-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
+			}
+		} catch (SQLException e7) {
+			e7.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
 	}
 
 	/**
@@ -359,7 +385,59 @@ public class ProjektMapper {
 	 * @return
 	 */
 	public Vector<Projekt> getByProjektleiter(Person p) {
-		return null;
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Projekt> result = new Vector<Projekt>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projektleiter_ID=" + p.getId());
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Projekt-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
+	public Vector<Projekt> getByProjektbetreiber(Projekt pr) {
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Projekt> result = new Vector<Projekt>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM projekt WHERE projektbetreiber_ID=" + pr.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Projekt-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
 
 	}
 }
