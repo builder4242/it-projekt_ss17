@@ -30,7 +30,7 @@ public class ProjektMarktplatz implements EntryPoint {
 		
 		
 		/*Panel zur HTML Seite hinzufügen */ 
-		 RootPanel.get("projektmarktplatz").add(mainPanel);
+		 RootPanel.get().add(mainPanel);
 		
 		
 	}
