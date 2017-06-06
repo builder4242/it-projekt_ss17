@@ -33,7 +33,7 @@ public class Ausschreibung extends BusinessObject {
 	/**
 	 * Partnerprofil zur Ausschreibung
 	 */
-	private Partnerprofil partnerprofil = null;
+	private int partnerprofilId;
 
 	/**
 	 * Auslesen der Bezeichnung der Ausschreibung
@@ -92,15 +92,15 @@ public class Ausschreibung extends BusinessObject {
 	/**
 	 * @return the partnerprofil
 	 */
-	public Partnerprofil getPartnerprofil() {
-		return partnerprofil;
+	public int getPartnerprofilId() {
+		return partnerprofilId;
 	}
 
 	/**
 	 * @param partnerprofil the partnerprofil to set
 	 */
-	public void setPartnerprofil(Partnerprofil partnerprofil) {
-		this.partnerprofil = partnerprofil;
+	public void setPartnerprofilId(int id) {
+		this.partnerprofilId = id;
 	}
 	
 /**

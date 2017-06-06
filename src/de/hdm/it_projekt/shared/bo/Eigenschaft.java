@@ -19,13 +19,6 @@ public class Eigenschaft extends BusinessObject {
 	 * Eigenschaftswert
 	 */
 	private float wert;
-
-	/**
-	 * Default Konstruktor
-	 */
-	public Eigenschaft() {
-		
-	}
 		
 	/**
 	 * Rueckgabe des Eigenschaftsnamens

@@ -13,13 +13,6 @@ public class ProjektMarktplatz extends BusinessObject {
 
 	private String bezeichnung;
 
-	private Vector<Projekt> projekte = null;
-
-	public ProjektMarktplatz() {
-		if (this.projekte == null)
-			this.projekte = new Vector<Projekt>();
-	}
-
 	/**
 	 * 
 	 * @return
@@ -36,16 +29,6 @@ public class ProjektMarktplatz extends BusinessObject {
 		this.bezeichnung = bezeichnung;
 	}
 	
-	public void addProjekt(Projekt pr) throws IllegalArgumentException {
-		this.projekte.add(pr);
-	}
-	public void updateProjekt(Projekt pr) throws IllegalArgumentException {
-		this.projekte.set(this.projekte.indexOf(pr), pr);
-	}
-	public void deleteProjekt(Projekt pr) throws IllegalArgumentException {
-		this.projekte.remove(pr);
-	}
-
 	/**
 	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode
 	 * die spezifischen Attribute dieser Klasse aus

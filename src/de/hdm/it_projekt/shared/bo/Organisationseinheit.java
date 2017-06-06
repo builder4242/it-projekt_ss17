@@ -22,7 +22,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	/**
 	 * Partnerprofil zur Organisationseinheit
 	 */
-	private Partnerprofil partnerprofil = null;
+	private int partnerprofilId;
 
   /**
 	 * Strasse der Organisationseinheit
@@ -80,15 +80,15 @@ public abstract class Organisationseinheit extends BusinessObject {
 	/**
 	 * @return the partnerprofil
 	 */
-	public Partnerprofil getPartnerprofil() {
-		return partnerprofil;
+	public int getPartnerprofil() {
+		return partnerprofilId;
 	}
 
 	/**
 	 * @param partnerprofil the partnerprofil to set
 	 */
-	public void setPartnerprofil(Partnerprofil partnerprofil) {
-		this.partnerprofil = partnerprofil;
+	public void setPartnerprofil(int id) {
+		this.partnerprofilId = id;
 	}
 
 	/**
@@ -160,20 +160,11 @@ public abstract class Organisationseinheit extends BusinessObject {
 	public void setGoogleID(String googleID) {
 		this.googleID = googleID;
 	}
-
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	
 	/**
 	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
 	 */
 	public String toString() {
-	return super.toString() + " " + this.name + " " + this.email + " " + this.partnerprofil + " " + this.ort + " " + this.plz + " " + this.strasse + " " + this.tel + " " + this.googleID;
+	return super.toString() + " " + this.name + " " + this.email + " " + this.ort + " " + this.plz + " " + this.strasse + " " + this.tel + " " + this.googleID;
 	  }
-	
-
 }
