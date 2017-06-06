@@ -11,18 +11,18 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.it_projekt.shared.bo.Projekt;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 /**
  * Formular für die Darstellung des selektierten Kunden
  * 
  * @author Julian Reimenthal
  */
-public class ProjektForm extends VerticalPanel {
+public class OrganisationseinheitForm extends VerticalPanel {
 
 
 		BankAdministrationAsync bankVerwaltung = ClientsideSettings
 				.getBankVerwaltung();
-		Projekt projektToDisplay = null;
+		Organisationseinheit organisationseinheitToDisplay = null;
 		ProjektOrganisationseinheitTreeView catvm = null;
 
 		/*
@@ -37,39 +37,39 @@ public class ProjektForm extends VerticalPanel {
 		 * einem Raster angeordnet, dessen Größe sich aus dem Platzbedarf
 		 * der enthaltenen Widgets bestimmt.
 		 */
-		public ProjektForm() {
-			Grid projektGrid = new Grid(3, 2);
-			this.add(projektGrid);
+		public OrganisationseinheitForm() {
+			Grid organisationseinheitGrid = new Grid(3, 2);
+			this.add(organisationseinheitGrid);
 
 			Label idLabel = new Label("ID");
-			projektGrid.setWidget(0, 0, idLabel);
-			projektGrid.setWidget(0, 1, idValueLabel);
+			organisationseinheitGrid.setWidget(0, 0, idLabel);
+			organisationseinheitGrid.setWidget(0, 1, idValueLabel);
 
 			Label firstNameLabel = new Label("Vorname");
-			projektGrid.setWidget(1, 0, firstNameLabel);
-			projektGrid.setWidget(1, 1, firstNameTextBox);
+			organisationseinheitGrid.setWidget(1, 0, firstNameLabel);
+			organisationseinheitGrid.setWidget(1, 1, firstNameTextBox);
 
 			Label lastNameLabel = new Label("Nachname");
-			projektGrid.setWidget(2, 0, lastNameLabel);
-			projektGrid.setWidget(2, 1, lastNameTextBox);
+			organisationseinheitGrid.setWidget(2, 0, lastNameLabel);
+			organisationseinheitGrid.setWidget(2, 1, lastNameTextBox);
 
-			HorizontalPanel projektButtonsPanel = new HorizontalPanel();
-			this.add(projektButtonsPanel);
+			HorizontalPanel organisationseinheitButtonsPanel = new HorizontalPanel();
+			this.add(organisationseinheitButtonsPanel);
 
 			Button changeButton = new Button("Ändern");
 			changeButton.addClickHandler(new ChangeClickHandler());
-			projektButtonsPanel.add(changeButton);
+			organisationseinheitButtonsPanel.add(changeButton);
 
 			Button searchButton = new Button("Suchen");
-			projektButtonsPanel.add(searchButton);
+			organisationseinheitButtonsPanel.add(searchButton);
 
 			Button deleteButton = new Button("Löschen");
 			deleteButton.addClickHandler(new DeleteClickHandler());
-			projektButtonsPanel.add(deleteButton);
+			organisationseinheitButtonsPanel.add(deleteButton);
 
 			Button newButton = new Button("Neu");
 			newButton.addClickHandler(new NewClickHandler());
-			projektButtonsPanel.add(newButton);
+			organisationseinheitButtonsPanel.add(newButton);
 		}
 
 		/*
@@ -77,7 +77,7 @@ public class ProjektForm extends VerticalPanel {
 		 */
 
 		/**
-		 * Die Änderung einer Projekt bezieht sich auf den
+		 * Die Änderung einer Organisationseinheit bezieht sich auf den
 		 * Namen, im Fall dass es sich um eine Person handelt zusätzlich auf den Vorname.
 		 *  Es erfolgt der Aufruf der Service-Methode "save".
 		 * 
@@ -85,10 +85,10 @@ public class ProjektForm extends VerticalPanel {
 		private class ChangeClickHandler implements ClickHandler {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (projektToDisplay != null) {
-					projektToDisplay.setName(firstNameTextBox.getText());
-					projektToDisplay.setLastName(lastNameTextBox.getText());
-					bankVerwaltung.save(projektToDisplay, new SaveCallback());
+				if (organisationseinheitToDisplay != null) {
+					organisationseinheitToDisplay.setName(firstNameTextBox.getText());
+					organisationseinheitToDisplay.setLastName(lastNameTextBox.getText());
+					bankVerwaltung.save(organisationseinheitToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
 				}
@@ -104,7 +104,7 @@ public class ProjektForm extends VerticalPanel {
 			@Override
 			public void onSuccess(Void result) {
 				// Die Änderung wird zum Kunden- und Kontenbaum propagiert.
-				catvm.updateProjekt(projektToDisplay);
+				catvm.updateOrganisationseinheit(organisationseinheitToDisplay);
 			}
 		}
 
@@ -117,21 +117,21 @@ public class ProjektForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (projektToDisplay == null) {
+				if (organisationseinheitToDisplay == null) {
 					Window.alert("kein Kunde ausgewählt");
 				} else {
-					bankVerwaltung.delete(projektToDisplay,
-							new deleteProjektCallback(projektToDisplay));
+					bankVerwaltung.delete(organisationseinheitToDisplay,
+							new deleteOrganisationseinheitCallback(organisationseinheitToDisplay));
 				}
 			}
 		}
 
-		class deleteProjektCallback implements AsyncCallback<Void> {
+		class deleteOrganisationseinheitCallback implements AsyncCallback<Void> {
 
-			Projekt projekt = null;
+			Organisationseinheit organisationseinheit = null;
 
-			deleteProjektCallback(Projekt c) {
-				projekt = c;
+			deleteOrganisationseinheitCallback(Organisationseinheit c) {
+				organisationseinheit = c;
 			}
 
 			@Override
@@ -141,9 +141,9 @@ public class ProjektForm extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Void result) {
-				if (projekt != null) {
+				if (organisationseinheit != null) {
 					setSelected(null);
-					catvm.removeProjekt(projekt);
+					catvm.removeOrganisationseinheit(organisationseinheit);
 				}
 			}
 		}
@@ -159,12 +159,12 @@ public class ProjektForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				String firstName = firstNameTextBox.getText();
 				String lastName = lastNameTextBox.getText();
-				bankVerwaltung.createProjekt(firstName, lastName,
-						new CreateProjektCallback());
+				bankVerwaltung.createOrganisationseinheit(firstName, lastName,
+						new CreateOrganisationseinheitCallback());
 			}
 		}
 
-		class CreateProjektCallback implements AsyncCallback<Projekt> {
+		class CreateOrganisationseinheitCallback implements AsyncCallback<Organisationseinheit> {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -172,17 +172,17 @@ public class ProjektForm extends VerticalPanel {
 			}
 
 			@Override
-			public void onSuccess(Projekt projekt) {
-				if (projekt != null) {
+			public void onSuccess(Organisationseinheit organisationseinheit) {
+				if (organisationseinheit != null) {
 					// Das erfolgreiche Hinzufügen eines Kunden wird an den Kunden- und
 					// Kontenbaum propagiert.
-					catvm.addProjekt(projekt);
+					catvm.addOrganisationseinheit(organisationseinheit);
 				}
 			}
 		}
 
 		// catvm setter
-		void setCatvm(ProjektOrganisationseinheitTreeView catvm) {
+		void setCatvm(OrganisationseinheitAccountsTreeViewModel catvm) {
 			this.catvm = catvm;
 		}
 
@@ -191,12 +191,12 @@ public class ProjektForm extends VerticalPanel {
 		 * zugehörenden Textfelder mit den Informationen aus dem Kundenobjekt
 		 * gefüllt bzw. gelöscht.
 		 */
-		void setSelected(Projekt c) {
+		void setSelected(Organisationseinheit c) {
 			if (c != null) {
-				projektToDisplay = c;
-				firstNameTextBox.setText(projektToDisplay.getFirstName());
-				lastNameTextBox.setText(projektToDisplay.getName());
-				idValueLabel.setText(Integer.toString(projektToDisplay.getId()));
+				organisationseinheitToDisplay = c;
+				firstNameTextBox.setText(organisationseinheitToDisplay.getFirstName());
+				lastNameTextBox.setText(organisationseinheitToDisplay.getName());
+				idValueLabel.setText(Integer.toString(organisationseinheitToDisplay.getId()));
 			} else {
 				firstNameTextBox.setText("");
 				lastNameTextBox.setText("");
@@ -205,9 +205,5 @@ public class ProjektForm extends VerticalPanel {
 		}
 
 	}
-
-}
-
-public class ProjektForm {
 
 }
