@@ -91,7 +91,8 @@ public class TeamMapper {
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
-				/*
+				
+				/* 
 				 * t erhaelt den bisher maximalen, nun um 1 inkrementierten
 				 * Primaerschluessel.
 				 */
@@ -216,6 +217,7 @@ public class TeamMapper {
 	 * @return
 	 */
 	public Team findById(int id) {
+
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
 
@@ -263,6 +265,7 @@ public class TeamMapper {
 	 * @return
 	 */
 	public Vector<Team> findByName(String name) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Team> result = new Vector<Team>();
@@ -312,6 +315,7 @@ public class TeamMapper {
 	 * @return
 	 */
 	public Vector<Team> findByMail(String email) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Team> result = new Vector<Team>();

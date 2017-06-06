@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 /**
@@ -74,6 +73,7 @@ public class ProjektMarktplatzMapper {
 	 * @return
 	 */
 	public ProjektMarktplatz insert(ProjektMarktplatz pm) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 
@@ -88,6 +88,7 @@ public class ProjektMarktplatzMapper {
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
+				
 				/*
 				 * pm erhaelt den bisher maximalen, nun um 1 inkrementierten
 				 * Primaerschluessel.
@@ -282,16 +283,6 @@ public class ProjektMarktplatzMapper {
 
 		// Ergebnisvektor zurueckgeben
 		return result;
-	}
-
-	/**
-	 * Erhalten einer Person anhand eines Teilnehmers.
-	 * 
-	 * @param p
-	 * @return
-	 */
-	public Vector<Person> getByPerson(Person p) {
-		return null;
 	}
 
 }
