@@ -105,7 +105,7 @@ public class BewerbungMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO bewerbung (Id, Erstelldatum, Bewerbungstext) " + "VALUES (" + bw.getId()
+				stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext) " + "VALUES (" + bw.getId()
 						+ "," + bw.getErstelldatum() + "," + bw.getBewerbungstext() + ")");
 			}
 		} catch (SQLException e1) {
@@ -134,7 +134,7 @@ public class BewerbungMapper {
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 			stmt.executeUpdate("UPDATE bewerbung" + "SET Erstelldatum=\"" + bw.getErstelldatum() + "\","
-					+ "Bewerbungstext=\"" + bw.getBewerbungstext() + "WHERE Id=" + bw.getId());
+					+ "Bewerbungstext=\"" + bw.getBewerbungstext() + "WHERE ID=" + bw.getId());
 		}
 
 		catch (SQLException e2) {
@@ -162,7 +162,7 @@ public class BewerbungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM bewerbung" + "WHERE Id=" + bw.getId());
+			stmt.executeUpdate("DELETE FROM bewerbung" + "WHERE ID=" + bw.getId());
 		}
 
 		catch (SQLException e3) {
@@ -192,13 +192,13 @@ public class BewerbungMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT Id, Erstelldatum, Bewerbungstext " + "FROM bewerbung " + " ORDER BY Id");
+					.executeQuery("SELECT ID, Erstelldatum, Bewerbungstext " + "FROM bewerbung " + " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewerbung-Objekt erstellt.
 			while (rs.next()) {
 				Bewerbung bw = new Bewerbung();
-				bw.setId(rs.getInt("Id"));
+				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
 
@@ -235,7 +235,7 @@ public class BewerbungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT Id, Erstelldatum, Bewerbungstext FROM bewerbung " + "WHERE Id=" + id + "ORDER BY Id");
+					"SELECT ID, Erstelldatum, Bewerbungstext FROM bewerbung " + "WHERE ID=" + id + "ORDER BY ID");
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -247,7 +247,7 @@ public class BewerbungMapper {
 				// Ausgabe des Ergebnis-Objekts.
 
 				Bewerbung bw = new Bewerbung();
-				bw.setId(rs.getInt("Id"));
+				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
 
@@ -281,14 +281,14 @@ public class BewerbungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT Id, Erstelldatum, Bewerbungstext FROM bewerbung "
+			ResultSet rs = stmt.executeQuery("SELECT ID, Erstelldatum, Bewerbungstext FROM bewerbung "
 					+ "WHERE Erstelldatum=" + erstelldatum + " ORDER BY Erstelldatum");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewerbung-Objekt
 			// erstellt
 			while (rs.next()) {
 				Bewerbung bw = new Bewerbung();
-				bw.setId(rs.getInt("Id"));
+				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
 
@@ -324,14 +324,14 @@ public class BewerbungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT Id, Erstelldatum, Bewerbungstext FROM bewerbung "
+			ResultSet rs = stmt.executeQuery("SELECT ID, Erstelldatum, Bewerbungstext FROM bewerbung "
 					+ "WHERE Bewerbungstext='" + bewerbungstext + "' ORDER BY Bewerbungstext");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewerbung-Objekt
 			// erstellt
 			while (rs.next()) {
 				Bewerbung bw = new Bewerbung();
-				bw.setId(rs.getInt("Id"));
+				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
 

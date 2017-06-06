@@ -9,7 +9,6 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Bewertung;
-import de.hdm.it_projekt.shared.bo.Person;
 
 /**
  * Anlehnung an @author Thies
@@ -102,7 +101,7 @@ public class BewertungMapper {
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 				stmt.executeUpdate(
-						"INSERT INTO bewertung (Id, Wert, Stellungnahme, Erstelldatum)" + "VALUES (" + bt.getId() + ","
+						"INSERT INTO bewertung (ID, Wert, Stellungnahme, Erstelldatum)" + "VALUES (" + bt.getId() + ","
 								+ bt.getWert() + "," + bt.getStellungnahme() + "," + bt.getErstelldatum() + ")");
 
 			}
@@ -133,7 +132,7 @@ public class BewertungMapper {
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 			stmt.executeUpdate("UPDATE bewertung " + "SET Wert=\"" + bt.getWert() + "\"," + "Stellungnahme=\""
-					+ bt.getStellungnahme() + "\", " + "Erstelldatum=\"" + bt.getErstelldatum() + "\" " + "WHERE id="
+					+ bt.getStellungnahme() + "\", " + "Erstelldatum=\"" + bt.getErstelldatum() + "\" " + "WHERE ID="
 					+ bt.getId());
 
 		} catch (SQLException e2) {
@@ -162,7 +161,7 @@ public class BewertungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM bewertung" + "WHERE Id=" + bt.getId());
+			stmt.executeUpdate("DELETE FROM bewertung" + "WHERE ID=" + bt.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -190,14 +189,14 @@ public class BewertungMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT Id, Wert, Stellungnahme, Erstelldatum FROM bewertung " + "ORDER BY Wert");
+					.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung " + "ORDER BY Wert");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewertung-Objekt erstellt.
 
 			while (rs.next()) {
 				Bewertung bt = new Bewertung();
-				bt.setId(rs.getInt("Id"));
+				bt.setId(rs.getInt("ID"));
 				bt.setWert(rs.getFloat("Wert"));
 				bt.setStellungnahme(rs.getString("Stellungnahme"));
 				bt.setErstelldatum(rs.getDate("Erstelldatum"));
@@ -235,7 +234,7 @@ public class BewertungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT Id, Wert, Stellungnahme, Ertselldatum FROM bewertung " + "WHERE Id=" + id + "ORDER BY Id");
+					"SELECT ID, Wert, Stellungnahme, Ertselldatum FROM bewertung " + "WHERE ID=" + id + "ORDER BY ID");
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -248,7 +247,7 @@ public class BewertungMapper {
 				// Ausgabe des Ergebnis-Objekts.
 
 				Bewertung bt = new Bewertung();
-				bt.setId(rs.getInt("Id"));
+				bt.setId(rs.getInt("ID"));
 				bt.setWert(rs.getFloat("Wert"));
 				bt.setStellungnahme(rs.getString("Stellungnahme"));
 				bt.setErstelldatum(rs.getDate("Erstelldatum"));
@@ -283,14 +282,14 @@ public class BewertungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT Id, Wert, Stellungnahme, Erstelldatum FROM bewertung "
+			ResultSet rs = stmt.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung "
 					+ "WHERE Stellungnahme='" + stellungnahme + "' ORDER BY Stellungnahme");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
 			// erstellt
 			while (rs.next()) {
 				Bewertung bt = new Bewertung();
-				bt.setId(rs.getInt("Id"));
+				bt.setId(rs.getInt("ID"));
 				bt.setWert(rs.getFloat("Wert"));
 				bt.setStellungnahme(rs.getString("Stellungnahme"));
 				bt.setErstelldatum(rs.getDate("Erstelldatum"));
@@ -323,14 +322,14 @@ public class BewertungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT Id, Wert, Stellungnahme, Erstelldatum FROM bewertung "
+			ResultSet rs = stmt.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung "
 					+ "WHERE Wert=" + wert + " ORDER BY Wert");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
 			// erstellt
 			while (rs.next()) {
 				Bewertung bt = new Bewertung();
-				bt.setId(rs.getInt("Id"));
+				bt.setId(rs.getInt("ID"));
 				bt.setWert(rs.getFloat("Wert"));
 				bt.setStellungnahme(rs.getString("Stellungnahme"));
 				bt.setErstelldatum(rs.getDate("Erstelldatum"));
