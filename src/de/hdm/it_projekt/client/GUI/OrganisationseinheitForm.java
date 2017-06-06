@@ -20,7 +20,7 @@ import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 public class OrganisationseinheitForm extends VerticalPanel {
 
 
-		BankAdministrationAsync bankVerwaltung = ClientsideSettings // waiting 
+		BankAdministrationAsync bankVerwaltung = ClientsideSettings // waiting for Classes 
 				.getBankVerwaltung();
 		Organisationseinheit organisationseinheitToDisplay = null;
 		ProjektOrganisationseinheitTreeView catvm = null;
