@@ -360,8 +360,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM projekt WHERE projektmarktplatz_ID=" + pm.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projektmarktplatz_ID=" + pm.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
@@ -411,7 +410,15 @@ public class ProjektMapper {
 		return result;
 	}
 
-	public Vector<Projekt> getByProjektbetreiber(Projekt pr) {
+	/**
+	 * Das Erhalten des Projektes von einem Projektbetreiber, der eine Person
+	 * ist
+	 * 
+	 * @param pr
+	 * @return
+	 */
+
+	public Vector<Projekt> getByProjektbetreiber(Person p) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Projekt> result = new Vector<Projekt>();
@@ -422,8 +429,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM projekt WHERE projektbetreiber_ID=" + pr.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projektbetreiber_ID=" + p.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
