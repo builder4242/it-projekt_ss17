@@ -11,384 +11,433 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Beteiligung;
-
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
+import de.hdm.it_projekt.shared.bo.Projekt;
 
 /**
  * Mapper-Klasse, die <code>Beteiligung</code>-Objekte auf eine relationale
  * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfuegung
  * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
- * geloescht werden koennen. Das Mapping ist bidirektional. D.h., Objekte koennen
- * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
+ * geloescht werden koennen. Das Mapping ist bidirektional. D.h., Objekte
+ * koennen in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * <p>
  * 
  * Anlehnung an @author Thies
+ * 
  * @author ElifY
  */
 public class BeteiligungMapper {
 
-  /**
-   * Die Klasse BeteiligungMapper wird nur einmal instantiiert. Man spricht hierbei
-   * von einem sogenannten <b>Singleton</b>.
-   * <p>
-   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal fuer
-   * saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
-   * einzige Instanz dieser Klasse.
-   * 
-   */
-  private static BeteiligungMapper beteiligungMapper = null;
+	/**
+	 * Die Klasse BeteiligungMapper wird nur einmal instantiiert. Man spricht
+	 * hierbei von einem sogenannten <b>Singleton</b>.
+	 * <p>
+	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal
+	 * fuer saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
+	 * speichert die einzige Instanz dieser Klasse.
+	 * 
+	 */
+	private static BeteiligungMapper beteiligungMapper = null;
 
-  /**
-   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit new neue
-   * Instanzen dieser Klasse zu erzeugen.
-   */
-  protected BeteiligungMapper() {
-  }
+	/**
+	 * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit new neue
+	 * Instanzen dieser Klasse zu erzeugen.
+	 */
+	protected BeteiligungMapper() {
+	}
 
-  /**
-   * Diese statische Methode kann aufgrufen werden durch
-   * <code>BeteiligungMapper.beteiligungMapper()</code>. Sie stellt die
-   * Singleton-Eigenschaft sicher, indem Sie dafuer sorgt, dass nur eine einzige
-   * Instanz von <code>BeteiligungMapper</code> existiert.
-   * <p>
-   * 
-   * <b>Fazit:</b> BeteiligungMapper sollte nicht mittels <code>new</code>
-   * instantiiert werden, sondern stets durch Aufruf dieser statischen Methode.
-   * 
-   * @return DAS <code>BeteiligungMapper</code>-Objekt.
-   */
-  public static BeteiligungMapper beteiligungMapper() {
-    if (beteiligungMapper == null) {
-      beteiligungMapper = new BeteiligungMapper();
-    }
+	/**
+	 * Diese statische Methode kann aufgrufen werden durch
+	 * <code>BeteiligungMapper.beteiligungMapper()</code>. Sie stellt die
+	 * Singleton-Eigenschaft sicher, indem Sie dafuer sorgt, dass nur eine
+	 * einzige Instanz von <code>BeteiligungMapper</code> existiert.
+	 * <p>
+	 * 
+	 * <b>Fazit:</b> BeteiligungMapper sollte nicht mittels <code>new</code>
+	 * instantiiert werden, sondern stets durch Aufruf dieser statischen
+	 * Methode.
+	 * 
+	 * @return DAS <code>BeteiligungMapper</code>-Objekt.
+	 */
+	public static BeteiligungMapper beteiligungMapper() {
+		if (beteiligungMapper == null) {
+			beteiligungMapper = new BeteiligungMapper();
+		}
 
-    return beteiligungMapper;
-  }
+		return beteiligungMapper;
+	}
 
-   /** 
+	/**
 	 * Diese Methode ermoeglicht es eine Beteiligung in der Datenbank anzulegen.
 	 * 
 	 * @param bet
-	 * @return 
+	 * @return
 	 */
-public Beteiligung insert(Beteiligung bet){
-	
-	//DB-Verbindung herstellen
-	Connection con = DBConnection.connection();
+	public Beteiligung insert(Beteiligung bet) {
 
-	try {
-		    //Leeres SQL-Statement (JDBC) anlegen
-	    	Statement stmt = con.createStatement();
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
 
-	       //Momentan hoechsten Primaerschluesselwert pruefen
-	       ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
-	          + "FROM beteiligung ");
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
 
-	      // Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
-	      if (rs.next()) {
-	        
-	    	/*
-	         * bet erhaelt den bisher maximalen, nun um 1 inkrementierten
-	         * Primaerschluessel.
-	         */
-	        bet.setId(rs.getInt("maxid") + 1);
+			// Momentan hoechsten Primaerschluesselwert pruefen
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM beteiligung ");
 
-	        stmt = con.createStatement();
+			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
+			if (rs.next()) {
 
-	        // Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-	        stmt.executeUpdate("INSERT INTO beteiligung (Id, Personentage, Enddatum, Startdatum) "
-	            + "VALUES (" + bet.getId() + ","
-	            + bet.getPersonentage() + ","
-	            + bet.getEnddatum() + "," + bet.getStartdatum() + ")");
-	      }
-	    }
-	    catch (SQLException e1) {
-	      e1.printStackTrace();
-	    }
-	
-	    //Rueckgabe, der evtl. korrigierten Beteiligung.
-	    return bet;
-	  }
+				/*
+				 * bet erhaelt den bisher maximalen, nun um 1 inkrementierten
+				 * Primaerschluessel.
+				 */
+				bet.setId(rs.getInt("maxid") + 1);
 
-/**
- * Wiederholtes Schreiben eines Objekts in die Datenbank.
- * 
- * @param bet das Objekt, das in die DB geschrieben werden soll
- * @return das als Parameter uebergebene Objekt
- */
+				stmt = con.createStatement();
 
-	 public Beteiligung update(Beteiligung bet){
-		 
-		 //DB-Verbindung herstellen
-		 Connection con = DBConnection.connection();
-		 
-		 try{
-			 //Leeres SQL-Statement (JDBC) anlegen
-			 Statement stmt = con.createStatement();
-			 
-		     // Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-			 stmt.executeUpdate("UPDATE beteiligung " + "SET Peronentage=\""
-		     + bet.getPersonentage() + "\"," + "Enddatum=\"" + bet.getEnddatum()
-		     + "\", " + "Startdatum=\"" + bet.getStartdatum() + "\" "
-		     + "WHERE Id=" + bet.getId());
-		 
-		 }
-		 catch (SQLException e2){
-			 e2.printStackTrace();
-		 }
-		 
-		 // Um Analogie zu insert(Bewertung bet) zu wahren, geben wir bt zurueck
-	     return bet;
-	  }
-	 
-	 
-	 /**
-	  * Loeschen der Daten eines <code>Beteiligung</code>-Objekts aus der DB
-	  * @param bet
-	  * 		das aus der DB zu loeschende Objekt
-	 * @return 
-	  */
-	 
-	 public void delete (Beteiligung bet){
-			 
-			 //DB-Verbindung herstellen
-			 Connection con = DBConnection.connection();
-			 
-			 try{
-				 
-				 //Leeres SQL-Statement (JDBC) anlegen
-				 Statement stmt = con.createStatement();
-				 
-				 stmt.executeUpdate("DELETE FROM beteiligung" + "WHERE Id=" + bet.getId());
-			 }
-			 catch (SQLException e3){
-				 e3.printStackTrace();
-			 }
-		 }
-		 
-		 
-	 /**
-	  * Auslesen aller Beteiligungen
-	  * @return Ein Vektor mit Beteiligung-Objekten, die saemtliche
-	  *         Beteiligungen repraesentieren. Bei evtl. Exceptions wird eine
-	  *         partiell gefuellter oder ggf. auch leerer Vektor zurueckgeliefert
-	  */
-		 
-	 public Vector<Beteiligung> findAll(){
-			 
-			//DB-Verbindung herstellen
-	 		 Connection con = DBConnection.connection();
-	 		 
-	 		 //Ergebnisvektor vorbereiten
-	 		 Vector<Beteiligung> result = new Vector<Beteiligung>();
-	 		 
-	 		 try{
-	 			
-	 			 //Leeres SQL-Statement (JDBC) anlegen
-	 			 Statement stmt = con.createStatement();
-	 			 
-	 			 ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum "
-	 				+ "FROM beteiligung " + " ORDER BY Id");
-	 			 
-	 			 
-	 			 //Fuer jeden Eintrag im Suchergebnis wird nun ein
-	 			 //Beteiligung-Objekt erstellt.
-	 		 
-	 			 while (rs.next()) {
-	 				 Beteiligung bet = new Beteiligung();
-	 				 bet.setId(rs.getInt("Id"));
-	 				 bet.setPersonentage(rs.getInt("Personentage"));
-	 				 bet.setEnddatum(rs.getDate("Enddatum"));
-	 				 bet.setEnddatum(rs.getDate("Startdatum"));
-	 				 
-	 			 
-	 			 //Hinzufuegen des neuen Objekts zum Ergebnisvektor
-	 		       result.addElement(bet);
-	 		      		}
-	 		 		}
-	 		    catch (SQLException e4) {
-	 		    e4.printStackTrace();
-	 		    		}	
+				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+				stmt.executeUpdate("INSERT INTO beteiligung (ID, Personentage, Enddatum, Startdatum) " + "VALUES ("
+						+ bet.getId() + "," + bet.getPersonentage() + "," + bet.getEnddatum() + ","
+						+ bet.getStartdatum() + ")");
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 
-	 		   	// Ergebnisvektor zurueckgeben
-	 		   	return result;
-	 	 		}
-	 
-	 /**
-	   * Suchen einer Beteiligung mit vorgegebener Nummer. Da diese eindeutig ist,
-	   * wird genau ein Objekt zurueckgegeben.
-	   * 
-	   * @param id Primaerschluesselattribut (->DB)
-	   * @return Bewerber-Objekt, das dem uebergebenen Schluessel entspricht, null bei
-	   *         nicht vorhandenem DB-Tupel.
-	   */
-	 
-	 public Beteiligung findByID (int id){
-	 
-		 //DB-Verbindung herstellen
-		 Connection con = DBConnection.connection();
-		 
-		 try {
-		      // Leeres SQL-Statement (JDBC) anlegen
-		      Statement stmt = con.createStatement();
+		// Rueckgabe, der evtl. korrigierten Beteiligung.
+		return bet;
+	}
 
-		      //Statement ausfuellen und als Query an die DB schicken
-		      ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
-		      + "WHERE Id=" + id + "ORDER BY Personentage");
-	 
-		      /*
-		       * Da id Primäerschluessel ist, kann max. nur ein Tupel zurueckgegeben
-		       * werden. Pruefe, ob ein Ergebnis vorliegt
-		       */
-		      
-		      if (rs.next()){
-		    	
-		    	  // Ergebnis-Tupel in Objekt umwandeln
-		    	  Beteiligung bet = new Beteiligung();
-		    	  bet.setId(rs.getInt("Id"));
-		          bet.setPersonentage(rs.getInt("Personentage"));
-		          bet.setEnddatum(rs.getDate("Enddatum"));
-		          bet.setStartdatum(rs.getDate("Startdatum"));
-			 
-		          return bet;
-		      }
-		    }
-		    catch (SQLException e) {
-		      e.printStackTrace();
-		      return null;
-		    }
+	/**
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+	 * 
+	 * @param bet
+	 *            das Objekt, das in die DB geschrieben werden soll
+	 * @return das als Parameter uebergebene Objekt
+	 */
 
-		    return null;
-		  
-	 }
-		      
-	 	
-	 /**
-	  * Suchen einer Beteiligung anhand der Personentage.
-	  * @param personentage
-	  * @return result
-	  */
-	 	
-	 	public Vector <Beteiligung> findByPersonentage(int personentage){
-	 		//DB-Verbindung herstellen
-	 		Connection con = DBConnection.connection();
-		
-	 		//Ergebnisvektor vorbereiten
-	 		Vector<Beteiligung> result = new Vector<Beteiligung>();
-		
-	 		try{
-	 			//Leeres SQL-Statement (JDBC) anlegen
-	 			Statement stmt = con.createStatement();
-			
-	 			//Statement ausfuellen und als Query an die Datenbank schicken
-	 			ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
-					+ "WHERE Personentage=" + personentage + " ORDER BY Personentage"); 
-				
-			
-	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
-	 			while (rs.next()){
+	public Beteiligung update(Beteiligung bet) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
+			stmt.executeUpdate("UPDATE beteiligung " + "SET Peronentage=\"" + bet.getPersonentage() + "\","
+					+ "Enddatum=\"" + bet.getEnddatum() + "\", " + "Startdatum=\"" + bet.getStartdatum() + "\" "
+					+ "WHERE ID=" + bet.getId());
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Um Analogie zu insert(Bewertung bet) zu wahren, geben wir bt zurueck
+		return bet;
+	}
+
+	/**
+	 * Loeschen der Daten eines <code>Beteiligung</code>-Objekts aus der DB
+	 * 
+	 * @param bet
+	 *            das aus der DB zu loeschende Objekt
+	 * @return
+	 */
+
+	public void delete(Beteiligung bet) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE FROM beteiligung" + "WHERE ID=" + bet.getId());
+		} catch (SQLException e3) {
+			e3.printStackTrace();
+		}
+	}
+
+	/**
+	 * Auslesen aller Beteiligungen
+	 * 
+	 * @return Ein Vektor mit Beteiligung-Objekten, die saemtliche Beteiligungen
+	 *         repraesentieren. Bei evtl. Exceptions wird eine partiell
+	 *         gefuellter oder ggf. auch leerer Vektor zurueckgeliefert
+	 */
+
+	public Vector<Beteiligung> findAll() {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		// Ergebnisvektor vorbereiten
+		Vector<Beteiligung> result = new Vector<Beteiligung>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Personentage, Enddatum, Startdatum " + "FROM beteiligung " + " ORDER BY ID");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Beteiligung-Objekt erstellt.
+
+			while (rs.next()) {
 				Beteiligung bet = new Beteiligung();
-				bet.setId(rs.getInt("Id"));
+				bet.setId(rs.getInt("ID"));
 				bet.setPersonentage(rs.getInt("Personentage"));
 				bet.setEnddatum(rs.getDate("Enddatum"));
-				bet.setStartdatum(rs.getDate("Startdatum"));
-				
-				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(bet);
-	 			}
-	 		}
-	 			catch (SQLException e5) {
-	 				e5.printStackTrace();
-	 			}
-		
-	 		//Ergebnisvektor zurueckgeben
-	 		return result;
-	 	}
-	 
+				bet.setEnddatum(rs.getDate("Startdatum"));
 
-	 	/**
-	 	 * Suchen einer Beteiligung anhand des Startdatums.
-	 	 * @param startdatum
-	 	 * @return result
-	 	 */
-	 		
-	 	public Vector<Beteiligung> findByStartdatum (Date startdatum){
-	 		
-	 		//DB-Verbindung herstellen
-	 		Connection con = DBConnection.connection();
-		
-	 		//Ergebnisvektor vorbereiten
-	 		Vector<Beteiligung> result = new Vector<Beteiligung>();
-		
-	 		try{
-	 			//Leeres SQL-Statement (JDBC) anlegen
-	 			Statement stmt = con.createStatement();
-			
-	 			//Statement ausfuellen und als Query an die Datenbank schicken
-	 			ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
-					+ "WHERE Startdatum=" + startdatum + " ORDER BY Startdatum"); 
-				
-			
-	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
-	 			while (rs.next()){
-				Beteiligung bet = new Beteiligung();
-				bet.setId(rs.getInt("Id"));
-				bet.setPersonentage(rs.getInt("Personentage"));
-				bet.setEnddatum(rs.getDate("Enddatum"));
-				bet.setStartdatum(rs.getDate("Startdatum"));
-				
-				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bet);
-	 			}
-	 		}
-	 			catch (SQLException e6) {
-	 				e6.printStackTrace();
-	 			}
-		
-	 		//Ergebnisvektor zurueckgeben
-	 		return result;
-	 	}
-	 		
-	 	/**
-	 	 * Suchen einer Beteiligung anhand des Startdatums.
-	 	 * @param enddatum
-	 	 * @return result
-	 	 */
-	 		
-	 	public Vector<Beteiligung> findByEnddatum (Date enddatum){
-	 		
-	 		//DB-Verbindung herstellen
-	 		Connection con = DBConnection.connection();
-		
-	 		//Ergebnisvektor vorbereiten
-	 		Vector<Beteiligung> result = new Vector<Beteiligung>();
-		
-	 		try{
-	 			//Leeres SQL-Statement (JDBC) anlegen
-	 			Statement stmt = con.createStatement();
-			
-	 			//Statement ausfuellen und als Query an die Datenbank schicken
-	 			ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
-					+ "WHERE Enddatum=" + enddatum + " ORDER BY Enddatum"); 
-				
-			
-	 			//Fuer jeden Eintrag im Suchergebnis wird nun ein Beteiligung-Objekt erstellt
-	 			while (rs.next()){
-				Beteiligung bet = new Beteiligung();
-				bet.setId(rs.getInt("Id"));
-				bet.setPersonentage(rs.getInt("Personentage"));
-				bet.setEnddatum(rs.getDate("Enddatum"));
-				bet.setStartdatum(rs.getDate("Startdatum"));
-				
-				//Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(bet);
-	 			}
-	 		}
-	 			catch (SQLException e7) {
-	 				e7.printStackTrace();
-	 			}
-		
-	 		//Ergebnisvektor zurueckgeben
+			}
+		} catch (SQLException e4) {
+			e4.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
 		return result;
 	}
 
+	/**
+	 * Suchen einer Beteiligung mit vorgegebener Nummer. Da diese eindeutig ist,
+	 * wird genau ein Objekt zurueckgegeben.
+	 * 
+	 * @param id
+	 *            Primaerschluesselattribut (->DB)
+	 * @return Bewerber-Objekt, das dem uebergebenen Schluessel entspricht, null
+	 *         bei nicht vorhandenem DB-Tupel.
+	 */
+
+	public Beteiligung findByID(int id) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
+					+ "WHERE ID=" + id + "ORDER BY Personentage");
+
+			/*
+			 * Da id Primäerschluessel ist, kann max. nur ein Tupel
+			 * zurueckgegeben werden. Pruefe, ob ein Ergebnis vorliegt
+			 */
+
+			if (rs.next()) {
+
+				// Ergebnis-Tupel in Objekt umwandeln
+				Beteiligung bet = new Beteiligung();
+				bet.setId(rs.getInt("ID"));
+				bet.setPersonentage(rs.getInt("Personentage"));
+				bet.setEnddatum(rs.getDate("Enddatum"));
+				bet.setStartdatum(rs.getDate("Startdatum"));
+
+				return bet;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return null;
+
+	}
+
+	/**
+	 * Suchen einer Beteiligung anhand der Personentage.
+	 * 
+	 * @param personentage
+	 * @return result
+	 */
+
+	public Vector<Beteiligung> findByPersonentage(int personentage) {
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		// Ergebnisvektor vorbereiten
+		Vector<Beteiligung> result = new Vector<Beteiligung>();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die Datenbank schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, Personentage, Enddatum, Startdatum FROM beteiligung "
+					+ "WHERE Personentage=" + personentage + " ORDER BY Personentage");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Beteiligung-Objekt erstellt
+			while (rs.next()) {
+				Beteiligung bet = new Beteiligung();
+				bet.setId(rs.getInt("ID"));
+				bet.setPersonentage(rs.getInt("Personentage"));
+				bet.setEnddatum(rs.getDate("Enddatum"));
+				bet.setStartdatum(rs.getDate("Startdatum"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(bet);
+			}
+		} catch (SQLException e5) {
+			e5.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
+	/**
+	 * Suchen einer Beteiligung anhand des Startdatums.
+	 * 
+	 * @param startdatum
+	 * @return result
+	 */
+
+	public Vector<Beteiligung> findByStartdatum(Date startdatum) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		// Ergebnisvektor vorbereiten
+		Vector<Beteiligung> result = new Vector<Beteiligung>();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die Datenbank schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, Personentage, Enddatum, Startdatum FROM beteiligung "
+					+ "WHERE Startdatum=" + startdatum + " ORDER BY Startdatum");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Beteiligung-Objekt erstellt
+			while (rs.next()) {
+				Beteiligung bet = new Beteiligung();
+				bet.setId(rs.getInt("ID"));
+				bet.setPersonentage(rs.getInt("Personentage"));
+				bet.setEnddatum(rs.getDate("Enddatum"));
+				bet.setStartdatum(rs.getDate("Startdatum"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(bet);
+			}
+		} catch (SQLException e6) {
+			e6.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
+	/**
+	 * Suchen einer Beteiligung anhand des Startdatums.
+	 * 
+	 * @param enddatum
+	 * @return result
+	 */
+
+	public Vector<Beteiligung> findByEnddatum(Date enddatum) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		// Ergebnisvektor vorbereiten
+		Vector<Beteiligung> result = new Vector<Beteiligung>();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die Datenbank schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, Personentage, Enddatum, Startdatum FROM beteiligung "
+					+ "WHERE Enddatum=" + enddatum + " ORDER BY Enddatum");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Beteiligung-Objekt erstellt
+			while (rs.next()) {
+				Beteiligung bet = new Beteiligung();
+				bet.setId(rs.getInt("ID"));
+				bet.setPersonentage(rs.getInt("Personentage"));
+				bet.setEnddatum(rs.getDate("Enddatum"));
+				bet.setStartdatum(rs.getDate("Startdatum"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(bet);
+			}
+		} catch (SQLException e7) {
+			e7.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
+	public Vector<Beteiligung> getByProjekt(Projekt pr) {
+		
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Beteiligung> result = new Vector<Beteiligung>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM beteiligung WHERE projekt_ID=" + pr.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Beteiligung-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findByID(rs.getInt("ID")));
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
+	public Vector<Beteiligung> getByOrganisationseinheit(Organisationseinheit oe) {
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Beteiligung> result = new Vector<Beteiligung>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM beteiligung WHERE organisationseinheit_ID=" + oe.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Beteiligung-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findByID(rs.getInt("ID")));
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
 }
