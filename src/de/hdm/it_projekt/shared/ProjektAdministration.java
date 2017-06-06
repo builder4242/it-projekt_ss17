@@ -21,19 +21,19 @@ public interface ProjektAdministration extends RemoteService {
 	 */
 	public void init() throws IllegalArgumentException;
 
-	public ProjektMarktplatz createProjektMarktplatz(String bezeichnung) throws IllegalArgumentException;
+	public ProjektMarktplatz createProjektMarktplatz(String bez) throws IllegalArgumentException;
 
-	public Projekt createProjektFor(ProjektMarktplatz marktplatz, String name, Date startdatum, Date enddatum,
+	public Projekt createProjektFor(ProjektMarktplatz mp, String name, Date startdatum, Date enddatum,
 			String beschreibung) throws IllegalArgumentException;
 
-	public Ausschreibung createAusschreibungFor(Projekt projekt, String bezeichnung, Date bewerbungsfrist,
+	public Ausschreibung createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist,
 			String ausschreibungstext, Partnerprofil profil) throws IllegalArgumentException;
 
-	public Partnerprofil createPartnerprofilFor(Ausschreibung ausschreibung) throws IllegalArgumentException;
-	
-	public Partnerprofil createPartnerprofilFor(Organisationseinheit organisation) throws IllegalArgumentException;
-	
-	public Eigenschaft createEigenschaftFor(Ausschreibung ausschreibung, String name, String value)
+	public Partnerprofil createPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException;
+
+	public Partnerprofil createPartnerprofilFor(Organisationseinheit or) throws IllegalArgumentException;
+
+	public Eigenschaft createEigenschaftFor(Ausschreibung as, String name, String value)
 			throws IllegalArgumentException;
 
 	public Person createPerson(String name, String vorname, String email, String strasse, int plz, String ort,
@@ -45,9 +45,14 @@ public interface ProjektAdministration extends RemoteService {
 	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel)
 			throws IllegalArgumentException;
 
-	public Bewerbung createBewerbungFor(Projekt projekt, Organisationseinheit organisation)
+	public Bewerbung bewerben(Projekt pr, Organisationseinheit organisation)
 			throws IllegalArgumentException;
 
+	public Bewertung bewerten(Bewerbung bw, String stellungsnahme, float wert) throws IllegalArgumentException;
 	
-	 
+	public Beteiligung beteiligen(Projekt pr, Organisationseinheit or, int personentage, Date startdatum, Date enddatum) throws IllegalArgumentException;
+	
+	
+	public void save(ProjektMarktplatz pm) throws IllegalArgumentException;
+	
 }
