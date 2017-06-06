@@ -214,7 +214,7 @@ public class BeteiligungMapper {
 	 * 
 	 * @param id
 	 *            Primaerschluesselattribut (->DB)
-	 * @return Bewerber-Objekt, das dem uebergebenen Schluessel entspricht, null
+	 * @return Beteiligung-Objekt, das dem uebergebenen Schluessel entspricht, null
 	 *         bei nicht vorhandenem DB-Tupel.
 	 */
 
@@ -228,8 +228,8 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT Id, Personentage, Enddatum, Startdatum FROM beteiligung "
-					+ "WHERE ID=" + id + "ORDER BY Personentage");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Personentage, Enddatum, Startdatum FROM beteiligung "
+					+ "WHERE ID=" + id + "ORDER BY ID");
 
 			/*
 			 * Da id Primäerschluessel ist, kann max. nur ein Tupel

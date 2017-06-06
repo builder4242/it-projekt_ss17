@@ -74,6 +74,7 @@ public class UnternehmenMapper {
 	 * @return
 	 */
 	public Unternehmen insert(Unternehmen u) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 
@@ -88,6 +89,7 @@ public class UnternehmenMapper {
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
+				
 				/*
 				 * u erhaelt den bisher maximalen, nun um 1 inkrementierten
 				 * Primaerschluessel.
@@ -259,6 +261,7 @@ public class UnternehmenMapper {
 	 * @return
 	 */
 	public Vector<Unternehmen> findByName(String name) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Unternehmen> result = new Vector<Unternehmen>();

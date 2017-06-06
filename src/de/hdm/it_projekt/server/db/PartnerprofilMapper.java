@@ -76,6 +76,7 @@ public class PartnerprofilMapper {
 	 * @return
 	 */
 	public Partnerprofil insert(Partnerprofil pp) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 
@@ -90,6 +91,7 @@ public class PartnerprofilMapper {
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
+
 				/*
 				 * pp erhaelt den bisher maximalen, nun um 1 inkrementierten
 				 * Primaerschluessel.
@@ -106,16 +108,7 @@ public class PartnerprofilMapper {
 			e.printStackTrace();
 		}
 
-		/*
-		 * Rueckgabe, des evtl. korrigierten Partnerprofils.
-		 * 
-		 * HINWEIS: Da in Java nur Referenzen auf Objekte und keine physischen
-		 * Objekte uebergeben werden, waere die Anpassung des
-		 * Partnerprofil-Objekts auch ohne diese explizite Rueckgabe ausserhalb
-		 * dieser Methode sichtbar. Die explizite Rueckgabe von pp ist eher ein
-		 * Stilmittel, um zu signalisieren, dass sich das Objekt evtl. im Laufe
-		 * der Methode veraendert hat.
-		 */
+		// Rueckgabe, des evtl. korrigierten Partnerprofils.
 		return pp;
 	}
 
@@ -219,6 +212,7 @@ public class PartnerprofilMapper {
 	 *         null bei nicht vorhandenem DB-Tupel.
 	 */
 	public Partnerprofil findById(int id) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 
@@ -236,10 +230,11 @@ public class PartnerprofilMapper {
 			 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
 			 */
 			if (rs.next()) {
+
 				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
 				// Ergebnis-Objekts
-
 				Partnerprofil pp = new Partnerprofil();
+
 				pp.setId(rs.getInt("ID"));
 				pp.setErstelldatum(rs.getDate("erstelldatum"));
 				pp.setAenderungsdatum(rs.getDate("aenderungsdatum"));
@@ -250,26 +245,6 @@ public class PartnerprofilMapper {
 			e5.printStackTrace();
 			return null;
 		}
-		return null;
-	}
-
-	/**
-	 * Erhalten des Partnerprofil anhand einer Ausschreibung.
-	 * 
-	 * @param as
-	 * @return
-	 */
-	public Vector<Partnerprofil> getByMatch(Ausschreibung as) {
-		return null;
-	}
-
-	/**
-	 * Erhalten des Partnerprofils anhand einer Person.
-	 * 
-	 * @param p
-	 * @return
-	 */
-	public Vector<Partnerprofil> getByPerson(Person p) {
 		return null;
 	}
 
