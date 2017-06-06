@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
-import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Unternehmen;
 
@@ -75,6 +74,7 @@ public class UnternehmenMapper {
 	 * @return
 	 */
 	public Unternehmen insert(Unternehmen u) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 
@@ -89,6 +89,7 @@ public class UnternehmenMapper {
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
+				
 				/*
 				 * u erhaelt den bisher maximalen, nun um 1 inkrementierten
 				 * Primaerschluessel.
@@ -260,6 +261,7 @@ public class UnternehmenMapper {
 	 * @return
 	 */
 	public Vector<Unternehmen> findByName(String name) {
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Unternehmen> result = new Vector<Unternehmen>();
@@ -350,23 +352,40 @@ public class UnternehmenMapper {
 	}
 
 	/**
-	 * Erhalten des Unternehmens anhand eines Projekts.
-	 * 
-	 * @param pr
-	 * @return
-	 */
-	public Vector<Unternehmen> getByProjekt(Projekt pr) {
-		return null;
-	}
-
-	/**
 	 * Erhalten des Unternehmens anhand eines ProjektMarktplatzes.
 	 * 
 	 * @param pm
 	 * @return
 	 */
 	public Vector<Unternehmen> getByProjektMarktplatz(ProjektMarktplatz pm) {
-		return null;
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Unternehmen> result = new Vector<Unternehmen>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT o.ID AS ID FROM organisationseinheit AS o "
+					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit_ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
+					+ "WHERE projektmarktplatz_ID=" + pm.getId() + " AND Typ='U'");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Unternehmen-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
 	}
 
 }

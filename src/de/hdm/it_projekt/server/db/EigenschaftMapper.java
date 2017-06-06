@@ -97,7 +97,7 @@ public class EigenschaftMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO eigenschaft (Id, Wert) " + "VALUES (" + e.getId() + "," + e.getName()
+				stmt.executeUpdate("INSERT INTO eigenschaft (ID, Wert) " + "VALUES (" + e.getId() + "," + e.getName()
 						+ "," + e.getWert() + ")");
 			}
 		} catch (SQLException e1) {
@@ -126,7 +126,7 @@ public class EigenschaftMapper {
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 			stmt.executeUpdate("UPDATE eigenschaft " + "SET Name=\"" + e.getName() + "\"," + "Wert=\"" + e.getWert()
-					+ "WHERE Id=" + e.getId());
+					+ "WHERE ID=" + e.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -153,7 +153,7 @@ public class EigenschaftMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM eigenschaft" + "WHERE Id=" + e.getId());
+			stmt.executeUpdate("DELETE FROM eigenschaft" + "WHERE ID=" + e.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -180,13 +180,13 @@ public class EigenschaftMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT Id, Name, Wert " + "FROM eigenschaft " + " ORDER BY Id");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert " + "FROM eigenschaft " + " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschaft-Objekt erstellt.
 			while (rs.next()) {
 				Eigenschaft e = new Eigenschaft();
-				e.setId(rs.getInt("Id"));
+				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getFloat("Wert"));
 
@@ -225,14 +225,14 @@ public class EigenschaftMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT Id, Name, Wert FROM eigenschaft " + "WHERE Name LIKE '" + name + "'ORDER BY Name");
+					"SELECT ID, Name, Wert FROM eigenschaft " + "WHERE Name LIKE '" + name + "'ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschaft-Objekt
 			// erstellt.
 			while (rs.next()) {
 				Eigenschaft e = new Eigenschaft();
-				e.setId(rs.getInt("Id"));
+				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getFloat("Wert"));
 
@@ -268,7 +268,7 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfüllen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT Id, Name, Wert FROM eigenschaft " + "FROM eigenschaft "
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert FROM eigenschaft " + "FROM eigenschaft "
 					+ "WHERE Wert LIKE '" + wert + "' ORDER BY Wert");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -276,7 +276,7 @@ public class EigenschaftMapper {
 			// erstellt.
 			while (rs.next()) {
 				Eigenschaft e = new Eigenschaft();
-				e.setId(rs.getInt("Id"));
+				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getFloat("Wert"));
 
