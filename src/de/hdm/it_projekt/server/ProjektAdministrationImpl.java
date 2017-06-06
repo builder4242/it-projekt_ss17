@@ -40,7 +40,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Vector<Projekt> getAlleProjekte() throws IllegalArgumentException {
+	public Vector<Projekt> getAlleProjekteFor(ProjektMarktplatz pm) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -322,5 +322,4 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		// TODO Auto-generated method stub
 
 	}
-
 }

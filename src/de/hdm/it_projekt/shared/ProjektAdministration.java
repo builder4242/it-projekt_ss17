@@ -25,7 +25,7 @@ public interface ProjektAdministration extends RemoteService {
 
 	public ProjektMarktplatz getProjektMarktplatzById(int id) throws IllegalArgumentException;
 
-	public Vector<Projekt> getAlleProjekte() throws IllegalArgumentException;
+	public Vector<Projekt> getAlleProjekteFor(ProjektMarktplatz pm) throws IllegalArgumentException;
 
 	public Vector<Projekt> getProjektByName(String name) throws IllegalArgumentException;
 

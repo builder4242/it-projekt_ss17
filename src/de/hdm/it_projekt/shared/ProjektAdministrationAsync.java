@@ -65,8 +65,6 @@ public interface ProjektAdministrationAsync {
 
 	void delete(Projekt pr, AsyncCallback<Void> callback);
 
-	void getAlleProjekte(AsyncCallback<Vector<Projekt>> callback);
-
 	void getAlleProjektMarktplaetze(AsyncCallback<Vector<ProjektMarktplatz>> callback);
 
 	void getAusschreibungById(int id, AsyncCallback<Ausschreibung> callback);
@@ -112,5 +110,7 @@ public interface ProjektAdministrationAsync {
 	void save(Partnerprofil pr, AsyncCallback<Void> callback);
 
 	void save(Ausschreibung as, AsyncCallback<Void> callback);
+
+	void getAlleProjekteFor(ProjektMarktplatz pm, AsyncCallback<Vector<Projekt>> callback);
 
 }
