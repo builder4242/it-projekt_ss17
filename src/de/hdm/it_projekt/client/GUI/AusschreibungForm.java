@@ -1,5 +1,10 @@
 package de.hdm.it_projekt.client.GUI;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -10,8 +15,10 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 /**
  * Formular für die Darstellung des selektierten Kunden
  * 
@@ -28,8 +35,10 @@ public class AusschreibungForm extends VerticalPanel {
 		/*
 		 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 		 */
-		TextBox firstNameTextBox = new TextBox();
-		TextBox lastNameTextBox = new TextBox();
+		TextBox bezeichnungTextBox = new TextBox();
+		DateBox bewerbungsfristTextBox = new DateBox();
+		TextBox ausschreibungstextTextBox = new TextBox();
+		TextBox partnerprofileigenschaftTextBox = new TextBox();
 		Label idValueLabel = new Label();
 
 		/*
@@ -38,21 +47,29 @@ public class AusschreibungForm extends VerticalPanel {
 		 * der enthaltenen Widgets bestimmt.
 		 */
 		public AusschreibungForm() {
-			Grid ausschreibungGrid = new Grid(3, 2);
+			Grid ausschreibungGrid = new Grid(5, 2);
 			this.add(ausschreibungGrid);
 
 			Label idLabel = new Label("ID");
 			ausschreibungGrid.setWidget(0, 0, idLabel);
 			ausschreibungGrid.setWidget(0, 1, idValueLabel);
 
-			Label firstNameLabel = new Label("Vorname");
-			ausschreibungGrid.setWidget(1, 0, firstNameLabel);
-			ausschreibungGrid.setWidget(1, 1, firstNameTextBox);
+			Label bezeichnungLabel = new Label("Bezeichnung");
+			ausschreibungGrid.setWidget(1, 0, bezeichnungLabel);
+			ausschreibungGrid.setWidget(1, 1, bezeichnungTextBox);
 
-			Label lastNameLabel = new Label("Nachname");
-			ausschreibungGrid.setWidget(2, 0, lastNameLabel);
-			ausschreibungGrid.setWidget(2, 1, lastNameTextBox);
+			Label bewerbungsfristLabel = new Label("Bewerbungsfrist");
+			ausschreibungGrid.setWidget(2, 0, bewerbungsfristLabel);
+			ausschreibungGrid.setWidget(2, 1, bewerbungsfristLabel);
 
+			Label ausschreibungstextLabel = new Label("Ausschreibungstext");
+			ausschreibungGrid.setWidget(3, 0, ausschreibungstextLabel);
+			ausschreibungGrid.setWidget(3, 1, ausschreibungstextLabel);
+			
+			Label partnerprofilLabel = new Label("Partnerprofil");
+			ausschreibungGrid.setWidget(4, 0, partnerprofilLabel);
+			ausschreibungGrid.setWidget(4, 1, partnerprofilLabel);
+			
 			HorizontalPanel ausschreibungButtonsPanel = new HorizontalPanel();
 			this.add(ausschreibungButtonsPanel);
 
@@ -77,22 +94,24 @@ public class AusschreibungForm extends VerticalPanel {
 		 */
 
 		/**
-		 * Die Änderung einer Ausschreibung bezieht sich auf den
-		 * Namen, im Fall dass es sich um eine Person handelt zusätzlich auf den Vorname.
-		 *  Es erfolgt der Aufruf der Service-Methode "save".
+		 * Die Änderung einer Ausschreibung.
 		 * 
 		 */
 		private class ChangeClickHandler implements ClickHandler {
 			@Override
 			public void onClick(ClickEvent event) {
 				if (ausschreibungToDisplay != null) {
-					ausschreibungToDisplay.setName(firstNameTextBox.getText());
-					ausschreibungToDisplay.setLastName(lastNameTextBox.getText());
+					ausschreibungToDisplay.setAusschreibungstext(ausschreibungstextTextBox.getText());
+					ausschreibungToDisplay.setBezeichnung(bezeichnungTextBox.getText());
+					ausschreibungToDisplay.setBewerbungsfrist(bewerbungsfristTextBox.getValue());
+					//ausschreibungToDisplay.setEigenschaften(bezeichnungTextBox.getValue());
 					bankVerwaltung.save(ausschreibungToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
 				}
+				
 			}
+		
 		}
 
 		private class SaveCallback implements AsyncCallback<Void> {
@@ -157,8 +176,11 @@ public class AusschreibungForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				String firstName = firstNameTextBox.getText();
-				String lastName = lastNameTextBox.getText();
+				String bezeichnung = bezeichnungTextBox.getText();
+				String ausschreibungstext = ausschreibungstextTextBox.getText();
+				Partnerprofil p1 = new Partnerprofil();
+				p1.setEigenschaften((Eigenschaft).setName(partnerprofileigenschaftTextBox.getValue()));
+				
 				bankVerwaltung.createAusschreibung(firstName, lastName,
 						new CreateAusschreibungCallback());
 			}
@@ -203,7 +225,7 @@ public class AusschreibungForm extends VerticalPanel {
 				idValueLabel.setText("");
 			}
 		}
-
+		
+	
 	}
 
-}
