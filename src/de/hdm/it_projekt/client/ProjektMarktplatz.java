@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Label;
 
 public class ProjektMarktplatz implements EntryPoint {
 
@@ -14,6 +15,7 @@ public class ProjektMarktplatz implements EntryPoint {
 	private Button addWertButton = new Button("Submit");
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private HorizontalPanel addPanel = new HorizontalPanel();
+	private Label testLabel = new Label();
 	
 	
 	
@@ -23,6 +25,7 @@ public class ProjektMarktplatz implements EntryPoint {
 		/*Aufbau des Textfeldes inkl. Button */  
 		addPanel.add(testTextBox);
 	    addPanel.add(addWertButton);
+	    mainPanel.add(testLabel);
 	
 	
 		/* main Panel */ 
@@ -30,7 +33,7 @@ public class ProjektMarktplatz implements EntryPoint {
 		
 		
 		/*Panel zur HTML Seite hinzufügen */ 
-		 RootPanel.get("projektmarktplatz").add(mainPanel);
+		 RootPanel.get().add(mainPanel);
 		
 		
 	}
