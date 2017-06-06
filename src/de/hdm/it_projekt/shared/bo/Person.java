@@ -36,7 +36,4 @@ public class Person extends Organisationseinheit {
 	public String toString() {
 	return super.toString() + " " + this.vorname;
 	  }
-	
-	
-
 }

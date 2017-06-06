@@ -29,7 +29,6 @@ public class Beteiligung extends BusinessObject {
 	 */
 	private Date enddatum;
 	
-	
 	/**
 	 * Auslesen der Personentage 
 	 * @return personentage
