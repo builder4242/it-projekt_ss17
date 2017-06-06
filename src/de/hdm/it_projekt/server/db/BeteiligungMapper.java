@@ -384,8 +384,15 @@ public class BeteiligungMapper {
 		return result;
 	}
 
+	/**
+	 * Auslesen der Beteiligung von einem Projekt
+	 * 
+	 * @param pr
+	 * @return
+	 */
+
 	public Vector<Beteiligung> getByProjekt(Projekt pr) {
-		
+
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Beteiligung> result = new Vector<Beteiligung>();
@@ -413,7 +420,15 @@ public class BeteiligungMapper {
 		return result;
 	}
 
-	public Vector<Beteiligung> getByOrganisationseinheit(Organisationseinheit oe) {
+	/**
+	 * Auslesen der Beteiligung von einer Organisationseinheiti, die eine
+	 * Person, ein Team oder Unternehmen sein kann.
+	 * 
+	 * @param o
+	 * @return
+	 */
+
+	public Vector<Beteiligung> getByOrganisationseinheit(Organisationseinheit o) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Beteiligung> result = new Vector<Beteiligung>();
@@ -423,8 +438,7 @@ public class BeteiligungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM beteiligung WHERE organisationseinheit_ID=" + oe.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM beteiligung WHERE organisationseinheit_ID=" + o.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt.
