@@ -88,7 +88,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Vector<Eigenschaft> getEigenschaftenFor(Partnerprofil pr) throws IllegalArgumentException {
-		return null;
+		return this.eMapper.getByPartnerprofil(pr);
 	}
 
 	@Override
@@ -401,6 +401,14 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Projekt pr) throws IllegalArgumentException {
 
+		Vector<Ausschreibung> ausschreibungen = getAusschreibungFor(pr);
+		
+		if(ausschreibungen != null) {
+			for(Ausschreibung a : ausschreibungen) {
+				delete(a);
+			}
+		}
+		
 		this.prMapper.delete(pr);
 
 	}
@@ -408,12 +416,22 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Ausschreibung as) throws IllegalArgumentException {
 
+		delete(getPartnerprofilById(as.getPartnerprofilId()));
+		
 		this.asMapper.delete(as);
 	}
 
 	@Override
 	public void delete(Partnerprofil pp) throws IllegalArgumentException {
 
+		Vector<Eigenschaft> eigenschaften = getEigenschaftenFor(pp);
+		
+		if(eigenschaften != null) {
+			for (Eigenschaft e : eigenschaften) {
+				delete(e);
+			}
+		}
+		
 		this.ppMapper.delete(pp);
 	}
 
