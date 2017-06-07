@@ -12,16 +12,16 @@ public interface ProjektAdministrationAsync {
 	void beteiligen(Projekt pr, Organisationseinheit or, int personentage, Date startdatum, Date enddatum,
 			AsyncCallback<Beteiligung> callback);
 
-	void bewerben(Projekt pr, Organisationseinheit organisation, AsyncCallback<Bewerbung> callback);
+	void bewerben(Ausschreibung as, Organisationseinheit organisation, String bewerbungstext, AsyncCallback<Bewerbung> callback);
 
-	void bewerten(Bewerbung bw, String stellungsnahme, float wert, AsyncCallback<Bewertung> callback);
+	void bewerten(Bewerbung bw, String stellungnahme, float wert, AsyncCallback<Bewertung> callback);
 
 	void createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist, String ausschreibungstext,
 			Partnerprofil profil, AsyncCallback<Ausschreibung> callback);
 
 	void createPartnerprofilFor(Organisationseinheit or, AsyncCallback<Partnerprofil> callback);
 
-	void createEigenschaftFor(Ausschreibung as, String name, String value, AsyncCallback<Eigenschaft> callback);
+	void createEigenschaftFor(Partnerprofil pp, String name, String value, AsyncCallback<Eigenschaft> callback);
 
 	void createPartnerprofilFor(Ausschreibung as, AsyncCallback<Partnerprofil> callback);
 
@@ -34,7 +34,7 @@ public interface ProjektAdministrationAsync {
 	void createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel,
 			AsyncCallback<Unternehmen> callback);
 
-	void delete(Partnerprofil pr, AsyncCallback<Void> callback);
+	void delete(Partnerprofil pp, AsyncCallback<Void> callback);
 
 	void createProjektMarktplatz(String bez, AsyncCallback<ProjektMarktplatz> callback);
 
@@ -107,7 +107,7 @@ public interface ProjektAdministrationAsync {
 
 	void save(ProjektMarktplatz pm, AsyncCallback<Void> callback);
 
-	void save(Partnerprofil pr, AsyncCallback<Void> callback);
+	void save(Partnerprofil pp, AsyncCallback<Void> callback);
 
 	void save(Ausschreibung as, AsyncCallback<Void> callback);
 
