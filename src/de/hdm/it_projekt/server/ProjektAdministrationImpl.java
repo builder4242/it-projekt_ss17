@@ -320,7 +320,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void projektmarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o)
 			throws IllegalArgumentException {
-
+		this.pmMapper.projektMarktplatzBeitreten(pm, o);
 	}
 
 	@Override
@@ -458,5 +458,11 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	public void delete(Team t) throws IllegalArgumentException {
 
 		this.tMapper.delete(t);
+	}
+
+	@Override
+	public Vector<ProjektMarktplatz> getProjektMarktplaetzeByOrganisation(Organisationseinheit o)
+			throws IllegalArgumentException {
+		return this.pmMapper.getByOrganisation(o);
 	}
 }
