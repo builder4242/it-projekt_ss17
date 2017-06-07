@@ -65,7 +65,7 @@ public interface ProjektAdministration extends RemoteService {
 
 	public Partnerprofil createPartnerprofilFor(Organisationseinheit or) throws IllegalArgumentException;
 
-	public Eigenschaft createEigenschaftFor(Ausschreibung as, String name, String value)
+	public Eigenschaft createEigenschaftFor(Partnerprofil pp, String name, String value)
 			throws IllegalArgumentException;
 
 	public Person createPerson(String name, String vorname, String email, String strasse, int plz, String ort,
@@ -77,9 +77,9 @@ public interface ProjektAdministration extends RemoteService {
 	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel)
 			throws IllegalArgumentException;
 
-	public Bewerbung bewerben(Projekt pr, Organisationseinheit organisation) throws IllegalArgumentException;
+	public Bewerbung bewerben(Ausschreibung as, Organisationseinheit organisation, String bewerbungstext) throws IllegalArgumentException;
 
-	public Bewertung bewerten(Bewerbung bw, String stellungsnahme, float wert) throws IllegalArgumentException;
+	public Bewertung bewerten(Bewerbung bw, String stellungnahme, float wert) throws IllegalArgumentException;
 
 	public Beteiligung beteiligen(Projekt pr, Organisationseinheit or, int personentage, Date startdatum, Date enddatum)
 			throws IllegalArgumentException;
@@ -93,7 +93,7 @@ public interface ProjektAdministration extends RemoteService {
 
 	public void save(Ausschreibung as) throws IllegalArgumentException;
 
-	public void save(Partnerprofil pr) throws IllegalArgumentException;
+	public void save(Partnerprofil pp) throws IllegalArgumentException;
 
 	public void save(Eigenschaft e) throws IllegalArgumentException;
 
@@ -115,7 +115,7 @@ public interface ProjektAdministration extends RemoteService {
 
 	public void delete(Ausschreibung as) throws IllegalArgumentException;
 
-	public void delete(Partnerprofil pr) throws IllegalArgumentException;
+	public void delete(Partnerprofil pp) throws IllegalArgumentException;
 
 	public void delete(Eigenschaft e) throws IllegalArgumentException;
 
