@@ -132,7 +132,6 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		pm.setId(1);
 
 		return this.pmMapper.insert(pm);
-		;
 	}
 
 	@Override
@@ -149,7 +148,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		pr.setId(1);
 
 		return this.prMapper.insert(pr);
-		;
+
 	}
 
 	@Override
@@ -166,7 +165,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		as.setId(1);
 
 		return this.asMapper.insert(as);
-		;
+
 	}
 
 	@Override
@@ -200,201 +199,277 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 		or.setPartnerprofilId(npp.getId());
 
-		if(or instanceof Person)
-			this.save((Person)or);
-		
-		if(or instanceof Unternehmen)
-			this.save((Unternehmen)or);
-		
-		if(or instanceof Team)
-			this.save((Team)or);
+		if (or instanceof Person)
+			this.save((Person) or);
+
+		if (or instanceof Unternehmen)
+			this.save((Unternehmen) or);
+
+		if (or instanceof Team)
+			this.save((Team) or);
 
 		return npp;
 	}
 
 	@Override
-	public Eigenschaft createEigenschaftFor(Ausschreibung as, String name, String value)
+	public Eigenschaft createEigenschaftFor(Partnerprofil pp, String name, String value)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Eigenschaft e = new Eigenschaft();
+
+		e.setName(name);
+		e.setWert(value);
+		e.setPartnerprofilId(pp.getId());
+
+		e.setId(1);
+
+		return this.eMapper.insert(e);
+
 	}
 
 	@Override
 	public Person createPerson(String name, String vorname, String email, String strasse, int plz, String ort,
 			String tel) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Person p = new Person();
+		p.setName(name);
+		p.setVorname(vorname);
+		p.setEmail(email);
+		p.setStrasse(strasse);
+		p.setPlz(plz);
+		p.setOrt(ort);
+		p.setTel(tel);
+
+		p.setId(1);
+
+		return this.pMapper.insert(p);
 	}
 
 	@Override
 	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Unternehmen u = new Unternehmen();
+		u.setName(name);
+		u.setEmail(email);
+		u.setStrasse(strasse);
+		u.setPlz(plz);
+		u.setOrt(ort);
+		u.setTel(tel);
+
+		u.setId(1);
+
+		return this.uMapper.insert(u);
 	}
 
 	@Override
 	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Team t = new Team();
+
+		t.setName(name);
+		t.setEmail(email);
+		t.setStrasse(strasse);
+		t.setPlz(plz);
+		t.setOrt(ort);
+		t.setTel(tel);
+
+		t.setId(1);
+
+		return this.tMapper.insert(t);
 	}
 
 	@Override
-	public Bewerbung bewerben(Projekt pr, Organisationseinheit organisation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Bewerbung bewerben(Ausschreibung as, Organisationseinheit organisation, String bewerbungstext)
+			throws IllegalArgumentException {
+
+		Bewerbung bw = new Bewerbung();
+
+		bw.setAusschreibungId(as.getId());
+		bw.setOrganisationseinheitId(organisation.getId());
+		bw.setErstelldatum(new Date());
+		bw.setBewerbungstext(bewerbungstext);
+
+		bw.setId(1);
+
+		return this.bwMapper.insert(bw);
+
 	}
 
 	@Override
-	public Bewertung bewerten(Bewerbung bw, String stellungsnahme, float wert) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Bewertung bewerten(Bewerbung bw, String stellungnahme, float wert) throws IllegalArgumentException {
+
+		Bewertung bwt = new Bewertung();
+
+		bwt.setBewerbungId(bw.getId());
+		bwt.setErstelldatum(new Date());
+		bwt.setStellungnahme(stellungnahme);
+		bwt.setWert(wert);
+
+		bwt.setId(1);
+
+		return this.bwtMapper.insert(bwt);
+
 	}
 
 	@Override
 	public Beteiligung beteiligen(Projekt pr, Organisationseinheit or, int personentage, Date startdatum, Date enddatum)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Beteiligung bt = new Beteiligung();
+
+		bt.setProjektId(pr.getId());
+		bt.setOrganisationseinheitId(or.getId());
+		bt.setPersonentage(personentage);
+		bt.setStartdatum(startdatum);
+		bt.setEnddatum(enddatum);
+
+		bt.setId(1);
+
+		return this.btMapper.insert(bt);
+
 	}
 
 	@Override
 	public void projektmarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void save(ProjektMarktplatz pm) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
+		this.pmMapper.update(pm);
 
 	}
 
 	@Override
 	public void save(Projekt pr) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
+		this.prMapper.update(pr);
 
 	}
 
 	@Override
 	public void save(Ausschreibung as) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
+		this.asMapper.update(as);
 
 	}
 
 	@Override
-	public void save(Partnerprofil pr) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void save(Partnerprofil pp) throws IllegalArgumentException {
 
+		this.ppMapper.update(pp);
 	}
 
 	@Override
 	public void save(Eigenschaft e) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.eMapper.update(e);
 	}
 
 	@Override
 	public void save(Bewerbung bw) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.bwMapper.update(bw);
 	}
 
 	@Override
 	public void save(Bewertung bwt) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.bwtMapper.update(bwt);
 	}
 
 	@Override
 	public void save(Beteiligung bt) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.btMapper.update(bt);
 	}
 
 	@Override
 	public void save(Person ps) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.pMapper.update(ps);
 	}
 
 	@Override
 	public void save(Unternehmen u) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.uMapper.update(u);
 	}
 
 	@Override
 	public void save(Team t) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.tMapper.update(t);
 	}
 
 	@Override
 	public void delete(ProjektMarktplatz pm) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.pmMapper.delete(pm);
 	}
 
 	@Override
 	public void delete(Projekt pr) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
+		this.prMapper.delete(pr);
 
 	}
 
 	@Override
 	public void delete(Ausschreibung as) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.asMapper.delete(as);
 	}
 
 	@Override
-	public void delete(Partnerprofil pr) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void delete(Partnerprofil pp) throws IllegalArgumentException {
 
+		this.ppMapper.delete(pp);
 	}
 
 	@Override
 	public void delete(Eigenschaft e) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.eMapper.delete(e);
 	}
 
 	@Override
 	public void delete(Bewerbung bw) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
+		this.bwMapper.delete(bw);
 
 	}
 
 	@Override
 	public void delete(Bewertung bwt) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.bwtMapper.delete(bwt);
 	}
 
 	@Override
 	public void delete(Beteiligung bt) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.btMapper.delete(bt);
 	}
 
 	@Override
 	public void delete(Person ps) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.pMapper.update(ps);
 	}
 
 	@Override
 	public void delete(Unternehmen u) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.uMapper.delete(u);
 	}
 
 	@Override
 	public void delete(Team t) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		this.tMapper.delete(t);
 	}
 }
