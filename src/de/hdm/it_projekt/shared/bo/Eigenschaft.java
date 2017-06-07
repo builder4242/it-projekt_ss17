@@ -36,7 +36,7 @@ public class Eigenschaft extends BusinessObject {
 	/**
 	 * Eigenschaftswert
 	 */
-	private float wert;
+	private String wert;
 		
 	/**
 	 * Rueckgabe des Eigenschaftsnamens
@@ -58,7 +58,7 @@ public class Eigenschaft extends BusinessObject {
 	 * Setzen Rueckgabe des Eigenschaftswertes
 	 * @return Wert
 	 */
-	public float getWert() {
+	public String getWert() {
 		return wert;
 	}
 
@@ -66,7 +66,7 @@ public class Eigenschaft extends BusinessObject {
 	 * Setzen des Eigenschaftswertes
 	 * @param f the wert to set
 	 */
-	public void setWert(float f) {
+	public void setWert(String f) {
 		this.wert = f;
 	}
 	
