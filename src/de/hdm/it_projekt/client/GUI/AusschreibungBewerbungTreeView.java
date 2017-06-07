@@ -13,6 +13,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.it_projekt.shared.bo.BusinessObject;
+import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
@@ -58,14 +59,6 @@ public class AusschreibungBewerbungTreeView implements TreeViewModel{
 		}
 	};
 
-	
-	
-	
-	
-
-
-
-
 /**
  * Diese Implementierung des TreeViewModels sorgt für die Verwaltung des Kunden-
  * und Kontenbaumes.
@@ -105,7 +98,7 @@ public class AusschreibungBewerbungTreeView implements TreeViewModel{
 	 * Variaben initialisiert.
 	 */
 	public void AusschreibungBewerbungsTreeViewModel() {
-		projektVerwaltung = ClientsideSettings.getBankVerwaltung();
+		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
@@ -113,12 +106,12 @@ public class AusschreibungBewerbungTreeView implements TreeViewModel{
 		BewerbungDataProviders = new HashMap<Ausschreibung, ListDataProvider<Bewerbung>>();
 	}
 
-	void setAusschreibungForm(Ausschreibung cf) {
-		ausschreibungForm = cf;
+	void setAusschreibungForm(AusschreibungForm af) {
+		ausschreibungForm = af;
 	}
 
-	void setBewerbungForm(BewerbungForm af) {
-		bewerbungForm = af;
+	void setBewerbungForm(BewerbungForm bf) {
+		bewerbungForm = bf;
 	}
 
 	Ausschreibung getSelectedAusschreibung() {
@@ -145,7 +138,7 @@ public class AusschreibungBewerbungTreeView implements TreeViewModel{
 		bewerbungForm.setSelected(a);
 
 		if (a != null) {
-			projektVerwaltung.getAusschreibungById(a.getOwnerID(),
+			projektVerwaltung.getAusschreibungById(a.getAusschreibungId(),
 					new AsyncCallback<Ausschreibung>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -217,7 +210,7 @@ public class AusschreibungBewerbungTreeView implements TreeViewModel{
 	 * Baumstruktur noch ein "veraltetes" Kontoobjekt enthalten ist.
 	 */
 	void updateBewerbung(Bewerbung a) {
-		projektVerwaltung.getAusschreibungById(a.getOwnerID(),
+		projektVerwaltung.getAusschreibungById(a.getOrganisationseinheitId(),
 				new UpdateBewerbungCallback(a));
 	}
 

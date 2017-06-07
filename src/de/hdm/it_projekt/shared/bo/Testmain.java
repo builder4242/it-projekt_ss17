@@ -1,7 +1,9 @@
 package de.hdm.it_projekt.shared.bo;
 
-import de.hdm.it_projekt.server.db.*;  
+import de.hdm.it_projekt.server.db.*; 
+
 import java.util.Date;
+
 
 public class Testmain {
 
@@ -14,7 +16,7 @@ public class Testmain {
 		Person p1 = new Person();
 		p1.setName("Fleps");
 		p1.setVorname("Guenther");
-		p1.setEmail("mailatflepsde");
+		p1.setEmail("mail@fleps.de");
 		p1.setStrasse("Rohrerweg");
 		p1.setPlz(70565);
 		p1.setOrt("Stugart");
@@ -51,6 +53,9 @@ public class Testmain {
 		System.out.println(pmMapper.findAll());
 		System.out.println(pmMapper.findById(8));
 		System.out.println(pmMapper.findByBezeichnung("Daimler"));
+		
+		Date dat = new Date();
+		System.out.println( "Datum  :  "+dat.getDay()+"."+dat.getMonth()+"."+dat.getYear() );
 	}
 
 }
