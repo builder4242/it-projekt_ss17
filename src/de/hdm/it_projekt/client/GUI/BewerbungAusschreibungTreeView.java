@@ -14,6 +14,7 @@ import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.it_projekt.shared.bo.BusinessObject;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 
 
@@ -28,7 +29,7 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	private Bewerbung selectedBewerbung = null;
 	private Ausschreibung selectedAusschreibung = null;
 
-	private BankAdministrationAsync bankVerwaltung = null; //warten auf anlage Async
+	private ProjektAdministrationAsync projektVerwaltung = null; //warten auf anlage Async
 	private ListDataProvider<Bewerbung> BewerbungDataProvider = null;
 	
 	private Map<Bewerbung, ListDataProvider<Ausschreibung>> AusschreibungDataProviders = null;
@@ -105,7 +106,7 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	 * Variaben initialisiert.
 	 */
 	public void BewerbungAusschreibungsTreeViewModel() {
-		bankVerwaltung = ClientsideSettings.getBankVerwaltung();
+		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
@@ -145,7 +146,7 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 		ausschreibungForm.setSelected(a);
 
 		if (a != null) {
-			bankVerwaltung.getBewerbungById(a.getOwnerID(),
+			projektVerwaltung.getBewerbungById(a.getOwnerID(),
 					new AsyncCallback<Bewerbung>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -217,7 +218,7 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	 * Baumstruktur noch ein "veraltetes" Kontoobjekt enthalten ist.
 	 */
 	void updateAusschreibung(Ausschreibung a) {
-		bankVerwaltung.getBewerbungById(a.getOwnerID(),
+		projektVerwaltung.getBewerbungById(a.getOwnerID(),
 				new UpdateAusschreibungCallback(a));
 	}
 
@@ -253,7 +254,7 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 		if (value.equals("Root")) {
 			// Erzeugen eines ListDataproviders für Bewerbungdaten
 			BewerbungDataProvider = new ListDataProvider<Bewerbung>();
-			bankVerwaltung
+			projektVerwaltung
 					.getAllBewerbungs(new AsyncCallback<Vector<Bewerbung>>() {
 						@Override
 						public void onFailure(Throwable t) {
@@ -277,7 +278,7 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 			final ListDataProvider<Ausschreibung> AusschreibungsProvider = new ListDataProvider<Ausschreibung>();
 			AusschreibungDataProviders.put((Bewerbung) value, AusschreibungsProvider);
 
-			bankVerwaltung.getAusschreibungsOf((Bewerbung) value,
+			projektVerwaltung.getAusschreibungsOf((Bewerbung) value,
 					new AsyncCallback<Vector<Ausschreibung>>() {
 					
 						public void onFailure(Throwable t) {

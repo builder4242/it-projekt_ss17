@@ -3,7 +3,7 @@ package de.hdm.it_projekt.client.GUI;
  * To be Done:
  * 
  * Eigenschaften -> Hashmap
- * bankverwaltung anpassen
+ * projektverwaltung anpassen
  * on success überprüfen
  * setSelected prüfen
  */
@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 /**
@@ -34,8 +35,8 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 public class AusschreibungForm extends VerticalPanel {
 
 
-		BankAdministrationAsync bankVerwaltung = ClientsideSettings // waiting for Classes 
-				.getBankVerwaltung();
+		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings // waiting for Classes 
+				.getProjektVerwaltung();
 		Ausschreibung ausschreibungToDisplay = null;
 		ProjektAusschreibungTreeView catvm = null;
 
@@ -112,7 +113,7 @@ public class AusschreibungForm extends VerticalPanel {
 					ausschreibungToDisplay.setBezeichnung(bezeichnungTextBox.getText());
 					ausschreibungToDisplay.setBewerbungsfrist(bewerbungsfristTextBox.getValue());
 					//ausschreibungToDisplay.setEigenschaften(bezeichnungTextBox.getValue());
-					bankVerwaltung.save(ausschreibungToDisplay, new SaveCallback());
+					projektVerwaltung.save(ausschreibungToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
 				}
@@ -146,7 +147,7 @@ public class AusschreibungForm extends VerticalPanel {
 				if (ausschreibungToDisplay == null) {
 					Window.alert("kein Kunde ausgewählt");
 				} else {
-					bankVerwaltung.delete(ausschreibungToDisplay,
+					projektVerwaltung.delete(ausschreibungToDisplay,
 							new deleteAusschreibungCallback(ausschreibungToDisplay));
 				}
 			}
@@ -188,7 +189,7 @@ public class AusschreibungForm extends VerticalPanel {
 				Partnerprofil p1 = new Partnerprofil();
 				p1.setEigenschaften((Eigenschaft).setName(partnerprofileigenschaftTextBox.getValue()));
 				
-				bankVerwaltung.createAusschreibung(firstName, lastName,
+				projektVerwaltung.createAusschreibung(firstName, lastName,
 						new CreateAusschreibungCallback());
 			}
 		}
