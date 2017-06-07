@@ -81,7 +81,7 @@ public class BewerbungMapper {
 	 *         <code>id</id>
 	 */
 
-	public static Bewerbung insert(Bewerbung bw) {
+	public Bewerbung insert(Bewerbung bw) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -105,9 +105,8 @@ public class BewerbungMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO bewerbung (Bewerbungstext) " + "VALUES (" + bw.getBewerbungstext() + ")");
-			/*	stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext) " + "VALUES (" + bw.getId()
-						+ "," + bw.getErstelldatum() + "," + bw.getBewerbungstext() + ")"); */
+			stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext) " + "VALUES (" + bw.getId()
+						+ "," + bw.getErstelldatum() + "," + bw.getBewerbungstext() + ")");
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
