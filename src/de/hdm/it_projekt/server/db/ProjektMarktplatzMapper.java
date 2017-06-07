@@ -94,12 +94,13 @@ public class ProjektMarktplatzMapper {
 				 * Primaerschluessel.
 				 */
 				pm.setId(rs.getInt("maxid") + 1);
+				System.out.println(pm.getId());
 
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO projektmarktplatz (ID, Bezeichnung) " + "VALUES (" + pm.getId() + ","
-						+ pm.getBezeichnung() + ")");
+				stmt.executeUpdate("INSERT INTO projektmarktplatz (ID, Bezeichnung) " + "VALUES ('" + pm.getId() + "','"
+						+ pm.getBezeichnung() + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -218,7 +219,7 @@ public class ProjektMarktplatzMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz" + "WHERE ID=" + id + " ORDER BY ID");
+					.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz WHERE ID=" + id + " ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -261,8 +262,7 @@ public class ProjektMarktplatzMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz" + "WHERE Bezeichnung='"
-					+ bezeichnung + " ORDER BY Bezeichnung");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz WHERE Bezeichnung='"+bezeichnung+"' ORDER BY Bezeichnung");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// ProjektMarktplatz-Objekt erstellt.

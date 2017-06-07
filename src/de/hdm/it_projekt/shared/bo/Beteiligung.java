@@ -13,7 +13,7 @@ public class Beteiligung extends BusinessObject {
 	 * Serializable
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Personentage der Beteiligung
 	 */
@@ -28,6 +28,17 @@ public class Beteiligung extends BusinessObject {
 	 * Enddatum der Beteiligung
 	 */
 	private Date enddatum;
+	
+	/*Beginn Fremdschluesseldefinitionen*/
+	/**
+	 * Fremdschluesselbeziehung zu Projekt
+	 */
+	private int projektId = 0;
+	/**
+	 * Fremdschluesselbeziehung zu Organisationseinheit
+	 */
+	private int organisationseinheitId = 0;
+	/*Ende Fremdschluesseldefinitionen*/
 	
 	/**
 	 * Auslesen der Personentage 
@@ -76,6 +87,36 @@ public class Beteiligung extends BusinessObject {
 	public void setEnddatum(Date enddatum) {
 		this.enddatum = enddatum;
 	}
+	
+	/*Beginn Fremdschluessel Getter und Setter*/
+	/**
+	 * @return the projektId
+	 */
+	public int getProjektId() {
+		return projektId;
+	}
+
+	/**
+	 * @param projektId the projektId to set
+	 */
+	public void setProjektId(int projektId) {
+		this.projektId = projektId;
+	}
+
+	/**
+	 * @return the organisationseinheitId
+	 */
+	public int getOrganisationseinheitId() {
+		return organisationseinheitId;
+	}
+
+	/**
+	 * @param organisationseinheitId the organisationseinheitId to set
+	 */
+	public void setOrganisationseinheitId(int organisationseinheitId) {
+		this.organisationseinheitId = organisationseinheitId;
+	}
+	/*Ende Fremdschluessel Getter und Setter*/
 	
 	/**
 	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die

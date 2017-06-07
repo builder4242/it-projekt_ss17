@@ -1,6 +1,6 @@
 package de.hdm.it_projekt.server.db;
 
-import java.sql.Connection;
+import java.sql.Connection;  
 import java.sql.DriverManager;
 
 import com.google.appengine.api.utils.SystemProperty;
@@ -43,8 +43,10 @@ public class DBConnection {
      * mitgegeben, um bei einer Veränderung dieser URL nicht die gesamte
      * Software neu komilieren zu müssen.
      */
-    private static String googleUrl = "jdbc:google:mysql://prof-thies.de:thies-bankproject:thies-bankproject/bankproject?user=demo&password=demo";
-    private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=Projektmarktplatz&password=itprojekt17";
+    
+    /* googleURL zu Testzwecken auf localURL gesetzt. Muss nachher wieder geaendert werden*/
+    private static String googleUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";
+    private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";
 
     /**
      * Diese statische Methode kann aufgrufen werden durch

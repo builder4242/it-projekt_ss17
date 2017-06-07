@@ -11,7 +11,7 @@ public class Projekt extends BusinessObject {
 
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Name des Projektes
 	 */
@@ -31,6 +31,21 @@ public class Projekt extends BusinessObject {
 	 * Erweiterte Beschreibung des Projektes
 	 */
 	private String beschreibung;
+	
+	/*Beginn Fremdschluesseldefinitionen*/
+	/**
+	 * Fremnschluesselbeziehung zu Projektmarktplatz
+	 */
+	private int projektMarktplatzId = 0;
+	/**
+	 * Fremdschluesselbeziehung zu Projektbetreiber
+	 */
+	private int projektbetreiberId = 0;
+	/**
+	 * Fremdschluesselbeziehung zu Projektleiter
+	 */
+	private int projektleiterId = 0;
+	/*Ende Fremdschluesseldefinitionen*/
 
 	/**
 	 * Rueckgabe des Namens
@@ -95,6 +110,50 @@ public class Projekt extends BusinessObject {
 	public void setBeschreibung(String beschreibung) {
 		this.beschreibung = beschreibung;
 	}
+	
+	/*Beginn Fremdschluessel Getter und Setter*/
+	/**
+	 * @return the projektMarktplatzId
+	 */
+	public int getProjektMarktplatzId() {
+		return projektMarktplatzId;
+	}
+
+	/**
+	 * @param projektMarktplatzId the projektMarktplatzId to set
+	 */
+	public void setProjektMarktplatzId(int projektMarktplatzId) {
+		this.projektMarktplatzId = projektMarktplatzId;
+	}
+
+	/**
+	 * @return the projektbetreiberId
+	 */
+	public int getProjektbetreiberId() {
+		return projektbetreiberId;
+	}
+
+	/**
+	 * @param projektbetreiberId the projektbetreiberId to set
+	 */
+	public void setProjektbetreiberId(int projektbetreiberId) {
+		this.projektbetreiberId = projektbetreiberId;
+	}
+
+	/**
+	 * @return the projektleiterId
+	 */
+	public int getProjektleiterId() {
+		return projektleiterId;
+	}
+
+	/**
+	 * @param projektleiterId the projektleiterId to set
+	 */
+	public void setProjektleiterId(int projektleiterId) {
+		this.projektleiterId = projektleiterId;
+	}
+	/*Ende Fremdschluessel Getter und Setter*/
 	
 	/**
 	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
