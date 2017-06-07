@@ -25,7 +25,7 @@ public interface ProjektAdministrationAsync {
 
 	void createPartnerprofilFor(Ausschreibung as, AsyncCallback<Partnerprofil> callback);
 
-	void createProjektFor(ProjektMarktplatz mp, String name, Date startdatum, Date enddatum, String beschreibung,
+	void createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum, String beschreibung,
 			AsyncCallback<Projekt> callback);
 
 	void createPerson(String name, String vorname, String email, String strasse, int plz, String ort, String tel,
