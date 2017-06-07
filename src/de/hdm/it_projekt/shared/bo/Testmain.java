@@ -12,13 +12,23 @@ public class Testmain {
 
 		ProjektMarktplatz p1 = new ProjektMarktplatz();
 		
-		p1.setBezeichnung("Daimler");
-		p1.setId(7);
+
+	
+		p1.setBezeichnung("ATI");
 		
 		System.out.println(p1.getId() + " " + p1.getBezeichnung());
 		
 		ProjektMarktplatzMapper.insert(p1);
 		
+		/*
+		p1.setBezeichnung("Volvo");
+		ProjektMarktplatzMapper.update(p1);
+		ProjektMarktplatzMapper.delete(p1);
+		*/
+		
+		System.out.println(ProjektMarktplatzMapper.findAll());
+		System.out.println(ProjektMarktplatzMapper.findById(8));
+		System.out.println(ProjektMarktplatzMapper.findByBezeichnung("Daimler"));
 	}
 
 }
