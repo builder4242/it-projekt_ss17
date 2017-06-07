@@ -3,6 +3,7 @@ package de.hdm.it_projekt.server.report;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.it_projekt.server.db.*;
+import de.hdm.it_projekt.shared.ReportGenerator;
 
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator  {
 
