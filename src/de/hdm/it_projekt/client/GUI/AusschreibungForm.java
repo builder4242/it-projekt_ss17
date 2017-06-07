@@ -187,11 +187,9 @@ public class AusschreibungForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				String bezeichnung = bezeichnungTextBox.getText();
 				String ausschreibungstext = ausschreibungstextTextBox.getText();
-				Partnerprofil p1 = new Partnerprofil();
-				p1.setEigenschaften((Eigenschaft).setName(partnerprofileigenschaftTextBox.getValue()));
-				
-				projektVerwaltung.createAusschreibung(firstName, lastName,
-						new CreateAusschreibungCallback());
+				String eigenschaften = partnerprofileigenschaftTextBox.getText();
+			
+				projektVerwaltung.createAusschreibungFor(pr, bezeichnung, bewerbungsfrist, ausschreibungstext, profil, callback);
 			}
 		}
 
