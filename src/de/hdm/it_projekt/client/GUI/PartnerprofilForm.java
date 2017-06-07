@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 /**
@@ -36,7 +37,7 @@ public class PartnerprofilForm extends VerticalPanel {
 
 
 		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings // waiting for Classes 
-				.getProjektVerwaltung();
+				.getProjektAdministration();
 		Partnerprofil partnerprofilToDisplay = null;
 		PartnerprofilProjektTreeView catvm = null;
 
