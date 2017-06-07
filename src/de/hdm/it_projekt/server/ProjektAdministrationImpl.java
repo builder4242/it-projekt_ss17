@@ -48,80 +48,67 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Vector<ProjektMarktplatz> getAlleProjektMarktplaetze() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.pmMapper.findAll();
 	}
 
 	@Override
 	public ProjektMarktplatz getProjektMarktplatzById(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.pmMapper.findById(id);
 	}
 
 	@Override
 	public Vector<Projekt> getAlleProjekteFor(ProjektMarktplatz pm) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.prMapper.getByProjektmarktplatz(pm);
 	}
 
 	@Override
 	public Vector<Projekt> getProjektByName(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.prMapper.findByName(name);
 	}
 
 	@Override
 	public Projekt getProjektById(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.prMapper.findById(id);
 	}
 
 	@Override
 	public Vector<Ausschreibung> getAusschreibungFor(Projekt pr) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.asMapper.getByProjekt(pr);
 	}
 
 	@Override
 	public Ausschreibung getAusschreibungById(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.asMapper.findById(id);
 	}
 
 	@Override
 	public Partnerprofil getPartnerprofilById(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ppMapper.findById(id);
 	}
 
 	@Override
 	public Vector<Eigenschaft> getEigenschaftenFor(Partnerprofil pr) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Vector<Bewerbung> getBewerbungFor(Ausschreibung as) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.bwMapper.getByAusschreibung(as);
 	}
 
 	@Override
 	public Bewertung getBewertungFor(Bewerbung bw) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.bwtMapper.getByBewerbung(bw);
 	}
 
 	@Override
 	public Vector<Beteiligung> getBeteiligungenFor(Projekt pr) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.btMapper.getByProjekt(pr);
 	}
 
 	@Override
 	public Vector<Beteiligung> getBeteiligungenFor(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.btMapper.getByOrganisationseinheit(o);
 	}
 
 	@Override

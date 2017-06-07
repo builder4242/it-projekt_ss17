@@ -24,7 +24,7 @@ import de.hdm.it_projekt.shared.bo.Projekt;
  * 
  * Anlehnung an @author Thies
  * 
- * @author ElifY
+ * @author Elif Yavuz
  */
 public class BeteiligungMapper {
 
@@ -97,9 +97,9 @@ public class BeteiligungMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO beteiligung (ID, Personentage, Enddatum, Startdatum) " + "VALUES ("
-						+ bet.getId() + "," + bet.getPersonentage() + "," + bet.getEnddatum() + ","
-						+ bet.getStartdatum() + ")");
+				stmt.executeUpdate("INSERT INTO beteiligung (ID, Personentage, Enddatum, Startdatum) " + "VALUES ('"
+						+ bet.getId() + "','" + bet.getPersonentage() + "','" + bet.getEnddatum() + "','"
+						+ bet.getStartdatum() + "')");
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -403,7 +403,7 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM beteiligung WHERE projekt_ID=" + pr.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projekt.ID=" + pr.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt.
@@ -421,7 +421,7 @@ public class BeteiligungMapper {
 	}
 
 	/**
-	 * Auslesen der Beteiligung von einer Organisationseinheiti, die eine
+	 * Auslesen der Beteiligung von einer Organisationseinheit, die eine
 	 * Person, ein Team oder Unternehmen sein kann.
 	 * 
 	 * @param o
@@ -438,7 +438,7 @@ public class BeteiligungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM beteiligung WHERE organisationseinheit_ID=" + o.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM organisationseinheit WHERE organisationseinheit.ID=" + o.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt.
