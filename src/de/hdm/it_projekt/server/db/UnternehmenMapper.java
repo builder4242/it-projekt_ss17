@@ -95,7 +95,6 @@ public class UnternehmenMapper {
 				 * Primaerschluessel.
 				 */
 				u.setId(rs.getInt("maxid") + 1);
-				System.out.println(u.getId());
 
 				stmt = con.createStatement();
 

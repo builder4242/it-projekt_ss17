@@ -93,7 +93,6 @@ public class PersonMapper {
 				 * Primaerschluessel.
 				 */
 				p.setId(rs.getInt("maxid") + 1);
-				System.out.println(p.getId());
 
 				stmt = con.createStatement();
 
