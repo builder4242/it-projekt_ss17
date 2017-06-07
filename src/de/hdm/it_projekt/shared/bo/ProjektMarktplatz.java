@@ -1,23 +1,24 @@
 package de.hdm.it_projekt.shared.bo;
 
-/***
-	 * 
-	 * @author Tugba Bulat
-	 *
-	 */
-public class ProjektMarktplatz extends BusinessObject {
+import java.util.Vector;
 
+/***
+ * 
+ * @author Tugba Bulat
+ *
+ */
+public class ProjektMarktplatz extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
 
-	private String Bezeichnung;
+	private String bezeichnung;
 
 	/**
 	 * 
 	 * @return
 	 */
 	public String getBezeichnung() {
-		return Bezeichnung;
+		return bezeichnung;
 	}
 
 	/**
@@ -25,14 +26,14 @@ public class ProjektMarktplatz extends BusinessObject {
 	 * @param bezeichnung
 	 */
 	public void setBezeichnung(String bezeichnung) {
-		Bezeichnung = bezeichnung;
+		this.bezeichnung = bezeichnung;
 	}
 	
 	/**
-	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
+	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode
+	 * die spezifischen Attribute dieser Klasse aus
 	 */
 	public String toString() {
-	return super.toString() + " " + this.Bezeichnung;
-	  }
-
+		return super.toString() + " " + this.bezeichnung;
+	}
 }

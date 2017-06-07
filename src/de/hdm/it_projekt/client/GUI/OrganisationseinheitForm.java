@@ -1,5 +1,11 @@
 package de.hdm.it_projekt.client.GUI;
-
+/**
+ * 
+ * to be done:
+ * unterscheidung ob person  oder unternehmen ggfs vorname abfragen -> set Vorname
+ * bankverwaltung async
+ * remove/addOrganisationseinheit anpassen
+ */
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -12,6 +18,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
+import de.hdm.it_projekt.shared.bo.Person;
 /**
  * Formular für die Darstellung des selektierten Kunden
  * 
@@ -20,7 +27,7 @@ import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 public class OrganisationseinheitForm extends VerticalPanel {
 
 
-		BankAdministrationAsync bankVerwaltung = ClientsideSettings
+		BankAdministrationAsync bankVerwaltung = ClientsideSettings // waiting for Classes 
 				.getBankVerwaltung();
 		Organisationseinheit organisationseinheitToDisplay = null;
 		ProjektOrganisationseinheitTreeView catvm = null;
@@ -87,7 +94,7 @@ public class OrganisationseinheitForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				if (organisationseinheitToDisplay != null) {
 					organisationseinheitToDisplay.setName(firstNameTextBox.getText());
-					organisationseinheitToDisplay.setLastName(lastNameTextBox.getText());
+					organisationseinheitToDisplay.setVorname(lastNameTextBox.getText());
 					bankVerwaltung.save(organisationseinheitToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
@@ -182,7 +189,7 @@ public class OrganisationseinheitForm extends VerticalPanel {
 		}
 
 		// catvm setter
-		void setCatvm(OrganisationseinheitAccountsTreeViewModel catvm) {
+		void setCatvm(ProjektOrganisationseinheitTreeView catvm) {
 			this.catvm = catvm;
 		}
 
