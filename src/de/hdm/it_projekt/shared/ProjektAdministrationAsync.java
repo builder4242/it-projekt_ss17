@@ -113,4 +113,7 @@ public interface ProjektAdministrationAsync {
 
 	void getAlleProjekteFor(ProjektMarktplatz pm, AsyncCallback<Vector<Projekt>> callback);
 
+	void getProjektMarktplaetzeByOrganisation(Organisationseinheit o,
+			AsyncCallback<Vector<ProjektMarktplatz>> callback);
+
 }
