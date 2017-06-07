@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.util.Date;
 
 import com.google.appengine.api.utils.SystemProperty;
-import com.ibm.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Verwalten einer Verbindung zur Datenbank.
@@ -108,7 +108,7 @@ public class DBConnection {
         return con;
     }
     
-    private String convertToSQLDateString(Date d) {
+    public static String convertToSQLDateString(Date d) {
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
     	return sdf.format(d);
     }

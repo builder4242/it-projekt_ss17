@@ -1,11 +1,19 @@
 package de.hdm.it_projekt.shared.bo;
 
-import de.hdm.it_projekt.server.db.*; 
-
+import de.hdm.it_projekt.server.db.*;  
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 
 public class Testmain {
+	
+    static public String readDate() {
+    	String datum; 
+    	Date aktuellesDatum = new Date(); 
+    	SimpleDateFormat  sdf = new SimpleDateFormat("yyyy.MM.dd");
+    	datum = sdf.format(aktuellesDatum);
+    	return datum; 
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -22,6 +30,19 @@ public class Testmain {
 		p1.setOrt("Stugart");
 		p1.setTel("00000");
 		p1.setGoogleID("kfnsveior8945ztghg");
+		
+	
+		Bewerbung bw1 = new Bewerbung();
+		bw1.setAusschreibungId(1);
+		bw1.setBewerbungstext("Nimm mich");
+		bw1.setOrganisationseinheitId(2);
+		bw1.setErstelldatum(new Date());
+		
+		/* Datums Spielereien
+		System.out.println(new Date());
+		System.out.println(DBConnection.convertToSQLDateString(new Date()));
+		*/
+		
 		
 		/*Mapper Definitionen*/
 		AusschreibungMapper asMapper = AusschreibungMapper.ausschreibungMapper();
@@ -43,6 +64,7 @@ public class Testmain {
 		
 		pmMapper.insert(pm1);
 		psMapper.insert(p1);
+		bwMapper.insert(bw1);
 		
 		/*
 		p1.setBezeichnung("Volvo");
@@ -54,8 +76,8 @@ public class Testmain {
 		System.out.println(pmMapper.findById(8));
 		System.out.println(pmMapper.findByBezeichnung("Daimler"));
 		
-		Date dat = new Date();
-		System.out.println( "Datum  :  "+dat.getDay()+"."+dat.getMonth()+"."+dat.getYear() );
+		/*System.out.println(readDate());*/
+
 	}
 
 }
