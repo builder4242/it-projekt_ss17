@@ -18,24 +18,26 @@ import de.hdm.it_projekt.server.db.*;
 
 public class ProjektMarktplatz implements EntryPoint {
 
-	public String Ergebnis; 
-	private ProjektMarktplatz markt = null; 
-	
-	private TextBox testTextBox = new TextBox();
-	
-	private Button TestButton = new Button("Test"); 
-	
-	private VerticalPanel mainPanel = new VerticalPanel();
-	private HorizontalPanel addPanel = new HorizontalPanel();
-	private Label testLabel = new Label();
-	
-	/*Mapper Buttons*/ 
-	private Button projektmarktplatzButton = new Button("Daten Projektmarktplatz"); 
-	
-	
-	
+
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
+		
+		String Ergebnis; 
+		ProjektMarktplatz markt = null; 
+		
+		TextBox testTextBox = new TextBox();
+		
+		Button TestButton = new Button("Test"); 
+		
+		VerticalPanel mainPanel = new VerticalPanel();
+		HorizontalPanel addPanel = new HorizontalPanel();
+		Label testLabel = new Label();
+		
+		/*Mapper Buttons*/ 
+		Button projektmarktplatzButton = new Button("Daten Projektmarktplatz"); 
+		
+		
+		
 		
 		/*Aufbau des Textfeldes inkl. Button */  
 		addPanel.add(testTextBox);
@@ -48,7 +50,7 @@ public class ProjektMarktplatz implements EntryPoint {
 		
 		
 		/*Panel zur HTML Seite hinzufügen */ 
-		 RootPanel.get().add(mainPanel);
+		 RootPanel.get("content").add(mainPanel);
 		 
 		 
 		 
