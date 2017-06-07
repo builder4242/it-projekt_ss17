@@ -97,7 +97,6 @@ public class TeamMapper {
 				 * Primaerschluessel.
 				 */
 				t.setId(rs.getInt("maxid") + 1);
-				System.out.println(t.getId());
 
 				stmt = con.createStatement();
 
