@@ -108,7 +108,7 @@ public class DBConnection {
         return con;
     }
     
-    public String getSQLDateString(Date d) {
+    private String convertToSQLDateString(Date d) {
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
     	return sdf.format(d);
     }
