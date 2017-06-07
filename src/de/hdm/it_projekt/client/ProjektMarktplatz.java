@@ -43,6 +43,7 @@ public class ProjektMarktplatz implements EntryPoint {
 		addPanel.add(testTextBox);
 	    addPanel.add(TestButton);
 	    mainPanel.add(testLabel);
+	    addPanel.add(projektmarktplatzButton);
 	
 	
 		/* main Panel */ 
