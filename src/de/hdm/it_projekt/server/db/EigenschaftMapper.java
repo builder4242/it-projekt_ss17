@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 /**
  * Mapper-Klasse, die <code>Eigenschaft</code>-Objekte auf eine relationale
@@ -268,7 +269,7 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfüllen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert FROM eigenschaft " + "FROM eigenschaft "
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert FROM eigenschaft"
 					+ "WHERE Wert LIKE '" + wert + "' ORDER BY Wert");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -290,4 +291,40 @@ public class EigenschaftMapper {
 		// Ergebnisvektor zurueckgeben
 		return result;
 	}
+	
+	public Vector<Eigenschaft> getByPartnerprofil(Partnerprofil pp) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Eigenschaft> result = new Vector<Eigenschaft>();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfüllen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert FROM eigenschaft"
+					+ "WHERE Partnerprofil_ID=" + pp.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Eigenschhaft-Objekt
+			// erstellt.
+			while (rs.next()) {
+				Eigenschaft e = new Eigenschaft();
+				e.setId(rs.getInt("ID"));
+				e.setName(rs.getString("Name"));
+				e.setWert(rs.getString("Wert"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(e);
+			}
+		} catch (SQLException e6) {
+			e6.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+	
+	
 }
