@@ -8,9 +8,18 @@ public class Testmain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		ProjektMarktplatz p1 = new ProjektMarktplatz();
+		ProjektMarktplatz pm1 = new ProjektMarktplatz();
+		pm1.setBezeichnung("Burger King");
 		
-		p1.setBezeichnung("Burger King");
+		Person p1 = new Person();
+		p1.setName("Fleps");
+		p1.setVorname("Guenther");
+		p1.setEmail("mailatflepsde");
+		p1.setStrasse("Rohrerweg");
+		p1.setPlz(70565);
+		p1.setOrt("Stugart");
+		p1.setTel("00000");
+		p1.setGoogleID("kfnsveior8945ztghg");
 		
 		/*Mapper Definitionen*/
 		AusschreibungMapper asMapper = AusschreibungMapper.ausschreibungMapper();
@@ -27,10 +36,11 @@ public class Testmain {
 		/*Ende Mapper Definitionen*/
 		
 		
-		System.out.println(p1.getId() + " " + p1.getBezeichnung());
+		System.out.println(pm1.getId() + " " + pm1.getBezeichnung());
 		
 		
-		pmMapper.insert(p1);
+		pmMapper.insert(pm1);
+		psMapper.insert(p1);
 		
 		/*
 		p1.setBezeichnung("Volvo");
