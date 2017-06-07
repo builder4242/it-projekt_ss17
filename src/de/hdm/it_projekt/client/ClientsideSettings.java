@@ -10,8 +10,18 @@ import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 
 
 public class ClientsideSettings extends CommonSettings {
+	
+	/**
+	   * Remote Service Proxy zur Verbindungsaufnahme mit dem Server-seitgen Dienst
+	   * namens <code>ProjektAdministration</code>.
+	   */
 
 	 private static ProjektAdministrationAsync projektAdministration = null;
+	 
+	 /**
+	   * Remote Service Proxy zur Verbindungsaufnahme mit dem Server-seitgen Dienst
+	   * namens <code>ReportGenerator</code>.
+	   */
 	 
 	 private static ReportGeneratorAsync reportGenerator = null;
 	 
@@ -25,6 +35,7 @@ public class ClientsideSettings extends CommonSettings {
 	   */
 	  private static final Logger log = Logger.getLogger(LOGGER_NAME);
 	  
+	  /* Rückgabe der Logger Instanz */ 
 	  
 	  public static Logger getLogger() {
 		    return log;
