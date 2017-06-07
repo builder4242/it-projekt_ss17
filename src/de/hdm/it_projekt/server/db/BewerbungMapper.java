@@ -105,8 +105,8 @@ public class BewerbungMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext) " + "VALUES (" + bw.getId()
-						+ "," + bw.getErstelldatum() + "," + bw.getBewerbungstext() + ")");
+			stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext) " + "VALUES ('" + bw.getId()
+						+ "','" + bw.getErstelldatum() + "','" + bw.getBewerbungstext() + "')");
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -150,6 +150,7 @@ public class BewerbungMapper {
 	 * 
 	 * @param bw
 	 *            das aus der DB zu loeschende Objekt
+	 * @return 
 	 * @return
 	 */
 
