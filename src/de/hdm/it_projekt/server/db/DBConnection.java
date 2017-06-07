@@ -1,6 +1,6 @@
 package de.hdm.it_projekt.server.db;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.DriverManager;
 
 import com.google.appengine.api.utils.SystemProperty;
