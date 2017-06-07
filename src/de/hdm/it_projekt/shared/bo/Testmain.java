@@ -1,8 +1,6 @@
 package de.hdm.it_projekt.shared.bo;
 
-import de.hdm.it_projekt.server.db.ProjektMarktplatzMapper;
-import de.hdm.it_projekt.server.db.PersonMapper;
-import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.server.db.ProjektMarktplatzMapper; 
 import java.util.Date;
 
 public class Testmain {
