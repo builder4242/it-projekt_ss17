@@ -93,15 +93,16 @@ public class PersonMapper {
 				 * Primaerschluessel.
 				 */
 				p.setId(rs.getInt("maxid") + 1);
+				System.out.println(p.getId());
 
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 				stmt.executeUpdate(
 						"INSERT INTO organisationseinheit (ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID) "
-								+ "VALUES (" + p.getId() + "," + p.getName() + "," + p.getVorname() + "," + p.getEmail()
-								+ "," + p.getStrasse() + "," + p.getPlz() + "," + p.getOrt() + "," + p.getTel() + ","
-								+ p.getGoogleID() + ")");
+								+ "VALUES ('" + p.getId() + "','" + p.getName() + "','" + p.getVorname() + "','"
+								+ p.getEmail() + "','" + p.getStrasse() + "','" + p.getPlz() + "','" + p.getOrt()
+								+ "','" + p.getTel() + "','" + p.getGoogleID() + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -176,7 +177,7 @@ public class PersonMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID "
 					+ "FROM organisationseinheit" + " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -214,6 +215,7 @@ public class PersonMapper {
 	 * @return
 	 */
 	public Person findById(int id) {
+
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
 
@@ -223,8 +225,8 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE ID=" + id
-							+ "' AND Typ='P' ORDER BY ID");
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE ID= " + id
+							+ " AND Typ='P' ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -272,8 +274,9 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID"
-					+ "FROM organisationseinheit WHERE Name='" + name + "' AND Typ='P' ORDER BY Name");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE Name=' "
+							+ name + "' AND Typ= 'P' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
@@ -372,9 +375,9 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit"
-							+ "WHERE Email='" + email + "' AND Typ='P' ORDER BY Email");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE Email= '"
+							+ email + "' AND Typ= 'P' ORDER BY Email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
