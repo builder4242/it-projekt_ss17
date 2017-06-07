@@ -25,7 +25,7 @@ public interface ProjektAdministrationAsync {
 
 	void createPartnerprofilFor(Ausschreibung as, AsyncCallback<Partnerprofil> callback);
 
-	void createProjektFor(ProjektMarktplatz mp, String name, Date startdatum, Date enddatum, String beschreibung,
+	void createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum, String beschreibung,
 			AsyncCallback<Projekt> callback);
 
 	void createPerson(String name, String vorname, String email, String strasse, int plz, String ort, String tel,
@@ -64,8 +64,6 @@ public interface ProjektAdministrationAsync {
 	void delete(Beteiligung bt, AsyncCallback<Void> callback);
 
 	void delete(Projekt pr, AsyncCallback<Void> callback);
-
-	void getAlleProjekte(AsyncCallback<Vector<Projekt>> callback);
 
 	void getAlleProjektMarktplaetze(AsyncCallback<Vector<ProjektMarktplatz>> callback);
 
@@ -112,5 +110,7 @@ public interface ProjektAdministrationAsync {
 	void save(Partnerprofil pr, AsyncCallback<Void> callback);
 
 	void save(Ausschreibung as, AsyncCallback<Void> callback);
+
+	void getAlleProjekteFor(ProjektMarktplatz pm, AsyncCallback<Vector<Projekt>> callback);
 
 }

@@ -5,26 +5,45 @@ import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.it_projekt.server.db.*;
 import de.hdm.it_projekt.shared.ProjektAdministration;
-import de.hdm.it_projekt.shared.bo.Ausschreibung;
-import de.hdm.it_projekt.shared.bo.Beteiligung;
-import de.hdm.it_projekt.shared.bo.Bewerbung;
-import de.hdm.it_projekt.shared.bo.Bewertung;
-import de.hdm.it_projekt.shared.bo.Eigenschaft;
-import de.hdm.it_projekt.shared.bo.Organisationseinheit;
-import de.hdm.it_projekt.shared.bo.Partnerprofil;
-import de.hdm.it_projekt.shared.bo.Person;
-import de.hdm.it_projekt.shared.bo.Projekt;
-import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
-import de.hdm.it_projekt.shared.bo.Team;
-import de.hdm.it_projekt.shared.bo.Unternehmen;
+import de.hdm.it_projekt.shared.bo.*;
 
 @SuppressWarnings("serial")
 public class ProjektAdministrationImpl extends RemoteServiceServlet implements ProjektAdministration {
 
+	private ProjektMarktplatz pm = null;
+
+	private AusschreibungMapper asMapper = null;
+	private BeteiligungMapper btMapper = null;
+	private BewerbungMapper bwMapper = null;
+	private BewertungMapper bwtMapper = null;
+	private EigenschaftMapper eMapper = null;
+	private PartnerprofilMapper ppMapper = null;
+	private PersonMapper pMapper = null;
+	private ProjektMapper prMapper = null;
+	private ProjektMarktplatzMapper pmMapper = null;
+	private TeamMapper tMapper = null;
+	private UnternehmenMapper uMapper = null;
+
+	public ProjektAdministrationImpl() throws IllegalArgumentException {
+
+	}
+
 	@Override
 	public void init() throws IllegalArgumentException {
 
+		this.asMapper = AusschreibungMapper.ausschreibungMapper();
+		this.btMapper = BeteiligungMapper.beteiligungMapper();
+		this.bwMapper = BewerbungMapper.bewerbungMapper();
+		this.bwtMapper = BewertungMapper.bewertungMapper();
+		this.eMapper = EigenschaftMapper.eigenschaftMapper();
+		this.ppMapper = PartnerprofilMapper.partnerprofilMapper();
+		this.pMapper = PersonMapper.personMapper();
+		this.prMapper = ProjektMapper.projektMapper();
+		this.pmMapper = ProjektMarktplatzMapper.projektMarktplatzMapper();
+		this.tMapper = TeamMapper.teamMapper();
+		this.uMapper = UnternehmenMapper.unternehmenMapper();
 	}
 
 	@Override
@@ -40,7 +59,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Vector<Projekt> getAlleProjekte() throws IllegalArgumentException {
+	public Vector<Projekt> getAlleProjekteFor(ProjektMarktplatz pm) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -107,34 +126,90 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public ProjektMarktplatz createProjektMarktplatz(String bez) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		ProjektMarktplatz pm = new ProjektMarktplatz();
+		pm.setBezeichnung(bez);
+
+		pm.setId(1);
+
+		return this.pmMapper.insert(pm);
+		;
 	}
 
 	@Override
-	public Projekt createProjektFor(ProjektMarktplatz mp, String name, Date startdatum, Date enddatum,
+	public Projekt createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum,
 			String beschreibung) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Projekt pr = new Projekt();
+		pr.setName(name);
+		pr.setStartdatum(startdatum);
+		pr.setEnddatum(enddatum);
+		pr.setBeschreibung(beschreibung);
+		pr.setProjektMarktplatzId(pm.getId());
+
+		pr.setId(1);
+
+		return this.prMapper.insert(pr);
+		;
 	}
 
 	@Override
 	public Ausschreibung createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist,
 			String ausschreibungstext, Partnerprofil profil) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Ausschreibung as = new Ausschreibung();
+		as.setBezeichnung(bezeichnung);
+		as.setBewerbungsfrist(bewerbungsfrist);
+		as.setAusschreibungstext(ausschreibungstext);
+		as.setPartnerprofilId(profil.getId());
+		as.setProjektId(pr.getId());
+
+		as.setId(1);
+
+		return this.asMapper.insert(as);
+		;
 	}
 
 	@Override
 	public Partnerprofil createPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Partnerprofil pp = new Partnerprofil();
+		pp.setErstelldatum(new Date());
+		pp.setAenderungsdatum(new Date());
+
+		pp.setId(1);
+
+		Partnerprofil npp = this.ppMapper.insert(pp);
+
+		as.setPartnerprofilId(npp.getId());
+
+		this.save(as);
+
+		return npp;
 	}
 
 	@Override
 	public Partnerprofil createPartnerprofilFor(Organisationseinheit or) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Partnerprofil pp = new Partnerprofil();
+		pp.setErstelldatum(new Date());
+		pp.setAenderungsdatum(new Date());
+
+		pp.setId(1);
+
+		Partnerprofil npp = this.ppMapper.insert(pp);
+
+		or.setPartnerprofilId(npp.getId());
+
+		if(or instanceof Person)
+			this.save((Person)or);
+		
+		if(or instanceof Unternehmen)
+			this.save((Unternehmen)or);
+		
+		if(or instanceof Team)
+			this.save((Team)or);
+
+		return npp;
 	}
 
 	@Override
@@ -322,5 +397,4 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		// TODO Auto-generated method stub
 
 	}
-
 }
