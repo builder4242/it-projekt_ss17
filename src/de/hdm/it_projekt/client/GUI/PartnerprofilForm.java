@@ -1,11 +1,11 @@
 package de.hdm.it_projekt.client.GUI;
 
-package de.hdm.it_projekt.client.GUI;
 /**
  * To be Done:
  * Bankverwaltung
  * ClientsideSettings
  * remove/addpartnerprofil
+ * Clickhandler anpassen
  */
 
 import java.text.DateFormat;
@@ -37,7 +37,7 @@ public class PartnerprofilForm extends VerticalPanel {
 		BankAdministrationAsync bankVerwaltung = ClientsideSettings // waiting for Classes 
 				.getBankVerwaltung();
 		Partnerprofil partnerprofilToDisplay = null;
-		AusschreibungPartnerprofilTreeView catvm = null;
+		PartnerprofilProjektTreeView catvm = null;
 
 		/*
 		 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -103,7 +103,7 @@ public class PartnerprofilForm extends VerticalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				if (partnerprofilToDisplay != null) {
-					partnerprofilToDisplay.setPartnerprofilstext(partnerprofilstextTextBox.getText());
+					partnerprofilToDisplay.setAenderungsdatum(aenderungsdatumTextBox.getValue());
 					partnerprofilToDisplay.setErstelldatum(erstelldatumTextBox.getValue());
 					//partnerprofilToDisplay.setEigenschaften(bezeichnungTextBox.getValue());
 					bankVerwaltung.save(partnerprofilToDisplay, new SaveCallback());
