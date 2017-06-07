@@ -18,6 +18,7 @@ public class Testmain {
 		
 		System.out.println(p1.getId() + " " + p1.getBezeichnung());
 		
+		
 		ProjektMarktplatzMapper.insert(p1);
 		
 		/*
