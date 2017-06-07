@@ -350,11 +350,11 @@ public class BewertungMapper {
 	 * @param bw
 	 * @return
 	 */
-	public Vector<Bewertung> getByBewerbung(Bewerbung bw) {
+	public Bewertung getByBewerbung(Bewerbung bw) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
-		Vector<Bewertung> result = new Vector<Bewertung>();
+		Bewertung bwt = null;
 
 		try {
 
@@ -362,21 +362,21 @@ public class BewertungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM bewerbung WHERE bewerbung.ID=" + bw.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM bewertung WHERE Bewerbung_ID=" + bw.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewertungs-Objekt erstellt.
-			while (rs.next()) {
+			if (rs.next()) {
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(findById(rs.getInt("ID")));
+				bwt = findById(rs.getInt("ID"));
 			}
 		} catch (SQLException e7) {
 			e7.printStackTrace();
 		}
 
-		// Ergebnisvektor zurueckgeben
-		return result;
+		
+		return bwt;
 	}
 
 }
