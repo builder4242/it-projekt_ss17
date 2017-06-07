@@ -98,7 +98,7 @@ public class AusschreibungBewerbungTreeView implements TreeViewModel{
 	 * Variaben initialisiert.
 	 */
 	public void AusschreibungBewerbungsTreeViewModel() {
-		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
+		projektVerwaltung = ClientsideSettings.getProjektAdministration();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
