@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Projekt;
 /**
  * Formular für die Darstellung des selektierten Kunden
@@ -20,8 +21,8 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 public class ProjektForm extends VerticalPanel {
 
 
-		BankAdministrationAsync bankVerwaltung = ClientsideSettings
-				.getBankVerwaltung();
+		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings
+				.getProjektVerwaltung();
 		Projekt projektToDisplay = null;
 		ProjektOrganisationseinheitTreeView catvm = null;
 
@@ -88,7 +89,7 @@ public class ProjektForm extends VerticalPanel {
 				if (projektToDisplay != null) {
 					projektToDisplay.setName(firstNameTextBox.getText());
 					projektToDisplay.setLastName(lastNameTextBox.getText());
-					bankVerwaltung.save(projektToDisplay, new SaveCallback());
+					projektVerwaltung.save(projektToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
 				}
@@ -120,7 +121,7 @@ public class ProjektForm extends VerticalPanel {
 				if (projektToDisplay == null) {
 					Window.alert("kein Kunde ausgewählt");
 				} else {
-					bankVerwaltung.delete(projektToDisplay,
+					projektVerwaltung.delete(projektToDisplay,
 							new deleteProjektCallback(projektToDisplay));
 				}
 			}
@@ -159,7 +160,7 @@ public class ProjektForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				String firstName = firstNameTextBox.getText();
 				String lastName = lastNameTextBox.getText();
-				bankVerwaltung.createProjekt(firstName, lastName,
+				projektVerwaltung.createProjekt(firstName, lastName,
 						new CreateProjektCallback());
 			}
 		}

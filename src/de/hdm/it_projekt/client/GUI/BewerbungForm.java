@@ -1,7 +1,7 @@
 package de.hdm.it_projekt.client.GUI;
 /**
  * To be Done:
- * Bankverwaltung
+ * Projektverwaltung
  * ClientsideSettings
  * remove/addbewerbung
  */
@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 /**
@@ -33,8 +34,8 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 public class BewerbungForm extends VerticalPanel {
 
 
-		BankAdministrationAsync bankVerwaltung = ClientsideSettings // waiting for Classes 
-				.getBankVerwaltung();
+		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings // waiting for Classes 
+				.getProjektVerwaltung();
 		Bewerbung bewerbungToDisplay = null;
 		AusschreibungBewerbungTreeView catvm = null;
 
@@ -100,7 +101,7 @@ public class BewerbungForm extends VerticalPanel {
 					bewerbungToDisplay.setBewerbungstext(bewerbungstextTextBox.getText());
 					bewerbungToDisplay.setErstelldatum(erstelldatumTextBox.getValue());
 					//bewerbungToDisplay.setEigenschaften(bezeichnungTextBox.getValue());
-					bankVerwaltung.save(bewerbungToDisplay, new SaveCallback());
+					projektVerwaltung.save(bewerbungToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
 				}
@@ -134,7 +135,7 @@ public class BewerbungForm extends VerticalPanel {
 				if (bewerbungToDisplay == null) {
 					Window.alert("kein Kunde ausgewählt");
 				} else {
-					bankVerwaltung.delete(bewerbungToDisplay,
+					projektVerwaltung.delete(bewerbungToDisplay,
 							new deleteBewerbungCallback(bewerbungToDisplay));
 				}
 			}
@@ -176,7 +177,7 @@ public class BewerbungForm extends VerticalPanel {
 				Partnerprofil p1 = new Partnerprofil();
 				p1.setEigenschaften((Eigenschaft).setName(partnerprofileigenschaftTextBox.getValue()));
 				
-				bankVerwaltung.createBewerbung(firstName, lastName,
+				projektVerwaltung.createBewerbung(firstName, lastName,
 						new CreateBewerbungCallback());
 			}
 		}
