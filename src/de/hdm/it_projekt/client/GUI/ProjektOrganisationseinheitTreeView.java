@@ -13,6 +13,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.BusinessObject;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
@@ -28,7 +29,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 	private Projekt selectedProjekt = null;
 	private Organisationseinheit selectedOrganisationseinheit = null;
 
-	private BankAdministrationAsync bankVerwaltung = null;
+	private ProjektAdministrationAsync projektVerwaltung = null;
 	private ListDataProvider<Projekt> ProjektDataProvider = null;
 	
 	private Map<Projekt, ListDataProvider<Organisationseinheit>> OrganisationseinheitDataProviders = null;
@@ -74,7 +75,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 		return false;
 	}
 
-}
+
 
 
 
@@ -117,7 +118,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 	 * Variaben initialisiert.
 	 */
 	public ProjektOrganisationseinheitsTreeViewModel() {
-		bankVerwaltung = ClientsideSettings.getBankVerwaltung();
+		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
@@ -129,7 +130,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 		projektForm = cf;
 	}
 
-	void setOrganisationseinheitForm(organisationseinheitForm af) {
+	void setOrganisationseinheitForm(OrganisationseinheitForm af) {
 		organisationseinheitForm = af;
 	}
 
@@ -157,7 +158,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 		organisationseinheitForm.setSelected(a);
 
 		if (a != null) {
-			bankVerwaltung.getProjektById(a.getOwnerID(),
+			projektVerwaltung.getProjektById(a.getId(),
 					new AsyncCallback<Projekt>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -229,7 +230,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 	 * Baumstruktur noch ein "veraltetes" Kontoobjekt enthalten ist.
 	 */
 	void updateOrganisationseinheit(Organisationseinheit a) {
-		bankVerwaltung.getProjektById(a.getOwnerID(),
+		projektVerwaltung.getProjektById(a.getId(),
 				new UpdateOrganisationseinheitCallback(a));
 	}
 
@@ -265,7 +266,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 		if (value.equals("Root")) {
 			// Erzeugen eines ListDataproviders für Projektdaten
 			ProjektDataProvider = new ListDataProvider<Projekt>();
-			bankVerwaltung
+			projektVerwaltung
 					.getAllProjekts(new AsyncCallback<Vector<Projekt>>() {
 						@Override
 						public void onFailure(Throwable t) {
@@ -289,7 +290,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 			final ListDataProvider<Organisationseinheit> OrganisationseinheitsProvider = new ListDataProvider<Organisationseinheit>();
 			OrganisationseinheitDataProviders.put((Projekt) value, OrganisationseinheitsProvider);
 
-			bankVerwaltung.getOrganisationseinheitsOf((Projekt) value,
+			projektVerwaltung.getOrganisationseinheitsOf((Projekt) value,
 					new AsyncCallback<Vector<Organisationseinheit>>() {
 					
 						public void onFailure(Throwable t) {

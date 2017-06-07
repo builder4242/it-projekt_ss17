@@ -2,7 +2,7 @@ package de.hdm.it_projekt.client.GUI;
 
 /**
  * To be Done:
- * Bankverwaltung
+ * Projektverwaltung
  * ClientsideSettings
  * remove/addpartnerprofil
  * Clickhandler anpassen
@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 /**
 * Formular für die Darstellung der gewählten Partnerprofil
@@ -34,8 +35,8 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 public class PartnerprofilForm extends VerticalPanel {
 
 
-		BankAdministrationAsync bankVerwaltung = ClientsideSettings // waiting for Classes 
-				.getBankVerwaltung();
+		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings // waiting for Classes 
+				.getProjektVerwaltung();
 		Partnerprofil partnerprofilToDisplay = null;
 		PartnerprofilProjektTreeView catvm = null;
 
@@ -106,7 +107,7 @@ public class PartnerprofilForm extends VerticalPanel {
 					partnerprofilToDisplay.setAenderungsdatum(aenderungsdatumTextBox.getValue());
 					partnerprofilToDisplay.setErstelldatum(erstelldatumTextBox.getValue());
 					//partnerprofilToDisplay.setEigenschaften(bezeichnungTextBox.getValue());
-					bankVerwaltung.save(partnerprofilToDisplay, new SaveCallback());
+					projektVerwaltung.save(partnerprofilToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
 				}
@@ -140,7 +141,7 @@ public class PartnerprofilForm extends VerticalPanel {
 				if (partnerprofilToDisplay == null) {
 					Window.alert("kein Kunde ausgewählt");
 				} else {
-					bankVerwaltung.delete(partnerprofilToDisplay,
+					projektVerwaltung.delete(partnerprofilToDisplay,
 							new deletePartnerprofilCallback(partnerprofilToDisplay));
 				}
 			}
@@ -182,7 +183,7 @@ public class PartnerprofilForm extends VerticalPanel {
 				Partnerprofil p1 = new Partnerprofil();
 				p1.setEigenschaften((Eigenschaft).setName(partnerprofileigenschaftTextBox.getValue()));
 				
-				bankVerwaltung.createPartnerprofil(firstName, lastName,
+				projektVerwaltung.createPartnerprofil(firstName, lastName,
 						new CreatePartnerprofilCallback());
 			}
 		}
