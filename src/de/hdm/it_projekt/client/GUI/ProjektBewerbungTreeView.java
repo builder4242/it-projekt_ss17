@@ -12,6 +12,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.BusinessObject;
 import de.hdm.it_projekt.shared.bo.Projekt;
@@ -28,7 +29,7 @@ public class ProjektBewerbungTreeView implements TreeViewModel {
 	private Projekt selectedProjekt = null;
 	private Bewerbung selectedBewerbung = null;
 
-	private BankAdministrationAsync bankVerwaltung = null;
+	private ProjektAdministrationAsync projektVerwaltung = null;
 	private ListDataProvider<Projekt> ProjektDataProvider = null;
 	
 	private Map<Projekt, ListDataProvider<Bewerbung>> BewerbungDataProviders = null;
@@ -117,7 +118,7 @@ public class ProjektBewerbungTreeView implements TreeViewModel {
 	 * Variaben initialisiert.
 	 */
 	public ProjektBewerbungsTreeViewModel() {
-		bankVerwaltung = ClientsideSettings.getBankVerwaltung();
+		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
@@ -129,7 +130,7 @@ public class ProjektBewerbungTreeView implements TreeViewModel {
 		projektForm = cf;
 	}
 
-	void setBewerbungForm(bewerberForm af) {
+	void setBewerbungForm(BewerbungForm af) {
 		bewerberForm = af;
 	}
 
@@ -157,7 +158,7 @@ public class ProjektBewerbungTreeView implements TreeViewModel {
 		bewerberForm.setSelected(a);
 
 		if (a != null) {
-			bankVerwaltung.getProjektById(a.getOwnerID(),
+			projektVerwaltung.getProjektById(a.getOwnerID(),
 					new AsyncCallback<Projekt>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -229,7 +230,7 @@ public class ProjektBewerbungTreeView implements TreeViewModel {
 	 * Baumstruktur noch ein "veraltetes" Kontoobjekt enthalten ist.
 	 */
 	void updateBewerbung(Bewerbung a) {
-		bankVerwaltung.getProjektById(a.getOwnerID(),
+		projektVerwaltung.getProjektById(a.getOwnerID(),
 				new UpdateBewerbungCallback(a));
 	}
 
@@ -265,7 +266,7 @@ public class ProjektBewerbungTreeView implements TreeViewModel {
 		if (value.equals("Root")) {
 			// Erzeugen eines ListDataproviders für Projektdaten
 			ProjektDataProvider = new ListDataProvider<Projekt>();
-			bankVerwaltung
+			projektVerwaltung
 					.getAllProjekts(new AsyncCallback<Vector<Projekt>>() {
 						@Override
 						public void onFailure(Throwable t) {
@@ -289,7 +290,7 @@ public class ProjektBewerbungTreeView implements TreeViewModel {
 			final ListDataProvider<Bewerbung> BewerbungsProvider = new ListDataProvider<Bewerbung>();
 			BewerbungDataProviders.put((Projekt) value, BewerbungsProvider);
 
-			bankVerwaltung.getBewerbungsOf((Projekt) value,
+			projektVerwaltung.getBewerbungsOf((Projekt) value,
 					new AsyncCallback<Vector<Bewerbung>>() {
 					
 						public void onFailure(Throwable t) {

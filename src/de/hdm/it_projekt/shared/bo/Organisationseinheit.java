@@ -8,6 +8,13 @@ package de.hdm.it_projekt.shared.bo;
 public abstract class Organisationseinheit extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
+	
+	/*Beginn Fremdschluesseldefinitionen*/
+	/**
+	 * Fremdschluesselbeziehung zu Partnerprofil
+	 */
+	private int partnerprofilId = 0;
+	/*Ende Fremdschluesseldefinitionen*/
 
 	/**
 	 * Name der Organisationseinheit
@@ -18,11 +25,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * E-Mail Adresse der Organisationseinheit
 	 */
 	private String email;
-	
-	/**
-	 * Partnerprofil zur Organisationseinheit
-	 */
-	private int partnerprofilId;
 
   /**
 	 * Strasse der Organisationseinheit
@@ -75,20 +77,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	/**
-	 * @return the partnerprofil
-	 */
-	public int getPartnerprofil() {
-		return partnerprofilId;
-	}
-
-	/**
-	 * @param partnerprofil the partnerprofil to set
-	 */
-	public void setPartnerprofil(int id) {
-		this.partnerprofilId = id;
 	}
 
 	/**
@@ -160,6 +148,22 @@ public abstract class Organisationseinheit extends BusinessObject {
 	public void setGoogleID(String googleID) {
 		this.googleID = googleID;
 	}
+	
+	/*Beginn Fremdschluessel Getter und Setter*/
+	/**
+	 * @return the partnerprofilId
+	 */
+	public int getPartnerprofilId() {
+		return partnerprofilId;
+	}
+
+	/**
+	 * @param partnerprofilId the partnerprofilId to set
+	 */
+	public void setPartnerprofilId(int partnerprofilId) {
+		this.partnerprofilId = partnerprofilId;
+	}
+	/*Ende Fremdschluessel Getter und Setter*/
 	
 	/**
 	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus

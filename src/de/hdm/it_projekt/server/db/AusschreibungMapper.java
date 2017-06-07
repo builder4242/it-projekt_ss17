@@ -22,7 +22,7 @@ import de.hdm.it_projekt.shared.bo.Projekt;
  * 
  * Anlehnung an @author Thies
  * 
- * @author ElifY
+ * @author Elif Yavuz
  */
 
 public class AusschreibungMapper {
@@ -104,8 +104,8 @@ public class AusschreibungMapper {
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 				stmt.executeUpdate("INSERT INTO ausschreibung (ID, Bezeichnung, Ausschreibungstext, Bewerbungsfrist) "
-						+ "VALUES (" + as.getId() + "," + as.getBezeichnung() + "," + as.getAusschreibungstext() + ","
-						+ as.getBewerbungsfrist() + ")");
+						+ "VALUES ('" + as.getId() + "','" + as.getBezeichnung() + "','" + as.getAusschreibungstext() + "','"
+						+ as.getBewerbungsfrist() + "')");
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -418,7 +418,7 @@ public class AusschreibungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM ausschreibung WHERE projekt_ID=" + pr.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projekt.ID=" + pr.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Ausschreibung-Objekt erstellt.

@@ -12,7 +12,7 @@ public class Bewertung extends BusinessObject {
 	 * Serializable
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Stellungnahme der Bewertung
 	 */
@@ -27,6 +27,13 @@ public class Bewertung extends BusinessObject {
 	 * Erstelldatum der Bewertung
 	 */
 	private Date erstelldatum;
+	
+	/*Beginn Fremdschluesseldefinitionen*/
+	/**
+	 * Fremdschluesselbeziehung zu Bewerbung
+	 */
+	private int bewerbungId = 0;
+	/*Ende Fremdschluesseldefinitionen*/
 	
 	/**
 	 * @return the erstelldatum
@@ -73,6 +80,22 @@ public class Bewertung extends BusinessObject {
 	public void setWert(float wert) {
 		this.wert = wert;
 	}
+	
+	/*Beginn Fremdschluessel Getter und Setter*/
+	/**
+	 * @return the bewerbungId
+	 */
+	public int getBewerbungId() {
+		return bewerbungId;
+	}
+
+	/**
+	 * @param bewerbungId the bewerbungId to set
+	 */
+	public void setBewerbungId(int bewerbungId) {
+		this.bewerbungId = bewerbungId;
+	}	
+	 /*Ende Fremdschluessel Getter und Setter*/
 	
 	/**
 	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus

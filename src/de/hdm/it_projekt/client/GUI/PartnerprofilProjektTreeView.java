@@ -12,6 +12,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.BusinessObject;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
@@ -28,7 +29,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 	private Partnerprofil selectedPartnerprofil = null;
 	private Projekt selectedProjekt = null;
 
-	private BankAdministrationAsync bankVerwaltung = null; //warten auf anlage Async
+	private ProjektAdministrationAsync projektVerwaltung = null; //warten auf anlage Async
 	private ListDataProvider<Partnerprofil> PartnerprofilDataProvider = null;
 	
 	private Map<Partnerprofil, ListDataProvider<Projekt>> ProjektDataProviders = null;
@@ -105,7 +106,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 	 * Variaben initialisiert.
 	 */
 	public void PartnerprofilProjektsTreeViewModel() {
-		bankVerwaltung = ClientsideSettings.getBankVerwaltung();
+		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
@@ -145,7 +146,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 		projektForm.setSelected(a);
 
 		if (a != null) {
-			bankVerwaltung.getPartnerprofilById(a.getOwnerID(),
+			projektVerwaltung.getPartnerprofilById(a.getOwnerID(),
 					new AsyncCallback<Partnerprofil>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -217,7 +218,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 	 * Baumstruktur noch ein "veraltetes" Kontoobjekt enthalten ist.
 	 */
 	void updateProjekt(Projekt a) {
-		bankVerwaltung.getPartnerprofilById(a.getOwnerID(),
+		projektVerwaltung.getPartnerprofilById(a.getOwnerID(),
 				new UpdateProjektCallback(a));
 	}
 
@@ -253,7 +254,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 		if (value.equals("Root")) {
 			// Erzeugen eines ListDataproviders für Partnerprofildaten
 			PartnerprofilDataProvider = new ListDataProvider<Partnerprofil>();
-			bankVerwaltung
+			projektVerwaltung
 					.getAllPartnerprofils(new AsyncCallback<Vector<Partnerprofil>>() {
 						@Override
 						public void onFailure(Throwable t) {
@@ -277,7 +278,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 			final ListDataProvider<Projekt> ProjektsProvider = new ListDataProvider<Projekt>();
 			ProjektDataProviders.put((Partnerprofil) value, ProjektsProvider);
 
-			bankVerwaltung.getProjektsOf((Partnerprofil) value,
+			projektVerwaltung.getProjektsOf((Partnerprofil) value,
 					new AsyncCallback<Vector<Projekt>>() {
 					
 						public void onFailure(Throwable t) {

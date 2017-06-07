@@ -72,7 +72,7 @@ public class ProjektMarktplatzMapper {
 	 * @param pm
 	 * @return
 	 */
-	public static ProjektMarktplatz insert(ProjektMarktplatz pm) {
+	public ProjektMarktplatz insert(ProjektMarktplatz pm) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -116,7 +116,7 @@ public class ProjektMarktplatzMapper {
 	 *            - das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter uebergebene Objekt
 	 */
-	public static ProjektMarktplatz update(ProjektMarktplatz pm) {
+	public ProjektMarktplatz update(ProjektMarktplatz pm) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -142,7 +142,7 @@ public class ProjektMarktplatzMapper {
 	 * @param pm
 	 *            - das aus der DB zu loeschende "Objekt"
 	 */
-	public static void delete(ProjektMarktplatz pm) {
+	public void delete(ProjektMarktplatz pm) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -164,7 +164,7 @@ public class ProjektMarktplatzMapper {
 	 *         eine partiell gefuellter oder ggf. auch leerer Vektor
 	 *         zurueckgeliefert.
 	 */
-	public static Vector<ProjektMarktplatz> findAll() {
+	public Vector<ProjektMarktplatz> findAll() {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -207,7 +207,7 @@ public class ProjektMarktplatzMapper {
 	 * @return Projektmarktplatz-Objekt, das dem uebergebenen Schluessel
 	 *         entspricht, null bei nicht vorhandenem DB-Tupel.
 	 */
-	public static ProjektMarktplatz findById(int id) {
+	public ProjektMarktplatz findById(int id) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -250,7 +250,7 @@ public class ProjektMarktplatzMapper {
 	 * @return Projektmarktplatz-Objekt, das der uebergebenen Bezeichnung
 	 *         entspricht, null bei nicht vorhandenem DB-Tupel.
 	 */
-	public static Vector<ProjektMarktplatz> findByBezeichnung(String bezeichnung) {
+	public Vector<ProjektMarktplatz> findByBezeichnung(String bezeichnung) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 

@@ -18,7 +18,7 @@ import de.hdm.it_projekt.shared.bo.Eigenschaft;
  * 
  * Anlehnung an @author Thies
  * 
- * @author ElifY
+ * @author Elif Yavuz
  */
 
 public class EigenschaftMapper {
@@ -97,8 +97,8 @@ public class EigenschaftMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO eigenschaft (ID, Wert) " + "VALUES (" + e.getId() + "," + e.getName()
-						+ "," + e.getWert() + ")");
+				stmt.executeUpdate("INSERT INTO eigenschaft (ID, Wert) " + "VALUES ('" + e.getId() + "','" + e.getName()
+						+ "','" + e.getWert() + "')");
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -188,7 +188,7 @@ public class EigenschaftMapper {
 				Eigenschaft e = new Eigenschaft();
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
-				e.setWert(rs.getFloat("Wert"));
+				e.setWert(rs.getString("Wert"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);
@@ -234,7 +234,7 @@ public class EigenschaftMapper {
 				Eigenschaft e = new Eigenschaft();
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
-				e.setWert(rs.getFloat("Wert"));
+				e.setWert(rs.getString("Wert"));
 
 				// Hinzufuegen des neuen Eigenschafts zum Ergebnisvektor
 				result.addElement(e);
@@ -278,7 +278,7 @@ public class EigenschaftMapper {
 				Eigenschaft e = new Eigenschaft();
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
-				e.setWert(rs.getFloat("Wert"));
+				e.setWert(rs.getString("Wert"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);

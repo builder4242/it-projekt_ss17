@@ -9,6 +9,13 @@ public class Eigenschaft extends BusinessObject {
 
 
 	private static final long serialVersionUID = 1L;
+	
+	/*Beginn Fremdschluesseldefinitionen*/
+	/**
+	 * Fremdschluesselbeziehung zu Partnerprofil
+	 */
+	private int partnerprofilId = 0;
+	/*Ende Fremdschluesseldefinitionen*/
 
 	/**
 	 * Eigenschaftsname
@@ -18,7 +25,7 @@ public class Eigenschaft extends BusinessObject {
 	/**
 	 * Eigenschaftswert
 	 */
-	private float wert;
+	private String wert;
 		
 	/**
 	 * Rueckgabe des Eigenschaftsnamens
@@ -40,7 +47,7 @@ public class Eigenschaft extends BusinessObject {
 	 * Setzen Rueckgabe des Eigenschaftswertes
 	 * @return Wert
 	 */
-	public float getWert() {
+	public String getWert() {
 		return wert;
 	}
 
@@ -48,9 +55,25 @@ public class Eigenschaft extends BusinessObject {
 	 * Setzen des Eigenschaftswertes
 	 * @param f the wert to set
 	 */
-	public void setWert(float f) {
+	public void setWert(String f) {
 		this.wert = f;
 	}
+	
+	/*Beginn Fremdschluessel Getter und Setter*/
+	/**
+	 * @return the partnerprofilId
+	 */
+	public int getPartnerprofilId() {
+		return partnerprofilId;
+	}
+
+	/**
+	 * @param partnerprofilId the partnerprofilId to set
+	 */
+	public void setPartnerprofilId(int partnerprofilId) {
+		this.partnerprofilId = partnerprofilId;
+	}
+	/*Ende Fremdschluessel Getter und Setter*/
 	
 	/**
 	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
