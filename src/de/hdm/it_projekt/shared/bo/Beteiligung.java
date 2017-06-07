@@ -14,6 +14,39 @@ public class Beteiligung extends BusinessObject {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/*Beginn Fremdschluesseldefinitionen*/
+	private int projektId = 0;
+	private int organisationseinheitId = 0;
+	
+	/**
+	 * @return the projektId
+	 */
+	public int getProjektId() {
+		return projektId;
+	}
+
+	/**
+	 * @param projektId the projektId to set
+	 */
+	public void setProjektId(int projektId) {
+		this.projektId = projektId;
+	}
+
+	/**
+	 * @return the organisationseinheitId
+	 */
+	public int getOrganisationseinheitId() {
+		return organisationseinheitId;
+	}
+
+	/**
+	 * @param organisationseinheitId the organisationseinheitId to set
+	 */
+	public void setOrganisationseinheitId(int organisationseinheitId) {
+		this.organisationseinheitId = organisationseinheitId;
+	}
+	/*Ende Fremdschluesseldefinitionen*/
+
 	/**
 	 * Personentage der Beteiligung
 	 */

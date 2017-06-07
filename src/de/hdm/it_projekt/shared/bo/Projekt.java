@@ -12,6 +12,56 @@ public class Projekt extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
 	
+	/*Beginn Fremdschluesseldefinitionen*/
+	private int projektMarktplatzId = 0;
+	private int projektbetreiberId = 0;
+	private int projektleiterId = 0;
+	
+	
+	/**
+	 * @return the projektMarktplatzId
+	 */
+	public int getProjektMarktplatzId() {
+		return projektMarktplatzId;
+	}
+
+	/**
+	 * @param projektMarktplatzId the projektMarktplatzId to set
+	 */
+	public void setProjektMarktplatzId(int projektMarktplatzId) {
+		this.projektMarktplatzId = projektMarktplatzId;
+	}
+
+	/**
+	 * @return the projektbetreiberId
+	 */
+	public int getProjektbetreiberId() {
+		return projektbetreiberId;
+	}
+
+	/**
+	 * @param projektbetreiberId the projektbetreiberId to set
+	 */
+	public void setProjektbetreiberId(int projektbetreiberId) {
+		this.projektbetreiberId = projektbetreiberId;
+	}
+
+	/**
+	 * @return the projektleiterId
+	 */
+	public int getProjektleiterId() {
+		return projektleiterId;
+	}
+
+	/**
+	 * @param projektleiterId the projektleiterId to set
+	 */
+	public void setProjektleiterId(int projektleiterId) {
+		this.projektleiterId = projektleiterId;
+	}
+	
+	/*Ende Fremdschluesseldefinitionen*/
+
 	/**
 	 * Name des Projektes
 	 */
