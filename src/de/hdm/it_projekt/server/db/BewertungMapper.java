@@ -1,4 +1,3 @@
-
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
@@ -101,8 +100,8 @@ public class BewertungMapper {
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 				stmt.executeUpdate(
-						"INSERT INTO bewertung (ID, Wert, Stellungnahme, Erstelldatum)" + "VALUES (" + bt.getId() + ","
-								+ bt.getWert() + "," + bt.getStellungnahme() + "," + bt.getErstelldatum() + ")");
+						"INSERT INTO bewertung (ID, Wert, Stellungnahme, Erstelldatum)" + "VALUES ('" + bt.getId() + "','"
+								+ bt.getWert() + "','" + bt.getStellungnahme() + "','" + bt.getErstelldatum() + "')");
 
 			}
 		} catch (SQLException e) {

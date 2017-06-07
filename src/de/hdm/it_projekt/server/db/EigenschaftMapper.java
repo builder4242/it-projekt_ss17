@@ -18,7 +18,7 @@ import de.hdm.it_projekt.shared.bo.Eigenschaft;
  * 
  * Anlehnung an @author Thies
  * 
- * @author ElifY
+ * @author Elif Yavuz
  */
 
 public class EigenschaftMapper {
@@ -97,8 +97,8 @@ public class EigenschaftMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO eigenschaft (ID, Wert) " + "VALUES (" + e.getId() + "," + e.getName()
-						+ "," + e.getWert() + ")");
+				stmt.executeUpdate("INSERT INTO eigenschaft (ID, Wert) " + "VALUES ('" + e.getId() + "','" + e.getName()
+						+ "','" + e.getWert() + "')");
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
