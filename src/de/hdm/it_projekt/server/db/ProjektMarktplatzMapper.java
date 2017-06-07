@@ -72,7 +72,7 @@ public class ProjektMarktplatzMapper {
 	 * @param pm
 	 * @return
 	 */
-	public ProjektMarktplatz insert(ProjektMarktplatz pm) {
+	public static ProjektMarktplatz insert(ProjektMarktplatz pm) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -94,12 +94,13 @@ public class ProjektMarktplatzMapper {
 				 * Primaerschluessel.
 				 */
 				pm.setId(rs.getInt("maxid") + 1);
+				System.out.println(pm.getId());
 
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO projektmarktplatz (ID, Bezeichnung) " + "VALUES (" + pm.getId() + ","
-						+ pm.getBezeichnung() + ")");
+				stmt.executeUpdate("INSERT INTO projektmarktplatz (ID, Bezeichnung) " + "VALUES ('" + pm.getId() + "','"
+						+ pm.getBezeichnung() + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
