@@ -81,7 +81,7 @@ public class BewerbungMapper {
 	 *         <code>id</id>
 	 */
 
-	public static Bewerbung insert(Bewerbung bw) {
+	public Bewerbung insert(Bewerbung bw) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
