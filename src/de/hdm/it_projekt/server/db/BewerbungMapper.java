@@ -3,7 +3,7 @@
  */
 package de.hdm.it_projekt.server.db;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -105,7 +105,7 @@ public class BewerbungMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext) " + "VALUES (" + bw.getId()
+			stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext) " + "VALUES (" + bw.getId()
 						+ "," + bw.getErstelldatum() + "," + bw.getBewerbungstext() + ")");
 			}
 		} catch (SQLException e1) {
