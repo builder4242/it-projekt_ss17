@@ -4,7 +4,6 @@ package de.hdm.it_projekt.client.GUI;
  * Bankverwaltung
  * ClientsideSettings
  * remove/addbewerbung
- * 
  */
 
 import java.text.DateFormat;
