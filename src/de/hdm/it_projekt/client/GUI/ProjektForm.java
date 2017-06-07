@@ -88,7 +88,7 @@ public class ProjektForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				if (projektToDisplay != null) {
 					projektToDisplay.setName(firstNameTextBox.getText());
-					projektToDisplay.setLastName(lastNameTextBox.getText());
+					projektToDisplay.setName(lastNameTextBox.getText());
 					projektVerwaltung.save(projektToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
