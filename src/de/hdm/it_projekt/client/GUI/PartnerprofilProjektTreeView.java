@@ -12,7 +12,9 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
+import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
+import de.hdm.it_projekt.shared.bo.Beteiligung;
 import de.hdm.it_projekt.shared.bo.BusinessObject;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
@@ -59,14 +61,6 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 		}
 	};
 
-	
-	
-	
-	
-
-
-
-
 /**
  * Diese Implementierung des TreeViewModels sorgt für die Verwaltung des Kunden-
  * und Kontenbaumes.
@@ -106,7 +100,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 	 * Variaben initialisiert.
 	 */
 	public void PartnerprofilProjektsTreeViewModel() {
-		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
+		projektVerwaltung = ClientsideSettings.getProjektAdminstration();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
@@ -146,7 +140,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 		projektForm.setSelected(a);
 
 		if (a != null) {
-			projektVerwaltung.getPartnerprofilById(a.getOwnerID(),
+			projektVerwaltung.getPartnerprofilById(a.getProjektleiterId(),
 					new AsyncCallback<Partnerprofil>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -218,7 +212,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 	 * Baumstruktur noch ein "veraltetes" Kontoobjekt enthalten ist.
 	 */
 	void updateProjekt(Projekt a) {
-		projektVerwaltung.getPartnerprofilById(a.getOwnerID(),
+		projektVerwaltung.getPartnerprofilById(a.getProjektleiterId(),
 				new UpdateProjektCallback(a));
 	}
 
@@ -255,14 +249,15 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 			// Erzeugen eines ListDataproviders für Partnerprofildaten
 			PartnerprofilDataProvider = new ListDataProvider<Partnerprofil>();
 			projektVerwaltung
-					.getAllPartnerprofils(new AsyncCallback<Vector<Partnerprofil>>() {
+				.getBeteiligungenFor(selectedProjekt, new AsyncCallback<Vector<Beteiligung>>(){
 						@Override
 						public void onFailure(Throwable t) {
 						}
 
 						@Override
-						public void onSuccess(Vector<Partnerprofil> Partnerprofils) {
-							for (Partnerprofil c : Partnerprofils) {
+						public void onSuccess(Vector<Beteiligung> result) {
+							// TODO Auto-generated method stub
+							for (Beteiligung c : result) {
 								PartnerprofilDataProvider.getList().add(c);
 							}
 						}
@@ -307,11 +302,7 @@ public class PartnerprofilProjektTreeView implements TreeViewModel{
 	}
 
 }
-	@Override
-	public <T> NodeInfo<?> getNodeInfo(T value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public boolean isLeaf(Object value) {

@@ -59,14 +59,6 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 		}
 	};
 
-	
-	
-	
-	
-
-
-
-
 /**
  * Diese Implementierung des TreeViewModels sorgt für die Verwaltung des Kunden-
  * und Kontenbaumes.
