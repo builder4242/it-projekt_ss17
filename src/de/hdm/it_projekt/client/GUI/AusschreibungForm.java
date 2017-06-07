@@ -1,5 +1,12 @@
 package de.hdm.it_projekt.client.GUI;
-
+/**
+ * To be Done:
+ * 
+ * Eigenschaften -> Hashmap
+ * bankverwaltung anpassen
+ * on success überprüfen
+ * setSelected prüfen
+ */
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -204,7 +211,7 @@ public class AusschreibungForm extends VerticalPanel {
 		}
 
 		// catvm setter
-		void setCatvm(AusschreibungAccountsTreeViewModel catvm) {
+		void setCatvm(ProjektAusschreibungTreeView catvm) {
 			this.catvm = catvm;
 		}
 
