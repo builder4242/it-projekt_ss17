@@ -1,6 +1,6 @@
 package de.hdm.it_projekt.shared.bo;
 
-import de.hdm.it_projekt.server.db.BewerbungMapper;
+import de.hdm.it_projekt.server.db.ProjektMarktplatzMapper;
 import de.hdm.it_projekt.server.db.PersonMapper;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import java.util.Date;
@@ -10,14 +10,26 @@ public class Testmain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		Bewerbung b1 = new Bewerbung();
+		ProjektMarktplatz p1 = new ProjektMarktplatz();
 		
-		b1.setBewerbungstext("das ist ein Test");
+
+	
+		p1.setBezeichnung("ATI");
 		
-		System.out.println(b1.getBewerbungstext());
+		System.out.println(p1.getId() + " " + p1.getBezeichnung());
 		
-		BewerbungMapper.insert(b1);
 		
+		ProjektMarktplatzMapper.insert(p1);
+		
+		/*
+		p1.setBezeichnung("Volvo");
+		ProjektMarktplatzMapper.update(p1);
+		ProjektMarktplatzMapper.delete(p1);
+		*/
+		
+		System.out.println(ProjektMarktplatzMapper.findAll());
+		System.out.println(ProjektMarktplatzMapper.findById(8));
+		System.out.println(ProjektMarktplatzMapper.findByBezeichnung("Daimler"));
 	}
 
 }
