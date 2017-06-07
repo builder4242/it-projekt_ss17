@@ -13,6 +13,25 @@ public class Bewertung extends BusinessObject {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/*Beginn Fremdschluesseldefinitionen*/
+	private int bewerbungId = 0;
+	
+	/**
+	 * @return the bewerbungId
+	 */
+	public int getBewerbungId() {
+		return bewerbungId;
+	}
+
+	/**
+	 * @param bewerbungId the bewerbungId to set
+	 */
+	public void setBewerbungId(int bewerbungId) {
+		this.bewerbungId = bewerbungId;
+	}
+	
+	/*Ende Fremdschluesseldefinitionen*/
+
 	/**
 	 * Stellungnahme der Bewertung
 	 */

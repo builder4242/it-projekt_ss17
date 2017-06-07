@@ -9,6 +9,24 @@ public class Eigenschaft extends BusinessObject {
 
 
 	private static final long serialVersionUID = 1L;
+	
+	/*Beginn Fremdschluesseldefinitionen*/
+	private int partnerprofilId = 0;
+	
+	/**
+	 * @return the partnerprofilId
+	 */
+	public int getPartnerprofilId() {
+		return partnerprofilId;
+	}
+
+	/**
+	 * @param partnerprofilId the partnerprofilId to set
+	 */
+	public void setPartnerprofilId(int partnerprofilId) {
+		this.partnerprofilId = partnerprofilId;
+	}
+	/*Ende Fremdschluesseldefinitionen*/
 
 	/**
 	 * Eigenschaftsname

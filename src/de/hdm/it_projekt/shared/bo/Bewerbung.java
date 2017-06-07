@@ -14,6 +14,40 @@ public class Bewerbung extends BusinessObject {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/*Beginn Fremdschluesseldefinitionen*/
+	private int ausschreibungId = 0;
+	private int organisationseinheitId = 0;
+	
+	/**
+	 * @return the ausschreibungId
+	 */
+	public int getAusschreibungId() {
+		return ausschreibungId;
+	}
+
+	/**
+	 * @param ausschreibungId the ausschreibungId to set
+	 */
+	public void setAusschreibungId(int ausschreibungId) {
+		this.ausschreibungId = ausschreibungId;
+	}
+
+	/**
+	 * @return the organisationseinheitId
+	 */
+	public int getOrganisationseinheitId() {
+		return organisationseinheitId;
+	}
+
+	/**
+	 * @param organisationseinheitId the organisationseinheitId to set
+	 */
+	public void setOrganisationseinheitId(int organisationseinheitId) {
+		this.organisationseinheitId = organisationseinheitId;
+	}
+	
+	/*Ende Fremdschluesseldefinitionen*/
+
 	/**
 	 * Erstelldatum der Bewerbung
 	 */
