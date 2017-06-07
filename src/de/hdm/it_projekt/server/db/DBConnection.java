@@ -2,8 +2,10 @@ package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;  
 import java.sql.DriverManager;
+import java.util.Date;
 
 import com.google.appengine.api.utils.SystemProperty;
+import com.ibm.icu.text.SimpleDateFormat;
 
 /**
  * Verwalten einer Verbindung zur Datenbank.
@@ -104,6 +106,11 @@ public class DBConnection {
 
         // Zurückgegeben der Verbindung
         return con;
+    }
+    
+    private String convertToSQLDateString(Date d) {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+    	return sdf.format(d);
     }
 
 }
