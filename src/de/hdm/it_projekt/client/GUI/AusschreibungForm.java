@@ -1,11 +1,7 @@
 package de.hdm.it_projekt.client.GUI;
 /**
  * To be Done:
- * 
- * Eigenschaften -> Hashmap
- * projektverwaltung anpassen
- * on success überprüfen
- * setSelected prüfen
+ * create Ausschreibung fertig machen 
  */
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +24,7 @@ import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
+import de.hdm.it_projekt.shared.bo.Projekt;
 /**
  * Formular für die Darstellung des selektierten Kunden
  * 
@@ -47,16 +44,17 @@ public class AusschreibungForm extends VerticalPanel {
 		TextBox bezeichnungTextBox = new TextBox();
 		DateBox bewerbungsfristTextBox = new DateBox();
 		TextBox ausschreibungstextTextBox = new TextBox();
-		TextBox partnerprofileigenschaftTextBox = new TextBox();
+		TextBox partnerprofilTextBox = new TextBox();
+		TextBox projektTextBox = new TextBox();
 		Label idValueLabel = new Label();
-
+		
 		/*
 		 * Im Konstruktor werden die anderen Widgets erzeugt. Alle werden in
 		 * einem Raster angeordnet, dessen Größe sich aus dem Platzbedarf
 		 * der enthaltenen Widgets bestimmt.
 		 */
 		public AusschreibungForm() {
-			Grid ausschreibungGrid = new Grid(5, 2);
+			Grid ausschreibungGrid = new Grid(6, 2);
 			this.add(ausschreibungGrid);
 
 			Label idLabel = new Label("ID");
@@ -65,7 +63,7 @@ public class AusschreibungForm extends VerticalPanel {
 
 			Label bezeichnungLabel = new Label("Bezeichnung");
 			ausschreibungGrid.setWidget(1, 0, bezeichnungLabel);
-			ausschreibungGrid.setWidget(1, 1, bezeichnungTextBox);
+			ausschreibungGrid.setWidget(1, 1, bezeichnungLabel);
 
 			Label bewerbungsfristLabel = new Label("Bewerbungsfrist");
 			ausschreibungGrid.setWidget(2, 0, bewerbungsfristLabel);
@@ -78,6 +76,10 @@ public class AusschreibungForm extends VerticalPanel {
 			Label partnerprofilLabel = new Label("Partnerprofil");
 			ausschreibungGrid.setWidget(4, 0, partnerprofilLabel);
 			ausschreibungGrid.setWidget(4, 1, partnerprofilLabel);
+			
+			Label projektLabel = new Label("Projekt");
+			ausschreibungGrid.setWidget(5, 0, projektLabel);
+			ausschreibungGrid.setWidget(5, 1, projektLabel);
 			
 			HorizontalPanel ausschreibungButtonsPanel = new HorizontalPanel();
 			this.add(ausschreibungButtonsPanel);
@@ -113,7 +115,13 @@ public class AusschreibungForm extends VerticalPanel {
 					ausschreibungToDisplay.setAusschreibungstext(ausschreibungstextTextBox.getText());
 					ausschreibungToDisplay.setBezeichnung(bezeichnungTextBox.getText());
 					ausschreibungToDisplay.setBewerbungsfrist(bewerbungsfristTextBox.getValue());
-					//ausschreibungToDisplay.setEigenschaften(bezeichnungTextBox.getValue());
+					/**
+					 * Konvertierung von String der Projekt ID zu Int
+					 */
+					
+					int i = Integer.parseInt(bezeichnungTextBox.getText());
+					ausschreibungToDisplay.setProjektId(i);
+					
 					projektVerwaltung.save(ausschreibungToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
@@ -187,9 +195,13 @@ public class AusschreibungForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				String bezeichnung = bezeichnungTextBox.getText();
 				String ausschreibungstext = ausschreibungstextTextBox.getText();
-				String eigenschaften = partnerprofileigenschaftTextBox.getText();
-			
-				projektVerwaltung.createAusschreibungFor(pr, bezeichnung, bewerbungsfrist, ausschreibungstext, profil, callback);
+				Projekt pr =;
+				Date bewerbungsfrist = bewerbungsfristTextBox.getValue();
+				
+				Partnerprofil profil = partnerprofilTextBox.getValue();
+				
+													//	(Projekt pr, String bezeichnung, Date bewerbungsfrist,String ausschreibungstext, Partnerprofil profil,  AsyncCallback<Ausschreibung> callback)
+				projektVerwaltung.createAusschreibungFor(pr, 			bezeichnung,			bewerbungsfrist, 	ausschreibungstext, 				profil, new CreateAusschreibungCallback());
 			}
 		}
 
