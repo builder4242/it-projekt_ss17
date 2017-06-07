@@ -228,13 +228,31 @@ public class AusschreibungBewerbungTreeView implements TreeViewModel {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.google.gwt.view.client.TreeViewModel#getNodeInfo(java.lang.Object)
+	 */
+	@Override
+	public <T> NodeInfo<?> getNodeInfo(T value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.google.gwt.view.client.TreeViewModel#isLeaf(java.lang.Object)
+	 */
+	@Override
+	public boolean isLeaf(Object value) {
+		// TODO Auto-generated method stub
+		return false;
+	}}
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * com.google.gwt.view.client.TreeViewModel#getNodeInfo(java.lang.Object)
 	 */
-	@Override
+/*	@Override
 	public <T> NodeInfo<?> getNodeInfo(T value) {
 		// TODO Auto-generated method stub
 		return null;
@@ -296,14 +314,14 @@ public class AusschreibungBewerbungTreeView implements TreeViewModel {
 	 * 
 	 * @see com.google.gwt.view.client.TreeViewModel#isLeaf(java.lang.Object)
 	 */
-	@Override
+/*	@Override
 	public boolean isLeaf(Object value) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 }
 
-/*
+
  * // Get the NodeInfo that provides the children of the specified value.
  * 
  * @Override public <T> NodeInfo<?> getNodeInfo(T value) {
