@@ -1,5 +1,7 @@
 package de.hdm.it_projekt.client;
 
+import java.util.Vector;
+
 import com.google.gwt.core.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -11,20 +13,24 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
+import de.hdm.it_projekt.server.db.*;
+
+
 public class ProjektMarktplatz implements EntryPoint {
 
+	public String Ergebnis; 
+	private ProjektMarktplatz markt = null; 
 	
 	private TextBox testTextBox = new TextBox();
 	
 	private Button TestButton = new Button("Test"); 
 	
-	
-		
-	
-	
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private HorizontalPanel addPanel = new HorizontalPanel();
 	private Label testLabel = new Label();
+	
+	/*Mapper Buttons*/ 
+	private Button projektmarktplatzButton = new Button("Daten Projektmarktplatz"); 
 	
 	
 	
@@ -55,7 +61,13 @@ public class ProjektMarktplatz implements EntryPoint {
 		        	}
 		      });
 		
-		
+			/* Mapper Test */ 
+		projektmarktplatzButton.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){
+				Window.alert("ausstehend"); 
+			}
+		}); 
+	
 	}
 		
 		

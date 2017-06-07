@@ -188,7 +188,7 @@ public class EigenschaftMapper {
 				Eigenschaft e = new Eigenschaft();
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
-				e.setWert(rs.getFloat("Wert"));
+				e.setWert(rs.getString("Wert"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);
@@ -234,7 +234,7 @@ public class EigenschaftMapper {
 				Eigenschaft e = new Eigenschaft();
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
-				e.setWert(rs.getFloat("Wert"));
+				e.setWert(rs.getString("Wert"));
 
 				// Hinzufuegen des neuen Eigenschafts zum Ergebnisvektor
 				result.addElement(e);
@@ -278,7 +278,7 @@ public class EigenschaftMapper {
 				Eigenschaft e = new Eigenschaft();
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
-				e.setWert(rs.getFloat("Wert"));
+				e.setWert(rs.getString("Wert"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);

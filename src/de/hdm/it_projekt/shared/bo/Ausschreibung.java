@@ -29,11 +29,17 @@ public class Ausschreibung extends BusinessObject {
 	 * Text der Ausschreibung
 	 */
 	private String ausschreibungstext;
-
+	
+	/*Beginn Fremdschluesseldefinitionen*/
 	/**
-	 * Partnerprofil zur Ausschreibung
+	 * Fremdschluesselbeziehung zu Projekt
 	 */
-	private int partnerprofilId;
+	private int projektId = 0;
+	/**
+	 * Fremdschluesselbeziehung zu Partnerprofil
+	 */
+	private int partnerprofilId = 0;
+	 /*Ende Fremdschluesseldefinitionen*/
 
 	/**
 	 * Auslesen der Bezeichnung der Ausschreibung
@@ -88,20 +94,37 @@ public class Ausschreibung extends BusinessObject {
 	public void setAusschreibungstext(String ausschreibungstext) {
 		this.ausschreibungstext = ausschreibungstext;
 	}
-		
+	
+	/*Beginn Fremdschluessel Getter und Setter*/
 	/**
-	 * @return the partnerprofil
+	 * @return the projektId
+	 */
+	public int getProjektId() {
+		return projektId;
+	}
+
+	/**
+	 * @param projektId the projektId to set
+	 */
+	public void setProjektId(int projektId) {
+		this.projektId = projektId;
+	}
+
+	/**
+	 * @return the partnerprofilId
 	 */
 	public int getPartnerprofilId() {
 		return partnerprofilId;
 	}
 
 	/**
-	 * @param partnerprofil the partnerprofil to set
+	 * @param partnerprofilId the partnerprofilId to set
 	 */
-	public void setPartnerprofilId(int id) {
-		this.partnerprofilId = id;
+	public void setPartnerprofilId(int partnerprofilId) {
+		this.partnerprofilId = partnerprofilId;
 	}
+	 /*Ende Fremdschluessel Getter und Setter*/
+
 	
 /**
  * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die

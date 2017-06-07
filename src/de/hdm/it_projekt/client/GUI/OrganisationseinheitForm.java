@@ -3,7 +3,7 @@ package de.hdm.it_projekt.client.GUI;
  * 
  * to be done:
  * unterscheidung ob person  oder unternehmen ggfs vorname abfragen -> set Vorname
- * bankverwaltung async
+ * projektverwaltung async
  * remove/addOrganisationseinheit anpassen
  */
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
 /**
@@ -27,8 +28,8 @@ import de.hdm.it_projekt.shared.bo.Person;
 public class OrganisationseinheitForm extends VerticalPanel {
 
 
-		BankAdministrationAsync bankVerwaltung = ClientsideSettings // waiting for Classes 
-				.getBankVerwaltung();
+		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings // waiting for Classes 
+				.getProjektVerwaltung();
 		Organisationseinheit organisationseinheitToDisplay = null;
 		ProjektOrganisationseinheitTreeView catvm = null;
 
@@ -95,7 +96,7 @@ public class OrganisationseinheitForm extends VerticalPanel {
 				if (organisationseinheitToDisplay != null) {
 					organisationseinheitToDisplay.setName(firstNameTextBox.getText());
 					organisationseinheitToDisplay.setVorname(lastNameTextBox.getText());
-					bankVerwaltung.save(organisationseinheitToDisplay, new SaveCallback());
+					projektVerwaltung.save(organisationseinheitToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
 				}
@@ -127,7 +128,7 @@ public class OrganisationseinheitForm extends VerticalPanel {
 				if (organisationseinheitToDisplay == null) {
 					Window.alert("kein Kunde ausgewählt");
 				} else {
-					bankVerwaltung.delete(organisationseinheitToDisplay,
+					projektVerwaltung.delete(organisationseinheitToDisplay,
 							new deleteOrganisationseinheitCallback(organisationseinheitToDisplay));
 				}
 			}
@@ -166,7 +167,7 @@ public class OrganisationseinheitForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				String firstName = firstNameTextBox.getText();
 				String lastName = lastNameTextBox.getText();
-				bankVerwaltung.createOrganisationseinheit(firstName, lastName,
+				projektVerwaltung.createOrganisationseinheit(firstName, lastName,
 						new CreateOrganisationseinheitCallback());
 			}
 		}

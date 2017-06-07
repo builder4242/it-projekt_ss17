@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 /**
@@ -72,7 +73,7 @@ public class ProjektMarktplatzMapper {
 	 * @param pm
 	 * @return
 	 */
-	public static ProjektMarktplatz insert(ProjektMarktplatz pm) {
+	public ProjektMarktplatz insert(ProjektMarktplatz pm) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -88,7 +89,7 @@ public class ProjektMarktplatzMapper {
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
-				
+
 				/*
 				 * pm erhaelt den bisher maximalen, nun um 1 inkrementierten
 				 * Primaerschluessel.
@@ -116,7 +117,7 @@ public class ProjektMarktplatzMapper {
 	 *            - das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter uebergebene Objekt
 	 */
-	public static ProjektMarktplatz update(ProjektMarktplatz pm) {
+	public ProjektMarktplatz update(ProjektMarktplatz pm) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -142,7 +143,7 @@ public class ProjektMarktplatzMapper {
 	 * @param pm
 	 *            - das aus der DB zu loeschende "Objekt"
 	 */
-	public static void delete(ProjektMarktplatz pm) {
+	public void delete(ProjektMarktplatz pm) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -164,7 +165,7 @@ public class ProjektMarktplatzMapper {
 	 *         eine partiell gefuellter oder ggf. auch leerer Vektor
 	 *         zurueckgeliefert.
 	 */
-	public static Vector<ProjektMarktplatz> findAll() {
+	public Vector<ProjektMarktplatz> findAll() {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -207,7 +208,7 @@ public class ProjektMarktplatzMapper {
 	 * @return Projektmarktplatz-Objekt, das dem uebergebenen Schluessel
 	 *         entspricht, null bei nicht vorhandenem DB-Tupel.
 	 */
-	public static ProjektMarktplatz findById(int id) {
+	public ProjektMarktplatz findById(int id) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -250,7 +251,7 @@ public class ProjektMarktplatzMapper {
 	 * @return Projektmarktplatz-Objekt, das der uebergebenen Bezeichnung
 	 *         entspricht, null bei nicht vorhandenem DB-Tupel.
 	 */
-	public static Vector<ProjektMarktplatz> findByBezeichnung(String bezeichnung) {
+	public Vector<ProjektMarktplatz> findByBezeichnung(String bezeichnung) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 
@@ -262,7 +263,8 @@ public class ProjektMarktplatzMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz WHERE Bezeichnung='"+bezeichnung+"' ORDER BY Bezeichnung");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz WHERE Bezeichnung='"
+					+ bezeichnung + "' ORDER BY Bezeichnung");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// ProjektMarktplatz-Objekt erstellt.
@@ -283,6 +285,62 @@ public class ProjektMarktplatzMapper {
 
 		// Ergebnisvektor zurueckgeben
 		return result;
+	}
+
+	public Vector<ProjektMarktplatz> getByOrganisation(Organisationseinheit o) {
+
+		Connection con = DBConnection.connection();
+
+		Vector<ProjektMarktplatz> result = new Vector<ProjektMarktplatz>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT pm.ID, pm.Bezeichnung FROM projektmarktplatz as pm "
+					+ "inner join projektmarktplatz_has_organisationseinheit on pm.id=Projektmarktplatz_ID"
+					+ "WHERE Organisationseinheit_ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// ProjektMarktplatz-Objekt erstellt.
+			while (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				ProjektMarktplatz pm = new ProjektMarktplatz();
+				pm.setId(rs.getInt("pm.ID"));
+				pm.setBezeichnung(rs.getString("pm.Bezeichnung"));
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(pm);
+			}
+		} catch (SQLException e6) {
+			e6.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
+	public void projektMarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt = con.createStatement();
+
+			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+			stmt.executeUpdate("INSERT INTO projektmarktplatz_has_organisationseinheit (Projektmarktplatz_ID, Organisationseinheit_ID) " 
+					+ "VALUES ('" + pm.getId() + "','" + o.getId() + "')");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

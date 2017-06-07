@@ -89,7 +89,7 @@ public class UnternehmenMapper {
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
-				
+
 				/*
 				 * u erhaelt den bisher maximalen, nun um 1 inkrementierten
 				 * Primaerschluessel.
@@ -101,8 +101,9 @@ public class UnternehmenMapper {
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 				stmt.executeUpdate(
 						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID) "
-								+ "VALUES (" + u.getId() + "," + u.getName() + "," + u.getEmail() + "," + u.getStrasse()
-								+ "," + u.getPlz() + "," + u.getOrt() + "," + u.getTel() + "," + u.getGoogleID() + ")");
+								+ "VALUES ('" + u.getId() + "','" + u.getName() + "','" + u.getEmail() + "','"
+								+ u.getStrasse() + "','" + u.getPlz() + "','" + u.getOrt() + "','" + u.getTel() + "','"
+								+ u.getGoogleID() + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -215,6 +216,7 @@ public class UnternehmenMapper {
 	 * @return
 	 */
 	public Unternehmen findById(int id) {
+
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
 
@@ -224,8 +226,8 @@ public class UnternehmenMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit"
-							+ "WHERE ID=" + id + " ORDER BY ID");
+					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit "
+							+ "WHERE ID= " + id + " AND Typ= 'P' ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel

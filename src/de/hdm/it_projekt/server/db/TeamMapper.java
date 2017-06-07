@@ -91,8 +91,8 @@ public class TeamMapper {
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
-				
-				/* 
+
+				/*
 				 * t erhaelt den bisher maximalen, nun um 1 inkrementierten
 				 * Primaerschluessel.
 				 */
@@ -103,8 +103,9 @@ public class TeamMapper {
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 				stmt.executeUpdate(
 						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID) "
-								+ "VALUES (" + t.getId() + "," + t.getName() + "," + t.getEmail() + "," + t.getStrasse()
-								+ "," + t.getPlz() + "," + t.getOrt() + "," + t.getTel() + "," + t.getGoogleID() + ")");
+								+ "VALUES ('" + t.getId() + "','" + t.getName() + "','" + t.getEmail() + "','"
+								+ t.getStrasse() + "','" + t.getPlz() + "','" + t.getOrt() + "','" + t.getTel() + "','"
+								+ t.getGoogleID() + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -181,7 +182,7 @@ public class TeamMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit" + " ORDER BY ID");
+					+ "FROM organisationseinheit " + " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.
@@ -227,8 +228,8 @@ public class TeamMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE ID=" + id
-							+ "' AND Typ='T' ORDER BY ID");
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE ID= " + id
+							+ " AND Typ= 'T' ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
