@@ -1,6 +1,6 @@
 package de.hdm.it_projekt.shared.bo;
 
-import de.hdm.it_projekt.server.db.ProjektMarktplatzMapper;  
+import de.hdm.it_projekt.server.db.*;  
 import java.util.Date;
 
 public class Testmain {
@@ -12,7 +12,20 @@ public class Testmain {
 		
 		p1.setBezeichnung("Burger King");
 		
+		/*Mapper Definitionen*/
+		AusschreibungMapper asMapper = AusschreibungMapper.ausschreibungMapper();
+		BeteiligungMapper btMapper = BeteiligungMapper.beteiligungMapper();
+		BewerbungMapper bwMapper = BewerbungMapper.bewerbungMapper();
+		BewertungMapper bwtMapper = BewertungMapper.bewertungMapper();
+		EigenschaftMapper egMapper = EigenschaftMapper.eigenschaftMapper();
+		PartnerprofilMapper pfMapper = PartnerprofilMapper.partnerprofilMapper();
+		PersonMapper psMapper = PersonMapper.personMapper();
+		ProjektMapper pjMapper = ProjektMapper.projektMapper();
 		ProjektMarktplatzMapper pmMapper = ProjektMarktplatzMapper.projektMarktplatzMapper();
+		TeamMapper tmMapper = TeamMapper.teamMapper();
+		UnternehmenMapper unMapper = UnternehmenMapper.unternehmenMapper();
+		/*Ende Mapper Definitionen*/
+		
 		
 		System.out.println(p1.getId() + " " + p1.getBezeichnung());
 		
