@@ -14,43 +14,6 @@ public class Ausschreibung extends BusinessObject {
 	 * Serializable
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	/*Beginn Fremdschluesseldefinitionen*/
-	
-	private int projektId = 0;
-	private int partnerprofilId = 0;
-	
-
-	/**
-	 * @return the projektId
-	 */
-	public int getProjektId() {
-		return projektId;
-	}
-
-	/**
-	 * @param projektId the projektId to set
-	 */
-	public void setProjektId(int projektId) {
-		this.projektId = projektId;
-	}
-
-	/**
-	 * @return the partnerprofilId
-	 */
-	public int getPartnerprofilId() {
-		return partnerprofilId;
-	}
-
-	/**
-	 * @param partnerprofilId the partnerprofilId to set
-	 */
-	public void setPartnerprofilId(int partnerprofilId) {
-		this.partnerprofilId = partnerprofilId;
-	}
-	
-	/*Ende Fremdschluesseldefinitionen*/
-
 
 	/**
 	 * Bezeichnung der Ausschreibung
@@ -66,6 +29,17 @@ public class Ausschreibung extends BusinessObject {
 	 * Text der Ausschreibung
 	 */
 	private String ausschreibungstext;
+	
+	/*Beginn Fremdschluesseldefinitionen*/
+	/**
+	 * Fremdschluesselbeziehung zu Projekt
+	 */
+	private int projektId = 0;
+	/**
+	 * Fremdschluesselbeziehung zu Partnerprofil
+	 */
+	private int partnerprofilId = 0;
+	 /*Ende Fremdschluesseldefinitionen*/
 
 	/**
 	 * Auslesen der Bezeichnung der Ausschreibung
@@ -120,6 +94,36 @@ public class Ausschreibung extends BusinessObject {
 	public void setAusschreibungstext(String ausschreibungstext) {
 		this.ausschreibungstext = ausschreibungstext;
 	}
+	
+	/*Beginn Fremdschluessel Getter und Setter*/
+	/**
+	 * @return the projektId
+	 */
+	public int getProjektId() {
+		return projektId;
+	}
+
+	/**
+	 * @param projektId the projektId to set
+	 */
+	public void setProjektId(int projektId) {
+		this.projektId = projektId;
+	}
+
+	/**
+	 * @return the partnerprofilId
+	 */
+	public int getPartnerprofilId() {
+		return partnerprofilId;
+	}
+
+	/**
+	 * @param partnerprofilId the partnerprofilId to set
+	 */
+	public void setPartnerprofilId(int partnerprofilId) {
+		this.partnerprofilId = partnerprofilId;
+	}
+	 /*Ende Fremdschluessel Getter und Setter*/
 
 	
 /**

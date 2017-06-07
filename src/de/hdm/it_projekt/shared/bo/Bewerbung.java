@@ -13,40 +13,7 @@ public class Bewerbung extends BusinessObject {
 	 * Serializable
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	/*Beginn Fremdschluesseldefinitionen*/
-	private int ausschreibungId = 0;
-	private int organisationseinheitId = 0;
-	
-	/**
-	 * @return the ausschreibungId
-	 */
-	public int getAusschreibungId() {
-		return ausschreibungId;
-	}
-
-	/**
-	 * @param ausschreibungId the ausschreibungId to set
-	 */
-	public void setAusschreibungId(int ausschreibungId) {
-		this.ausschreibungId = ausschreibungId;
-	}
-
-	/**
-	 * @return the organisationseinheitId
-	 */
-	public int getOrganisationseinheitId() {
-		return organisationseinheitId;
-	}
-
-	/**
-	 * @param organisationseinheitId the organisationseinheitId to set
-	 */
-	public void setOrganisationseinheitId(int organisationseinheitId) {
-		this.organisationseinheitId = organisationseinheitId;
-	}
-	
-	/*Ende Fremdschluesseldefinitionen*/
+		
 
 	/**
 	 * Erstelldatum der Bewerbung
@@ -58,10 +25,17 @@ public class Bewerbung extends BusinessObject {
 	 */
 	private String bewerbungstext;
 	
+	
+	/*Beginn Fremdschluesseldefinitionen*/
 	/**
-	 * Bewertung der Bewerbung 
+	 * Fremdschluesselbeziehung zur Ausschreibung
 	 */
-	private Bewertung bewertung = null;
+	private int ausschreibungId = 0;
+	/**
+	 * Fremdschluesselbeziehung zur Organisationseinheit
+	 */
+	private int organisationseinheitId = 0;
+	  /*Ende Fremdschluesseldefinitionen*/
 
 	/**
 	 * Auslesen des Erstelldatums
@@ -95,21 +69,36 @@ public class Bewerbung extends BusinessObject {
 		this.bewerbungstext = bewerbungstext;
 	}
 	
+	/*Beginn Fremdschluessel Getter und Setter*/
 	/**
-	 *  R�ckgabe der Bewertung
-	 * @return the bewertung
+	 * @return the ausschreibungId
 	 */
-	public Bewertung getBewertung() {
-		return bewertung;
+	public int getAusschreibungId() {
+		return ausschreibungId;
 	}
 
 	/**
-	 *  Setzen der Bewertung
-	 * @param bewertung the bewertung to set
+	 * @param ausschreibungId the ausschreibungId to set
 	 */
-	public void setBewertung(Bewertung bewertung) {
-		this.bewertung = bewertung;
+	public void setAusschreibungId(int ausschreibungId) {
+		this.ausschreibungId = ausschreibungId;
 	}
+
+	/**
+	 * @return the organisationseinheitId
+	 */
+	public int getOrganisationseinheitId() {
+		return organisationseinheitId;
+	}
+
+	/**
+	 * @param organisationseinheitId the organisationseinheitId to set
+	 */
+	public void setOrganisationseinheitId(int organisationseinheitId) {
+		this.organisationseinheitId = organisationseinheitId;
+	}
+	
+	  /*Ende Fremdschluessel Getter und Setter*/
 	
 	/**
 	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
