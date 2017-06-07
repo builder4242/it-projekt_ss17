@@ -254,7 +254,7 @@ public class AusschreibungBewerbungTreeView implements TreeViewModel{
 			// Erzeugen eines ListDataproviders für Ausschreibungdaten
 			AusschreibungDataProvider = new ListDataProvider<Ausschreibung>();
 			projektVerwaltung
-					.getAllAusschreibungs(new AsyncCallback<Vector<Ausschreibung>>() {
+					.getAllAusschreibung(new AsyncCallback<Vector<Ausschreibung>>() {
 						@Override
 						public void onFailure(Throwable t) {
 						}
