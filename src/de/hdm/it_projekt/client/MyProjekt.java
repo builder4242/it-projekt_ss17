@@ -36,9 +36,7 @@ public class MyProjekt implements EntryPoint {
 		
 		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
 		
-		final MarktplatzUebersicht menu = new MarktplatzUebersicht();
-		
-		//menu.onInitialize().asWidget()
+
 		/* main Panel */ 
 	    mainPanel.add(ausgabe); 
 		
