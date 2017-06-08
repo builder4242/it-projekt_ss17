@@ -289,7 +289,7 @@ public class TeamMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
-							+ name + SQLTYP + "' ORDER BY name");
+							+ name + SQLTYP + "' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.
