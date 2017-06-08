@@ -6,14 +6,16 @@ package de.hdm.it_projekt.client.GUI;
 import com.google.gwt.i18n.client.Constants;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
+
 
 /**
  * @author Daniel Fleps
  *
  */
-public class MarktplatzUebersicht {
+public class MarktplatzUebersicht extends VerticalPanel{
 
 	/**
 	 * The constants used in this Content Widget.
@@ -124,5 +126,33 @@ public class MarktplatzUebersicht {
 		menu.ensureDebugId("cwMenuBar");
 		return menu;
 	}
+	
+	
+	ProjektAdministrationAsync projektVerwaltung = ClientsideSettings.getProjektAdministration();
+	
+	while (i<projektVerwaltung.getAlleMarktplätze().getLength()){ 
+		
+	
+	Button i = new Button(i.toString());
+	i.addClickHandler(new ChangeClickHandler());
+	ausschreibungButtonsPanel.add(changeButton);
+	}
+	
 
+	
+	
+	private class ChangeClickHandler implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
+		
+	}
 }
