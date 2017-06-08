@@ -37,9 +37,7 @@ import de.hdm.it_projekt.server.ProjektAdministrationImpl;
  */
 public class AusschreibungForm extends VerticalPanel {
 
-	ProjektAdministrationAsync projektVerwaltung = ClientsideSettings // waiting
-																		// for
-																		// Classes
+	ProjektAdministrationAsync projektVerwaltung = ClientsideSettings 
 			.getProjektAdministration();
 	Ausschreibung ausschreibungToDisplay = null;
 	ProjektAusschreibungTreeView catvm = null;

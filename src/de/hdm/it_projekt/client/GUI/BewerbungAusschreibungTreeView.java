@@ -14,9 +14,16 @@ import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.it_projekt.shared.bo.BusinessObject;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
-
+/**
+ * to be done
+ * 
+ * callback
+ * @author Julian Reimenthal
+ *
+ */
 
 public class BewerbungAusschreibungTreeView implements TreeViewModel{
 
@@ -29,7 +36,7 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	private Bewerbung selectedBewerbung = null;
 	private Ausschreibung selectedAusschreibung = null;
 
-	private ProjektAdministrationAsync projektVerwaltung = null; //warten auf anlage Async
+	private ProjektAdministrationAsync projektVerwaltung = null; 
 	private ListDataProvider<Bewerbung> BewerbungDataProvider = null;
 	
 	private Map<Bewerbung, ListDataProvider<Ausschreibung>> AusschreibungDataProviders = null;
@@ -98,7 +105,7 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	 * Variaben initialisiert.
 	 */
 	public void BewerbungAusschreibungsTreeViewModel() {
-		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
+		projektVerwaltung = ClientsideSettings.getProjektAdministration();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
@@ -106,7 +113,7 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 		AusschreibungDataProviders = new HashMap<Bewerbung, ListDataProvider<Ausschreibung>>();
 	}
 
-	void setBewerbungForm(Bewerbung cf) {
+	void setBewerbungForm(BewerbungForm cf) {
 		bewerbungForm = cf;
 	}
 
@@ -138,8 +145,8 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 		ausschreibungForm.setSelected(a);
 
 		if (a != null) {
-			projektVerwaltung.getBewerbungById(a.getOwnerID(),
-					new AsyncCallback<Bewerbung>() {
+			projektVerwaltung.getBewerbungFor(a, callback)
+					 {
 						@Override
 						public void onFailure(Throwable caught) {
 						}
@@ -210,8 +217,8 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	 * Baumstruktur noch ein "veraltetes" Kontoobjekt enthalten ist.
 	 */
 	void updateAusschreibung(Ausschreibung a) {
-		projektVerwaltung.getBewerbungById(a.getOwnerID(),
-				new UpdateAusschreibungCallback(a));
+		projektVerwaltung.getBewerbungFor(a, callback)
+			//	new UpdateAusschreibungCallback(a));
 	}
 
 	private class UpdateAusschreibungCallback implements AsyncCallback<Bewerbung> {
@@ -239,8 +246,26 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 		}
 	}
 
-	// Get the NodeInfo that provides the children of the specified value.
+	/* (non-Javadoc)
+	 * @see com.google.gwt.view.client.TreeViewModel#getNodeInfo(java.lang.Object)
+	 */
 	@Override
+	public <T> NodeInfo<?> getNodeInfo(T value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.google.gwt.view.client.TreeViewModel#isLeaf(java.lang.Object)
+	 */
+	@Override
+	public boolean isLeaf(Object value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+}
+	// Get the NodeInfo that provides the children of the specified value.
+/*	@Override
 	public <T> NodeInfo<?> getNodeInfo(T value) {
 
 		if (value.equals("Root")) {
@@ -311,5 +336,5 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 		return false;
 	}
 
-}
+}*/
 
