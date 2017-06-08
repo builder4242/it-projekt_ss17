@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -29,21 +30,26 @@ public class ProjektMarktplatz implements EntryPoint {
 		
 		Button TestButton = new Button("Test"); 
 		
+		Button sidButton = new Button("Sid"); 
+		
 		VerticalPanel mainPanel = new VerticalPanel();
 		HorizontalPanel addPanel = new HorizontalPanel();
-		Label testLabel = new Label();
+		Label testLabel = new Label("myproject2017");
 		
 		/*Mapper Buttons*/ 
 		Button projektmarktplatzButton = new Button("Daten Projektmarktplatz"); 
 		
 		
-		
+		Hyperlink link = new Hyperlink("Ausschreibung", "de.hdm.it_projekt.client.GUI.AusschreibungForm");
 		
 		/*Aufbau des Textfeldes inkl. Button */  
+		addPanel.add(testLabel);
+		addPanel.add(link);
 		addPanel.add(testTextBox);
 	    addPanel.add(TestButton);
 	    mainPanel.add(testLabel);
 	    addPanel.add(projektmarktplatzButton);
+	    addPanel.add(sidButton);
 	
 	
 		/* main Panel */ 
@@ -70,6 +76,20 @@ public class ProjektMarktplatz implements EntryPoint {
 				Window.alert("ausstehend"); 
 			}
 		}); 
+		
+		sidButton.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){
+				Window.alert("Hallo ich bin ein Sid"); 
+				
+			}
+		}); 
+		
+		
+		//TEST 
+		//TEST DER MENU BAR 
+		
+		
+
 	
 	}
 		
