@@ -1,9 +1,8 @@
 package de.hdm.it_projekt.client.GUI;
 /**
  * To be Done:
- * Projektverwaltung
- * ClientsideSettings
- * remove/addbewerbung
+ * callback
+ * methode bewerben 
  */
 
 import java.text.DateFormat;
@@ -23,19 +22,23 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
+import de.hdm.it_projekt.shared.bo.Projekt;
+
 /**
 * Formular für die Darstellung der gewählten Bewerbung
 * 
 * @author Julian Reimenthal
 */
+
 public class BewerbungForm extends VerticalPanel {
 
 
 		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings // waiting for Classes 
-				.getProjektVerwaltung();
+				.getProjektAdministration();
 		Bewerbung bewerbungToDisplay = null;
 		AusschreibungBewerbungTreeView catvm = null;
 
@@ -44,6 +47,8 @@ public class BewerbungForm extends VerticalPanel {
 		 */
 		DateBox erstelldatumTextBox = new DateBox();
 		TextBox bewerbungstextTextBox = new TextBox();
+		TextBox auschreibungTextBox = new TextBox();
+		TextBox organisationseinheitTextBox = new TextBox();
 		Label idValueLabel = new Label();
 
 		/*
@@ -52,7 +57,7 @@ public class BewerbungForm extends VerticalPanel {
 		 * der enthaltenen Widgets bestimmt.
 		 */
 		public BewerbungForm() {
-			Grid bewerbungGrid = new Grid(3, 2);
+			Grid bewerbungGrid = new Grid(5, 2);
 			this.add(bewerbungGrid);
 
 			Label idLabel = new Label("ID");
@@ -66,6 +71,14 @@ public class BewerbungForm extends VerticalPanel {
 			Label bewerbungstextLabel = new Label("Bewerbungstext");
 			bewerbungGrid.setWidget(2, 0, bewerbungstextLabel);
 			bewerbungGrid.setWidget(2, 1, bewerbungstextLabel);
+			
+			Label auschreibungLabel = new Label("Ausschreibung");
+			bewerbungGrid.setWidget(2, 0, auschreibungLabel);
+			bewerbungGrid.setWidget(2, 1, auschreibungLabel);
+			
+			Label organisationseinheitLabel = new Label("Organisationseinheit");
+			bewerbungGrid.setWidget(2, 0, organisationseinheitLabel);
+			bewerbungGrid.setWidget(2, 1, organisationseinheitLabel);
 			
 			HorizontalPanel bewerbungButtonsPanel = new HorizontalPanel();
 			this.add(bewerbungButtonsPanel);
@@ -113,7 +126,7 @@ public class BewerbungForm extends VerticalPanel {
 		private class SaveCallback implements AsyncCallback<Void> {
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Die Namensänderung ist fehlgeschlagen!");
+				Window.alert("Die Änderung ist fehlgeschlagen!");
 			}
 
 			@Override
@@ -151,14 +164,14 @@ public class BewerbungForm extends VerticalPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Das Löschen des Kunden ist fehlgeschlagen!");
+				Window.alert("Das Löschen der Bewerbung ist fehlgeschlagen!");
 			}
 
 			@Override
 			public void onSuccess(Void result) {
 				if (bewerbung != null) {
 					setSelected(null);
-					catvm.removeBewerbung(bewerbung);
+					catvm.delete(bewerbung);
 				}
 			}
 		}
@@ -172,13 +185,11 @@ public class BewerbungForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				String bezeichnung = bezeichnungTextBox.getText();
+				String as = auschreibungTextBox.getText();
 				String bewerbungstext = bewerbungstextTextBox.getText();
-				Partnerprofil p1 = new Partnerprofil();
-				p1.setEigenschaften((Eigenschaft).setName(partnerprofileigenschaftTextBox.getValue()));
-				
-				projektVerwaltung.createBewerbung(firstName, lastName,
-						new CreateBewerbungCallback());
+				String organisation = organisationseinheitTextBox.getValue();
+							
+				projektVerwaltung.bewerben(as, organisation, bewerbungstext, callback);
 			}
 		}
 
@@ -194,13 +205,13 @@ public class BewerbungForm extends VerticalPanel {
 				if (bewerbung != null) {
 					// Das erfolgreiche Hinzufügen eines Kunden wird an den Kunden- und
 					// Kontenbaum propagiert.
-					catvm.addBewerbung(bewerbung);
+					catvm.bewerben(bewerbung);
 				}
 			}
 		}
 
 		// catvm setter
-		void setCatvm(ProjektBewerbungTreeView catvm) {
+		void setCatvm(AusschreibungBewerbungTreeView catvm) {
 			this.catvm = catvm;
 		}
 

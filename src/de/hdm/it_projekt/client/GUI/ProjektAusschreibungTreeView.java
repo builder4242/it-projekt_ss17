@@ -200,6 +200,10 @@ public class ProjektAusschreibungTreeView implements TreeViewModel {
 		AusschreibungDataProviders.remove(projekt);
 	}
 
+	void removeAusschreibung(Ausschreibung projekt) {
+		ProjektDataProvider.getList().remove(projekt);
+		AusschreibungDataProviders.remove(projekt);
+	}
 	void addAusschreibungOfProjekt(Ausschreibung ausschreibung, Projekt projekt) {
 		// falls es noch keinen Ausschreibung Provider für diesen Projekt gibt,
 		// wurde der Baumknoten noch nicht geöffnet und wir brauchen nichts tun.

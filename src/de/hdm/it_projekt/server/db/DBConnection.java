@@ -2,8 +2,10 @@ package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;  
 import java.sql.DriverManager;
+import java.util.Date;
 
 import com.google.appengine.api.utils.SystemProperty;
+import java.text.SimpleDateFormat;
 
 /**
  * Verwalten einer Verbindung zur Datenbank.
@@ -46,7 +48,7 @@ public class DBConnection {
     
     /* googleURL zu Testzwecken auf localURL gesetzt. Muss nachher wieder geaendert werden*/
     private static String googleUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";
-    private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";
+    private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=eclipse&password=1234";
 
     /**
      * Diese statische Methode kann aufgrufen werden durch
@@ -104,6 +106,11 @@ public class DBConnection {
 
         // Zurückgegeben der Verbindung
         return con;
+    }
+    
+    public static String convertToSQLDateString(Date d) {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+    	return sdf.format(d);
     }
 
 }

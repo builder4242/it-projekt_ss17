@@ -46,6 +46,13 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		this.uMapper = UnternehmenMapper.unternehmenMapper();
 	}
 
+
+	@Override
+	public Vector<ProjektMarktplatz> getProjektMarktplaetzeByOrganisation(Organisationseinheit o)
+			throws IllegalArgumentException {
+		return this.pmMapper.getByOrganisation(o);
+	}
+	
 	@Override
 	public Vector<ProjektMarktplatz> getAlleProjektMarktplaetze() throws IllegalArgumentException {
 		return this.pmMapper.findAll();
@@ -88,7 +95,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Vector<Eigenschaft> getEigenschaftenFor(Partnerprofil pr) throws IllegalArgumentException {
-		return null;
+		return this.eMapper.getByPartnerprofil(pr);
 	}
 
 	@Override
@@ -401,6 +408,21 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Projekt pr) throws IllegalArgumentException {
 
+		Vector<Ausschreibung> ausschreibungen = getAusschreibungFor(pr);
+		Vector<Beteiligung> beteiligungen = getBeteiligungenFor(pr);
+		
+		if(ausschreibungen != null) {
+			for(Ausschreibung a : ausschreibungen) {
+				delete(a);
+			}
+		}
+		
+		if(beteiligungen != null) {
+			for(Beteiligung b : beteiligungen) {
+				delete(b);
+			}
+		}
+		
 		this.prMapper.delete(pr);
 
 	}
@@ -408,12 +430,22 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Ausschreibung as) throws IllegalArgumentException {
 
+		delete(getPartnerprofilById(as.getPartnerprofilId()));
+		
 		this.asMapper.delete(as);
 	}
 
 	@Override
 	public void delete(Partnerprofil pp) throws IllegalArgumentException {
 
+		Vector<Eigenschaft> eigenschaften = getEigenschaftenFor(pp);
+		
+		if(eigenschaften != null) {
+			for (Eigenschaft e : eigenschaften) {
+				delete(e);
+			}
+		}
+		
 		this.ppMapper.delete(pp);
 	}
 
@@ -426,6 +458,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Bewerbung bw) throws IllegalArgumentException {
 
+		delete(getBewertungFor(bw));
 		this.bwMapper.delete(bw);
 
 	}
@@ -445,6 +478,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Person ps) throws IllegalArgumentException {
 
+		
 		this.pMapper.update(ps);
 	}
 
@@ -458,11 +492,5 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	public void delete(Team t) throws IllegalArgumentException {
 
 		this.tMapper.delete(t);
-	}
-
-	@Override
-	public Vector<ProjektMarktplatz> getProjektMarktplaetzeByOrganisation(Organisationseinheit o)
-			throws IllegalArgumentException {
-		return this.pmMapper.getByOrganisation(o);
 	}
 }

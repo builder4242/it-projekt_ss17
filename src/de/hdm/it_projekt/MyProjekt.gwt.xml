@@ -5,7 +5,7 @@
 -->
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.0//EN"
   "http://google-web-toolkit.googlecode.com/svn/tags/2.5.0/distro-source/core/src/gwt-module.dtd">
-<module rename-to='ProjektMarktplatz'>
+<module rename-to='MyProjekt'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.user.User'/>
 
@@ -23,7 +23,7 @@
 	<inherits name="com.google.gwt.logging.Logging" />
 
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='de.hdm.it_projekt.client.ProjektMarktplatz'/>
+  <entry-point class='de.hdm.it_projekt.client.MyProjekt'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

@@ -2,9 +2,7 @@ package de.hdm.it_projekt.client.GUI;
 /**
  * 
  * to be done:
- * unterscheidung ob person  oder unternehmen ggfs vorname abfragen -> set Vorname
- * projektverwaltung async
- * remove/addOrganisationseinheit anpassen
+ * warte auf kartoffelsalat 
  */
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -17,6 +15,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
@@ -29,7 +28,7 @@ public class OrganisationseinheitForm extends VerticalPanel {
 
 
 		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings // waiting for Classes 
-				.getProjektVerwaltung();
+				.getProjektAdministration();
 		Organisationseinheit organisationseinheitToDisplay = null;
 		ProjektOrganisationseinheitTreeView catvm = null;
 
@@ -38,6 +37,12 @@ public class OrganisationseinheitForm extends VerticalPanel {
 		 */
 		TextBox firstNameTextBox = new TextBox();
 		TextBox lastNameTextBox = new TextBox();
+		TextBox emailTextBox = new TextBox();
+		TextBox strasseTextBox = new TextBox();
+		TextBox ortTextBox = new TextBox();
+		TextBox telTextBox = new TextBox();
+		TextBox plzTextBox = new TextBox();
+		
 		Label idValueLabel = new Label();
 
 		/*
@@ -60,6 +65,26 @@ public class OrganisationseinheitForm extends VerticalPanel {
 			Label lastNameLabel = new Label("Nachname");
 			organisationseinheitGrid.setWidget(2, 0, lastNameLabel);
 			organisationseinheitGrid.setWidget(2, 1, lastNameTextBox);
+			
+			Label emailLabel = new Label("Vorname");
+			organisationseinheitGrid.setWidget(3, 0, emailLabel);
+			organisationseinheitGrid.setWidget(3, 1, emailLabel);
+
+			Label strasseLabel = new Label("Nachname");
+			organisationseinheitGrid.setWidget(4, 0, strasseLabel);
+			organisationseinheitGrid.setWidget(4, 1, strasseLabel);
+			
+			Label ortLabel = new Label("Nachname");
+			organisationseinheitGrid.setWidget(5, 0, ortLabel);
+			organisationseinheitGrid.setWidget(5, 1, ortLabel);
+			
+			Label telLabel = new Label("Vorname");
+			organisationseinheitGrid.setWidget(6, 0, telLabel);
+			organisationseinheitGrid.setWidget(6, 1, telLabel);
+
+			Label plzLabel = new Label("Nachname");
+			organisationseinheitGrid.setWidget(7, 0, plzLabel);
+			organisationseinheitGrid.setWidget(7, 1, plzLabel);
 
 			HorizontalPanel organisationseinheitButtonsPanel = new HorizontalPanel();
 			this.add(organisationseinheitButtonsPanel);
@@ -214,4 +239,4 @@ public class OrganisationseinheitForm extends VerticalPanel {
 
 	}
 
-}
+

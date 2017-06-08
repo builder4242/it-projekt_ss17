@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Projekt;
 /**
@@ -22,7 +23,7 @@ public class ProjektForm extends VerticalPanel {
 
 
 		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings
-				.getProjektVerwaltung();
+				.getProjektAdministration();
 		Projekt projektToDisplay = null;
 		ProjektOrganisationseinheitTreeView catvm = null;
 
@@ -88,7 +89,7 @@ public class ProjektForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				if (projektToDisplay != null) {
 					projektToDisplay.setName(firstNameTextBox.getText());
-					projektToDisplay.setLastName(lastNameTextBox.getText());
+					projektToDisplay.setName(lastNameTextBox.getText());
 					projektVerwaltung.save(projektToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");

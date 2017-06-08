@@ -105,8 +105,8 @@ public class BewerbungMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext) " + "VALUES ('" + bw.getId()
-						+ "','" + bw.getErstelldatum() + "','" + bw.getBewerbungstext() + "')");
+			stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext, Ausschreibung_ID, Organisationseinheit_ID) " + "VALUES ('" + bw.getId()
+						+ "','" + DBConnection.convertToSQLDateString(bw.getErstelldatum()) + "','" + bw.getBewerbungstext() + "','" + bw.getAusschreibungId() + "','" + bw.getOrganisationseinheitId() + "')");
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
