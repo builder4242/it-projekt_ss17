@@ -47,7 +47,7 @@ public class DBConnection {
      */
     
     /* googleURL zu Testzwecken auf localURL gesetzt. Muss nachher wieder geaendert werden*/
-    private static String googleUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";
+    private static String googleUrl = "jdbc:google:mysql://173.194.250.17:3306/projektmarktplatzdb?user=vorname&password=vorname02";
     private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=eclipse&password=1234";
 
     /**
