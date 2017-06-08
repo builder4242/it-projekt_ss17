@@ -7,13 +7,6 @@ import java.text.SimpleDateFormat;
 
 public class Testmain {
 	
-    static public String readDate() {
-    	String datum; 
-    	Date aktuellesDatum = new Date(); 
-    	SimpleDateFormat  sdf = new SimpleDateFormat("yyyy.MM.dd");
-    	datum = sdf.format(aktuellesDatum);
-    	return datum; 
-    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -21,27 +14,6 @@ public class Testmain {
 		ProjektMarktplatz pm1 = new ProjektMarktplatz();
 		pm1.setBezeichnung("Burger King");
 		
-		Person p1 = new Person();
-		p1.setName("Fleps");
-		p1.setVorname("Guenther");
-		p1.setEmail("mail@fleps.de");
-		p1.setStrasse("Rohrerweg");
-		p1.setPlz(70565);
-		p1.setOrt("Stugart");
-		p1.setTel("00000");
-		p1.setGoogleID("kfnsveior8945ztghg");
-		
-	
-		Bewerbung bw1 = new Bewerbung();
-		bw1.setAusschreibungId(1);
-		bw1.setBewerbungstext("Nimm mich");
-		bw1.setOrganisationseinheitId(2);
-		bw1.setErstelldatum(new Date());
-		
-		/* Datums Spielereien
-		System.out.println(new Date());
-		System.out.println(DBConnection.convertToSQLDateString(new Date()));
-		*/
 		
 		
 		/*Mapper Definitionen*/
@@ -63,9 +35,7 @@ public class Testmain {
 		
 		
 		pmMapper.insert(pm1);
-		psMapper.insert(p1);
-		bwMapper.insert(bw1);
-		
+
 		/*
 		p1.setBezeichnung("Volvo");
 		pmMapper.update(p1);
@@ -73,8 +43,6 @@ public class Testmain {
 		*/
 		
 		System.out.println(pmMapper.findAll());
-		System.out.println(pmMapper.findById(8));
-		System.out.println(pmMapper.findByBezeichnung("Daimler"));
 		
 		/*System.out.println(readDate());*/
 
