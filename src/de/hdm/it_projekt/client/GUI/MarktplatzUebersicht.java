@@ -10,6 +10,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 
+import de.hdm.it_projekt.client.ClientsideSettings;
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
+
 
 /**
  * @author Daniel Fleps
