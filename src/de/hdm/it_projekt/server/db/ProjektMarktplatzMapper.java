@@ -165,7 +165,7 @@ public class ProjektMarktplatzMapper {
 	 *         eine partiell gefuellter oder ggf. auch leerer Vektor
 	 *         zurueckgeliefert.
 	 */
-	public Vector<ProjektMarktplatz> findAll() {
+	public Vector<ProjektMarktplatz> findAll() throws IllegalArgumentException {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -178,7 +178,7 @@ public class ProjektMarktplatzMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung " + "FROM projektmarktplatz" + " ORDER BY ID");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projektmarktplatz-Objekt erstellt.
