@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
+import de.hdm.it_projekt.client.GUI.MarktplatzUebersicht;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
@@ -34,7 +35,14 @@ public class MyProjekt implements EntryPoint {
 		final HorizontalPanel mainPanel = new HorizontalPanel();
 		
 		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
+
 		
+	
+		final MarktplatzUebersicht menu = new MarktplatzUebersicht();
+		
+		//menu.onInitialize().asWidget()
+		
+
 		/* main Panel */ 
 	    mainPanel.add(ausgabe); 
 		
@@ -54,8 +62,8 @@ public class MyProjekt implements EntryPoint {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
 
+			a.setText("Fehler bei getAlleMarktplätze." + caught.getMessage());
 		}
 
 		@Override
@@ -66,8 +74,7 @@ public class MyProjekt implements EntryPoint {
 				t += pm.toString();
 			}
 			
-			a.setText(t);
-			
+			a.setText(t);			
 		}
 	}
 }

@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `projektmarktplatzdb`.`bewertung` (
   `ID` INT NOT NULL,
   `Wert` DECIMAL NULL,
   `Stellungnahme` TEXT NULL,
-  `Erstelldatumm` DATE NULL,
+  `Erstelldatum` DATE NULL,
   `Bewerbung_ID` INT NOT NULL,
   PRIMARY KEY (`ID`),
   INDEX `fk_Bewertung_Bewerbung1_idx` (`Bewerbung_ID` ASC),

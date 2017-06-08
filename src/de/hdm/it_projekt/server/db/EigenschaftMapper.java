@@ -98,8 +98,10 @@ public class EigenschaftMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO eigenschaft (ID, Wert) " + "VALUES ('" + e.getId() + "','" + e.getName()
-						+ "','" + e.getWert() + "')");
+				stmt.executeUpdate(
+						"INSERT INTO eigenschaft (ID, Name, Wert, Partnerprofil_ID) " + "VALUES ('" + e.getId() + "','"
+								+ e.getName() + "','" + e.getWert() + "','" + e.getPartnerprofilId() + "')");
+
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -126,8 +128,8 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("UPDATE eigenschaft " + "SET Name=\"" + e.getName() + "\"," + "Wert=\"" + e.getWert()
-					+ "WHERE ID=" + e.getId());
+			stmt.executeUpdate("UPDATE eigenschaft " + "SET Name=\"" + e.getName() + "\", " + "Wert=\"" + e.getWert()
+					+ "\", " + "Partnerprofil_ID=\"" + e.getPartnerprofilId() + "\" " + "WHERE ID=" + e.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -154,7 +156,7 @@ public class EigenschaftMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM eigenschaft" + "WHERE ID=" + e.getId());
+			stmt.executeUpdate("DELETE FROM eigenschaft " + "WHERE ID=" + e.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -181,7 +183,8 @@ public class EigenschaftMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert " + "FROM eigenschaft " + " ORDER BY ID");
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID, Name, Wert, Partnerprofil_ID " + "FROM eigenschaft " + " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschaft-Objekt erstellt.
@@ -190,6 +193,7 @@ public class EigenschaftMapper {
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
+				e.setPartnerprofilId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);
@@ -226,7 +230,7 @@ public class EigenschaftMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Wert FROM eigenschaft " + "WHERE Name LIKE '" + name + "'ORDER BY Name");
+					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE name='" + name + "'ORDER BY name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschaft-Objekt
@@ -236,6 +240,7 @@ public class EigenschaftMapper {
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
+				e.setPartnerprofilId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Eigenschafts zum Ergebnisvektor
 				result.addElement(e);
@@ -269,8 +274,10 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfüllen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert FROM eigenschaft"
-					+ "WHERE Wert LIKE '" + wert + "' ORDER BY Wert");
+
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE Wert='" + wert + "' ORDER BY Wert");
+ 
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschhaft-Objekt
@@ -280,6 +287,7 @@ public class EigenschaftMapper {
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
+				e.setPartnerprofilId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);
