@@ -1,5 +1,7 @@
 package de.hdm.it_projekt.client.GUI;
 
+import java.util.Date;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -10,6 +12,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
@@ -18,6 +21,9 @@ import de.hdm.it_projekt.shared.bo.Projekt;
  * Formular für die Darstellung des selektierten Kunden
  * 
  * @author Julian Reimenthal
+ * 
+ * To be done:
+ * Projekt erstellung benötigt einen projektmarktpplatz um ertsellt zu werden. Methode zum auslesen? 
  */
 public class ProjektForm extends VerticalPanel {
 
@@ -30,7 +36,9 @@ public class ProjektForm extends VerticalPanel {
 		/*
 		 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 		 */
-		TextBox firstNameTextBox = new TextBox();
+		TextBox nameTextBox = new TextBox();
+		DateBox startdatumDateBox = new DateBox();
+		DateBox enddatumDateBox = new DateBox();
 		TextBox lastNameTextBox = new TextBox();
 		Label idValueLabel = new Label();
 
@@ -159,9 +167,11 @@ public class ProjektForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				String firstName = firstNameTextBox.getText();
+				String name = nameTextBox.getText();
+				Date startdatum= startdatumDateBox.getValue() 
+				Date enddatum= enddatumDateBox.getValue()
 				String lastName = lastNameTextBox.getText();
-				projektVerwaltung.createProjekt(firstName, lastName,
+				projektVerwaltung.createProjektFor(null, name, null, null, lastName,
 						new CreateProjektCallback());
 			}
 		}
@@ -208,8 +218,3 @@ public class ProjektForm extends VerticalPanel {
 
 	}
 
-}
-
-public class ProjektForm {
-
-}
