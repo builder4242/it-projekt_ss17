@@ -143,9 +143,10 @@ public class MarktplatzUebersicht extends VerticalPanel{
 	
 	ProjektAdministrationAsync projektVerwaltung = ClientsideSettings.getProjektAdministration();		
 	
-	Button marktplaetzeAbrufen = new Button();
-	marktplaetzeAbrufen.addClickHandler(new AbrufenClickHandler);
-	
+	public MarktplatzUebersicht(){
+	Button marktplaetzeAbrufen = new Button("Marktplätze aufrufen");
+	marktplaetzeAbrufen.addClickHandler(new AbrufenClickHandler());
+	}
 	
 
 
@@ -156,6 +157,9 @@ public class MarktplatzUebersicht extends VerticalPanel{
 	
 		public void onClick(ClickEvent event) {
 			//TO BE DONE 
+			for(ie=0; ie < 5; ie++){
+				Window.alert("Hallo i bims"); 
+			}
 		}
 	}
 }
