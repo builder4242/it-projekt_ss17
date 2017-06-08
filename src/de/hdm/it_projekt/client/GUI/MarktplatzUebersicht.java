@@ -9,7 +9,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 
-import apple.laf.JRSUIConstants.Widget;
 
 /**
  * @author Daniel Fleps
