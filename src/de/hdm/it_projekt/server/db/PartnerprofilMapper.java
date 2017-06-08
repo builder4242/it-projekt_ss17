@@ -9,9 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
-import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
 /**
@@ -75,7 +73,7 @@ public class PartnerprofilMapper {
 	 * @param pp
 	 * @return
 	 */
-	public Partnerprofil insert(Partnerprofil pp) {
+	public static Partnerprofil insert(Partnerprofil pp) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -101,8 +99,9 @@ public class PartnerprofilMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO partnerprofil (ID, Erstelldatum, Aenderungsdatum) " + "VALUES ("
-						+ pp.getId() + "," + pp.getErstelldatum() + "," + pp.getAenderungsdatum() + ")");
+				stmt.executeUpdate("INSERT INTO partnerprofil (ID, Erstelldatum, Aenderungsdatum) " + "VALUES ('"
+						+ pp.getId() + "','" + DBConnection.convertToSQLDateString(pp.getErstelldatum()) + "','"
+						+ DBConnection.convertToSQLDateString(pp.getAenderungsdatum()) + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -127,8 +126,9 @@ public class PartnerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE partnerprofil " + "SET Erstelldatum=\"" + pp.getErstelldatum() + "\" "
-					+ "SET Aenderungsdatum=\"" + pp.getAenderungsdatum() + "\" " + "WHERE ID=" + pp.getId());
+			stmt.executeUpdate("UPDATE partnerprofil SET Erstelldatum=\"" + pp.getErstelldatum() + "\", "
+					+ "Aenderungsdatum=\"" + pp.getAenderungsdatum() + "\" WHERE ID= " + pp.getId());
+
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -152,7 +152,7 @@ public class PartnerprofilMapper {
 
 		try {
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM partnerprofil " + "WHERE ID=" + pp.getId());
+			stmt.executeUpdate("DELETE FROM partnerprofil WHERE ID=" + pp.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -166,7 +166,7 @@ public class PartnerprofilMapper {
 	 *         partiell gefuellter oder ggf. auch leerer Vektor
 	 *         zurueckgeliefert.
 	 */
-	public Vector<Partnerprofil> findAll() {
+	public static Vector<Partnerprofil> findAll() {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -179,8 +179,7 @@ public class PartnerprofilMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Erstelldatum, Aenderungsdatum " + "FROM partnerprofil" + " ORDER BY ID");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Erstelldatum, Aenderungsdatum FROM partnerprofil ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Partnerprofil-Objekt erstellt.
@@ -211,7 +210,7 @@ public class PartnerprofilMapper {
 	 * @return Partnerprofil-Objekt, das dem uebergebenen Schluessel entspricht,
 	 *         null bei nicht vorhandenem DB-Tupel.
 	 */
-	public Partnerprofil findById(int id) {
+	public static Partnerprofil findById(int id) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -223,7 +222,7 @@ public class PartnerprofilMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Erstelldatum, Aenderungsdatum FROM partnerprofil" + "WHERE ID=" + id + " ORDER BY ID");
+					"SELECT ID, Erstelldatum, Aenderungsdatum FROM partnerprofil WHERE ID= " + id + " ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
