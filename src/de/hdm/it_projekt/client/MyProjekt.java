@@ -27,17 +27,14 @@ public class MyProjekt implements EntryPoint {
 
 		ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
-
-
 		final Label ausgabe = new Label();
-		ausgabe.setText("Hallo<br>");
+
+		ausgabe.setText("Hallo_!");
 
 		final HorizontalPanel mainPanel = new HorizontalPanel();
 		
 		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
 
-		
-	
 		final MarktplatzUebersicht menu = new MarktplatzUebersicht();
 		
 		//menu.onInitialize().asWidget()
@@ -63,7 +60,7 @@ public class MyProjekt implements EntryPoint {
 		@Override
 		public void onFailure(Throwable caught) {
 
-			a.setText("Fehler bei getAlleMarktplätze." + caught.getMessage());
+			a.setText(caught.getMessage());
 		}
 
 		@Override

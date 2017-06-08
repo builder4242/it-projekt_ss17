@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.util.Date;
 
 import com.google.appengine.api.utils.SystemProperty;
+
 import java.text.SimpleDateFormat;
 
 /**
@@ -78,21 +79,19 @@ public class DBConnection {
         if (con == null) {
             String url = null;
             try {
-                if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
+            	if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                     // Load the class that provides the new
                     // "jdbc:google:mysql://" prefix.
                     
-                	/*
                 	Class.forName("com.mysql.jdbc.GoogleDriver");
                     url = googleUrl;
-                    */
-                	Class.forName("com.mysql.jdbc.Driver");
-                    url = localUrl;
+                    
                 } else {
                     // Local MySQL instance to use during development.
                     Class.forName("com.mysql.jdbc.Driver");
                     url = localUrl;
                 }
+
                 /*
                  * Dann erst kann uns der DriverManager eine Verbindung mit den
                  * oben in der Variable url angegebenen Verbindungsinformationen
