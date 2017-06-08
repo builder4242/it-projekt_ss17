@@ -13,7 +13,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	/**
 	 * Fremdschluesselbeziehung zu Partnerprofil
 	 */
-	private int partnerprofilId = 0;
+	private int partnerprofilId;
 	/*Ende Fremdschluesseldefinitionen*/
 
 	/**
@@ -51,6 +51,13 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 */
 	private String googleID;
 
+	/**
+	 * Default Konstruktor
+	 */
+	public Organisationseinheit () {
+		
+	}
+	
 	/**
 	 * @return the name
 	 */

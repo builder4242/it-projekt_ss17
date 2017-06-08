@@ -2,28 +2,19 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>ProjektverwaltungServlet</servlet-name>
-    <servlet-class>de.hdm.it_projekt.server.ProjektmarktplatzImpl</servlet-class>
+    <servlet-name>MyProjektServlet</servlet-name>
+    <servlet-class>de.hdm.it_projekt.server.ProjektAdministrationImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>ProjektverwaltungServlet</servlet-name>
-    <url-pattern>/projektmarktplatz/projektkadministration</url-pattern>
+    <servlet-name>MyProjektServlet</servlet-name>
+    <url-pattern>/projektadmin</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-    <servlet-name>reportGeneratorServlet</servlet-name>
-    <servlet-class>de.hdm.it_projekt.server..report.ReportGeneratorImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>reportGeneratorServlet</servlet-name>
-    <url-pattern>/projektmarktplatz/reportgenerator</url-pattern>
-  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>Projektmarktplatz.html</welcome-file>
+    <welcome-file>projektmarktplatz.html</welcome-file>
   </welcome-file-list>
 
   <servlet>
