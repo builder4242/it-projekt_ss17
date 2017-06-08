@@ -251,8 +251,11 @@ public class AusschreibungForm extends VerticalPanel {
 	void setSelected(Ausschreibung c) {
 		if (c != null) {
 			ausschreibungToDisplay = c;
-			firstNameTextBox.setText(ausschreibungToDisplay.getFirstName());
-			lastNameTextBox.setText(ausschreibungToDisplay.getName());
+			bezeichnungTextBox.setText(ausschreibungToDisplay.getBezeichnung());
+			ausschreibungstextTextBox.setText(ausschreibungToDisplay.getAusschreibungstext());
+			String s = projektVerwaltung.getProjektById(id, callback);
+			projektTextBox.setText(ausschreibungToDisplay.getProjektId());
+			
 			idValueLabel.setText(Integer.toString(ausschreibungToDisplay.getId()));
 		} else {
 			firstNameTextBox.setText("");
@@ -260,5 +263,10 @@ public class AusschreibungForm extends VerticalPanel {
 			idValueLabel.setText("");
 		}
 	}
+	
+	Projekt pr = projektVerwaltung.getProjektByName(projektTextBox.getText(), callback);
+	Date bewerbungsfrist = bewerbungsfristTextBox.getValue();
+	int i = Integer.parseInt(partnerprofilTextBox.getText());
+	Partnerprofil profil = projektVerwaltung.getPartnerprofilById(i, callback);
 
 }
