@@ -20,39 +20,35 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class MyProjekt implements EntryPoint {
 
-	private final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub
+		
+
+		ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
 
 
-
-		String ausgabe = "Hallo<br>";
+		final Label ausgabe = new Label();
+		ausgabe.setText("Hallo<br>");
 
 		final HorizontalPanel mainPanel = new HorizontalPanel();
 		
 		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
 		
-		final Label label = new Label(ausgabe);
-	
 		/* main Panel */ 
-	    mainPanel.add(label); 
+	    mainPanel.add(ausgabe); 
 		
 		
 		/*Panel zur HTML Seite hinzufügen */ 
 		 RootPanel.get("content").add(mainPanel);
 		 
-		 
-		 
-
 	}
 
 	class Marktplaetze implements AsyncCallback<Vector<ProjektMarktplatz>> {
 
-		private String a;
+		private Label a;
 
-		public Marktplaetze(String a) {
+		public Marktplaetze(Label a) {
 			this.a = a;
 		}
 
@@ -65,9 +61,12 @@ public class MyProjekt implements EntryPoint {
 		@Override
 		public void onSuccess(Vector<ProjektMarktplatz> result) {
 
+			String t = "";
 			for (ProjektMarktplatz pm : result) {
-				this.a += pm.toString();
+				t += pm.toString();
 			}
+			
+			a.setText(t);
 			
 		}
 	}
