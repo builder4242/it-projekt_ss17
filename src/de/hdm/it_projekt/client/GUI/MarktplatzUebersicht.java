@@ -9,8 +9,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 
-import apple.laf.JRSUIConstants.Widget;
-
 /**
  * @author Daniel Fleps
  *
@@ -23,23 +21,23 @@ public class MarktplatzUebersicht {
 	public static interface CwConstants extends Constants {
 		String cwMenuBarDescription();
 
-		String cwMenuBarMarktplatzCategory();
+		String cwMenuBarMarktplatzCategory(String Marktplatz);
 
 		String[] cwMenuBarMarktplatzOptions();
 
-		String cwMenuBarProjektCategory();
+		String cwMenuBarProjektCategory(String Projekt );
 
 		String[] cwMenuBarProjektOptions();
 
-		String cwMenuBarProfilCategory();
+		String cwMenuBarProfilCategory(String Profil);
 
 		String[] cwMenuBarProfilOptions();
 
-		String cwMenuBarBewerbungCategory();
+		String cwMenuBarBewerbungCategory( String Bewerbung);
 
 		String[] cwMenuBarBewerbungOptions();
 
-		String cwMenuBarAbmeldenCategory();
+		String cwMenuBarAbmeldenCategory(String Abmelden);
 
 		String[] cwMenuBarAbmeldenOptions();
 
@@ -51,7 +49,8 @@ public class MarktplatzUebersicht {
 	/**
 	 * An instance of the constants.
 	 */
-	private final CwConstants constants = null;
+	private final CwConstants  constants=null;
+	
 
 	/**
 	 * Initialize this example.
@@ -78,8 +77,8 @@ public class MarktplatzUebersicht {
 		// Create the Projekt menu
 		MenuBar projektMenu = new MenuBar(true);
 		projektMenu.setAnimationEnabled(true);
-		menu.addItem(new MenuItem(constants.cwMenuBarProjektCategory(), projektMenu));
-		String[] fileOptions = constants.cwMenuBarProjektOptions();
+		menu.addItem(new MenuItem(Projekt.cwMenuBarProjektCategory(), projektMenu));
+		String[] fileOptions = Projekt.cwMenuBarProjektOptions();
 		for (int i = 0; i < fileOptions.length; i++) {
 			if (i == 3) {
 				projektMenu.addSeparator();
@@ -91,8 +90,8 @@ public class MarktplatzUebersicht {
 
 		// Create the Marktplatz menu
 		MenuBar marktplatzMenu = new MenuBar(true);
-		menu.addItem(new MenuItem(constants.cwMenuBarMarktplatzCategory(), marktplatzMenu));
-		String[] editOptions = constants.cwMenuBarMarktplatzOptions();
+		menu.addItem(new MenuItem(Marktplatz.cwMenuBarMarktplatzCategory(), marktplatzMenu));
+		String[] editOptions = Marktplatz.cwMenuBarMarktplatzOptions();
 		for (int i = 0; i < editOptions.length; i++) {
 			marktplatzMenu.addItem(editOptions[i], menuCommand);
 		}
@@ -100,14 +99,14 @@ public class MarktplatzUebersicht {
 		// Create the GWT menu
 		MenuBar profilMenu = new MenuBar(true);
 		menu.addItem(new MenuItem("Profil", true, profilMenu));
-		String[] profilOptions = constants.cwMenuBarProfilOptions();
+		String[] profilOptions = Profil.cwMenuBarProfilOptions();
 		for (int i = 0; i < profilOptions.length; i++) {
 			profilMenu.addItem(profilOptions[i], menuCommand);
 		}
 
 		MenuBar bewerbungMenu = new MenuBar(true);
-		menu.addItem(new MenuItem(constants.cwMenuBarBewerbungCategory(), bewerbungMenu));
-		String[] bewerbungOptions = constants.cwMenuBarMarktplatzOptions();
+		menu.addItem(new MenuItem(Bewerbung.cwMenuBarBewerbungCategory(), bewerbungMenu));
+		String[] bewerbungOptions = Bewerbung.cwMenuBarMarktplatzOptions();
 		for (int s = 0; s < editOptions.length; s++) {
 			bewerbungMenu.addItem(editOptions[s], menuCommand);
 		}
@@ -115,8 +114,8 @@ public class MarktplatzUebersicht {
 		// Create the help menu
 		MenuBar abmeldenMenu = new MenuBar(true);
 		menu.addSeparator();
-		menu.addItem(new MenuItem(constants.cwMenuBarAbmeldenCategory(), abmeldenMenu));
-		String[] abmeldenOptions = constants.cwMenuBarAbmeldenOptions();
+		menu.addItem(new MenuItem(Abmelden.cwMenuBarAbmeldenCategory(), abmeldenMenu));
+		String[] abmeldenOptions = Abmelden.cwMenuBarAbmeldenOptions();
 		for (int i = 0; i < abmeldenOptions.length; i++) {
 			abmeldenMenu.addItem(abmeldenOptions[i], menuCommand);
 		}
