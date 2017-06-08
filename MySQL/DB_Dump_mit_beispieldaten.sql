@@ -31,7 +31,7 @@ USE `projektmarktplatzdb`;
 CREATE TABLE `ausschreibung` (
   `ID` int(11) NOT NULL,
   `Bezeichnung` varchar(255) DEFAULT NULL,
-  `Auschschreibungstext` text,
+  `Ausschreibungstext` text,
   `Bewerbungsfrist` date DEFAULT NULL,
   `Projekt_ID` int(11) NOT NULL,
   `Partnerprofil_ID` int(11) DEFAULT NULL
@@ -41,7 +41,7 @@ CREATE TABLE `ausschreibung` (
 -- Daten für Tabelle `ausschreibung`
 --
 
-INSERT INTO `ausschreibung` (`ID`, `Bezeichnung`, `Auschschreibungstext`, `Bewerbungsfrist`, `Projekt_ID`, `Partnerprofil_ID`) VALUES
+INSERT INTO `ausschreibung` (`ID`, `Bezeichnung`, `Ausschreibungstext`, `Bewerbungsfrist`, `Projekt_ID`, `Partnerprofil_ID`) VALUES
 (1, 'Facility on duty director', 'Wir brauchen ein Hausmeister', '2017-07-21', 2, 3),
 (2, 'Müllmann', 'Egal. Hauptsache tragen', '2017-07-30', 1, 3),
 (3, 'CEO', 'Bewerber benötigt folgende Qualifikation:\r\n- Gut aussehen\r\n- große Klappe\r\n- möglichst fachlich keine Ahnung', '2017-08-08', 1, 1);
