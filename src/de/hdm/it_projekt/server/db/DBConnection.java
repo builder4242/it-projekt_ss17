@@ -82,8 +82,13 @@ public class DBConnection {
                 if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                     // Load the class that provides the new
                     // "jdbc:google:mysql://" prefix.
-                    Class.forName("com.mysql.jdbc.GoogleDriver");
+                    
+                	/*
+                	Class.forName("com.mysql.jdbc.GoogleDriver");
                     url = googleUrl;
+                    */
+                	Class.forName("com.mysql.jdbc.Driver");
+                    url = localUrl;
                 } else {
                     // Local MySQL instance to use during development.
                     Class.forName("com.mysql.jdbc.Driver");
