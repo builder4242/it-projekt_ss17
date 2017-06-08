@@ -8,7 +8,7 @@
   
   <servlet-mapping>
     <servlet-name>MyProjektServlet</servlet-name>
-    <url-pattern>/myprojekt_2/projektadmin</url-pattern>
+    <url-pattern>/projektadmin</url-pattern>
   </servlet-mapping>
   
   
