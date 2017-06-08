@@ -28,11 +28,12 @@ public class MyProjekt implements EntryPoint {
 
 
 
-		String ausgabe = null;
+		String ausgabe = "Hallo<br>";
 
 		final HorizontalPanel mainPanel = new HorizontalPanel();
 		
 		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
+		
 		final Label label = new Label(ausgabe);
 	
 		/* main Panel */ 
@@ -49,7 +50,7 @@ public class MyProjekt implements EntryPoint {
 
 	class Marktplaetze implements AsyncCallback<Vector<ProjektMarktplatz>> {
 
-		private String a = "";
+		private String a;
 
 		public Marktplaetze(String a) {
 			this.a = a;
@@ -65,9 +66,9 @@ public class MyProjekt implements EntryPoint {
 		public void onSuccess(Vector<ProjektMarktplatz> result) {
 
 			for (ProjektMarktplatz pm : result) {
-				a += pm.toString();
+				this.a += pm.toString();
 			}
-
+			
 		}
 	}
 }
