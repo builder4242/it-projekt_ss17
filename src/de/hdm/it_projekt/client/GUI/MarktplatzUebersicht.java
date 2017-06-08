@@ -77,8 +77,8 @@ public class MarktplatzUebersicht {
 		// Create the Projekt menu
 		MenuBar projektMenu = new MenuBar(true);
 		projektMenu.setAnimationEnabled(true);
-		menu.addItem(new MenuItem(Projekt.cwMenuBarProjektCategory(), projektMenu));
-		String[] fileOptions = Projekt.cwMenuBarProjektOptions();
+		menu.addItem(new MenuItem(constants.cwMenuBarProjektCategory("Projekt"), projektMenu));
+		String[] fileOptions = constants.cwMenuBarProjektOptions();
 		for (int i = 0; i < fileOptions.length; i++) {
 			if (i == 3) {
 				projektMenu.addSeparator();
@@ -90,8 +90,8 @@ public class MarktplatzUebersicht {
 
 		// Create the Marktplatz menu
 		MenuBar marktplatzMenu = new MenuBar(true);
-		menu.addItem(new MenuItem(Marktplatz.cwMenuBarMarktplatzCategory(), marktplatzMenu));
-		String[] editOptions = Marktplatz.cwMenuBarMarktplatzOptions();
+		menu.addItem(new MenuItem(constants.cwMenuBarMarktplatzCategory("Marktplatz"), marktplatzMenu));
+		String[] editOptions = constants.cwMenuBarMarktplatzOptions();
 		for (int i = 0; i < editOptions.length; i++) {
 			marktplatzMenu.addItem(editOptions[i], menuCommand);
 		}
@@ -99,14 +99,14 @@ public class MarktplatzUebersicht {
 		// Create the GWT menu
 		MenuBar profilMenu = new MenuBar(true);
 		menu.addItem(new MenuItem("Profil", true, profilMenu));
-		String[] profilOptions = Profil.cwMenuBarProfilOptions();
+		String[] profilOptions = constants.cwMenuBarProfilOptions();
 		for (int i = 0; i < profilOptions.length; i++) {
 			profilMenu.addItem(profilOptions[i], menuCommand);
 		}
 
 		MenuBar bewerbungMenu = new MenuBar(true);
-		menu.addItem(new MenuItem(Bewerbung.cwMenuBarBewerbungCategory(), bewerbungMenu));
-		String[] bewerbungOptions = Bewerbung.cwMenuBarMarktplatzOptions();
+		menu.addItem(new MenuItem(constants.cwMenuBarBewerbungCategory("Bewerbung"), bewerbungMenu));
+		String[] bewerbungOptions = constants.cwMenuBarMarktplatzOptions();
 		for (int s = 0; s < editOptions.length; s++) {
 			bewerbungMenu.addItem(editOptions[s], menuCommand);
 		}
@@ -114,8 +114,8 @@ public class MarktplatzUebersicht {
 		// Create the help menu
 		MenuBar abmeldenMenu = new MenuBar(true);
 		menu.addSeparator();
-		menu.addItem(new MenuItem(Abmelden.cwMenuBarAbmeldenCategory(), abmeldenMenu));
-		String[] abmeldenOptions = Abmelden.cwMenuBarAbmeldenOptions();
+		menu.addItem(new MenuItem(constants.cwMenuBarAbmeldenCategory("Abmelden"), abmeldenMenu));
+		String[] abmeldenOptions = constants.cwMenuBarAbmeldenOptions();
 		for (int i = 0; i < abmeldenOptions.length; i++) {
 			abmeldenMenu.addItem(abmeldenOptions[i], menuCommand);
 		}
