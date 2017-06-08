@@ -6,7 +6,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.it_projekt.shared.*;
-import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 
 
 public class ClientsideSettings extends CommonSettings {

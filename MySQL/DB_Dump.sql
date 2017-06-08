@@ -129,7 +129,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `projektmarktplatzdb`.`ausschreibung` (
   `ID` INT NOT NULL,
   `Bezeichnung` VARCHAR(255) NULL,
-  `Auschschreibungstext` TEXT NULL,
+  `Ausschreibungstext` TEXT NULL,
   `Bewerbungsfrist` DATE NULL,
   `Projekt_ID` INT NOT NULL,
   `Partnerprofil_ID` INT NULL,

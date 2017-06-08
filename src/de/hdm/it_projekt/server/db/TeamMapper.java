@@ -37,7 +37,10 @@ public class TeamMapper {
 	 * 
 	 */
 	private static TeamMapper teamMapper = null;
-	
+
+	/**
+	 * Zuordnung der Klasse in der Organisationseinheit-Tabelle
+	 */
 	private final String SQLTYP = "T";
 
 	/**
@@ -104,10 +107,10 @@ public class TeamMapper {
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 				stmt.executeUpdate(
-						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Typ) "
+						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ) "
 								+ "VALUES ('" + t.getId() + "','" + t.getName() + "','" + t.getEmail() + "','"
 								+ t.getStrasse() + "','" + t.getPlz() + "','" + t.getOrt() + "','" + t.getTel() + "','"
-								+ t.getGoogleID() + "','" + SQLTYP + "'");
+								+ t.getGoogleID() + "','" + t.getPartnerprofilId() + "','" + SQLTYP + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -131,10 +134,12 @@ public class TeamMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE organisationseinheit " + "SET Name=\"" + t.getName() + "\" " + "SET Email=\""
-					+ t.getEmail() + "\" " + "SET Strasse=\"" + t.getStrasse() + "\" " + "SET PLZ=\"" + t.getPlz()
-					+ "\" " + "SET Ort=\"" + t.getOrt() + "\" " + "SET Tel=\"" + t.getTel() + "\" " + "SET GoogleID=\""
-					+ t.getGoogleID() + "\" " + "WHERE ID=" + t.getId());
+			stmt.executeUpdate(
+					"UPDATE organisationseinheit SET Name = '" + t.getName() + ", SET Email = " + t.getEmail() + ", "
+							+ "SET Strasse = " + t.getStrasse() + ", " + "SET PLZ = " + t.getPlz() + ", " + "SET Ort = "
+							+ t.getOrt() + ", " + "SET Tel = " + t.getTel() + ", " + "SET GoogleID=\"" + t.getGoogleID()
+							+ ", " + "SET Partnerprofil_ID=\"" + t.getPartnerprofilId() + ", ' WHERE ID=" + t.getId());
+
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -183,8 +188,9 @@ public class TeamMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID "
-					+ "FROM organisationseinheit WHERE Typ='" + SQLTYP + "' ORDER BY ID");
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ "
+							+ "FROM organisationseinheit WHERE Typ='" + SQLTYP + "' ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.
@@ -199,6 +205,7 @@ public class TeamMapper {
 				t.setOrt(rs.getString("Ort"));
 				t.setTel(rs.getString("Tel"));
 				t.setGoogleID(rs.getString("GoogleID"));
+				t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(t);
@@ -230,7 +237,8 @@ public class TeamMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE ID= " + id  + "' ORDER BY ID");
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= "
+							+ id + " ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -249,6 +257,7 @@ public class TeamMapper {
 				t.setOrt(rs.getString("Ort"));
 				t.setTel(rs.getString("Tel"));
 				t.setGoogleID(rs.getString("GoogleID"));
+				t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				return t;
 			}
@@ -279,8 +288,8 @@ public class TeamMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE name='"
-							+ name + "AND Typ='" + SQLTYP + "' ORDER BY name");
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
+							+ name + SQLTYP + "' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.
@@ -297,6 +306,7 @@ public class TeamMapper {
 				t.setOrt(rs.getString("Ort"));
 				t.setTel(rs.getString("Tel"));
 				t.setGoogleID(rs.getString("GoogleID"));
+				t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(t);
@@ -329,8 +339,8 @@ public class TeamMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID FROM organisationseinheit WHERE email='"
-							+ email + "AND Typ='" + SQLTYP + "' ORDER BY email");
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE email='"
+							+ email + SQLTYP + "' ORDER BY email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.
@@ -347,6 +357,7 @@ public class TeamMapper {
 				t.setOrt(rs.getString("Ort"));
 				t.setTel(rs.getString("Tel"));
 				t.setGoogleID(rs.getString("GoogleID"));
+				t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(t);
@@ -380,8 +391,8 @@ public class TeamMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT o.ID AS ID FROM organisationseinheit AS o "
-					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit_ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID"
-					+ "WHERE projektmarktplatz_ID=" + pm.getId() + " AND Typ='" + SQLTYP + "'");
+					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit_ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID "
+					+ "WHERE projektmarktplatz_ID= " + pm.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.

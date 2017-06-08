@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.it_projekt.shared.bo.*;
 
-@RemoteServiceRelativePath("projektadministration")
+@RemoteServiceRelativePath("projektadmin")
 public interface ProjektAdministration extends RemoteService {
 
 	/**
