@@ -97,9 +97,13 @@ public class BeteiligungMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO beteiligung (ID, Personentage, Enddatum, Startdatum) " + "VALUES ('"
-						+ bet.getId() + "','" + bet.getPersonentage() + "','" + bet.getEnddatum() + "','"
-						+ bet.getStartdatum() + "')");
+				stmt.executeUpdate(
+						"INSERT INTO beteiligung (ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organisationseinheit_ID) "
+								+ "VALUES ('" + bet.getId() + "','" + bet.getPersonentage() + "','"
+								+ DBConnection.convertToSQLDateString(bet.getStartdatum()) + "','"
+								+ DBConnection.convertToSQLDateString(bet.getEnddatum()) + "','" + bet.getProjektId()
+								+ "','" + bet.getOrganisationseinheitId() + "')");
+
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -127,9 +131,10 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-			stmt.executeUpdate("UPDATE beteiligung " + "SET Peronentage=\"" + bet.getPersonentage() + "\","
-					+ "Enddatum=\"" + bet.getEnddatum() + "\", " + "Startdatum=\"" + bet.getStartdatum() + "\" "
-					+ "WHERE ID=" + bet.getId());
+			stmt.executeUpdate("UPDATE beteiligung " + "SET Personentage=\"" + bet.getPersonentage() + "\", "
+					+ "Startdatum=\"" + bet.getStartdatum() + "\", " + "Enddatum=\"" + bet.getEnddatum() + "\", "
+					+ "Projekt_ID=\"" + bet.getProjektId() + "\", " + "Organisationseinheit_ID=\""
+					+ bet.getOrganisationseinheitId() + "\" " + "WHERE ID=" + bet.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -157,7 +162,7 @@ public class BeteiligungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM beteiligung" + "WHERE ID=" + bet.getId());
+			stmt.executeUpdate("DELETE FROM beteiligung " + "WHERE ID=" + bet.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -185,7 +190,8 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Personentage, Enddatum, Startdatum " + "FROM beteiligung " + " ORDER BY ID");
+					"SELECT ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organisationseinheit_ID FROM beteiligung "
+							+ " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt.
@@ -196,6 +202,8 @@ public class BeteiligungMapper {
 				bet.setPersonentage(rs.getInt("Personentage"));
 				bet.setEnddatum(rs.getDate("Enddatum"));
 				bet.setEnddatum(rs.getDate("Startdatum"));
+				bet.setProjektId(rs.getInt("ID"));
+				bet.setOrganisationseinheitId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bet);
@@ -214,8 +222,8 @@ public class BeteiligungMapper {
 	 * 
 	 * @param id
 	 *            Primaerschluesselattribut (->DB)
-	 * @return Beteiligung-Objekt, das dem uebergebenen Schluessel entspricht, null
-	 *         bei nicht vorhandenem DB-Tupel.
+	 * @return Beteiligung-Objekt, das dem uebergebenen Schluessel entspricht,
+	 *         null bei nicht vorhandenem DB-Tupel.
 	 */
 
 	public Beteiligung findByID(int id) {
@@ -228,8 +236,9 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Personentage, Enddatum, Startdatum FROM beteiligung "
-					+ "WHERE ID=" + id + "ORDER BY ID");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organisationseinheit_ID FROM beteiligung "
+							+ "WHERE ID=" + id + " ORDER BY ID");
 
 			/*
 			 * Da id Primäerschluessel ist, kann max. nur ein Tupel
@@ -244,6 +253,8 @@ public class BeteiligungMapper {
 				bet.setPersonentage(rs.getInt("Personentage"));
 				bet.setEnddatum(rs.getDate("Enddatum"));
 				bet.setStartdatum(rs.getDate("Startdatum"));
+				bet.setProjektId(rs.getInt("ID"));
+				bet.setOrganisationseinheitId(rs.getInt("ID"));
 
 				return bet;
 			}
@@ -275,8 +286,9 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die Datenbank schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Personentage, Enddatum, Startdatum FROM beteiligung "
-					+ "WHERE Personentage=" + personentage + " ORDER BY Personentage");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organisationseinheit_ID FROM beteiligung "
+							+ "WHERE Personentage=" + personentage + " ORDER BY Personentage");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt
@@ -286,6 +298,8 @@ public class BeteiligungMapper {
 				bet.setPersonentage(rs.getInt("Personentage"));
 				bet.setEnddatum(rs.getDate("Enddatum"));
 				bet.setStartdatum(rs.getDate("Startdatum"));
+				bet.setProjektId(rs.getInt("ID"));
+				bet.setOrganisationseinheitId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bet);
@@ -318,8 +332,9 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die Datenbank schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Personentage, Enddatum, Startdatum FROM beteiligung "
-					+ "WHERE Startdatum=" + startdatum + " ORDER BY Startdatum");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organisationseinheit_ID FROM beteiligung "
+							+ "WHERE Startdatum=" + startdatum + " ORDER BY Startdatum");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt
@@ -329,6 +344,8 @@ public class BeteiligungMapper {
 				bet.setPersonentage(rs.getInt("Personentage"));
 				bet.setEnddatum(rs.getDate("Enddatum"));
 				bet.setStartdatum(rs.getDate("Startdatum"));
+				bet.setProjektId(rs.getInt("ID"));
+				bet.setOrganisationseinheitId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bet);
@@ -361,8 +378,9 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die Datenbank schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Personentage, Enddatum, Startdatum FROM beteiligung "
-					+ "WHERE Enddatum=" + enddatum + " ORDER BY Enddatum");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organinsationseinheit_ID FROM beteiligung "
+							+ "WHERE Enddatum=" + enddatum + " ORDER BY Enddatum");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt
@@ -372,6 +390,8 @@ public class BeteiligungMapper {
 				bet.setPersonentage(rs.getInt("Personentage"));
 				bet.setEnddatum(rs.getDate("Enddatum"));
 				bet.setStartdatum(rs.getDate("Startdatum"));
+				bet.setProjektId(rs.getInt("ID"));
+				bet.setOrganisationseinheitId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bet);
@@ -421,8 +441,8 @@ public class BeteiligungMapper {
 	}
 
 	/**
-	 * Auslesen der Beteiligung von einer Organisationseinheit, die eine
-	 * Person, ein Team oder Unternehmen sein kann.
+	 * Auslesen der Beteiligung von einer Organisationseinheit, die eine Person,
+	 * ein Team oder Unternehmen sein kann.
 	 * 
 	 * @param o
 	 * @return
@@ -438,7 +458,8 @@ public class BeteiligungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM organisationseinheit WHERE organisationseinheit.ID=" + o.getId());
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM organisationseinheit WHERE organisationseinheit.ID=" + o.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt.
