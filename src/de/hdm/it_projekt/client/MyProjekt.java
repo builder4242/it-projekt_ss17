@@ -35,6 +35,12 @@ public class MyProjekt implements EntryPoint {
 		final HorizontalPanel mainPanel = new HorizontalPanel();
 		
 		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
+
+		
+	
+		final MarktplatzUebersicht menu = new MarktplatzUebersicht();
+		
+		//menu.onInitialize().asWidget()
 		
 
 		/* main Panel */ 
