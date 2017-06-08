@@ -287,6 +287,11 @@ public class ProjektMarktplatzMapper {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param o
+	 * @return
+	 */
 	public Vector<ProjektMarktplatz> getByOrganisation(Organisationseinheit o) {
 
 		Connection con = DBConnection.connection();
@@ -299,9 +304,9 @@ public class ProjektMarktplatzMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT pm.ID, pm.Bezeichnung FROM projektmarktplatz as pm "
-					+ "inner join projektmarktplatz_has_organisationseinheit on pm.id=Projektmarktplatz_ID"
-					+ "WHERE Organisationseinheit_ID=" + o.getId());
+			ResultSet rs = stmt.executeQuery("SELECT pm.ID, pm.Bezeichnung FROM projektmarktplatz AS pm "
+					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON pm.id=Projektmarktplatz_ID "
+					+ "WHERE Organisationseinheit_ID= " + o.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// ProjektMarktplatz-Objekt erstellt.
@@ -324,6 +329,11 @@ public class ProjektMarktplatzMapper {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param pm
+	 * @param o
+	 */
 	public void projektMarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o) {
 
 		// DB-Verbindung herstellen
@@ -332,11 +342,10 @@ public class ProjektMarktplatzMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt = con.createStatement();
-
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("INSERT INTO projektmarktplatz_has_organisationseinheit (Projektmarktplatz_ID, Organisationseinheit_ID) " 
-					+ "VALUES ('" + pm.getId() + "','" + o.getId() + "')");
+			stmt.executeUpdate(
+					"INSERT INTO projektmarktplatz_has_organisationseinheit (Projektmarktplatz_ID, Organisationseinheit_ID) "
+							+ "VALUES ('" + pm.getId() + "','" + o.getId() + "')");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
