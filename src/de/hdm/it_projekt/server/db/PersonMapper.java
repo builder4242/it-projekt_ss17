@@ -136,7 +136,7 @@ public class PersonMapper {
 					+ ", " + "SET PLZ = " + p.getPlz() + ", " + "SET Ort = " + p.getOrt() + ", " + "SET Tel = "
 					+ p.getTel() + ", " + "SET GoogleID=\"" + p.getGoogleID() + ", " + "SET Partnerprofil_ID=\""
 					+ p.getPartnerprofilId() + ", ' WHERE ID=" + p.getId());
-			
+
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
