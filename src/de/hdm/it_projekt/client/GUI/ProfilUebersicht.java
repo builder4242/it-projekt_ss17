@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package de.hdm.it_projekt.client.GUI;
 
 /**
@@ -27,7 +25,7 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
 
-public class ProjektUebersicht extends VerticalPanel{
+public class ProfilUebersicht extends VerticalPanel{
 
 	/**
 	 * The constants used in this Content Widget.
@@ -140,3 +138,4 @@ public class ProjektUebersicht extends VerticalPanel{
 	}
 	
 }
+

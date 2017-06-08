@@ -7,8 +7,6 @@ package de.hdm.it_projekt.client.GUI;
  * @author Julian Reimenthal
  *
  */
-
-
 import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -26,8 +24,7 @@ import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
-
-public class ProjektUebersicht extends VerticalPanel{
+public class BewerbungUebersicht extends VerticalPanel {
 
 	/**
 	 * The constants used in this Content Widget.
@@ -39,7 +36,7 @@ public class ProjektUebersicht extends VerticalPanel{
 
 		String[] cwMenuBarMarktplatzOptions();
 
-		String cwMenuBarProjektCategory(String Projekt );
+		String cwMenuBarProjektCategory(String Projekt);
 
 		String[] cwMenuBarProjektOptions();
 
@@ -47,7 +44,7 @@ public class ProjektUebersicht extends VerticalPanel{
 
 		String[] cwMenuBarProfilOptions();
 
-		String cwMenuBarBewerbungCategory( String Bewerbung);
+		String cwMenuBarBewerbungCategory(String Bewerbung);
 
 		String[] cwMenuBarBewerbungOptions();
 
@@ -63,8 +60,7 @@ public class ProjektUebersicht extends VerticalPanel{
 	/**
 	 * An instance of the constants.
 	 */
-	private final CwConstants  constants=null;
-	
+	private final CwConstants constants = null;
 
 	/**
 	 * Initialize this example.
@@ -138,5 +134,5 @@ public class ProjektUebersicht extends VerticalPanel{
 		menu.ensureDebugId("cwMenuBar");
 		return menu;
 	}
-	
+
 }
