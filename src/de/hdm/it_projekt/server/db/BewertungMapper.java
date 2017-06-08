@@ -99,9 +99,10 @@ public class BewertungMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-				stmt.executeUpdate(
-						"INSERT INTO bewertung (ID, Wert, Stellungnahme, Erstelldatum)" + "VALUES ('" + bt.getId() + "','"
-								+ bt.getWert() + "','" + bt.getStellungnahme() + "','" + bt.getErstelldatum() + "')");
+				stmt.executeUpdate("INSERT INTO bewertung (ID, Wert, Stellungnahme, Erstelldatum, Bewerbung_ID)"
+						+ "VALUES ('" + bt.getId() + "','" + bt.getWert() + "','" + bt.getStellungnahme() + "','"
+						+ DBConnection.convertToSQLDateString(bt.getErstelldatum()) + "','" + bt.getBewerbungId()
+						+ "')");
 
 			}
 		} catch (SQLException e) {
@@ -160,7 +161,7 @@ public class BewertungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM bewertung" + "WHERE ID=" + bt.getId());
+			stmt.executeUpdate("DELETE FROM bewertung WHERE ID= " + bt.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -188,7 +189,7 @@ public class BewertungMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung " + "ORDER BY Wert");
+					.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung ORDER BY Wert");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewertung-Objekt erstellt.
@@ -233,7 +234,7 @@ public class BewertungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Wert, Stellungnahme, Ertselldatum FROM bewertung " + "WHERE ID=" + id + "ORDER BY ID");
+					"SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung WHERE ID= " + id + " ORDER BY ID");
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -281,8 +282,7 @@ public class BewertungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung "
-					+ "WHERE Stellungnahme='" + stellungnahme + "' ORDER BY Stellungnahme");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung WHERE Stellungnahme='" + stellungnahme + "' ORDER BY Stellungnahme");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
 			// erstellt
@@ -362,7 +362,7 @@ public class BewertungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM bewertung WHERE Bewerbung_ID=" + bw.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM bewertung WHERE Bewerbung_ID= " + bw.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewertungs-Objekt erstellt.
@@ -375,7 +375,6 @@ public class BewertungMapper {
 			e7.printStackTrace();
 		}
 
-		
 		return bwt;
 	}
 
