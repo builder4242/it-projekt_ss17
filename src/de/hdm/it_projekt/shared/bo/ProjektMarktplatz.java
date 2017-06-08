@@ -1,7 +1,5 @@
 package de.hdm.it_projekt.shared.bo;
 
-import java.util.Vector;
-
 /***
  * 
  * @author Tugba Bulat
@@ -9,8 +7,7 @@ import java.util.Vector;
  */
 public class ProjektMarktplatz extends BusinessObject {
 
-	private static final long serialVersionUID = 1L;
-
+	
 	private String bezeichnung;
 
 	/**

@@ -10,29 +10,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 
-import de.hdm.it_projekt.client.ClientsideSettings;
-import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
-import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
-import de.hdm.it_projekt.server.ProjektAdministrationImpl;
 
-import java.text.DateFormat;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Vector;
-
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DateBox;
 /**
  * @author Daniel Fleps
  *

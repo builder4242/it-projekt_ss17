@@ -46,8 +46,7 @@ public class DBConnection {
      * Software neu komilieren zu müssen.
      */
     
-    /* googleURL zu Testzwecken auf localURL gesetzt. Muss nachher wieder geaendert werden*/
-    private static String googleUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";
+    private static String googleUrl = "jdbc:google:mysql://173.194.250.17:3306/projektmarktplatzdb?user=itpdev&password=itpdev02";
     private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=eclipse&password=1234";
 
     /**
@@ -82,8 +81,13 @@ public class DBConnection {
                 if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                     // Load the class that provides the new
                     // "jdbc:google:mysql://" prefix.
-                    Class.forName("com.mysql.jdbc.GoogleDriver");
+                    
+                	/*
+                	Class.forName("com.mysql.jdbc.GoogleDriver");
                     url = googleUrl;
+                    */
+                	Class.forName("com.mysql.jdbc.Driver");
+                    url = localUrl;
                 } else {
                     // Local MySQL instance to use during development.
                     Class.forName("com.mysql.jdbc.Driver");

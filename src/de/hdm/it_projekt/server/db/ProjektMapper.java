@@ -67,10 +67,11 @@ public class ProjektMapper {
 
 	/**
 	 * Diese Methode ermoeglicht es ein Projekt in der Datenbank anzulegen.
+	 * 
 	 * @param pr
 	 * @return
 	 */
-	
+
 	public Projekt insert(Projekt pr) {
 
 		// DB-Verbindung herstellen
@@ -96,9 +97,14 @@ public class ProjektMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-				stmt.executeUpdate("INSERT INTO projekt (ID, Name, Startdatum, Enddatum, Beschreibung) " + "VALUES ("
-						+ pr.getId() + "," + pr.getName() + "," + pr.getStartdatum() + "," + pr.getEnddatum() + ","
-						+ pr.getBeschreibung() + ")");
+				stmt.executeUpdate(
+						"INSERT INTO projekt (ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID) "
+								+ "VALUES ('" + pr.getId() + "','" + pr.getName() + "','"
+								+ DBConnection.convertToSQLDateString(pr.getStartdatum()) + "','"
+								+ DBConnection.convertToSQLDateString(pr.getEnddatum()) + "','" + pr.getBeschreibung()
+								+ "','" + pr.getProjektMarktplatzId() + "','" + pr.getProjektbetreiberId() + "','"
+								+ pr.getProjektleiterId() + "')");
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -127,9 +133,11 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-			stmt.executeUpdate("UPDATE projekt " + "SET Name=\"" + pr.getName() + "\"," + "Startdatum=\""
-					+ pr.getStartdatum() + "\", " + "Enddatum=\"" + pr.getEnddatum() + "\" " + "\", "
-					+ "Beschreibung=\"" + pr.getBeschreibung() + "\" " + "WHERE ID=" + pr.getId());
+			stmt.executeUpdate("UPDATE projekt " + "SET Name=\"" + pr.getName() + "\", " + "Startdatum=\""
+					+ pr.getStartdatum() + "\", " + "Enddatum=\"" + pr.getEnddatum() + "\", " + "Beschreibung=\""
+					+ pr.getBeschreibung() + "\", " + "Projektmarktplatz_ID=\"" + pr.getProjektMarktplatzId() + "\", "
+					+ "Projektbetreiber_ID=\"" + pr.getProjektbetreiberId() + "\", " + "Projektleiter_ID=\""
+					+ pr.getProjektleiterId() + "\" " + "WHERE ID=" + pr.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -158,7 +166,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-			stmt.executeUpdate("DELETE FROM projekt" + "WHERE ID=" + pr.getId());
+			stmt.executeUpdate("DELETE FROM projekt " + "WHERE ID=" + pr.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -186,7 +194,8 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung " + "FROM projekt " + " ORDER BY Name");
+					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID "
+							+ "FROM projekt " + "ORDER BY Name ");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
@@ -197,6 +206,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
+				pr.setProjektMarktplatzId(rs.getInt("ID"));
+				pr.setProjektbetreiberId(rs.getInt("ID"));
+				pr.setProjektleiterId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pr);
@@ -230,8 +242,9 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Startdatum, Enddatum, Beschreibung FROM projekt "
-					+ "WHERE ID=" + id + " ORDER BY ID");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID FROM projekt "
+							+ "WHERE ID=" + id + " ORDER BY ID");
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -247,6 +260,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
+				pr.setProjektMarktplatzId(rs.getInt("ID"));
+				pr.setProjektbetreiberId(rs.getInt("ID"));
+				pr.setProjektleiterId(rs.getInt("ID"));
 
 			}
 		} catch (SQLException e4) {
@@ -272,8 +288,9 @@ public class ProjektMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Startdatum, Enddatum, Beschreibung" + "FROM projekt "
-					+ "WHERE Name LIKE='" + name + "' ORDER BY Name");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID FROM projekt WHERE name='"
+							+ name + "' ORDER BY name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
@@ -284,6 +301,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
+				pr.setProjektMarktplatzId(rs.getInt("ID"));
+				pr.setProjektbetreiberId(rs.getInt("ID"));
+				pr.setProjektleiterId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pr);
@@ -314,8 +334,9 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Startdatum, Enddatum, Beschreibung" + "FROM projekt "
-					+ "WHERE Beschreibung ='" + beschreibung + "' ORDER BY Beschreibung");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID FROM projekt WHERE Beschreibung ='"
+							+ beschreibung + "' ORDER BY Beschreibung");
 
 			result = new Vector<Projekt>();
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -327,6 +348,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
+				pr.setProjektMarktplatzId(rs.getInt("ID"));
+				pr.setProjektbetreiberId(rs.getInt("ID"));
+				pr.setProjektleiterId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pr);
@@ -394,7 +418,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projektleiter_ID=" + p.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projekt.ID=" + p.getId());
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
 			while (rs.next()) {
@@ -429,7 +453,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projektbetreiber_ID=" + p.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projekt.ID=" + p.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.

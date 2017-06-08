@@ -101,7 +101,7 @@ CREATE TABLE `bewertung` (
   `ID` int(11) NOT NULL,
   `Wert` decimal(10,0) DEFAULT NULL,
   `Stellungnahme` text,
-  `Erstelldatumm` date DEFAULT NULL,
+  `Erstelldatum` date DEFAULT NULL,
   `Bewerbung_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -109,7 +109,7 @@ CREATE TABLE `bewertung` (
 -- Daten für Tabelle `bewertung`
 --
 
-INSERT INTO `bewertung` (`ID`, `Wert`, `Stellungnahme`, `Erstelldatumm`, `Bewerbung_ID`) VALUES
+INSERT INTO `bewertung` (`ID`, `Wert`, `Stellungnahme`, `Erstelldatum`, `Bewerbung_ID`) VALUES
 (1, '1', 'Der kann wirklich nichts', '2017-06-07', 2),
 (2, '10', 'Alter. Wie geil der ist.', '2017-06-06', 1);
 

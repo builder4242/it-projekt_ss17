@@ -55,7 +55,8 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	
 	@Override
 	public Vector<ProjektMarktplatz> getAlleProjektMarktplaetze() throws IllegalArgumentException {
-		return this.pmMapper.findAll();
+		//return this.pmMapper.findAll();
+		return new Vector<ProjektMarktplatz>();
 	}
 
 	@Override
