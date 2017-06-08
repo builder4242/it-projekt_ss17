@@ -2,13 +2,13 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>ProjektverwaltungServlet</servlet-name>
+    <servlet-name>MyProjektServlet</servlet-name>
     <servlet-class>de.hdm.it_projekt.server.ProjektAdministrationImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>ProjektverwaltungServlet</servlet-name>
-    <url-pattern>/projektmarktplatz/projektkadministration</url-pattern>
+    <servlet-name>MyProjektServlet</servlet-name>
+    <url-pattern>/myprojekt_2/projektadmin</url-pattern>
   </servlet-mapping>
   
   
