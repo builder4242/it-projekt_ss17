@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
+import de.hdm.it_projekt.client.GUI.MarktplatzUebersicht;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
@@ -33,10 +34,12 @@ public class MyProjekt implements EntryPoint {
 
 		final HorizontalPanel mainPanel = new HorizontalPanel();
 		
-		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
+		//pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
+		
+		final MarktplatzUebersicht menu = new MarktplatzUebersicht();
 		
 		/* main Panel */ 
-	    mainPanel.add(ausgabe); 
+	    mainPanel.add(menu.onInitialize().asWidget()); 
 		
 		
 		/*Panel zur HTML Seite hinzufügen */ 
