@@ -21,6 +21,9 @@ import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
+import de.hdm.it_projekt.client.ClientsideSettings;
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
+
 
 /**
  * @author Daniel Fleps
