@@ -35,6 +35,8 @@ public class MyProjekt implements EntryPoint {
 		
 		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
 		
+	
+		
 		/* main Panel */ 
 	    mainPanel.add(ausgabe); 
 		
