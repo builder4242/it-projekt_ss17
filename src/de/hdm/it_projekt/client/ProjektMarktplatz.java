@@ -40,7 +40,7 @@ public class ProjektMarktplatz implements EntryPoint {
 		Button projektmarktplatzButton = new Button("Daten Projektmarktplatz"); 
 		
 		
-		Hyperlink link = new Hyperlink("Ausschreibung", "de.hdm.it_projekt.client.GUI.AusschreibungForm");
+		Hyperlink link = new Hyperlink("Ausschreibung", "LauffaehigeTestKlasse");
 		
 		/*Aufbau des Textfeldes inkl. Button */  
 		addPanel.add(testLabel);
