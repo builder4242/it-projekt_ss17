@@ -1,9 +1,8 @@
 package de.hdm.it_projekt.client.GUI;
 /**
  * To be Done:
- * Projektverwaltung
- * ClientsideSettings
- * remove/addbewerbung
+ * callback
+ * methode bewerben 
  */
 
 import java.text.DateFormat;
