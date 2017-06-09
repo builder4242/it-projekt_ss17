@@ -16,9 +16,9 @@ div#header img {
 }
 div#header p {
 	float: left;
-	font-size: 20px;
-	padding-left: 35px;	
 	margin-top: 12px;
+	margin-right: 12px;
+	align: right;
 }
 div#menu {
 	margin: 5px;

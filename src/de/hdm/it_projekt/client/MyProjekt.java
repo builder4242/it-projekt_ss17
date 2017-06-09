@@ -17,7 +17,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Anchor;
 
 import de.hdm.it_projekt.client.GUI_in_dev.MarktplatzUebersicht;
+import de.hdm.it_projekt.shared.LoginService;
+import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
+import de.hdm.it_projekt.shared.bo.LoginInfo;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class MyProjekt implements EntryPoint {
@@ -107,9 +110,8 @@ public class MyProjekt implements EntryPoint {
 		});
 
 		content.add(ausgabe);
-
-		loginPanel.add(signOutLink);
-		RootPanel.get("content").add(loginPanel);
+		
+		RootPanel.get("signout").add(signOutLink);
 		RootPanel.get("headline").add(header);
 		RootPanel.get("menu").add(menu);
 		RootPanel.get("content").add(content);
