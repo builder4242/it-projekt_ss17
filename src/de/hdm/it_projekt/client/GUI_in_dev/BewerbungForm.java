@@ -12,9 +12,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-import de.hdm.it_projekt.client.GUI_alt.BewerbungForm.ChangeClickHandler;
-import de.hdm.it_projekt.client.GUI_alt.BewerbungForm.DeleteClickHandler;
-import de.hdm.it_projekt.client.GUI_alt.BewerbungForm.NewClickHandler;
+
 
 /**
  * @author Daniel Fleps
@@ -29,7 +27,7 @@ public class BewerbungForm {
 	TextBox organisationseinheitTextBox = new TextBox();
 	Label idValueLabel = new Label();
 	
-	
+	//Clickhandler to be DONE 
 	
 	public BewerbungForm(){
 		
