@@ -1,13 +1,18 @@
 package de.hdm.it_projekt.shared.bo;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import java.io.Serializable;
+
 /**
  * Klasse Login Info 
  * @author Sid Heiland
  *
  */
-public class LoginInfo implements IsSerializable {
+public class LoginInfo implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Beginn Attributdefinition 
 	 */
