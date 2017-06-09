@@ -15,29 +15,22 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
+import de.hdm.it_projekt.client.GUI.MarktplatzUebersicht;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class MyProjekt implements EntryPoint {
 
-
 	public void onModuleLoad() {
-		
 
 		ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
-
-
-		final Label ausgabe = new Label();
-		ausgabe.setText("Hallo<br>");
-
 		final HorizontalPanel mainPanel = new HorizontalPanel();
-		
+		final Label ausgabe = new Label();
 		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
-		
+
 		/* main Panel */ 
 	    mainPanel.add(ausgabe); 
-		
 		
 		/*Panel zur HTML Seite hinzufügen */ 
 		 RootPanel.get("content").add(mainPanel);
@@ -54,8 +47,8 @@ public class MyProjekt implements EntryPoint {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
 
+			a.setText(caught.getMessage());
 		}
 
 		@Override
@@ -66,8 +59,7 @@ public class MyProjekt implements EntryPoint {
 				t += pm.toString();
 			}
 			
-			a.setText(t);
-			
+			a.setText(t);			
 		}
 	}
 }

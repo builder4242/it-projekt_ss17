@@ -12,8 +12,6 @@ import de.hdm.it_projekt.shared.bo.*;
 @SuppressWarnings("serial")
 public class ProjektAdministrationImpl extends RemoteServiceServlet implements ProjektAdministration {
 
-	private ProjektMarktplatz pm = null;
-
 	private AusschreibungMapper asMapper = null;
 	private BeteiligungMapper btMapper = null;
 	private BewerbungMapper bwMapper = null;
@@ -55,7 +53,11 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	
 	@Override
 	public Vector<ProjektMarktplatz> getAlleProjektMarktplaetze() throws IllegalArgumentException {
-		return this.pmMapper.findAll();
+		Vector<ProjektMarktplatz> pm = this.pmMapper.findAll();
+		ProjektMarktplatz pm1 = new ProjektMarktplatz();
+		pm1.setBezeichnung("TestPM");
+		pm.add(pm1);
+		return pm;
 	}
 
 	@Override
