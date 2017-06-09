@@ -50,7 +50,7 @@ public abstract class BusinessObject implements IsSerializable {
     /*
      * Wir geben den Klassennamen gefolgt von der ID des Objekts zurück.
      */
-    return this.getClass().getName() + " #" + this.id;
+    return " #" + this.id;
   }
 
   /**
