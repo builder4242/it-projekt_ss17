@@ -47,7 +47,7 @@ public class DBConnection {
 	 * Software neu komilieren zu müssen.
 	 */
 
-	private static String googleUrl = "jdbc:google:mysql://173.194.250.17:3306/projektmarktplatzdb?user=itpdev&password=itpdev02";
+	private static String googleUrl = "jdbc:google:mysql://itprojekt-170113:itprojekt/projektmarktplatzdb?user=root";
 	private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";
 
 	/**
