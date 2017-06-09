@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Anchor;
 
-import de.hdm.it_projekt.client.GUI.MarktplatzUebersicht;
+import de.hdm.it_projekt.client.GUI_in_dev.MarktplatzUebersicht;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
