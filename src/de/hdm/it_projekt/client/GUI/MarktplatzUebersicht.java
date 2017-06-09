@@ -143,7 +143,7 @@ public class MarktplatzUebersicht extends VerticalPanel{
 		return menu;
 	}
 	
-	
+	/* Auskommentiert von sh sonst rot
 	ProjektAdministrationAsync projektVerwaltung = ClientsideSettings.getProjektAdministration();		
 	
 	public MarktplatzUebersicht(){
@@ -155,14 +155,14 @@ public class MarktplatzUebersicht extends VerticalPanel{
 
 	
 
-	private class AbrufenClickHandler implements ClickHandler {
+	/*private class AbrufenClickHandler implements ClickHandler {
 
 	
 		public void onClick(ClickEvent event) {
 			//TO BE DONE 
 			for(ie=0; ie < 5; ie++){
 				Window.alert("Hallo i bims"); 
-			}
-		}
-	}
+			
+		}*/
+	
 }
