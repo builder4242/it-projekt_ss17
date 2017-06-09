@@ -21,28 +21,16 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class MyProjekt implements EntryPoint {
 
-
 	public void onModuleLoad() {
-		
 
 		ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
-		final Label ausgabe = new Label();
-
-		ausgabe.setText("Hallo_!");
-
 		final HorizontalPanel mainPanel = new HorizontalPanel();
-		
+		final Label ausgabe = new Label();
 		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
-
-		final MarktplatzUebersicht menu = new MarktplatzUebersicht();
-		
-		//menu.onInitialize().asWidget()
-		
 
 		/* main Panel */ 
 	    mainPanel.add(ausgabe); 
-		
 		
 		/*Panel zur HTML Seite hinzufügen */ 
 		 RootPanel.get("content").add(mainPanel);
