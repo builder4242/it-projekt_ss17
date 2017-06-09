@@ -1,8 +1,39 @@
 
-.header {
-    padding: 15px;
+div#main {
+    margin: 10px;
+    border: 1px dashed #000;
+    width: auto;
 }
 
+div#header {
+	margin: 5px;
+	border: 1px dashed #000;
+	height: 60px;
+}
+div#header img {
+	float: left;
+	height: 60px;
+}
+div#header p {
+	float: left;
+	font-size: 20px;
+	padding-left: 35px;	
+	margin-top: 12px;
+}
+div#menu {
+	margin: 5px;
+	height: 30px;
+	border: 1px dashed #000;
+}
+div#content {
+	margin: 5px;
+	border: 1px dashed #000;
+}
+div#footer {
+	margin: 5px;
+	padding: 10px;
+	border: 1px dashed #000;
+}
 
 .sitename{
     padding: 5px;

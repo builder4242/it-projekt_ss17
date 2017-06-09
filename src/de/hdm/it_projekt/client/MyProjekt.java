@@ -50,7 +50,7 @@ public class MyProjekt implements EntryPoint {
 		signInLink.setHref(loginInfo.getLoginUrl());
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
-		RootPanel.get("stockList").add(loginPanel);
+		RootPanel.get("content").add(loginPanel);
 	}
 
 	private void loadMyProjekt() {
