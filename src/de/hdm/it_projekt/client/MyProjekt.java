@@ -110,7 +110,7 @@ public class MyProjekt implements EntryPoint {
 
 		loginPanel.add(signOutLink);
 		RootPanel.get("content").add(loginPanel);
-		RootPanel.get("header").add(header);
+		RootPanel.get("headline").add(header);
 		RootPanel.get("menu").add(menu);
 		RootPanel.get("content").add(content);
 

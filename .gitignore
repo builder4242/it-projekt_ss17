@@ -57,3 +57,5 @@ war/WEB-INF/classes/
 *.js
 *.rpc
 *.DS_Store
+war/myprojekt/
+war/myprojekt_reports/
