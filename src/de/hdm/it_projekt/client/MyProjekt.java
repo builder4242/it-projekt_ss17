@@ -25,41 +25,44 @@ public class MyProjekt implements EntryPoint {
 
 		ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
-		final HorizontalPanel mainPanel = new HorizontalPanel();
+		final HorizontalPanel header = new HorizontalPanel();
+		final HorizontalPanel menu = new HorizontalPanel();
+		final HorizontalPanel content = new HorizontalPanel();
+
+		final Label headline = new Label("MyProjekt");
+		header.add(headline);
+
+		final Label menulabel = new Label("hier sollte das Menü stehen !");
+		menu.add(menulabel);
+
 		final Label ausgabe = new Label();
-		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
-
-		/* main Panel */ 
-	    mainPanel.add(ausgabe); 
 		
-		/*Panel zur HTML Seite hinzufügen */ 
-		 RootPanel.get("content").add(mainPanel);
-		 
-	}
+		pa.getAlleProjektMarktplaetze(new AsyncCallback<Vector<ProjektMarktplatz>>() {
 
-	class Marktplaetze implements AsyncCallback<Vector<ProjektMarktplatz>> {
+			@Override
+			public void onFailure(Throwable caught) {
 
-		private Label a;
-
-		public Marktplaetze(Label a) {
-			this.a = a;
-		}
-
-		@Override
-		public void onFailure(Throwable caught) {
-
-			a.setText(caught.getMessage());
-		}
-
-		@Override
-		public void onSuccess(Vector<ProjektMarktplatz> result) {
-
-			String t = "";
-			for (ProjektMarktplatz pm : result) {
-				t += pm.toString();
+				ausgabe.setText(caught.getMessage());
 			}
-			
-			a.setText(t);			
-		}
+
+			@Override
+			public void onSuccess(Vector<ProjektMarktplatz> result) {
+
+				String t = "";
+				for (ProjektMarktplatz pm : result) {
+					t += pm.toString();
+				}
+
+				ausgabe.setText(t);
+			}
+		});
+
+		content.add(ausgabe);
+		
+		RootPanel.get("header").add(header);
+		RootPanel.get("menu").add(menu);
+		RootPanel.get("content").add(content);
+
 	}
+
 }
