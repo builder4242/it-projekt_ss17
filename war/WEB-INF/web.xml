@@ -18,8 +18,7 @@
   
   <servlet>
   <servlet-name>loginService</servlet-name>
-  <servlet-class>de.hdm.it_projekt.server.LoginServiceImpl
-  </servlet-class>
+  <servlet-class>de.hdm.it_projekt.server.LoginServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
