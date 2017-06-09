@@ -26,6 +26,7 @@ public class MyProjekt implements EntryPoint {
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte einloggen (Ahnma!)");
 	private Anchor signInLink = new Anchor("Sign In");
+	private Anchor signOutLink = new Anchor("Sing out");
 
 	public void onModuleLoad() {
 		// Check login status using login service
@@ -54,6 +55,8 @@ public class MyProjekt implements EntryPoint {
 	}
 
 	private void loadMyProjekt() {
+		
+		signOutLink.setHref(loginInfo.getLogoutUrl());
 
 		ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
@@ -91,6 +94,7 @@ public class MyProjekt implements EntryPoint {
 
 		content.add(ausgabe);
 
+		RootPanel.get("logout").add(signOutLink);
 		RootPanel.get("header").add(header);
 		RootPanel.get("menu").add(menu);
 		RootPanel.get("content").add(content);
