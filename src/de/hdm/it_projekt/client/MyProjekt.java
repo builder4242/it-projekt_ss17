@@ -22,11 +22,20 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class MyProjekt implements EntryPoint {
 
+	/**
+	 * Begin Attribute fuer Login
+	 */
 	private LoginInfo loginInfo = null;
 	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label("Bitte eilogge... Ahnma!.");
+	private Label loginLabel = new Label("Bitte einloggen (Ahnma!)");
 	private Anchor signInLink = new Anchor("Sign In");
+	private Anchor signOutLink = new Anchor("Sing out");
+	/*Ende Attribute fuer Login */
 
+	/**
+	 * Methode welche beim Seitenaufruf geladen wird und prueft ob User eingeloggt ist. Falls ja wird Methode loadMyProjekt() aufgerufen,
+	 * falls nicht die Methode loadLogin()
+	 */
 	public void onModuleLoad() {
 		// Check login status using login service
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
@@ -45,6 +54,9 @@ public class MyProjekt implements EntryPoint {
 		});
 	}
 
+	/**
+	 * Methode stellt Login bereit
+	 */
 	private void loadLogin() {
 		// Assemble login panel
 		signInLink.setHref(loginInfo.getLoginUrl());
@@ -53,7 +65,12 @@ public class MyProjekt implements EntryPoint {
 		RootPanel.get("content").add(loginPanel);
 	}
 
+	/**
+	 * Mit der Methode laodMyProjekt() wird der eigentliche Seiteninhalt geladen
+	 */
 	private void loadMyProjekt() {
+		
+		signOutLink.setHref(loginInfo.getLogoutUrl());
 
 		ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
@@ -91,6 +108,8 @@ public class MyProjekt implements EntryPoint {
 
 		content.add(ausgabe);
 
+		loginPanel.add(signOutLink);
+		RootPanel.get("content").add(loginPanel);
 		RootPanel.get("header").add(header);
 		RootPanel.get("menu").add(menu);
 		RootPanel.get("content").add(content);
