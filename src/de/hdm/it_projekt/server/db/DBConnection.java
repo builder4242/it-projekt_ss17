@@ -113,6 +113,11 @@ public class DBConnection {
 		return con;
 	}
 
+	/**
+	 * Methode zum Umwandeln des Java Date
+	 * @param d
+	 * @return
+	 */
 	public static String convertToSQLDateString(Date d) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		return sdf.format(d);
