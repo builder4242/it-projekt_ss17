@@ -16,10 +16,12 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
-import de.hdm.it_projekt.client.alteGUI.AusschreibungForm.CreateAusschreibungCallback;
+//import de.hdm.it_projekt.client.alteGUI.AusschreibungForm.CreateAusschreibungCallback;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
+import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
+
 
 import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
@@ -141,29 +143,26 @@ public class MarktplatzUebersicht extends VerticalPanel{
 		return menu;
 	}
 	
-	
+	/* Auskommentiert von sh sonst rot
 	ProjektAdministrationAsync projektVerwaltung = ClientsideSettings.getProjektAdministration();		
 	
-	Button marktplaetzeAbrufen = new Button();
-	marktplaetzeAbrufen.onClick(new AbrufenClickHandler);
-	
-
-	
-	
-
-	private class AbrufenClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			String bezeichnung = bezeichnungTextBox.getText();
-			String ausschreibungstext = ausschreibungstextTextBox.getText();
-			Projekt pr = projektVerwaltung.getProjektByName(projektTextBox.getText(), callback);
-			Date bewerbungsfrist = bewerbungsfristTextBox.getValue();
-			int i = Integer.parseInt(partnerprofilTextBox.getText());
-			Partnerprofil profil = projektVerwaltung.getPartnerprofilById(i, callback);
-
-			projektVerwaltung.createAusschreibungFor(pr, bezeichnung, bewerbungsfrist, ausschreibungstext, profil,
-					new CreateAusschreibungCallback());
-		}
+	public MarktplatzUebersicht(){
+	Button marktplaetzeAbrufen = new Button("Marktplätze aufrufen");
+	marktplaetzeAbrufen.addClickHandler(new AbrufenClickHandler());
 	}
-}}
+	
+
+
+	
+
+	/*private class AbrufenClickHandler implements ClickHandler {
+
+	
+		public void onClick(ClickEvent event) {
+			//TO BE DONE 
+			for(ie=0; ie < 5; ie++){
+				Window.alert("Hallo i bims"); 
+			
+		}*/
+	
+}
