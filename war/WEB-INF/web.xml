@@ -13,7 +13,7 @@
   
   <servlet-mapping>
     <servlet-name>MyProjektServlet</servlet-name>
-    <url-pattern>/projektadmin</url-pattern>
+    <url-pattern>/myprojekt/projektadmin</url-pattern>
   </servlet-mapping>
   
   
