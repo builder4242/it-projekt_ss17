@@ -17,7 +17,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Anchor;
 
 import de.hdm.it_projekt.client.GUI_in_dev.MarktplatzUebersicht;
+import de.hdm.it_projekt.shared.LoginService;
+import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
+import de.hdm.it_projekt.shared.bo.LoginInfo;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class MyProjekt implements EntryPoint {
@@ -27,9 +30,9 @@ public class MyProjekt implements EntryPoint {
 	 */
 	private LoginInfo loginInfo = null;
 	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label("Bitte einloggen (Ahnma!)");
+	private Label loginLabel = new Label("Bitte einloggen...");
 	private Anchor signInLink = new Anchor("Sign In");
-	private Anchor signOutLink = new Anchor("Sing out");
+	private Anchor signOutLink = new Anchor("Sing Out");
 	/*Ende Attribute fuer Login */
 
 	/**
@@ -78,9 +81,6 @@ public class MyProjekt implements EntryPoint {
 		final HorizontalPanel menu = new HorizontalPanel();
 		final HorizontalPanel content = new HorizontalPanel();
 
-		final Label headline = new Label("MyProjekt");
-		header.add(headline);
-
 		final Label menulabel = new Label("hier sollte das Menü stehen !");
 		menu.add(menulabel);
 
@@ -107,10 +107,8 @@ public class MyProjekt implements EntryPoint {
 		});
 
 		content.add(ausgabe);
-
-		loginPanel.add(signOutLink);
-		RootPanel.get("content").add(loginPanel);
-		RootPanel.get("headline").add(header);
+		
+		RootPanel.get("signout").add(signOutLink);
 		RootPanel.get("menu").add(menu);
 		RootPanel.get("content").add(content);
 
