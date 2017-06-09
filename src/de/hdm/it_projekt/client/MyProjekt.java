@@ -21,7 +21,6 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class MyProjekt implements EntryPoint {
 
-
 	public void onModuleLoad() {
 
 		ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
