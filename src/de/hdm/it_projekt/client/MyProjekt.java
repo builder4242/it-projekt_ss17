@@ -24,7 +24,7 @@ public class MyProjekt implements EntryPoint {
 
 	private LoginInfo loginInfo = null;
 	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label("Bitte eilogge... Ahnma!.");
+	private Label loginLabel = new Label("Bitte einloggen (Ahnma!)");
 	private Anchor signInLink = new Anchor("Sign In");
 
 	public void onModuleLoad() {
@@ -50,7 +50,7 @@ public class MyProjekt implements EntryPoint {
 		signInLink.setHref(loginInfo.getLoginUrl());
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
-		RootPanel.get("stockList").add(loginPanel);
+		RootPanel.get("content").add(loginPanel);
 	}
 
 	private void loadMyProjekt() {
