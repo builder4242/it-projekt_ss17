@@ -48,7 +48,7 @@ public class DBConnection {
 	 */
 
 	private static String googleUrl = "jdbc:google:mysql://173.194.250.17:3306/projektmarktplatzdb?user=itpdev&password=itpdev02";
-	private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=eclipse&password=1234";
+	private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";
 
 	/**
 	 * Diese statische Methode kann aufgrufen werden durch
