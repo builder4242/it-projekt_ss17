@@ -14,64 +14,106 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Anchor;
 
-import de.hdm.it_projekt.client.GUI.MarktplatzUebersicht;
+import de.hdm.it_projekt.client.GUI_in_dev.MarktplatzUebersicht;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class MyProjekt implements EntryPoint {
 
+	/**
+	 * Begin Attribute fuer Login
+	 */
+	private LoginInfo loginInfo = null;
+	private VerticalPanel loginPanel = new VerticalPanel();
+	private Label loginLabel = new Label("Bitte einloggen (Ahnma!)");
+	private Anchor signInLink = new Anchor("Sign In");
+	private Anchor signOutLink = new Anchor("Sing out");
+	/*Ende Attribute fuer Login */
 
+	/**
+	 * Methode welche beim Seitenaufruf geladen wird und prueft ob User eingeloggt ist. Falls ja wird Methode loadMyProjekt() aufgerufen,
+	 * falls nicht die Methode loadLogin()
+	 */
 	public void onModuleLoad() {
+		// Check login status using login service
+		LoginServiceAsync loginService = GWT.create(LoginService.class);
+		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+			public void onFailure(Throwable error) {
+			}
+
+			public void onSuccess(LoginInfo result) {
+				loginInfo = result;
+				if (loginInfo.isLoggedIn()) {
+					loadMyProjekt();
+				} else {
+					loadLogin();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Methode stellt Login bereit
+	 */
+	private void loadLogin() {
+		// Assemble login panel
+		signInLink.setHref(loginInfo.getLoginUrl());
+		loginPanel.add(loginLabel);
+		loginPanel.add(signInLink);
+		RootPanel.get("content").add(loginPanel);
+	}
+
+	/**
+	 * Mit der Methode laodMyProjekt() wird der eigentliche Seiteninhalt geladen
+	 */
+	private void loadMyProjekt() {
 		
+		signOutLink.setHref(loginInfo.getLogoutUrl());
 
 		ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
+		final HorizontalPanel header = new HorizontalPanel();
+		final HorizontalPanel menu = new HorizontalPanel();
+		final HorizontalPanel content = new HorizontalPanel();
+
+		final Label headline = new Label("MyProjekt");
+		header.add(headline);
+
+		final Label menulabel = new Label("hier sollte das Menü stehen !");
+		menu.add(menulabel);
+
 		final Label ausgabe = new Label();
 
-		ausgabe.setText("Hallo_!");
+		pa.getAlleProjektMarktplaetze(new AsyncCallback<Vector<ProjektMarktplatz>>() {
 
-		final HorizontalPanel mainPanel = new HorizontalPanel();
-		
-		pa.getAlleProjektMarktplaetze(new Marktplaetze(ausgabe));
+			@Override
+			public void onFailure(Throwable caught) {
 
-		final MarktplatzUebersicht menu = new MarktplatzUebersicht();
-		
-		//menu.onInitialize().asWidget()
-		
-
-		/* main Panel */ 
-	    mainPanel.add(ausgabe); 
-		
-		
-		/*Panel zur HTML Seite hinzufügen */ 
-		 RootPanel.get("content").add(mainPanel);
-		 
-	}
-
-	class Marktplaetze implements AsyncCallback<Vector<ProjektMarktplatz>> {
-
-		private Label a;
-
-		public Marktplaetze(Label a) {
-			this.a = a;
-		}
-
-		@Override
-		public void onFailure(Throwable caught) {
-
-			a.setText(caught.getMessage());
-		}
-
-		@Override
-		public void onSuccess(Vector<ProjektMarktplatz> result) {
-
-			String t = "";
-			for (ProjektMarktplatz pm : result) {
-				t += pm.toString();
+				ausgabe.setText(caught.getMessage());
 			}
-			
-			a.setText(t);			
-		}
+
+			@Override
+			public void onSuccess(Vector<ProjektMarktplatz> result) {
+
+				String t = "";
+				for (ProjektMarktplatz pm : result) {
+					t += pm.toString();
+				}
+
+				ausgabe.setText(t);
+			}
+		});
+
+		content.add(ausgabe);
+
+		loginPanel.add(signOutLink);
+		RootPanel.get("content").add(loginPanel);
+		RootPanel.get("headline").add(header);
+		RootPanel.get("menu").add(menu);
+		RootPanel.get("content").add(content);
+
 	}
+
 }
