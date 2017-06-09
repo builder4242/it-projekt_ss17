@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
-import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
 /**
  * Mapper-Klasse, die <code>Partnerprofil</code>-Objekte auf eine relationale
@@ -73,7 +72,7 @@ public class PartnerprofilMapper {
 	 * @param pp
 	 * @return
 	 */
-	public static Partnerprofil insert(Partnerprofil pp) {
+	public Partnerprofil insert(Partnerprofil pp) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
@@ -210,7 +209,7 @@ public class PartnerprofilMapper {
 	 * @return Partnerprofil-Objekt, das dem uebergebenen Schluessel entspricht,
 	 *         null bei nicht vorhandenem DB-Tupel.
 	 */
-	public static Partnerprofil findById(int id) {
+	public Partnerprofil findById(int id) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
