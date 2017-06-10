@@ -85,56 +85,58 @@ public class MyProjekt implements EntryPoint {
 
 		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
-		final HorizontalPanel header = new HorizontalPanel();
 		final HorizontalPanel menu = new HorizontalPanel();
 		final HorizontalPanel content = new HorizontalPanel();
 
-		final Label menulabel = new Label("hier sollte das Menü stehen !");
+		final Label menulabel = new Label(
+				"hier sollte das Menü stehen !" + loginInfo.getEmailAddress() + loginInfo.getNickname());
 		menu.add(menulabel);
 
-		final Label projekte = new Label();
+		final VerticalPanel projekte = new VerticalPanel();
 		final Label ausgabe = new Label();
 
 		final ListBox marktplaetze = new ListBox();
-		marktplaetze.addChangeHandler(new ChangeHandler() {
+
+		final Button change = new Button();
+		change.setText("wechseln");
+		change.addClickHandler(new ClickHandler() {
 
 			@Override
-			public void onChange(ChangeEvent event) {
-				
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
 				pa.getProjektMarktplatzById(Integer.parseInt(marktplaetze.getSelectedValue()),
 						new AsyncCallback<ProjektMarktplatz>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
-
-								
+								projekte.add(new Label("Fehler im Projektmarktplatz."));
 							}
 
 							@Override
-							public void onSuccess(ProjektMarktplatz result) {
+							public void onSuccess(ProjektMarktplatz pm_result) {
 
-								pa.getAlleProjekteFor(result, new AsyncCallback<Vector<Projekt>>() {
+								pa.getAlleProjekteFor(pm_result, new AsyncCallback<Vector<Projekt>>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
-										// TODO Auto-generated method stub
 
+										projekte.add(new Label("Fehler bei den Projekte."));
 									}
 
-									public void onSuccess(Vector<Projekt> result) {
+									public void onSuccess(Vector<Projekt> pr_result) {
 
-										String t = "";
-										for (Projekt p : result) {
-											t += p.toString();
+										projekte.clear();
+										projekte.add(new Label("Projekte:"));
+										for (Projekt p : pr_result) {
+											projekte.add(new Label(p.toString()));
 										}
-										
-										projekte.setText(t);
+
 									}
 
 								});
 
 							}
-						});				
+						});
 			}
 		});
 
@@ -154,12 +156,12 @@ public class MyProjekt implements EntryPoint {
 				for (ProjektMarktplatz pm : result) {
 					marktplaetze.addItem(pm.getBezeichnung(), Integer.toString(pm.getId()));
 				}
-
 			}
 		});
 
 		content.add(ausgabe);
 		content.add(marktplaetze);
+		content.add(change);
 		content.add(projekte);
 
 		RootPanel.get("signout").add(signOutLink);
