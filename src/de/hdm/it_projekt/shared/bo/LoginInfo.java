@@ -1,6 +1,7 @@
-package de.hdm.it_projekt.client;
+package de.hdm.it_projekt.shared.bo;
 
 import java.io.Serializable;
+
 /**
  * Klasse Login Info 
  * @author Sid Heiland
@@ -8,6 +9,9 @@ import java.io.Serializable;
  */
 public class LoginInfo implements Serializable {
 	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Beginn Attributdefinition 
