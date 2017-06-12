@@ -64,6 +64,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	public String getName() {
 		return name;
 	}
+	
 
 	/**
 	 * @param name the name to set

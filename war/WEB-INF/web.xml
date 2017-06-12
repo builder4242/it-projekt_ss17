@@ -13,13 +13,22 @@
   
   <servlet-mapping>
     <servlet-name>MyProjektServlet</servlet-name>
-    <url-pattern>/projektadmin</url-pattern>
+    <url-pattern>/myprojekt/projektadmin</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  <servlet-name>loginService</servlet-name>
+  <servlet-class>de.hdm.it_projekt.server.LoginServiceImpl</servlet-class>
+  </servlet>
   
+  <servlet-mapping>
+  	<servlet-name>loginService</servlet-name>
+  	<url-pattern>/myprojekt/login</url-pattern>
+  </servlet-mapping>
+   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>projektmarktplatz.html</welcome-file>
+    <welcome-file>projektmarktplatz.html</welcome-file>    
   </welcome-file-list>
 
 </web-app>
