@@ -233,8 +233,8 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= "
-							+ id + " ORDER BY ID");
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= '"
+							+ id + "' AND Typ='" + SQLTYP + "' ORDER BY email");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -284,7 +284,7 @@ public class PersonMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
-							+ name + SQLTYP + "' ORDER BY Name");
+							+ name + "' AND Typ='" + SQLTYP + "' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
@@ -334,7 +334,7 @@ public class PersonMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
-							+ vorname + SQLTYP + "' ORDER BY Vorname");
+							+ vorname + "' AND Typ='" + SQLTYP + "' ORDER BY Vorname");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
@@ -385,7 +385,7 @@ public class PersonMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE email='"
-							+ email + SQLTYP + "' ORDER BY email");
+							+ email + "' AND Typ='" + SQLTYP + "' ORDER BY email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
