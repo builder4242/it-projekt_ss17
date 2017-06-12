@@ -20,7 +20,7 @@
   
   <servlet>
     <servlet-name>MyProjektReportServlet</servlet-name>
-    <servlet-class>de.hdm.it_projekt.server.ReportGeneratorImpl</servlet-class>
+    <servlet-class>de.hdm.it_projekt.server.report.ReportGeneratorImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -38,6 +38,7 @@
   <servlet-mapping>
   	<servlet-name>loginService</servlet-name>
   	<url-pattern>/myprojekt/login</url-pattern>
+  	<url-pattern>/myprojekt_reports/login</url-pattern>
   </servlet-mapping>
   
    
