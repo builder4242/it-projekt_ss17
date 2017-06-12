@@ -42,7 +42,8 @@ public class Testmain {
 		pmMapper.delete(p1);
 		*/
 		
-		System.out.println(pmMapper.findAll());
+		System.out.println(tmMapper.findByGoogleId("oie8tu49hgnovrhe"));
+		
 		
 		/*System.out.println(readDate());*/
 
