@@ -14,7 +14,21 @@
   <servlet-mapping>
     <servlet-name>MyProjektServlet</servlet-name>
     <url-pattern>/myprojekt/projektadmin</url-pattern>
+    <url-pattern>/myprojekt_reports/projektadmin</url-pattern>
   </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>MyProjektReportServlet</servlet-name>
+    <servlet-class>de.hdm.it_projekt.server.ReportGeneratorImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>MyProjektReportServlet</servlet-name>
+    <url-pattern>/myprojekt/reportgenerator</url-pattern>
+    <url-pattern>/myprojekt_reports/reportgenerator</url-pattern>
+  </servlet-mapping>
+  
   
   <servlet>
   <servlet-name>loginService</servlet-name>
@@ -25,10 +39,12 @@
   	<servlet-name>loginService</servlet-name>
   	<url-pattern>/myprojekt/login</url-pattern>
   </servlet-mapping>
+  
    
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>projektmarktplatz.html</welcome-file>    
+    <welcome-file>projektmarktplatz.html</welcome-file> 
+    <welcome-file>reportgenerator.html</welcome-file>       
   </welcome-file-list>
 
 </web-app>
