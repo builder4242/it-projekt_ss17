@@ -34,9 +34,31 @@ import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
  */
 public class MarktplatzUebersicht extends VerticalPanel{
 	
-	Label marktplatzUebersichtLabel = new Label("Marktplatzübersicht"); 
+	
+Label marktplatzUebersichtLabel = new Label("Marktplatzübersicht"); 
 	
 	VerticalPanel marktplatzPanel = new VerticalPanel();
+	
+	final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
+	
+	public MarktplatzUebersicht(){
+	
+	
+	Button anlegenMarktplatzButton = new Button(); 
+	anlegenMarktplatzButton.addClickHandler(new AnlegenMarktplatzClickHandler()); 
+	marktplatzPanel.add(anlegenMarktplatzButton);
+	
+	
+	
+	
+	}
+	
+	private class AnlegenMarktplatzClickHandler implements ClickHandler{
+		public void onClick(ClickEvent event){
+			Window.alert("Test");
+			
+		}
+	}
 	
 	
 	
