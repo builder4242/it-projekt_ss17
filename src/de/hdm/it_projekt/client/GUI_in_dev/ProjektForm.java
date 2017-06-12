@@ -13,11 +13,11 @@ import com.google.gwt.user.client.ui.TextBox;
  */
 public class ProjektForm {
 	
-	Label ProjektLabel = new Label(); 
-	TextBox NameTextBox = new TextBox(); 
-	TextArea BeschreibungTextArea = new TextArea(); 
+	Label projektLabel = new Label(); 
+	TextBox nameTextBox = new TextBox(); 
+	TextArea beschreibungTextArea = new TextArea(); 
 	
-	TextBox StartDatumProjekt = new TextBox(); 
-	TextBox EndDatumProjekt = new TextBox(); 
+	TextBox startDatumProjekt = new TextBox(); 
+	TextBox endDatumProjekt = new TextBox(); 
 	// ggf. mit Date Picker erweitern... 
 }
