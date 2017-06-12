@@ -1,6 +1,6 @@
 package de.hdm.it_projekt.client;
 
-import java.util.Vector;
+import java.util.Vector; 
 
 import com.google.gwt.core.client.*;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -89,7 +89,7 @@ public class MyProjekt implements EntryPoint {
 		final HorizontalPanel content = new HorizontalPanel();
 
 		final Label menulabel = new Label(
-				"hier sollte das Menü stehen !" + loginInfo.getEmailAddress() + loginInfo.getNickname());
+				"hier sollte das Menü stehen ! Google-Email " + loginInfo.getEmailAddress() + " Google-User: " + loginInfo.getNickname());
 		menu.add(menulabel);
 
 		final VerticalPanel projekte = new VerticalPanel();
