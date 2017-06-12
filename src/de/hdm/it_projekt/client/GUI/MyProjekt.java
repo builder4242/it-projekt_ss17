@@ -47,7 +47,7 @@ public class MyProjekt implements EntryPoint {
 	public void onModuleLoad() {
 		// Check login status using login service
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getModuleBaseURL(), new AsyncCallback<LoginInfo>() {
+		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
 			}
 
