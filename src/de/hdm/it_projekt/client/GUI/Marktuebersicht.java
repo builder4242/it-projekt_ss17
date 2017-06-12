@@ -2,15 +2,11 @@ package de.hdm.it_projekt.client.GUI;
 
 import java.util.Vector;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
@@ -37,13 +33,12 @@ public class Marktuebersicht extends Showcase {
 
 		final ListBox marktplaetze = new ListBox();
 
-		final Button change = new Button();
-		change.setText("wechseln");
-		change.addClickHandler(new ClickHandler() {
 
+		marktplaetze.addChangeHandler(new ChangeHandler() {
+			
 			@Override
-			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
+			public void onChange(ChangeEvent event) {
+ 
 				pa.getProjektMarktplatzById(Integer.parseInt(marktplaetze.getSelectedValue()),
 						new AsyncCallback<ProjektMarktplatz>() {
 
@@ -93,6 +88,7 @@ public class Marktuebersicht extends Showcase {
 			@Override
 			public void onSuccess(Vector<ProjektMarktplatz> result) {
 
+				marktplaetze.setVisibleItemCount(result.size());
 				for (ProjektMarktplatz pm : result) {
 					marktplaetze.addItem(pm.getBezeichnung(), Integer.toString(pm.getId()));
 				}
@@ -101,9 +97,7 @@ public class Marktuebersicht extends Showcase {
 
 		this.add(ausgabe);
 		this.add(marktplaetze);
-		this.add(change);
 		this.add(projekte);
-
 		
 	}
 

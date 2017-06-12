@@ -1,4 +1,4 @@
-package de.hdm.it_projekt.client.GUI_alt;
+package de.hdm.it_projekt.client.GUI_in_dev.GUI_alt;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,27 +12,27 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
-import de.hdm.it_projekt.shared.bo.BusinessObject;
-import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.BusinessObject;
+import de.hdm.it_projekt.shared.bo.Projekt;
 
 
-public class BewerbungAusschreibungTreeView implements TreeViewModel{
 
 
+public class ProjektAusschreibungTreeView implements TreeViewModel {
 
 	
-	private BewerbungForm bewerbungForm;
+	private ProjektForm projektForm;
 	private AusschreibungForm ausschreibungForm;
 
-	private Bewerbung selectedBewerbung = null;
+	private Projekt selectedProjekt = null;
 	private Ausschreibung selectedAusschreibung = null;
 
-	private ProjektAdministrationAsync projektVerwaltung = null; //warten auf anlage Async
-	private ListDataProvider<Bewerbung> BewerbungDataProvider = null;
+	private ProjektAdministrationAsync projektVerwaltung = null;
+	private ListDataProvider<Projekt> ProjektDataProvider = null;
 	
-	private Map<Bewerbung, ListDataProvider<Ausschreibung>> AusschreibungDataProviders = null;
+	private Map<Projekt, ListDataProvider<Ausschreibung>> AusschreibungDataProviders = null;
 
 	/**
 	 * Bildet BusinessObjects auf eindeutige Zahlenobjekte ab, die als Schlüssel
@@ -51,13 +51,33 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 			if (bo == null) {
 				return null;
 			}
-			if (bo instanceof Bewerbung) {
+			if (bo instanceof Projekt) {
 				return new Integer(bo.getId());
 			} else {
 				return new Integer(-bo.getId());
 			}
 		}
 	};
+
+	
+	
+	
+	
+	@Override
+	public <T> NodeInfo<?> getNodeInfo(T value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isLeaf(Object value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}
+
+
 
 /**
  * Diese Implementierung des TreeViewModels sorgt für die Verwaltung des Kunden-
@@ -78,15 +98,15 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	/**
 	 * Nested Class für die Reaktion auf Selektionsereignisse. Als Folge einer
 	 * Baumknotenauswahl wird je nach Typ des Business-Objekts der
-	 * "selectedBewerbung" bzw. das "selectedAusschreibung" gesetzt.
+	 * "selectedProjekt" bzw. das "selectedAusschreibung" gesetzt.
 	 */
 	private class SelectionChangeEventHandler implements
 			SelectionChangeEvent.Handler {
 		@Override
 		public void onSelectionChange(SelectionChangeEvent event) {
 			BusinessObject selection = selectionModel.getSelectedObject();
-			if (selection instanceof Bewerbung) {
-				setSelectedBewerbung((Bewerbung) selection);
+			if (selection instanceof Projekt) {
+				setSelectedProjekt((Projekt) selection);
 			} else if (selection instanceof Ausschreibung) {
 				setSelectedAusschreibung((Ausschreibung) selection);
 			}
@@ -97,30 +117,30 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	 * Im Konstruktor werden die für den Kunden- und Kontobaum wichtigen lokalen
 	 * Variaben initialisiert.
 	 */
-	public void BewerbungAusschreibungsTreeViewModel() {
+	public ProjektAusschreibungsTreeViewModel() {
 		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEventHandler());
-		AusschreibungDataProviders = new HashMap<Bewerbung, ListDataProvider<Ausschreibung>>();
+		AusschreibungDataProviders = new HashMap<Projekt, ListDataProvider<Ausschreibung>>();
 	}
 
-	void setBewerbungForm(Bewerbung cf) {
-		bewerbungForm = cf;
+	void setProjektForm(ProjektForm cf) {
+		projektForm = cf;
 	}
 
 	void setAusschreibungForm(AusschreibungForm af) {
 		ausschreibungForm = af;
 	}
 
-	Bewerbung getSelectedBewerbung() {
-		return selectedBewerbung;
+	Projekt getSelectedProjekt() {
+		return selectedProjekt;
 	}
 
-	void setSelectedBewerbung(Bewerbung c) {
-		selectedBewerbung = c;
-		bewerbungForm.setSelected(c);
+	void setSelectedProjekt(Projekt c) {
+		selectedProjekt = c;
+		projektForm.setSelected(c);
 		selectedAusschreibung = null;
 		ausschreibungForm.setSelected(null);
 	}
@@ -138,16 +158,16 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 		ausschreibungForm.setSelected(a);
 
 		if (a != null) {
-			projektVerwaltung.getBewerbungById(a.getOwnerID(),
-					new AsyncCallback<Bewerbung>() {
+			projektVerwaltung.getProjektById(a.getOwnerID(),
+					new AsyncCallback<Projekt>() {
 						@Override
 						public void onFailure(Throwable caught) {
 						}
 
 						@Override
-						public void onSuccess(Bewerbung bewerbung) {
-							selectedBewerbung = bewerbung;
-							bewerbungForm.setSelected(bewerbung);
+						public void onSuccess(Projekt projekt) {
+							selectedProjekt = projekt;
+							projektForm.setSelected(projekt);
 						}
 					});
 		}
@@ -156,52 +176,56 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	/*
 	 * Wenn ein Kunde neu erzeugt wurde, wird er selektiert.
 	 */
-	void addBewerbung(Bewerbung bewerbung) {
-		BewerbungDataProvider.getList().add(bewerbung);
-		selectionModel.setSelected(bewerbung, true);
+	void addProjekt(Projekt projekt) {
+		ProjektDataProvider.getList().add(projekt);
+		selectionModel.setSelected(projekt, true);
 	}
 
-	void updateBewerbung(Bewerbung bewerbung) {
-		List<Bewerbung> bewerbungList = BewerbungDataProvider.getList();
+	void updateProjekt(Projekt projekt) {
+		List<Projekt> projektList = ProjektDataProvider.getList();
 		int i = 0;
-		for (Bewerbung c : bewerbungList) {
-			if (c.getId() == bewerbung.getId()) {
-				bewerbungList.set(i, bewerbung);
+		for (Projekt c : projektList) {
+			if (c.getId() == projekt.getId()) {
+				projektList.set(i, projekt);
 				break;
 			} else {
 				i++;
 			}
 		}
-		BewerbungDataProvider.refresh();
+		ProjektDataProvider.refresh();
 	}
 
-	void removeBewerbung(Bewerbung bewerbung) {
-		BewerbungDataProvider.getList().remove(bewerbung);
-		AusschreibungDataProviders.remove(bewerbung);
+	void removeProjekt(Projekt projekt) {
+		ProjektDataProvider.getList().remove(projekt);
+		AusschreibungDataProviders.remove(projekt);
 	}
 
-	void addAusschreibungOfBewerbung(Ausschreibung ausschreibung, Bewerbung bewerbung) {
-		// falls es noch keinen Ausschreibung Provider für diesen Bewerbung gibt,
+	void removeAusschreibung(Ausschreibung projekt) {
+		ProjektDataProvider.getList().remove(projekt);
+		AusschreibungDataProviders.remove(projekt);
+	}
+	void addAusschreibungOfProjekt(Ausschreibung ausschreibung, Projekt projekt) {
+		// falls es noch keinen Ausschreibung Provider für diesen Projekt gibt,
 		// wurde der Baumknoten noch nicht geöffnet und wir brauchen nichts tun.
-		if (!AusschreibungDataProviders.containsKey(bewerbung)) {
+		if (!AusschreibungDataProviders.containsKey(projekt)) {
 			return;
 		}
 		ListDataProvider<Ausschreibung> AusschreibungsProvider = AusschreibungDataProviders
-				.get(bewerbung);
+				.get(projekt);
 		if (!AusschreibungsProvider.getList().contains(ausschreibung)) {
 			AusschreibungsProvider.getList().add(ausschreibung);
 		}
 		selectionModel.setSelected(ausschreibung, true);
 	}
 
-	void removeAusschreibungOfBewerbung(Ausschreibung ausschreibung, Bewerbung bewerbung) {
-		// falls es keinen Ausschreibung Provider für diesen Bewerbung gibt,
+	void removeAusschreibungOfProjekt(Ausschreibung ausschreibung, Projekt projekt) {
+		// falls es keinen Ausschreibung Provider für diesen Projekt gibt,
 		// wurde der Baumknoten noch nicht geöffnet und wir brauchen nichts tun.
-		if (!AusschreibungDataProviders.containsKey(bewerbung)) {
+		if (!AusschreibungDataProviders.containsKey(projekt)) {
 			return;
 		}
-		AusschreibungDataProviders.get(bewerbung).getList().remove(ausschreibung);
-		selectionModel.setSelected(bewerbung, true);
+		AusschreibungDataProviders.get(projekt).getList().remove(ausschreibung);
+		selectionModel.setSelected(projekt, true);
 	}
 
 	/*
@@ -210,11 +234,11 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	 * Baumstruktur noch ein "veraltetes" Kontoobjekt enthalten ist.
 	 */
 	void updateAusschreibung(Ausschreibung a) {
-		projektVerwaltung.getBewerbungById(a.getOwnerID(),
+		projektVerwaltung.getProjektById(a.getOwnerID(),
 				new UpdateAusschreibungCallback(a));
 	}
 
-	private class UpdateAusschreibungCallback implements AsyncCallback<Bewerbung> {
+	private class UpdateAusschreibungCallback implements AsyncCallback<Projekt> {
 
 		Ausschreibung ausschreibung = null;
 
@@ -227,8 +251,8 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 		}
 
 		@Override
-		public void onSuccess(Bewerbung bewerbung) {
-			List<Ausschreibung> ausschreibungList = AusschreibungDataProviders.get(bewerbung)
+		public void onSuccess(Projekt projekt) {
+			List<Ausschreibung> ausschreibungList = AusschreibungDataProviders.get(projekt)
 					.getList();
 			for (int i=0; i<ausschreibungList.size(); i++) {
 				if (ausschreibung.getId() == ausschreibungList.get(i).getId()) {
@@ -244,33 +268,33 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	public <T> NodeInfo<?> getNodeInfo(T value) {
 
 		if (value.equals("Root")) {
-			// Erzeugen eines ListDataproviders für Bewerbungdaten
-			BewerbungDataProvider = new ListDataProvider<Bewerbung>();
+			// Erzeugen eines ListDataproviders für Projektdaten
+			ProjektDataProvider = new ListDataProvider<Projekt>();
 			projektVerwaltung
-					.getAllBewerbungs(new AsyncCallback<Vector<Bewerbung>>() {
+					.getAllProjekts(new AsyncCallback<Vector<Projekt>>() {
 						@Override
 						public void onFailure(Throwable t) {
 						}
 
 						@Override
-						public void onSuccess(Vector<Bewerbung> Bewerbungs) {
-							for (Bewerbung c : Bewerbungs) {
-								BewerbungDataProvider.getList().add(c);
+						public void onSuccess(Vector<Projekt> Projekts) {
+							for (Projekt c : Projekts) {
+								ProjektDataProvider.getList().add(c);
 							}
 						}
 					});
 
 			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<Bewerbung>(BewerbungDataProvider,
-					new BewerbungCell(), selectionModel, null);
+			return new DefaultNodeInfo<Projekt>(ProjektDataProvider,
+					new ProjektCell(), selectionModel, null);
 		}
 
-		if (value instanceof Bewerbung) {
+		if (value instanceof Projekt) {
 			// Erzeugen eines ListDataproviders für Ausschreibung-Daten
 			final ListDataProvider<Ausschreibung> AusschreibungsProvider = new ListDataProvider<Ausschreibung>();
-			AusschreibungDataProviders.put((Bewerbung) value, AusschreibungsProvider);
+			AusschreibungDataProviders.put((Projekt) value, AusschreibungsProvider);
 
-			projektVerwaltung.getAusschreibungsOf((Bewerbung) value,
+			projektVerwaltung.getAusschreibungsOf((Projekt) value,
 					new AsyncCallback<Vector<Ausschreibung>>() {
 					
 						public void onFailure(Throwable t) {
@@ -299,17 +323,3 @@ public class BewerbungAusschreibungTreeView implements TreeViewModel{
 	}
 
 }
-	@Override
-	public <T> NodeInfo<?> getNodeInfo(T value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isLeaf(Object value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-}
-

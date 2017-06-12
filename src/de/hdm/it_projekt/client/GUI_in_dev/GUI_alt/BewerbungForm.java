@@ -1,11 +1,8 @@
-package de.hdm.it_projekt.client.GUI_alt;
-
+package de.hdm.it_projekt.client.GUI_in_dev.GUI_alt;
 /**
  * To be Done:
- * Projektverwaltung
- * ClientsideSettings
- * remove/addpartnerprofil
- * Clickhandler anpassen
+ * callback
+ * methode bewerben 
  */
 
 import java.text.DateFormat;
@@ -27,26 +24,31 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
+import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
+import de.hdm.it_projekt.shared.bo.Projekt;
+
 /**
-* Formular für die Darstellung der gewählten Partnerprofil
+* Formular für die Darstellung der gewählten Bewerbung
 * 
 * @author Julian Reimenthal
 */
-public class PartnerprofilForm extends VerticalPanel {
+
+public class BewerbungForm extends VerticalPanel {
 
 
 		ProjektAdministrationAsync projektVerwaltung = ClientsideSettings // waiting for Classes 
 				.getProjektAdministration();
-		Partnerprofil partnerprofilToDisplay = null;
-		PartnerprofilProjektTreeView catvm = null;
+		Bewerbung bewerbungToDisplay = null;
+		AusschreibungBewerbungTreeView catvm = null;
 
 		/*
 		 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 		 */
 		DateBox erstelldatumTextBox = new DateBox();
-		DateBox aenderungsdatumTextBox =new DateBox();
-		TextBox eigenschaftenTextBox = new TextBox();
+		TextBox bewerbungstextTextBox = new TextBox();
+		TextBox auschreibungTextBox = new TextBox();
+		TextBox organisationseinheitTextBox = new TextBox();
 		Label idValueLabel = new Label();
 
 		/*
@@ -54,43 +56,47 @@ public class PartnerprofilForm extends VerticalPanel {
 		 * einem Raster angeordnet, dessen Größe sich aus dem Platzbedarf
 		 * der enthaltenen Widgets bestimmt.
 		 */
-		public PartnerprofilForm() {
-			Grid partnerprofilGrid = new Grid(4, 2);
-			this.add(partnerprofilGrid);
+		public BewerbungForm() {
+			Grid bewerbungGrid = new Grid(5, 2);
+			this.add(bewerbungGrid);
 
 			Label idLabel = new Label("ID");
-			partnerprofilGrid.setWidget(0, 0, idLabel);
-			partnerprofilGrid.setWidget(0, 1, idValueLabel);
+			bewerbungGrid.setWidget(0, 0, idLabel);
+			bewerbungGrid.setWidget(0, 1, idValueLabel);
 
-			Label partnerprofilsErstelldatumLabel = new Label("Erstelldatum");
-			partnerprofilGrid.setWidget(1, 0, partnerprofilsErstelldatumLabel);
-			partnerprofilGrid.setWidget(1, 1, partnerprofilsErstelldatumLabel);
+			Label bewerbungsdatumLabel = new Label("Erstelldatum");
+			bewerbungGrid.setWidget(1, 0, bewerbungsdatumLabel);
+			bewerbungGrid.setWidget(1, 1, bewerbungsdatumLabel);
 			
-			Label partnerprofilAenderungsdatumLabel = new Label("Änderungsdatum");
-			partnerprofilGrid.setWidget(2, 0, partnerprofilAenderungsdatumLabel);
-			partnerprofilGrid.setWidget(2, 1, partnerprofilAenderungsdatumLabel);
+			Label bewerbungstextLabel = new Label("Bewerbungstext");
+			bewerbungGrid.setWidget(2, 0, bewerbungstextLabel);
+			bewerbungGrid.setWidget(2, 1, bewerbungstextLabel);
 			
-			Label partnerprofilEigenschaftenLabel = new Label("Eigenschaften");
-			partnerprofilGrid.setWidget(2, 0, partnerprofilEigenschaftenLabel);
-			partnerprofilGrid.setWidget(2, 1, partnerprofilEigenschaftenLabel);
+			Label auschreibungLabel = new Label("Ausschreibung");
+			bewerbungGrid.setWidget(2, 0, auschreibungLabel);
+			bewerbungGrid.setWidget(2, 1, auschreibungLabel);
 			
-			HorizontalPanel partnerprofilButtonsPanel = new HorizontalPanel();
-			this.add(partnerprofilButtonsPanel);
+			Label organisationseinheitLabel = new Label("Organisationseinheit");
+			bewerbungGrid.setWidget(2, 0, organisationseinheitLabel);
+			bewerbungGrid.setWidget(2, 1, organisationseinheitLabel);
+			
+			HorizontalPanel bewerbungButtonsPanel = new HorizontalPanel();
+			this.add(bewerbungButtonsPanel);
 
 			Button changeButton = new Button("Ändern");
 			changeButton.addClickHandler(new ChangeClickHandler());
-			partnerprofilButtonsPanel.add(changeButton);
+			bewerbungButtonsPanel.add(changeButton);
 
 			Button searchButton = new Button("Suchen");
-			partnerprofilButtonsPanel.add(searchButton);
+			bewerbungButtonsPanel.add(searchButton);
 
 			Button deleteButton = new Button("Löschen");
 			deleteButton.addClickHandler(new DeleteClickHandler());
-			partnerprofilButtonsPanel.add(deleteButton);
+			bewerbungButtonsPanel.add(deleteButton);
 
 			Button newButton = new Button("Neu");
 			newButton.addClickHandler(new NewClickHandler());
-			partnerprofilButtonsPanel.add(newButton);
+			bewerbungButtonsPanel.add(newButton);
 		}
 
 		/*
@@ -98,17 +104,17 @@ public class PartnerprofilForm extends VerticalPanel {
 		 */
 
 		/**
-		 * Die Änderung einer Partnerprofil.
+		 * Die Änderung einer Bewerbung.
 		 * 
 		 */
 		private class ChangeClickHandler implements ClickHandler {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (partnerprofilToDisplay != null) {
-					partnerprofilToDisplay.setAenderungsdatum(aenderungsdatumTextBox.getValue());
-					partnerprofilToDisplay.setErstelldatum(erstelldatumTextBox.getValue());
-					//partnerprofilToDisplay.setEigenschaften(bezeichnungTextBox.getValue());
-					projektVerwaltung.save(partnerprofilToDisplay, new SaveCallback());
+				if (bewerbungToDisplay != null) {
+					bewerbungToDisplay.setBewerbungstext(bewerbungstextTextBox.getText());
+					bewerbungToDisplay.setErstelldatum(erstelldatumTextBox.getValue());
+					//bewerbungToDisplay.setEigenschaften(bezeichnungTextBox.getValue());
+					projektVerwaltung.save(bewerbungToDisplay, new SaveCallback());
 				} else {
 					Window.alert("kein Kunde ausgewählt");
 				}
@@ -120,13 +126,13 @@ public class PartnerprofilForm extends VerticalPanel {
 		private class SaveCallback implements AsyncCallback<Void> {
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Die Namensänderung ist fehlgeschlagen!");
+				Window.alert("Die Änderung ist fehlgeschlagen!");
 			}
 
 			@Override
 			public void onSuccess(Void result) {
 				// Die Änderung wird zum Kunden- und Kontenbaum propagiert.
-				catvm.updatePartnerprofil(partnerprofilToDisplay);
+				catvm.updateBewerbung(bewerbungToDisplay);
 			}
 		}
 
@@ -139,33 +145,33 @@ public class PartnerprofilForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (partnerprofilToDisplay == null) {
+				if (bewerbungToDisplay == null) {
 					Window.alert("kein Kunde ausgewählt");
 				} else {
-					projektVerwaltung.delete(partnerprofilToDisplay,
-							new deletePartnerprofilCallback(partnerprofilToDisplay));
+					projektVerwaltung.delete(bewerbungToDisplay,
+							new deleteBewerbungCallback(bewerbungToDisplay));
 				}
 			}
 		}
 
-		class deletePartnerprofilCallback implements AsyncCallback<Void> {
+		class deleteBewerbungCallback implements AsyncCallback<Void> {
 
-			Partnerprofil partnerprofil = null;
+			Bewerbung bewerbung = null;
 
-			deletePartnerprofilCallback(Partnerprofil c) {
-				partnerprofil = c;
+			deleteBewerbungCallback(Bewerbung c) {
+				bewerbung = c;
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Das Löschen des Kunden ist fehlgeschlagen!");
+				Window.alert("Das Löschen der Bewerbung ist fehlgeschlagen!");
 			}
 
 			@Override
 			public void onSuccess(Void result) {
-				if (partnerprofil != null) {
+				if (bewerbung != null) {
 					setSelected(null);
-					catvm.removePartnerprofil(partnerprofil);
+					catvm.delete(bewerbung);
 				}
 			}
 		}
@@ -179,17 +185,15 @@ public class PartnerprofilForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				String bezeichnung = bezeichnungTextBox.getText();
-				String partnerprofilstext = partnerprofilstextTextBox.getText();
-				Partnerprofil p1 = new Partnerprofil();
-				p1.setEigenschaften((Eigenschaft).setName(partnerprofileigenschaftTextBox.getValue()));
-				
-				projektVerwaltung.createPartnerprofil(firstName, lastName,
-						new CreatePartnerprofilCallback());
+				String as = auschreibungTextBox.getText();
+				String bewerbungstext = bewerbungstextTextBox.getText();
+				String organisation = organisationseinheitTextBox.getValue();
+							
+				projektVerwaltung.bewerben(as, organisation, bewerbungstext, callback);
 			}
 		}
 
-		class CreatePartnerprofilCallback implements AsyncCallback<Partnerprofil> {
+		class CreateBewerbungCallback implements AsyncCallback<Bewerbung> {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -197,17 +201,17 @@ public class PartnerprofilForm extends VerticalPanel {
 			}
 
 			@Override
-			public void onSuccess(Partnerprofil partnerprofil) {
-				if (partnerprofil != null) {
+			public void onSuccess(Bewerbung bewerbung) {
+				if (bewerbung != null) {
 					// Das erfolgreiche Hinzufügen eines Kunden wird an den Kunden- und
 					// Kontenbaum propagiert.
-					catvm.addPartnerprofil(partnerprofil);
+					catvm.bewerben(bewerbung);
 				}
 			}
 		}
 
 		// catvm setter
-		void setCatvm(PartnerprofilProjektTreeView catvm) {
+		void setCatvm(AusschreibungBewerbungTreeView catvm) {
 			this.catvm = catvm;
 		}
 
@@ -216,14 +220,14 @@ public class PartnerprofilForm extends VerticalPanel {
 		 * zugehörenden Textfelder mit den Informationen aus dem Kundenobjekt
 		 * gefüllt bzw. gelöscht.
 		 */
-		void setSelected(Partnerprofil c) {
+		void setSelected(Bewerbung c) {
 			if (c != null) {
-				partnerprofilToDisplay = c;
-				partnerprofilstextTextBox.setText(partnerprofilToDisplay.getPartnerprofilstext());
-				erstelldatumTextBox.setTitle(partnerprofilToDisplay.getErstelldatum().toString());
-				idValueLabel.setText(Integer.toString(partnerprofilToDisplay.getId()));
+				bewerbungToDisplay = c;
+				bewerbungstextTextBox.setText(bewerbungToDisplay.getBewerbungstext());
+				erstelldatumTextBox.setTitle(bewerbungToDisplay.getErstelldatum().toString());
+				idValueLabel.setText(Integer.toString(bewerbungToDisplay.getId()));
 			} else {
-				partnerprofilstextTextBox.setText("");
+				bewerbungstextTextBox.setText("");
 				erstelldatumTextBox.setTitle("");
 				idValueLabel.setText("");
 			}
