@@ -18,4 +18,8 @@ public class MarktplatzForm {
 	
 	Button marktplatzAnlegenButton = new Button("Marktplatz anlegen"); 
 	
+	public MarktplatzForm(){
+		
+	}
+	
 }
