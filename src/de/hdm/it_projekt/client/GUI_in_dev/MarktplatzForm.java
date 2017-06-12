@@ -13,9 +13,9 @@ import com.google.gwt.user.client.ui.TextBox;
  */
 public class MarktplatzForm {
 			
-	Label MarktplatzLable = new Label(); 
-	TextBox MarktplatzNameTextBox = new TextBox(); 
+	Label marktplatzLable = new Label(); 
+	TextBox marktplatzNameTextBox = new TextBox(); 
 	
-	Button MarktplatzAnlegenButton = new Button("Marktplatz anlegen"); 
+	Button marktplatzAnlegenButton = new Button("Marktplatz anlegen"); 
 	
 }
