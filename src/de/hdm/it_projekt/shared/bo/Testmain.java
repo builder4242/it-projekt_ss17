@@ -11,8 +11,7 @@ public class Testmain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		ProjektMarktplatz pm1 = new ProjektMarktplatz();
-		pm1.setBezeichnung("Burger King");
+
 		
 		
 		
@@ -29,12 +28,8 @@ public class Testmain {
 		TeamMapper tmMapper = TeamMapper.teamMapper();
 		UnternehmenMapper unMapper = UnternehmenMapper.unternehmenMapper();
 		/*Ende Mapper Definitionen*/
-		
-		
-		System.out.println(pm1.getId() + " " + pm1.getBezeichnung());
-		
-		
-		pmMapper.insert(pm1);
+
+		//System.out.println(pm1.getId() + " " + pm1.getBezeichnung());
 
 		/*
 		p1.setBezeichnung("Volvo");
@@ -48,6 +43,11 @@ public class Testmain {
 		
 		System.out.println(tmMapper.findByMail("info@goodquality.de"));
 		System.out.println(tmMapper.findAll());
+		
+		
+		ProjektMarktplatz pm1 = new ProjektMarktplatz();
+		pm1 = pmMapper.findById(4);
+		System.out.println(psMapper.getByProjektMarktplatz(pm1));
 		
 		
 		/*System.out.println(readDate());*/
