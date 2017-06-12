@@ -92,6 +92,9 @@ public class LoginInfo implements Serializable {
 		this.loggedIn = loggedIn;
 	}
 	
+	public String toString() {
+		return this.getNickname() + " (" + this.getEmailAddress() + ")";
+	}
 	
 
 }
