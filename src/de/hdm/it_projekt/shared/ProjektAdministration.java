@@ -49,6 +49,12 @@ public interface ProjektAdministration extends RemoteService {
 	public Vector<Beteiligung> getBeteiligungenFor(Organisationseinheit o) throws IllegalArgumentException;
 	
 	public Vector<ProjektMarktplatz> getProjektMarktplaetzeByOrganisation(Organisationseinheit o) throws IllegalArgumentException;
+	
+	public Team findTeamByGoogleId(String googleID) throws IllegalArgumentException;
+	
+	public Unternehmen findUnternehmenByGoogleId(String googleID) throws IllegalArgumentException;
+	
+	public Person findPersonByGoogleId(String googleID) throws IllegalArgumentException;
 
 	/**
 	 * 

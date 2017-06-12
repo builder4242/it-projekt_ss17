@@ -367,7 +367,7 @@ public class UnternehmenMapper {
 	 * @param pm
 	 * @return
 	 */
-	public Unternehmen findByGoogleId(String googleID) {
+	public Unternehmen findUnternehmenByGoogleId(String googleID) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
