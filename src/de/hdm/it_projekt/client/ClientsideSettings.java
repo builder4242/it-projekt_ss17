@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.it_projekt.client.GUI_Report.ReportGenerator;
 import de.hdm.it_projekt.shared.*;
 
 

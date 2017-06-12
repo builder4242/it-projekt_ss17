@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Anchor;
 
 import de.hdm.it_projekt.client.GUI_in_dev.MarktplatzUebersicht;
@@ -35,10 +36,7 @@ public class MyProjekt implements EntryPoint {
 	 * Begin Attribute fuer Login
 	 */
 	private LoginInfo loginInfo = null;
-	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label("Bitte einloggen...");
-	private Anchor signInLink = new Anchor("Sign In");
-	private Anchor signOutLink = new Anchor("Sing Out");
+	
 	/* Ende Attribute fuer Login */
 
 	/**
@@ -49,7 +47,7 @@ public class MyProjekt implements EntryPoint {
 	public void onModuleLoad() {
 		// Check login status using login service
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+		loginService.login(GWT.getModuleBaseURL(), new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
 			}
 
@@ -58,22 +56,13 @@ public class MyProjekt implements EntryPoint {
 				if (loginInfo.isLoggedIn()) {
 					loadMyProjekt();
 				} else {
-					loadLogin();
+					LoginPanel loginPanel = new LoginPanel(loginInfo);
+					loginPanel.run();
 				}
 			}
 		});
 	}
 
-	/**
-	 * Methode stellt Login bereit
-	 */
-	private void loadLogin() {
-		// Assemble login panel
-		signInLink.setHref(loginInfo.getLoginUrl());
-		loginPanel.add(loginLabel);
-		loginPanel.add(signInLink);
-		RootPanel.get("content").add(loginPanel);
-	}
 
 	/**
 	 * Mit der Methode laodMyProjekt() wird der eigentliche Seiteninhalt geladen
@@ -81,93 +70,28 @@ public class MyProjekt implements EntryPoint {
 	@SuppressWarnings("deprecation")
 	private void loadMyProjekt() {
 
-		signOutLink.setHref(loginInfo.getLogoutUrl());
-
-		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
-
 		final HorizontalPanel menu = new HorizontalPanel();
-		final HorizontalPanel content = new HorizontalPanel();
-
-		final Label menulabel = new Label(
-				"hier sollte das Menü stehen !" + loginInfo.getEmailAddress() + loginInfo.getNickname());
-		menu.add(menulabel);
-
-		final VerticalPanel projekte = new VerticalPanel();
-		final Label ausgabe = new Label();
-
-		final ListBox marktplaetze = new ListBox();
-
-		final Button change = new Button();
-		change.setText("wechseln");
-		change.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				pa.getProjektMarktplatzById(Integer.parseInt(marktplaetze.getSelectedValue()),
-						new AsyncCallback<ProjektMarktplatz>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								projekte.add(new Label("Fehler im Projektmarktplatz."));
-							}
-
-							@Override
-							public void onSuccess(ProjektMarktplatz pm_result) {
-
-								pa.getAlleProjekteFor(pm_result, new AsyncCallback<Vector<Projekt>>() {
-
-									@Override
-									public void onFailure(Throwable caught) {
-
-										projekte.add(new Label("Fehler bei den Projekte."));
-									}
-
-									public void onSuccess(Vector<Projekt> pr_result) {
-
-										projekte.clear();
-										projekte.add(new Label("Projekte:"));
-										for (Projekt p : pr_result) {
-											projekte.add(new Label(p.toString()));
-										}
-
-									}
-
-								});
-
-							}
-						});
-			}
-		});
-
-		ausgabe.setText("Bitte wählen Sie einen Marktplatz aus:");
-
-		pa.getAlleProjektMarktplaetze(new AsyncCallback<Vector<ProjektMarktplatz>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-				ausgabe.setText(caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(Vector<ProjektMarktplatz> result) {
-
-				for (ProjektMarktplatz pm : result) {
-					marktplaetze.addItem(pm.getBezeichnung(), Integer.toString(pm.getId()));
-				}
-			}
-		});
-
-		content.add(ausgabe);
-		content.add(marktplaetze);
-		content.add(change);
-		content.add(projekte);
-
-		RootPanel.get("signout").add(signOutLink);
+		menu.add(new Label("menü ??"));
 		RootPanel.get("menu").add(menu);
-		RootPanel.get("content").add(content);
-
+		
+		
+		final HorizontalPanel loginHeader = new HorizontalPanel();
+		
+		final Label userInfo = new Label(loginInfo.toString());
+		loginHeader.add(userInfo);
+		
+		final Anchor signOutLink = new Anchor("abmelden");
+		signOutLink.setHref(loginInfo.getLogoutUrl());
+		loginHeader.add(signOutLink);
+		
+		RootPanel.get("userinfo").add(loginHeader);
+		
+				
+		Showcase showcase = new Marktuebersicht();
+		
+		RootPanel.get("content").clear();	
+		RootPanel.get("content").add(showcase);
+		
 	}
 
 }
