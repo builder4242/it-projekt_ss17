@@ -42,9 +42,12 @@ public class Testmain {
 		pmMapper.delete(p1);
 		*/
 		
-		System.out.println(tmMapper.findByGoogleId("oie8tu49hgnovrhe"));
-		System.out.println(unMapper.findByGoogleId("klsnjv98z793rhgobwv"));
-		System.out.println(psMapper.findByGoogleId("iurehf934fh3ovrv"));
+		System.out.println(tmMapper.findTeamByGoogleId("oie8tu49hgnovrhe"));
+		System.out.println(unMapper.findUnternehmenByGoogleId("klsnjv98z793rhgobwv"));
+		System.out.println(psMapper.findPersonByGoogleId("iurehf934fh3ovrv"));
+		
+		System.out.println(tmMapper.findByMail("info@goodquality.de"));
+		System.out.println(tmMapper.findAll());
 		
 		
 		/*System.out.println(readDate());*/
