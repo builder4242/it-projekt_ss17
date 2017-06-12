@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
+import de.hdm.it_projekt.shared.bo.Team;
 import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**
@@ -366,6 +367,49 @@ public class UnternehmenMapper {
 	 * @param pm
 	 * @return
 	 */
+	public Unternehmen findByGoogleId(String googleID) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Unternehmen u = null;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE GoogleID='"
+							+ googleID + "' AND Typ='U'");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Team-Objekt erstellt.
+			if (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				u = new Unternehmen();
+				u.setId(rs.getInt("ID"));
+				u.setName(rs.getString("Name"));
+				u.setEmail(rs.getString("Email"));
+				u.setStrasse(rs.getString("Strasse"));
+				u.setPlz(rs.getInt("PLZ"));
+				u.setOrt(rs.getString("Ort"));
+				u.setTel(rs.getString("Tel"));
+				u.setGoogleID(rs.getString("GoogleID"));
+				u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+
+			}
+		} catch (SQLException e7) {
+			e7.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return u;
+
+	}
+	
 	public Vector<Unternehmen> getByProjektMarktplatz(ProjektMarktplatz pm) {
 
 		// DB-Verbindung herstellen

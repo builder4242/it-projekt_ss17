@@ -43,6 +43,8 @@ public class Testmain {
 		*/
 		
 		System.out.println(tmMapper.findByGoogleId("oie8tu49hgnovrhe"));
+		System.out.println(unMapper.findByGoogleId("klsnjv98z793rhgobwv"));
+		System.out.println(psMapper.findByGoogleId("iurehf934fh3ovrv"));
 		
 		
 		/*System.out.println(readDate());*/
