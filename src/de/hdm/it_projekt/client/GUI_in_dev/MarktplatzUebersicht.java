@@ -44,9 +44,12 @@ Label marktplatzUebersichtLabel = new Label("Marktplatzübersicht");
 	public MarktplatzUebersicht(){
 	
 	
-	Button anlegenMarktplatzButton = new Button(); 
+	Button anlegenMarktplatzButton = new Button("Marktplatz angelgen"); 
 	anlegenMarktplatzButton.addClickHandler(new AnlegenMarktplatzClickHandler()); 
 	marktplatzPanel.add(anlegenMarktplatzButton);
+	
+	Button anzeigenMarktplatzButton = new Button("Marktplätze anzeigen"); 
+	anzeigenMarktplatzButton.addClickHandler(new AnzeigenMarktplatzClickHandler()); 
 	
 	
 	
@@ -56,9 +59,17 @@ Label marktplatzUebersichtLabel = new Label("Marktplatzübersicht");
 	private class AnlegenMarktplatzClickHandler implements ClickHandler{
 		public void onClick(ClickEvent event){
 			Window.alert("Test");
-			
+			// Verlinkung auf MarktplatzForm.java
 		}
 	}
+	
+	private class AnzeigenMarktplatzClickHandler implements ClickHandler{
+		public void onClick(ClickEvent event){
+			Window.alert("Test"); 
+		}
+	}
+	
+	
 	
 	
 	
