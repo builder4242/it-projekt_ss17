@@ -491,4 +491,22 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 		this.tMapper.delete(t);
 	}
+
+	@Override
+	public Team findTeamByGoogleId(String googleID) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Unternehmen findUnternehmenByGoogleId(String googleID) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Person findPersonByGoogleId(String googleID) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

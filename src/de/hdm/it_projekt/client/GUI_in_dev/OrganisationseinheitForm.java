@@ -13,13 +13,13 @@ import com.google.gwt.user.client.ui.TextBox;
  */
 public class OrganisationseinheitForm {
 	
-	Label OrganisationseinheitLabel = new Label(); 
-	TextBox NameTextBox = new TextBox(); 
-	TextBox EmailTextBox = new TextBox(); 
-	TextBox StrasseTextBox = new TextBox(); 
-	TextBox PLZTextBox = new TextBox(); 
-	TextBox OrtTextBox = new TextBox(); 
-	TextBox TelefonTextBox = new TextBox(); 
+	Label organisationseinheitLabel = new Label(); 
+	TextBox nameTextBox = new TextBox(); 
+	TextBox emailTextBox = new TextBox(); 
+	TextBox strasseTextBox = new TextBox(); 
+	TextBox plzTextBox = new TextBox(); 
+	TextBox ortTextBox = new TextBox(); 
+	TextBox telefonTextBox = new TextBox(); 
 	
-	Button OrganisationseinheitAnlegenButton = new Button("OE anlegen"); 
+	Button organisationseinheitAnlegenButton = new Button("OE anlegen"); 
 }

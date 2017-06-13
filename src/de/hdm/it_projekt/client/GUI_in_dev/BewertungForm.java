@@ -14,8 +14,8 @@ import com.google.gwt.user.client.ui.TextBox;
  */
 public class BewertungForm {
 			
-	Label BewertungLabel = new Label(); 
-	TextBox BewertungsScoreTextBox = new TextBox();  // Wert muss zwischen ß und 1 liegen 
-	TextArea BewertungsTextTextArea = new TextArea(); 
-	Button AbsensenButton = new Button("Bewerten"); 
+	Label bewertungLabel = new Label(); 
+	TextBox bewertungsScoreTextBox = new TextBox();  // Wert muss zwischen ß und 1 liegen 
+	TextArea bewertungsTextTextArea = new TextArea(); 
+	Button absensenButton = new Button("Bewerten"); 
 }

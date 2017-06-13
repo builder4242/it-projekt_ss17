@@ -1,4 +1,4 @@
-package de.hdm.it_projekt.client.GUI_alt;
+package de.hdm.it_projekt.client.GUI_in_dev.GUI_alt;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;

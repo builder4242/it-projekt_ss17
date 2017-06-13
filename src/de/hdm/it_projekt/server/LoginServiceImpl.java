@@ -9,8 +9,10 @@ package de.hdm.it_projekt.server;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import de.hdm.it_projekt.client.LoginInfo;
-import de.hdm.it_projekt.client.LoginService;
+
+import de.hdm.it_projekt.shared.LoginService;
+import de.hdm.it_projekt.shared.bo.LoginInfo;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -19,8 +21,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
 	
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Methode fuer UserLogin
 	 */

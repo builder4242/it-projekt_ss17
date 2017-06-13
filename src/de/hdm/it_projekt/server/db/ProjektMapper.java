@@ -264,6 +264,7 @@ public class ProjektMapper {
 				pr.setProjektbetreiberId(rs.getInt("ID"));
 				pr.setProjektleiterId(rs.getInt("ID"));
 
+				return pr;
 			}
 		} catch (SQLException e4) {
 			e4.printStackTrace();
@@ -384,7 +385,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projektmarktplatz_ID=" + pm.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE Projektmarktplatz_ID=" + pm.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.

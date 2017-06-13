@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
+import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**
  * Mapper-Klasse, die <code>Person</code>-Objekte auf eine relationale Datenbank
@@ -232,8 +233,8 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= "
-							+ id + " ORDER BY ID");
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= '"
+							+ id + "' AND Typ='" + SQLTYP + "' ORDER BY email");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -283,7 +284,7 @@ public class PersonMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
-							+ name + SQLTYP + "' ORDER BY Name");
+							+ name + "' AND Typ='" + SQLTYP + "' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
@@ -333,7 +334,7 @@ public class PersonMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
-							+ vorname + SQLTYP + "' ORDER BY Vorname");
+							+ vorname + "' AND Typ='" + SQLTYP + "' ORDER BY Vorname");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
@@ -384,7 +385,7 @@ public class PersonMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE email='"
-							+ email + SQLTYP + "' ORDER BY email");
+							+ email + "' AND Typ='" + SQLTYP + "' ORDER BY email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Person-Objekt erstellt.
@@ -411,6 +412,49 @@ public class PersonMapper {
 
 		// Ergebnisvektor zurueckgeben
 		return result;
+
+	}
+	
+	public Person findPersonByGoogleId(String googleID) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Person p = null;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE GoogleID='"
+							+ googleID + "' AND Typ='" + SQLTYP + "'");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Team-Objekt erstellt.
+			if (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				p = new Person();
+				p.setId(rs.getInt("ID"));
+				p.setName(rs.getString("Name"));
+				p.setEmail(rs.getString("Email"));
+				p.setStrasse(rs.getString("Strasse"));
+				p.setPlz(rs.getInt("PLZ"));
+				p.setOrt(rs.getString("Ort"));
+				p.setTel(rs.getString("Tel"));
+				p.setGoogleID(rs.getString("GoogleID"));
+				p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+
+			}
+		} catch (SQLException e7) {
+			e7.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return p;
 
 	}
 
