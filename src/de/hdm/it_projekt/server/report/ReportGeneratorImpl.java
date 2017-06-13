@@ -1,4 +1,5 @@
 package de.hdm.it_projekt.server.report;
+
 /**
  * 
  * To be Done
@@ -49,34 +50,25 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return
 	 * 
 	 */
-	public AusschreibungMapper getAlleAusschreibungen() {
-		// TODO Auto-generated method stub
+	public AusschreibungMapper getAlleAusschreibungen(){
 		asMapper.findAll();
 		return asMapper;
 	}
 
 	public AusschreibungMapper getAusschreibungenForPartnerprofil(Partnerprofil pp) {
-
 		asMapper.getByPartnerprofil(pp);
-
 		return asMapper;
-
 	}
 
 	public BewerbungMapper getBewerbungenOnAusschreibung(Ausschreibung a) {
-		
 		bwMapper.getByAusschreibung(a);
-
 		return bwMapper;
 
 	}
-	
-	public BewerbungMapper getBewerbungToAusschreibung (Organisationseinheit o){
+
+	public BewerbungMapper getBewerbungToAusschreibung(Organisationseinheit o) {
 		bwMapper.getByOrganisationseinheit(o);
-		
 		return bwMapper;
-		
 	}
-	 
 
 }
