@@ -1,14 +1,20 @@
 
 h1{
-	font-weight: bold; 		/*Überschriften fett */ 
-	color: blue;             /*Farbe der Überschrift blau*/
-	text-aligin: center; 	/*Überschriften zentreiren*/ 
+	font-weight: bold; 		/*ï¿½berschriften fett */ 
+	color: blue;             /*Farbe der ï¿½berschrift blau*/
+	text-aligin: center; 	/*ï¿½berschriften zentreiren*/ 
 }
 
 .myprojekt-headline{
-	font-weight: bold; 		/*Überschriften fett */ 
-	color: blue;             /*Farbe der Überschrift blau*/
-	text-aligin: center; 	/*Überschriften zentreiren*/ 
+	font-weight: bold; 		/*ï¿½berschriften fett */ 
+	color: blue;             /*Farbe der ï¿½berschrift blau*/
+	text-aligin: center; 	/*ï¿½berschriften zentreiren*/ 
+}
+
+.loginHeader{
+	font-weight: bold; 		/*ï¿½berschriften fett */ 
+	color: blue;             /*Farbe der ï¿½berschrift blau*/
+	text-aligin: center; 	/*ï¿½berschriften zentreiren*/ 
 }
 
 .myprojekt-simpletext{
