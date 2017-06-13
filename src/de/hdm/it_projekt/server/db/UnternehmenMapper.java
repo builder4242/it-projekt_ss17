@@ -108,7 +108,7 @@ public class UnternehmenMapper {
 						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ) "
 								+ "VALUES ('" + u.getId() + "','" + u.getName() + "','" + u.getEmail() + "','"
 								+ u.getStrasse() + "','" + u.getPlz() + "','" + u.getOrt() + "','" + u.getTel() + "','"
-								+ u.getGoogleID() + "','" + u.getPartnerprofilId() + "','" + SQLTYP + "')");
+								+ u.getGoogleID() + "',NULL,'" + SQLTYP + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
