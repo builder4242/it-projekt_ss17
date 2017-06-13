@@ -226,11 +226,12 @@ public class PersonMapper {
 
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
-
+		Person p = null;
+		
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-
+			
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= '"
@@ -244,7 +245,7 @@ public class PersonMapper {
 				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
 				// Ergebnis-Objekts
 
-				Person p = new Person();
+				p = new Person();
 				p.setId(rs.getInt("ID"));
 				p.setName(rs.getString("Name"));
 				p.setVorname(rs.getString("Vorname"));
@@ -255,13 +256,11 @@ public class PersonMapper {
 				p.setTel(rs.getString("Tel"));
 				p.setGoogleID(rs.getString("GoogleID"));
 
-				return p;
 			}
 		} catch (SQLException e5) {
 			e5.printStackTrace();
-			return null;
 		}
-		return null;
+		return p;
 	}
 
 	/**
