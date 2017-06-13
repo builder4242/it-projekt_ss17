@@ -76,10 +76,10 @@ public interface ProjektAdministration extends RemoteService {
 	public Person createPerson(String name, String vorname, String email, String strasse, int plz, String ort,
 			String tel, String googleId) throws IllegalArgumentException;
 
-	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel)
+	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel, String googleId)
 			throws IllegalArgumentException;
 
-	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel)
+	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel, String googleId)
 			throws IllegalArgumentException;
 
 	public Bewerbung bewerben(Ausschreibung as, Organisationseinheit organisation, String bewerbungstext) throws IllegalArgumentException;
