@@ -26,6 +26,7 @@ import de.hdm.it_projekt.shared.LoginService;
 import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.LoginInfo;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.client.ClientsideSettings;
@@ -36,6 +37,8 @@ public class MyProjekt implements EntryPoint {
 	 * Begin Attribute fuer Login
 	 */
 	private LoginInfo loginInfo = null;
+	private ProjektMarktplatz cpm = null;
+	private Organisationseinheit cu = null;
 	
 	/* Ende Attribute fuer Login */
 
@@ -74,6 +77,9 @@ public class MyProjekt implements EntryPoint {
 		menu.add(new Label("menü ??"));
 		RootPanel.get("menu").add(menu);
 		
+		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
+		
+		pa.findPersonByGoogleId(loginInfo, callback);)
 		
 		final HorizontalPanel loginHeader = new HorizontalPanel();
 		

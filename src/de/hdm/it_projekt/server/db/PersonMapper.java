@@ -414,7 +414,7 @@ public class PersonMapper {
 
 	}
 	
-	public Person findPersonByGoogleId(String googleID) {
+	public Person findByGoogleId(String googleID) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
