@@ -243,8 +243,8 @@ public class AusschreibungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Bezeichnung, Ausschreibungstext, Bewerbungsfrist, Projekt_ID, Partnerprofil_ID FROM ausschreibung "
-							+ "WHERE ID=" + id + " ORDER BY ID");
+					"SELECT ID, Bezeichnung, Ausschreibungstext, Bewerbungsfrist, Projekt_ID, Partnerprofil_ID FROM ausschreibung WHERE ID= "
+							+ id + " ORDER BY ID");
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
