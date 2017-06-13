@@ -246,8 +246,8 @@ public class BewerbungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Erstelldatum, Bewerbungstext, Ausschreibung_ID, Organisationseinheit_ID FROM bewerbung "
-							+ "WHERE ID=" + id + " ORDER BY ID");
+					"SELECT ID, Erstelldatum, Bewerbungstext, Ausschreibung_ID, Organisationseinheit_ID FROM bewerbung WHERE ID= "
+							+ id + " ORDER BY ID");
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel

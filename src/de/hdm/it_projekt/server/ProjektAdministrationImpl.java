@@ -221,7 +221,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Person createPerson(String name, String vorname, String email, String strasse, int plz, String ort,
-			String tel) throws IllegalArgumentException {
+			String tel, String googleId) throws IllegalArgumentException {
 
 		Person p = new Person();
 		p.setName(name);
@@ -231,6 +231,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		p.setPlz(plz);
 		p.setOrt(ort);
 		p.setTel(tel);
+		p.setGoogleID(googleId);
 
 		p.setId(1);
 
@@ -238,7 +239,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel)
+	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel, String googleId)
 			throws IllegalArgumentException {
 
 		Unternehmen u = new Unternehmen();
@@ -248,6 +249,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		u.setPlz(plz);
 		u.setOrt(ort);
 		u.setTel(tel);
+		u.setGoogleID(googleId);
 
 		u.setId(1);
 
@@ -255,7 +257,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel)
+	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel, String googleId)
 			throws IllegalArgumentException {
 		Team t = new Team();
 
@@ -265,6 +267,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		t.setPlz(plz);
 		t.setOrt(ort);
 		t.setTel(tel);
+		t.setGoogleID(googleId);
 
 		t.setId(1);
 
