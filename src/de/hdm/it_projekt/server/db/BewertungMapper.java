@@ -132,7 +132,7 @@ public class BewertungMapper {
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 			stmt.executeUpdate("UPDATE bewertung " + "SET Wert=\"" + bt.getWert() + "\"," + "Stellungnahme=\""
-					+ bt.getStellungnahme() + "\", " + "Erstelldatum=\"" + bt.getErstelldatum() + "\" " + "WHERE ID="
+					+ bt.getStellungnahme() + "\", " + "Erstelldatum=\"" + DBConnection.convertToSQLDateString(bt.getErstelldatum()) + "\" " + "WHERE ID="
 					+ bt.getId());
 
 		} catch (SQLException e2) {

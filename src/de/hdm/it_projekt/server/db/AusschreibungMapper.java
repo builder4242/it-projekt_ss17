@@ -138,7 +138,7 @@ public class AusschreibungMapper {
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 			stmt.executeUpdate("UPDATE ausschreibung " + "SET Bezeichnung=\"" + as.getBezeichnung() + "\", "
 					+ "Ausschreibungstext=\"" + as.getAusschreibungstext() + "\", " + "Bewerbungsfrist=\""
-					+ as.getBewerbungsfrist() + "\", " + "Projekt_ID=\"" + as.getProjektId() + "\", "
+					+ DBConnection.convertToSQLDateString(as.getBewerbungsfrist()) + "\", " + "Projekt_ID=\"" + as.getProjektId() + "\", "
 					+ "Partnerprofil_ID=\"" + as.getPartnerprofilId() + "\" " + "WHERE ID=" + as.getId());
 
 		}
