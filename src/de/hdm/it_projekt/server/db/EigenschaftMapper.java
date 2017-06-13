@@ -357,9 +357,9 @@ public class EigenschaftMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			// Statement ausfüllen und als Query an die DB schicken
+			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Wert,  FROM eigenschaft" + "WHERE Partnerprofil_ID=" + pp.getId());
+					.executeQuery("SELECT ID, Name, Wert FROM eigenschaft WHERE Partnerprofil_ID=" + pp.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschhaft-Objekt
