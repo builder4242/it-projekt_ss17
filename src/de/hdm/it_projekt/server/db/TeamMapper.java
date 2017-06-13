@@ -339,7 +339,7 @@ public class TeamMapper {
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE email='"
-							+ email + SQLTYP + "' ORDER BY email");
+							+ email + "' AND Typ='" + SQLTYP + "' ORDER BY email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Team-Objekt erstellt.
@@ -367,6 +367,49 @@ public class TeamMapper {
 
 		// Ergebnisvektor zurueckgeben
 		return result;
+
+	}
+	
+	public Team findTeamByGoogleId(String googleID) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Team t = null;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE GoogleID='"
+							+ googleID + "' AND Typ='" + SQLTYP + "'");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Team-Objekt erstellt.
+			if (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				t = new Team();
+				t.setId(rs.getInt("ID"));
+				t.setName(rs.getString("Name"));
+				t.setEmail(rs.getString("Email"));
+				t.setStrasse(rs.getString("Strasse"));
+				t.setPlz(rs.getInt("PLZ"));
+				t.setOrt(rs.getString("Ort"));
+				t.setTel(rs.getString("Tel"));
+				t.setGoogleID(rs.getString("GoogleID"));
+				t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+
+			}
+		} catch (SQLException e7) {
+			e7.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return t;
 
 	}
 

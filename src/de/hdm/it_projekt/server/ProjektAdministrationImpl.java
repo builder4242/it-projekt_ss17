@@ -53,11 +53,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	
 	@Override
 	public Vector<ProjektMarktplatz> getAlleProjektMarktplaetze() throws IllegalArgumentException {
-		Vector<ProjektMarktplatz> pm = this.pmMapper.findAll();
-		ProjektMarktplatz pm1 = new ProjektMarktplatz();
-		pm1.setBezeichnung("TestPM");
-		pm.add(pm1);
-		return pm;
+		return this.pmMapper.findAll();
 	}
 
 	@Override
@@ -494,5 +490,23 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	public void delete(Team t) throws IllegalArgumentException {
 
 		this.tMapper.delete(t);
+	}
+
+	@Override
+	public Team findTeamByGoogleId(String googleID) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Unternehmen findUnternehmenByGoogleId(String googleID) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Person findPersonByGoogleId(String googleID) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

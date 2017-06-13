@@ -23,7 +23,7 @@
 	<inherits name="com.google.gwt.logging.Logging" />
 
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='de.hdm.it_projekt.client.ReportGenerator'/>
+  <entry-point class='de.hdm.it_projekt.client.GUI_Report.ReportGenerator'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
