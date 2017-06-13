@@ -18,14 +18,8 @@ public class LoginPanel extends Showcase {
 	protected LoginPanel(LoginInfo loginInfo) {
 		this.loginInfo = loginInfo;
 	}
-	
-	@Override
-	protected String getHeadlineText() {
-		// TODO Auto-generated method stub
-		return "Login";
-	}
 
-	@Override
+	
 	protected void run() {
 
 		final Button loginButton = new Button("Login");
