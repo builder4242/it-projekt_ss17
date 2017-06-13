@@ -205,6 +205,57 @@ public class EigenschaftMapper {
 		// Ergebnisvektor zurueckgeben
 		return result;
 	}
+	
+	
+	/**
+	 * Suchen einer Eigenschaft mit vorgegebener ID. Da diese eindeutig ist,
+	 * wird genau ein Objekt zurueckgegeben.
+	 * 
+	 * @param id
+	 *            Primaerschluesselattribut in DB
+	 * @return Eigenschaft-Objekt, das dem uebergebenen Schluessel entspricht,
+	 *         null bei nicht vorhandenem DB-Tupel.
+	 */
+	
+	public Eigenschaft findById(int id) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Wert, Partnerprofil_ID FROM projekt WHERE ID= "
+							+ id + " ORDER BY ID");
+
+			/*
+			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
+			 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+			 */
+
+			if (rs.next()) {
+
+				// Ergebnis-Tupel in Objekt umwandeln
+				Eigenschaft e = new Eigenschaft();
+				e.setId(rs.getInt("ID"));
+				e.setName(rs.getString("Name"));
+				e.setWert(rs.getString("Wert"));
+				e.setPartnerprofilId(rs.getInt("ID"));
+			
+				return e;
+			}
+		} catch (SQLException e4) {
+			e4.printStackTrace();
+			return null;
+		}
+
+		return null;
+	}
+
 
 	/**
 	 * Auslesen aller Eigenschaft-Objekte mit gegebenem Namen

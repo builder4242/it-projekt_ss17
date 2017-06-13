@@ -237,8 +237,8 @@ public class BeteiligungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organisationseinheit_ID FROM beteiligung "
-							+ "WHERE ID=" + id + " ORDER BY ID");
+					"SELECT ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organisationseinheit_ID FROM beteiligung WHERE ID= "
+							+ id + " ORDER BY ID");
 
 			/*
 			 * Da id Primäerschluessel ist, kann max. nur ein Tupel
