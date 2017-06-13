@@ -109,7 +109,7 @@ public class TeamMapper {
 						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ) "
 								+ "VALUES ('" + t.getId() + "','" + t.getName() + "','" + t.getEmail() + "','"
 								+ t.getStrasse() + "','" + t.getPlz() + "','" + t.getOrt() + "','" + t.getTel() + "','"
-								+ t.getGoogleID() + "','" + t.getPartnerprofilId() + "','" + SQLTYP + "')");
+								+ t.getGoogleID() + "',NULL,'" + SQLTYP + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

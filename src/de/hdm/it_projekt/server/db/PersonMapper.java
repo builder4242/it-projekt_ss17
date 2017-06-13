@@ -106,9 +106,8 @@ public class PersonMapper {
 				stmt.executeUpdate(
 						"INSERT INTO organisationseinheit (ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ) "
 								+ "VALUES ('" + p.getId() + "','" + p.getName() + "','" + p.getVorname() + "','"
-								+ p.getEmail() + "','" + p.getStrasse() + "','" + p.getPlz() + "','" + p.getOrt()
-								+ "','" + p.getTel() + "','" + p.getGoogleID() + "','" + p.getPartnerprofilId() + "','"
-								+ SQLTYP + "')");
+								+ p.getEmail() + "','" + p.getStrasse() + "'," + p.getPlz() + ",'" + p.getOrt()
+								+ "','" + p.getTel() + "','" + p.getGoogleID() + "',NULL,'" + SQLTYP + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
