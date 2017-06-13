@@ -184,7 +184,7 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Wert, Partnerprofil_ID " + "FROM eigenschaft " + " ORDER BY ID");
+					.executeQuery("SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft " + " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschaft-Objekt erstellt.
@@ -205,8 +205,7 @@ public class EigenschaftMapper {
 		// Ergebnisvektor zurueckgeben
 		return result;
 	}
-	
-	
+
 	/**
 	 * Suchen einer Eigenschaft mit vorgegebener ID. Da diese eindeutig ist,
 	 * wird genau ein Objekt zurueckgegeben.
@@ -216,7 +215,7 @@ public class EigenschaftMapper {
 	 * @return Eigenschaft-Objekt, das dem uebergebenen Schluessel entspricht,
 	 *         null bei nicht vorhandenem DB-Tupel.
 	 */
-	
+
 	public Eigenschaft findById(int id) {
 
 		// DB-Verbindung herstellen
@@ -229,8 +228,7 @@ public class EigenschaftMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Wert, Partnerprofil_ID FROM projekt WHERE ID= "
-							+ id + " ORDER BY ID");
+					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE ID= " + id + " ORDER BY ID");
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -245,7 +243,7 @@ public class EigenschaftMapper {
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
 				e.setPartnerprofilId(rs.getInt("ID"));
-			
+
 				return e;
 			}
 		} catch (SQLException e4) {
@@ -255,7 +253,6 @@ public class EigenschaftMapper {
 
 		return null;
 	}
-
 
 	/**
 	 * Auslesen aller Eigenschaft-Objekte mit gegebenem Namen
@@ -281,7 +278,7 @@ public class EigenschaftMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE name='" + name + "'ORDER BY name");
+					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE name='" + name + "' ORDER BY name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschaft-Objekt
@@ -328,7 +325,6 @@ public class EigenschaftMapper {
 
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE Wert='" + wert + "' ORDER BY Wert");
- 
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschhaft-Objekt
@@ -350,7 +346,7 @@ public class EigenschaftMapper {
 		// Ergebnisvektor zurueckgeben
 		return result;
 	}
-	
+
 	public Vector<Eigenschaft> getByPartnerprofil(Partnerprofil pp) {
 
 		// DB-Verbindung herstellen
@@ -362,8 +358,8 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfüllen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert FROM eigenschaft"
-					+ "WHERE Partnerprofil_ID=" + pp.getId());
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID, Name, Wert,  FROM eigenschaft" + "WHERE Partnerprofil_ID=" + pp.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschhaft-Objekt
@@ -377,13 +373,12 @@ public class EigenschaftMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);
 			}
-		} catch (SQLException e6) {
-			e6.printStackTrace();
+		} catch (SQLException e7) {
+			e7.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
 		return result;
 	}
-	
-	
+
 }

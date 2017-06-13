@@ -194,8 +194,8 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID "
-							+ "FROM projekt " + "ORDER BY Name ");
+					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID FROM projekt "
+							+ "ORDER BY Name ");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
