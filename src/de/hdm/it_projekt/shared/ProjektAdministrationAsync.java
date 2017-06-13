@@ -116,7 +116,7 @@ public interface ProjektAdministrationAsync {
 	void getProjektMarktplaetzeByOrganisation(Organisationseinheit o,
 			AsyncCallback<Vector<ProjektMarktplatz>> callback);
 
-	void findByGoogleId(LoginInfo li, AsyncCallback<Team> callback);
+	void findByGoogleId(LoginInfo li, AsyncCallback<Organisationseinheit> callback);
 
 
 }
