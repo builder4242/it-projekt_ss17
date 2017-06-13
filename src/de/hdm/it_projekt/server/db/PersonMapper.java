@@ -4,6 +4,7 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -131,11 +132,29 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE organisationseinheit SET Name= '" + p.getName() + ", SET Vorname= "
-					+ p.getVorname() + ", " + "SET Email = " + p.getEmail() + ", " + "SET Strasse = " + p.getStrasse()
-					+ ", " + "SET PLZ = " + p.getPlz() + ", " + "SET Ort = " + p.getOrt() + ", " + "SET Tel = "
-					+ p.getTel() + ", " + "SET GoogleID=\"" + p.getGoogleID() + ", " + "SET Partnerprofil_ID=\""
-					+ p.getPartnerprofilId() + ", ' WHERE ID=" + p.getId());
+		/*	stmt.executeUpdate("UPDATE organisationseinheit SET Name=\"" + p.getName() + "\", SET Vorname=\""
+					+ p.getVorname() + "\", " + "SET Email=\"" + p.getEmail() + "\", " + "SET Strasse=\"" + p.getStrasse()
+					+ "\", " + "SET PLZ=\"" + p.getPlz() + "\", " + "SET Ort=\"" + p.getOrt() + "\", " + "SET Tel=\""
+					+ p.getTel() + "\", " + "SET GoogleID=\"" + p.getGoogleID() + "\", " + "SET Partnerprofil_ID=\""
+					+ p.getPartnerprofilId() + "\", ' WHERE ID=\"" + p.getId()); */
+			
+			   PreparedStatement pstmt = con.prepareStatement("UPDATE organisationseinheit SET Typ = ?, Name = ?, Vorname = ?, Email = ?, Strasse = ?, Plz = ?, Ort = ?, Tel = ?, GoogleID = ?, Partnerprofil_ID = ? WHERE ID = ?");	   
+                    		   pstmt.setString(1, SQLTYP);
+                    		   pstmt.setString(2,p.getName());
+                    		   pstmt.setString(3, p.getVorname());
+                    		   pstmt.setString(4, p.getEmail());
+                    		   pstmt.setString(5, p.getStrasse());
+                    		   pstmt.setInt(6, p.getPlz());
+                    		   pstmt.setString(7, p.getOrt());
+                    		   pstmt.setString(8, p.getTel());
+                    		   pstmt.setString(9, p.getGoogleID());
+                    		   pstmt.setInt(10, p.getPartnerprofilId());
+                    		   pstmt.setInt(11, p.getId());
+                    		   
+                  System.out.println(pstmt.toString());
+                  pstmt.executeUpdate();
+                  pstmt.close();
+		
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
