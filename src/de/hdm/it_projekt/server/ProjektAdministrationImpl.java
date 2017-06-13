@@ -498,8 +498,8 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		Organisationseinheit o = null;
 		
 		Person p = pMapper.findByGoogleId(li.getEmailAddress());
-		Unternehmen u = uMapper.getByGoogleId(li.getEmailAddress());
-		Team t = tMapper.getByGoogleId(li.getEmailAddress());
+		Unternehmen u = uMapper.findByGoogleId(li.getEmailAddress());
+		Team t = tMapper.findByGoogleId(li.getEmailAddress());
 		
 		if(p != null)
 			o = p;
