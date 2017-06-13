@@ -37,7 +37,6 @@ public class Testmain {
 		pmMapper.delete(p1);
 		*/
 		
-
 		System.out.println(tmMapper.findByMail("info@goodquality.de"));
 		System.out.println(tmMapper.findAll());
 		
@@ -45,6 +44,22 @@ public class Testmain {
 		ProjektMarktplatz pm1 = new ProjektMarktplatz();
 		pm1 = pmMapper.findById(4);
 		System.out.println(psMapper.getByProjektMarktplatz(pm1));
+		
+		
+		Person p1 = new Person();
+		p1.setId(4);
+		p1.setName("Bulat");
+		p1.setVorname("Tugba");
+		p1.setEmail("tugba@bulat.de");
+		p1.setStrasse("Weg3");
+		p1.setPlz(10100);
+		p1.setOrt("Hier");
+		p1.setTel("0711000000");
+		p1.setGoogleID("vgndgzmtumtdntz345t");
+		p1.setPartnerprofilId(2);
+		
+		psMapper.update(p1);
+
 		
 		
 		/*System.out.println(readDate());*/
