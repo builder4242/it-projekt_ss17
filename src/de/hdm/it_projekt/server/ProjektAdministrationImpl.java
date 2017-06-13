@@ -493,20 +493,22 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Team findTeamByGoogleId(String googleID) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Organisationseinheit findByGoogleId(LoginInfo li) throws IllegalArgumentException {
 
-	@Override
-	public Unternehmen findUnternehmenByGoogleId(String googleID) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Person findPersonByGoogleId(String googleID) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Organisationseinheit o = null;
+		
+		Person p = pMapper.findByGoogleId(li.getEmailAddress());
+		Unternehmen u = uMapper.getByGoogleId(li.getEmailAddress());
+		Team t = tMapper.getByGoogleId(li.getEmailAddress());
+		
+		if(p != null)
+			o = p;
+		if(u != null)
+			o = u;
+		if(t != null)
+			o = t;		
+		
+		return o;
+		
 	}
 }
