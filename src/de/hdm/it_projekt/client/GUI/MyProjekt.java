@@ -75,6 +75,21 @@ public class MyProjekt implements EntryPoint {
 		final HorizontalPanel menu = new HorizontalPanel();
 		menu.add(new Label("menü ??"));
 		RootPanel.get("menu").add(menu);
+		
+		/* Menüleiste */ 
+		Button marktplaetzeButton = new Button(); 
+		marktplaetzeButton.setStyleName("myprojekt-menubutton");
+		Button projekteButton = new Button(); 
+		projekteButton.setStyleName("myprojekt-menubutton");
+		Button profilButton = new Button(); 
+		profilButton.setStyleName("myprojekt-menubutton");
+		Button bewerbungButton = new Button(); 
+		bewerbungButton.setStyleName("myprojekt-menubutton");
+		Button abmeldungButton = new Button(); 
+		abmeldungButton.setStyleName("myprojekt-menubutton");
+		
+		
+		
 
 		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
