@@ -370,7 +370,7 @@ public class TeamMapper {
 
 	}
 	
-	public Team findTeamByGoogleId(String googleID) {
+	public Team findByGoogleId(String googleID) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
