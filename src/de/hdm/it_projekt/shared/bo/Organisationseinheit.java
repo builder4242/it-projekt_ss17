@@ -146,14 +146,14 @@ public abstract class Organisationseinheit extends BusinessObject {
 	/**
 	 * @return the googleID
 	 */
-	public String getGoogleId() {
+	public String getGoogleID() {
 		return googleId;
 	}
 
 	/**
 	 * @param googleID the googleID to set
 	 */
-	public void setGoogleId(String googleId) {
+	public void setGoogleID(String googleId) {
 		this.googleId = googleId;
 	}
 	

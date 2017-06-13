@@ -231,7 +231,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		p.setPlz(plz);
 		p.setOrt(ort);
 		p.setTel(tel);
-		p.setGoogleId(googleId);
+		p.setGoogleID(googleId);
 
 		p.setId(1);
 
