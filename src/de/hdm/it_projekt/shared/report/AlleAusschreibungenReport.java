@@ -1,9 +1,15 @@
 package de.hdm.it_projekt.shared.report;
 
+import java.util.Vector;
+
+import de.hdm.it_projekt.client.GUI_Report.ReportGenerator;
+import de.hdm.it_projekt.server.db.AusschreibungMapper;
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 /**
  * 
- * <p>Abfrage von sämtlichen Ausschreibungen, die dem Partnerprofil des Benutzers entsprechend.</p>
+ * <p>Abfrage von sï¿½mtlichen Ausschreibungen, die dem Partnerprofil des Benutzers entsprechend.</p>
  * 
  * @author Daniel Miedtank
  *

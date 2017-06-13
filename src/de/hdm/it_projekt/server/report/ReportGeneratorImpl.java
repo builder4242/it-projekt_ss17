@@ -4,9 +4,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.it_projekt.server.db.*;
 import de.hdm.it_projekt.shared.ReportGenerator;
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 @SuppressWarnings("serial")
-public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator  {
+public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
 
 	private AusschreibungMapper asMapper = null;
 	private BeteiligungMapper btMapper = null;
@@ -19,7 +22,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	private ProjektMarktplatzMapper pmMapper = null;
 	private TeamMapper tMapper = null;
 	private UnternehmenMapper uMapper = null;
-	
+
 	public void init() throws IllegalArgumentException {
 		this.asMapper = AusschreibungMapper.ausschreibungMapper();
 		this.btMapper = BeteiligungMapper.beteiligungMapper();
@@ -33,5 +36,33 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		this.tMapper = TeamMapper.teamMapper();
 		this.uMapper = UnternehmenMapper.unternehmenMapper();
 	}
+
+	/**
+	 * @return
+	 * 
+	 */
+	public AusschreibungMapper getAlleAusschreibungen() {
+		// TODO Auto-generated method stub
+		asMapper.findAll();
+		return asMapper;
+	}
+
+	public AusschreibungMapper getAusschreibungenForPartnerprofil(Partnerprofil pp) {
+
+		asMapper.getByPartnerprofil(pp);
+
+		return asMapper;
+
+	}
+
+	public BewerbungMapper getBewerbungenOnAusschreibung(Ausschreibung a) {
+
+		bwMapper.getByAusschreibung(a);
+
+		return bwMapper;
+
+	}
+	
+	public 
 
 }
