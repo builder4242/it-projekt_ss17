@@ -1,13 +1,15 @@
 
 h1{
 
-    font-weight: bold; 		/*ï¿½berschriften fett */
+    font-weight: bold; 		/*Überschriften fett */
     color: blue;             /*Farbe der ï¿½berschrift blau*/
     text-aligin: center; 	/*ï¿½berschriften zentreiren*/
+    font-family: Verdana;
 }
 
 .myprojekt-headline{
     font-weight: bold; 		/*ï¿½berschriften fett */
+    font-family: Verdana;
     color: blue;             /*Farbe der ï¿½berschrift blau*/
     text-aligin: center; 	/*ï¿½berschriften zentreiren*/
 
@@ -18,23 +20,25 @@ h1{
 
 .myprojekt-headline{
 	font-weight: bold; 		/*ï¿½berschriften fett */ 
+	font-family: Verdana;
 	color: blue;             /*Farbe der ï¿½berschrift blau*/
 	text-aligin: center; 	/*ï¿½berschriften zentreiren*/ 
 }
 
 .loginHeader{
 	font-weight: bold; 		/*ï¿½berschriften fett */ 
+	font-family: Verdana;
 	color: blue;             /*Farbe der ï¿½berschrift blau*/
 	text-aligin: center; 	/*ï¿½berschriften zentreiren*/ 
 
 }
 
 .myprojekt-simpletext{
-
+	font-family: Verdana;
 }
 
 .myproject-textfield{
-
+	font-family: Verdana;
 }
 
 .myprojekt-button{
@@ -91,9 +95,15 @@ h1{
 }
 
 .myprojekt-label{
-
+	font-family: Verdana;
 }
 
+.myprojekt-ListBox {
+	font-family: Verdana;
+	font-size: 15px; 
+	
+	
+}
 
 
 div#main {
@@ -176,6 +186,8 @@ div#footer {
     margin-right: auto;
 }
 
+
+/*
 .gwt-MenuBar {
     cursor: default;
 }
@@ -290,6 +302,10 @@ div#footer {
     background: url(images/corner.png) no-repeat -5px -41px;
     -background: url(images/corner_ie6.png) no-repeat -5px -41px;
 }
+
+*/ 
+
+
 html>body .gwt-MenuBarPopup {
 }
 * html .gwt-MenuBarPopup .menuPopupTopLeftInner {
