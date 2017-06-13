@@ -125,8 +125,9 @@ public class PartnerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE partnerprofil SET Erstelldatum=\"" + pp.getErstelldatum() + "\", "
-					+ "Aenderungsdatum=\"" + pp.getAenderungsdatum() + "\" WHERE ID= " + pp.getId());
+			stmt.executeUpdate("UPDATE partnerprofil SET Erstelldatum=\""
+					+ DBConnection.convertToSQLDateString(pp.getErstelldatum()) + "\", " + "Aenderungsdatum=\""
+					+ DBConnection.convertToSQLDateString(pp.getAenderungsdatum()) + "\" WHERE ID=" + pp.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -204,7 +205,7 @@ public class PartnerprofilMapper {
 	 * Suchen eines Partnerprofils mit vorgegebener ID. Da diese eindeutig ist,
 	 * wird genau ein Objekt zurueckgegeben.
 	 * 
-	 * @param ID
+	 * @param id
 	 *            - Primaerschluesselattribut in DB
 	 * @return Partnerprofil-Objekt, das dem uebergebenen Schluessel entspricht,
 	 *         null bei nicht vorhandenem DB-Tupel.
@@ -213,6 +214,7 @@ public class PartnerprofilMapper {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
+		Partnerprofil pp = null;
 
 		try {
 
@@ -231,11 +233,11 @@ public class PartnerprofilMapper {
 
 				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
 				// Ergebnis-Objekts
-				Partnerprofil pp = new Partnerprofil();
+				pp = new Partnerprofil();
 
 				pp.setId(rs.getInt("ID"));
-				pp.setErstelldatum(rs.getDate("erstelldatum"));
-				pp.setAenderungsdatum(rs.getDate("aenderungsdatum"));
+				pp.setErstelldatum(rs.getDate("Erstelldatum"));
+				pp.setAenderungsdatum(rs.getDate("Aenderungsdatum"));
 
 				return pp;
 			}
@@ -243,7 +245,7 @@ public class PartnerprofilMapper {
 			e5.printStackTrace();
 			return null;
 		}
-		return null;
+		return pp;
 	}
 
 }
