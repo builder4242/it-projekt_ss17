@@ -18,41 +18,69 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class Marktuebersicht extends Showcase {
-	
-	final VerticalPanel projekte = new VerticalPanel();
+
 	final Label ausgabe = new Label();
 
-	final ListBox marktplaetze = new ListBox();
+	final ListBox memberPmLb = new ListBox();
+	final ListBox nonmemberPmLb = new ListBox();
+
+	Vector<ProjektMarktplatz> memberPm = new Vector<ProjektMarktplatz>();
 
 	public Marktuebersicht() {
 
-		
-
-		marktplaetze.addChangeHandler(new SelectChangeHandler());
+		memberPmLb.addChangeHandler(new SelectChangeHandler());
 
 		ausgabe.setText("Bitte wählen Sie einen Marktplatz aus:");
 
-		pa.getAlleProjektMarktplaetze(new AsyncCallback<Vector<ProjektMarktplatz>>() {
+/*
+		pa.getProjektMarktplaetzeByOrganisation(MyProjekt.cu, new AsyncCallback<Vector<ProjektMarktplatz>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 
-				ausgabe.setText(caught.getMessage());
+				Window.alert("Es ist ein Fehler aufgetreten");
 			}
 
 			@Override
 			public void onSuccess(Vector<ProjektMarktplatz> result) {
 
-				marktplaetze.setVisibleItemCount(result.size());
+				memberPm = result;
+
+				memberPmLb.setVisibleItemCount(result.size() + 1);
+
 				for (ProjektMarktplatz pm : result) {
-					marktplaetze.addItem(pm.getBezeichnung(), Integer.toString(pm.getId()));
+					memberPmLb.addItem(pm.getBezeichnung(), Integer.toString(pm.getId()));
 				}
+
+				
+			}
+		});*/
+		
+		pa.getAlleProjektMarktplaetze(new AsyncCallback<Vector<ProjektMarktplatz>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+				Window.alert("Fehler beim Abruf der Projekt Marktplätze");
+			}
+
+			@Override
+			public void onSuccess(Vector<ProjektMarktplatz> result) {
+
+				for (ProjektMarktplatz pm : result) {
+					nonmemberPmLb.addItem(pm.getBezeichnung(), Integer.toString(pm.getId()));
+					for (ProjektMarktplatz mpm : memberPm) {
+						
+							
+					}
+				}
+
 			}
 		});
 
 		this.add(ausgabe);
-		this.add(marktplaetze);
-		this.add(projekte);
+		this.add(memberPmLb);
+		this.add(nonmemberPmLb);
 
 	}
 
@@ -61,7 +89,7 @@ public class Marktuebersicht extends Showcase {
 		@Override
 		public void onChange(ChangeEvent event) {
 
-			pa.getProjektMarktplatzById(Integer.parseInt(marktplaetze.getSelectedValue()),
+			pa.getProjektMarktplatzById(Integer.parseInt(memberPmLb.getSelectedValue()),
 					new AsyncCallback<ProjektMarktplatz>() {
 
 						@Override
@@ -70,27 +98,7 @@ public class Marktuebersicht extends Showcase {
 						}
 
 						@Override
-						public void onSuccess(ProjektMarktplatz pm_result) {
-
-							pa.getAlleProjekteFor(pm_result, new AsyncCallback<Vector<Projekt>>() {
-
-								@Override
-								public void onFailure(Throwable caught) {
-
-									projekte.add(new Label("Fehler bei den Projekte."));
-								}
-
-								public void onSuccess(Vector<Projekt> pr_result) {
-
-									projekte.clear();
-									projekte.add(new Label("Projekte:"));
-									for (Projekt p : pr_result) {
-										projekte.add(new Label(p.toString()));
-									}
-
-								}
-
-							});
+						public void onSuccess(ProjektMarktplatz result) {
 
 						}
 					});

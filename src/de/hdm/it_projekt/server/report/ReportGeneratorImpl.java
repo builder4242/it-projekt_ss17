@@ -1,5 +1,13 @@
 package de.hdm.it_projekt.server.report;
 
+/**
+ * 
+ * To be Done
+ * getBewerbungToAusschreibung - Ausschreibungen auslesen
+ * Methode zum auslesen an welchen Projekten eines Marktplatzes eine OE beteiligt ist 
+ * Fan-In/Fan-Out Analyse
+ * 
+ */
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.it_projekt.server.db.*;
@@ -7,6 +15,7 @@ import de.hdm.it_projekt.shared.ReportGenerator;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
+import de.hdm.it_projekt.shared.bo.Person;
 
 @SuppressWarnings("serial")
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
@@ -41,28 +50,25 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return
 	 * 
 	 */
-	public AusschreibungMapper getAlleAusschreibungen() {
-		// TODO Auto-generated method stub
+	public AusschreibungMapper getAlleAusschreibungen(){
 		asMapper.findAll();
 		return asMapper;
 	}
 
 	public AusschreibungMapper getAusschreibungenForPartnerprofil(Partnerprofil pp) {
-
 		asMapper.getByPartnerprofil(pp);
-
 		return asMapper;
-
 	}
 
 	public BewerbungMapper getBewerbungenOnAusschreibung(Ausschreibung a) {
-
 		bwMapper.getByAusschreibung(a);
-
 		return bwMapper;
 
 	}
-	
-	public 
+
+	public BewerbungMapper getBewerbungToAusschreibung(Organisationseinheit o) {
+		bwMapper.getByOrganisationseinheit(o);
+		return bwMapper;
+	}
 
 }
