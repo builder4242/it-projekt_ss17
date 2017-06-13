@@ -49,7 +49,9 @@ public interface ProjektAdministration extends RemoteService {
 	public Vector<Beteiligung> getBeteiligungenFor(Organisationseinheit o) throws IllegalArgumentException;
 	
 	public Vector<ProjektMarktplatz> getProjektMarktplaetzeByOrganisation(Organisationseinheit o) throws IllegalArgumentException;
-
+	
+	public Organisationseinheit findByGoogleId(LoginInfo li) throws IllegalArgumentException;
+	
 	/**
 	 * 
 	 * @param bez

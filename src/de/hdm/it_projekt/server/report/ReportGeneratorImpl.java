@@ -5,6 +5,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.it_projekt.server.db.*;
 import de.hdm.it_projekt.shared.ReportGenerator;
 
+@SuppressWarnings("serial")
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator  {
 
 	private AusschreibungMapper asMapper = null;

@@ -1,4 +1,4 @@
-package de.hdm.it_projekt.client.GUI_alt;
+package de.hdm.it_projekt.client.GUI_in_dev.GUI_alt;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,27 +12,27 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
-import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
+import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.BusinessObject;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
 
 
 
-public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
+public class ProjektBewerbungTreeView implements TreeViewModel {
 
 	
 	private ProjektForm projektForm;
-	private OrganisationseinheitForm organisationseinheitForm;
+	private BewerbungForm bewerberForm;
 
 	private Projekt selectedProjekt = null;
-	private Organisationseinheit selectedOrganisationseinheit = null;
+	private Bewerbung selectedBewerbung = null;
 
 	private ProjektAdministrationAsync projektVerwaltung = null;
 	private ListDataProvider<Projekt> ProjektDataProvider = null;
 	
-	private Map<Projekt, ListDataProvider<Organisationseinheit>> OrganisationseinheitDataProviders = null;
+	private Map<Projekt, ListDataProvider<Bewerbung>> BewerbungDataProviders = null;
 
 	/**
 	 * Bildet BusinessObjects auf eindeutige Zahlenobjekte ab, die als Schlüssel
@@ -75,7 +75,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 		return false;
 	}
 
-
+}
 
 
 
@@ -98,7 +98,7 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 	/**
 	 * Nested Class für die Reaktion auf Selektionsereignisse. Als Folge einer
 	 * Baumknotenauswahl wird je nach Typ des Business-Objekts der
-	 * "selectedProjekt" bzw. das "selectedOrganisationseinheit" gesetzt.
+	 * "selectedProjekt" bzw. das "selectedBewerbung" gesetzt.
 	 */
 	private class SelectionChangeEventHandler implements
 			SelectionChangeEvent.Handler {
@@ -107,8 +107,8 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 			BusinessObject selection = selectionModel.getSelectedObject();
 			if (selection instanceof Projekt) {
 				setSelectedProjekt((Projekt) selection);
-			} else if (selection instanceof Organisationseinheit) {
-				setSelectedOrganisationseinheit((Organisationseinheit) selection);
+			} else if (selection instanceof Bewerbung) {
+				setSelectedBewerbung((Bewerbung) selection);
 			}
 		}
 	}
@@ -117,21 +117,21 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 	 * Im Konstruktor werden die für den Kunden- und Kontobaum wichtigen lokalen
 	 * Variaben initialisiert.
 	 */
-	public ProjektOrganisationseinheitsTreeViewModel() {
+	public ProjektBewerbungsTreeViewModel() {
 		projektVerwaltung = ClientsideSettings.getProjektVerwaltung();
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEventHandler());
-		OrganisationseinheitDataProviders = new HashMap<Projekt, ListDataProvider<Organisationseinheit>>();
+		BewerbungDataProviders = new HashMap<Projekt, ListDataProvider<Bewerbung>>();
 	}
 
 	void setProjektForm(ProjektForm cf) {
 		projektForm = cf;
 	}
 
-	void setOrganisationseinheitForm(OrganisationseinheitForm af) {
-		organisationseinheitForm = af;
+	void setBewerbungForm(BewerbungForm af) {
+		bewerberForm = af;
 	}
 
 	Projekt getSelectedProjekt() {
@@ -141,24 +141,24 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 	void setSelectedProjekt(Projekt c) {
 		selectedProjekt = c;
 		projektForm.setSelected(c);
-		selectedOrganisationseinheit = null;
-		organisationseinheitForm.setSelected(null);
+		selectedBewerbung = null;
+		bewerberForm.setSelected(null);
 	}
 
-	Organisationseinheit getSelectedOrganisationseinheit() {
-		return selectedOrganisationseinheit;
+	Bewerbung getSelectedBewerbung() {
+		return selectedBewerbung;
 	}
 
 	/*
 	 * Wenn ein Konto ausgewählt wird, wird auch der ausgewählte Kunde
 	 * angepasst.
 	 */
-	void setSelectedOrganisationseinheit(Organisationseinheit a) {
-		selectedOrganisationseinheit = a;
-		organisationseinheitForm.setSelected(a);
+	void setSelectedBewerbung(Bewerbung a) {
+		selectedBewerbung = a;
+		bewerberForm.setSelected(a);
 
 		if (a != null) {
-			projektVerwaltung.getProjektById(a.getId(),
+			projektVerwaltung.getProjektById(a.getOwnerID(),
 					new AsyncCallback<Projekt>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -197,30 +197,30 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 
 	void removeProjekt(Projekt projekt) {
 		ProjektDataProvider.getList().remove(projekt);
-		OrganisationseinheitDataProviders.remove(projekt);
+		BewerbungDataProviders.remove(projekt);
 	}
 
-	void addOrganisationseinheitOfProjekt(Organisationseinheit organisationseinheit, Projekt projekt) {
-		// falls es noch keinen Organisationseinheit Provider für diesen Projekt gibt,
+	void addBewerbungOfProjekt(Bewerbung bewerber, Projekt projekt) {
+		// falls es noch keinen Bewerbung Provider für diesen Projekt gibt,
 		// wurde der Baumknoten noch nicht geöffnet und wir brauchen nichts tun.
-		if (!OrganisationseinheitDataProviders.containsKey(projekt)) {
+		if (!BewerbungDataProviders.containsKey(projekt)) {
 			return;
 		}
-		ListDataProvider<Organisationseinheit> OrganisationseinheitsProvider = OrganisationseinheitDataProviders
+		ListDataProvider<Bewerbung> BewerbungsProvider = BewerbungDataProviders
 				.get(projekt);
-		if (!OrganisationseinheitsProvider.getList().contains(organisationseinheit)) {
-			OrganisationseinheitsProvider.getList().add(organisationseinheit);
+		if (!BewerbungsProvider.getList().contains(bewerber)) {
+			BewerbungsProvider.getList().add(bewerber);
 		}
-		selectionModel.setSelected(organisationseinheit, true);
+		selectionModel.setSelected(bewerber, true);
 	}
 
-	void removeOrganisationseinheitOfProjekt(Organisationseinheit organisationseinheit, Projekt projekt) {
-		// falls es keinen Organisationseinheit Provider für diesen Projekt gibt,
+	void removeBewerbungOfProjekt(Bewerbung bewerber, Projekt projekt) {
+		// falls es keinen Bewerbung Provider für diesen Projekt gibt,
 		// wurde der Baumknoten noch nicht geöffnet und wir brauchen nichts tun.
-		if (!OrganisationseinheitDataProviders.containsKey(projekt)) {
+		if (!BewerbungDataProviders.containsKey(projekt)) {
 			return;
 		}
-		OrganisationseinheitDataProviders.get(projekt).getList().remove(organisationseinheit);
+		BewerbungDataProviders.get(projekt).getList().remove(bewerber);
 		selectionModel.setSelected(projekt, true);
 	}
 
@@ -229,17 +229,17 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 	 * Dies ist sinnvoll, wenn sich die Eigenschaften eines Kontos geändert haben und in der
 	 * Baumstruktur noch ein "veraltetes" Kontoobjekt enthalten ist.
 	 */
-	void updateOrganisationseinheit(Organisationseinheit a) {
-		projektVerwaltung.getProjektById(a.getId(),
-				new UpdateOrganisationseinheitCallback(a));
+	void updateBewerbung(Bewerbung a) {
+		projektVerwaltung.getProjektById(a.getOwnerID(),
+				new UpdateBewerbungCallback(a));
 	}
 
-	private class UpdateOrganisationseinheitCallback implements AsyncCallback<Projekt> {
+	private class UpdateBewerbungCallback implements AsyncCallback<Projekt> {
 
-		Organisationseinheit organisationseinheit = null;
+		Bewerbung bewerber = null;
 
-		UpdateOrganisationseinheitCallback(Organisationseinheit a) {
-			organisationseinheit = a;
+		UpdateBewerbungCallback(Bewerbung a) {
+			bewerber = a;
 		}
 
 		@Override
@@ -248,11 +248,11 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 
 		@Override
 		public void onSuccess(Projekt projekt) {
-			List<Organisationseinheit> organisationseinheitList = OrganisationseinheitDataProviders.get(projekt)
+			List<Bewerbung> bewerberList = BewerbungDataProviders.get(projekt)
 					.getList();
-			for (int i=0; i<organisationseinheitList.size(); i++) {
-				if (organisationseinheit.getId() == organisationseinheitList.get(i).getId()) {
-					organisationseinheitList.set(i, organisationseinheit);
+			for (int i=0; i<bewerberList.size(); i++) {
+				if (bewerber.getId() == bewerberList.get(i).getId()) {
+					bewerberList.set(i, bewerber);
 					break;
 				}
 			}
@@ -286,26 +286,26 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 		}
 
 		if (value instanceof Projekt) {
-			// Erzeugen eines ListDataproviders für Organisationseinheit-Daten
-			final ListDataProvider<Organisationseinheit> OrganisationseinheitsProvider = new ListDataProvider<Organisationseinheit>();
-			OrganisationseinheitDataProviders.put((Projekt) value, OrganisationseinheitsProvider);
+			// Erzeugen eines ListDataproviders für Bewerbung-Daten
+			final ListDataProvider<Bewerbung> BewerbungsProvider = new ListDataProvider<Bewerbung>();
+			BewerbungDataProviders.put((Projekt) value, BewerbungsProvider);
 
-			projektVerwaltung.getOrganisationseinheitsOf((Projekt) value,
-					new AsyncCallback<Vector<Organisationseinheit>>() {
+			projektVerwaltung.getBewerbungsOf((Projekt) value,
+					new AsyncCallback<Vector<Bewerbung>>() {
 					
 						public void onFailure(Throwable t) {
 						}
 
-						public void onSuccess(Vector<Organisationseinheit> organisationseinheits) {
-							for (Organisationseinheit a : organisationseinheits) {
-								OrganisationseinheitProvider.getList().add(a);
+						public void onSuccess(Vector<Bewerbung> bewerbers) {
+							for (Bewerbung a : bewerbers) {
+								BewerbungProvider.getList().add(a);
 							}
 						}
 					
 
 			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<Organisationseinheit>(organisationseinheitsProvider,
-					new OrganisationseinheitCell(), selectionModel, null);
+			return new DefaultNodeInfo<Bewerbung>(bewerbersProvider,
+					new BewerbungCell(), selectionModel, null);
 			}
 		return null;
 	}
@@ -314,8 +314,8 @@ public class ProjektOrganisationseinheitTreeView implements TreeViewModel {
 	// cannot be opened.
 	@Override
 	public boolean isLeaf(Object value) {
-		// value is of type Organisationseinheit
-		return (value instanceof Organisationseinheit);
+		// value is of type Bewerbung
+		return (value instanceof Bewerbung);
 	}
 
 }

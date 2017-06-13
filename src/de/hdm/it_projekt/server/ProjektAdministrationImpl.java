@@ -491,4 +491,24 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 		this.tMapper.delete(t);
 	}
+
+	@Override
+	public Organisationseinheit findByGoogleId(LoginInfo li) throws IllegalArgumentException {
+
+		Organisationseinheit o = null;
+		
+		Person p = pMapper.findByGoogleId(li.getEmailAddress());
+		Unternehmen u = uMapper.findByGoogleId(li.getEmailAddress());
+		Team t = tMapper.findByGoogleId(li.getEmailAddress());
+		
+		if(p != null)
+			o = p;
+		if(u != null)
+			o = u;
+		if(t != null)
+			o = t;		
+		
+		return o;
+		
+	}
 }
