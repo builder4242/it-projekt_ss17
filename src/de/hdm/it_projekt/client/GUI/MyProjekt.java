@@ -88,7 +88,11 @@ public class MyProjekt implements EntryPoint {
 		Button abmeldungButton = new Button(); 
 		abmeldungButton.setStyleName("myprojekt-menubutton");
 		
-		
+		menu.add(marktplaetzeButton);
+		menu.add(projekteButton);
+		menu.add(profilButton);
+		menu.add(bewerbungButton);
+		menu.add(abmeldungButton);
 		
 
 		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
