@@ -5,6 +5,46 @@ h1{
 	text-aligin: center; 	/*Überschriften zentreiren*/ 
 }
 
+.myprojekt-headline{
+	
+}
+
+.myprojekt-simpletext{
+	
+}
+
+.myproject-textfield{
+	
+}
+
+.myprojekt-button{
+	border-radius:3px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Verdana;
+	font-size:18px;
+	padding:12px 37px;
+	text-shadow:0px 1px 20px #283966;
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+}
+
+.myprojekt-button:active {
+	position:relative;
+	top:1px;
+}
+
+
+.myprojekt-menubutton{
+	font-family:Verdana;
+}
+
+.myprojekt-label{
+	
+}
+
+
 
 div#main {
     margin: 10px;
