@@ -1,4 +1,11 @@
 
+h1{
+	font-weight: bold; 		/*Überschriften fett */ 
+	color: blue;             /*Farbe der Überschrift blau*/
+	text-aligin: center; 	/*Überschriften zentreiren*/ 
+}
+
+
 div#main {
     margin: 10px;
     border: 1px dashed #000;
