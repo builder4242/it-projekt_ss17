@@ -74,7 +74,7 @@ public interface ProjektAdministration extends RemoteService {
 			throws IllegalArgumentException;
 
 	public Person createPerson(String name, String vorname, String email, String strasse, int plz, String ort,
-			String tel) throws IllegalArgumentException;
+			String tel, String googleId) throws IllegalArgumentException;
 
 	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel)
 			throws IllegalArgumentException;

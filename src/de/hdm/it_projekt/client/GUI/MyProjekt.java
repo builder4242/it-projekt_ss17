@@ -29,6 +29,7 @@ import de.hdm.it_projekt.shared.bo.LoginInfo;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
+import de.hdm.it_projekt.shared.bo.Team;
 import de.hdm.it_projekt.client.ClientsideSettings;
 
 public class MyProjekt implements EntryPoint {
@@ -39,7 +40,7 @@ public class MyProjekt implements EntryPoint {
 	private LoginInfo loginInfo = null;
 	private ProjektMarktplatz cpm = null;
 	private Organisationseinheit cu = null;
-	
+
 	/* Ende Attribute fuer Login */
 
 	/**
@@ -66,38 +67,64 @@ public class MyProjekt implements EntryPoint {
 		});
 	}
 
-
 	/**
 	 * Mit der Methode laodMyProjekt() wird der eigentliche Seiteninhalt geladen
 	 */
-	@SuppressWarnings("deprecation")
 	private void loadMyProjekt() {
 
 		final HorizontalPanel menu = new HorizontalPanel();
 		menu.add(new Label("menü ??"));
 		RootPanel.get("menu").add(menu);
-		
+
 		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
-		
-		pa.findPersonByGoogleId(loginInfo, callback);)
-		
+
 		final HorizontalPanel loginHeader = new HorizontalPanel();
-		
+
 		final Label userInfo = new Label(loginInfo.toString());
 		loginHeader.add(userInfo);
-		
+
 		final Anchor signOutLink = new Anchor("abmelden");
 		signOutLink.setHref(loginInfo.getLogoutUrl());
 		loginHeader.add(signOutLink);
-		
+
 		RootPanel.get("userinfo").add(loginHeader);
 		
-				
-		Showcase showcase = new Marktuebersicht();
 		
-		RootPanel.get("content").clear();	
-		RootPanel.get("content").add(showcase);
+		if (cu == null) {
+			pa.findByGoogleId(loginInfo, new AsyncCallback<Organisationseinheit>() {
+
+				@Override
+				public void onSuccess(Organisationseinheit result) {
+
+					 VerticalPanel showcase;
+					
+					if (result != null) {
+						cu = result;
+
+						showcase = new Marktuebersicht();
+					} else {
+
+						showcase = new NewOrganisationseinheitForm(loginInfo.getEmailAddress());
+					}
+					
+					
+					RootPanel.get("content").clear();
+					RootPanel.get("content").add(showcase);
+					
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+
+					Window.alert("Es ist ein Datenbankfehler aufgetreten.");
+					LoginPanel loginPanel = new LoginPanel(loginInfo);
+					loginPanel.run();
+				}
+			});
+		}
 		
+
+
 	}
 
 }
