@@ -221,7 +221,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Person createPerson(String name, String vorname, String email, String strasse, int plz, String ort,
-			String tel) throws IllegalArgumentException {
+			String tel, String googleId) throws IllegalArgumentException {
 
 		Person p = new Person();
 		p.setName(name);
@@ -231,6 +231,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		p.setPlz(plz);
 		p.setOrt(ort);
 		p.setTel(tel);
+		p.setGoogleId(googleId);
 
 		p.setId(1);
 

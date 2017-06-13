@@ -28,7 +28,7 @@ public interface ProjektAdministrationAsync {
 	void createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum, String beschreibung,
 			AsyncCallback<Projekt> callback);
 
-	void createPerson(String name, String vorname, String email, String strasse, int plz, String ort, String tel,
+	void createPerson(String name, String vorname, String email, String strasse, int plz, String ort, String tel, String googleId,
 			AsyncCallback<Person> callback);
 
 	void createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel,
