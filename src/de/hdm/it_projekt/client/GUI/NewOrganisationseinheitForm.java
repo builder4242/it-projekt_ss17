@@ -161,6 +161,7 @@ public class NewOrganisationseinheitForm extends Showcase {
 		public void onSuccess(Person result) {
 
 			Window.alert("Person angelegt");
+			MyProjekt.cu = result;
 			Showcase showcase = new Marktuebersicht();
 			RootPanel.get("content").clear();
 			RootPanel.get("content").add(showcase);
@@ -180,7 +181,11 @@ public class NewOrganisationseinheitForm extends Showcase {
 		@Override
 		public void onSuccess(Unternehmen result) {
 
-			Window.alert("Person angelegt");
+			Window.alert("Unternehmen angelegt");
+			MyProjekt.cu = result;
+			Showcase showcase = new Marktuebersicht();
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(showcase);
 
 		}
 
@@ -197,7 +202,11 @@ public class NewOrganisationseinheitForm extends Showcase {
 		@Override
 		public void onSuccess(Team result) {
 
-			Window.alert("Person angelegt");
+			Window.alert("Team angelegt");
+			MyProjekt.cu = result;
+			Showcase showcase = new Marktuebersicht();
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(showcase);
 
 		}
 

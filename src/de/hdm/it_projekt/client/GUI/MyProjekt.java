@@ -3,25 +3,16 @@ package de.hdm.it_projekt.client.GUI;
 import java.util.Vector;
 
 import com.google.gwt.core.client.*;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.Anchor;
 
-import de.hdm.it_projekt.client.GUI_in_dev.MarktplatzUebersicht;
 import de.hdm.it_projekt.shared.LoginService;
 import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
@@ -37,9 +28,9 @@ public class MyProjekt implements EntryPoint {
 	/**
 	 * Begin Attribute fuer Login
 	 */
-	private LoginInfo loginInfo = null;
-	private ProjektMarktplatz cpm = null;
-	private Organisationseinheit cu = null;
+	protected LoginInfo loginInfo = null;
+	protected static ProjektMarktplatz cpm = null;
+	protected static Organisationseinheit cu = null;
 
 	/* Ende Attribute fuer Login */
 
@@ -75,6 +66,25 @@ public class MyProjekt implements EntryPoint {
 		final HorizontalPanel menu = new HorizontalPanel();
 		menu.add(new Label("menü ??"));
 		RootPanel.get("menu").add(menu);
+		
+		/* Menüleiste */ 
+		Button marktplaetzeButton = new Button(); 
+		marktplaetzeButton.setStyleName("myprojekt-menubutton");
+		Button projekteButton = new Button(); 
+		projekteButton.setStyleName("myprojekt-menubutton");
+		Button profilButton = new Button(); 
+		profilButton.setStyleName("myprojekt-menubutton");
+		Button bewerbungButton = new Button(); 
+		bewerbungButton.setStyleName("myprojekt-menubutton");
+		Button abmeldungButton = new Button(); 
+		abmeldungButton.setStyleName("myprojekt-menubutton");
+		
+		menu.add(marktplaetzeButton);
+		menu.add(projekteButton);
+		menu.add(profilButton);
+		menu.add(bewerbungButton);
+		menu.add(abmeldungButton);
+		
 
 		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
@@ -83,21 +93,28 @@ public class MyProjekt implements EntryPoint {
 		final Label userInfo = new Label(loginInfo.toString());
 		loginHeader.add(userInfo);
 
-		final Anchor signOutLink = new Anchor("abmelden");
-		signOutLink.setHref(loginInfo.getLogoutUrl());
-		loginHeader.add(signOutLink);
+		final Button signOutBtn = new Button("Logout");
+		signOutBtn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+
+				Window.Location.assign(loginInfo.getLogoutUrl());
+			}
+		});
+
+		loginHeader.add(signOutBtn);
 
 		RootPanel.get("userinfo").add(loginHeader);
-		
-		
+
 		if (cu == null) {
 			pa.findByGoogleId(loginInfo, new AsyncCallback<Organisationseinheit>() {
 
 				@Override
 				public void onSuccess(Organisationseinheit result) {
 
-					 VerticalPanel showcase;
-					
+					Showcase showcase;
+
 					if (result != null) {
 						cu = result;
 
@@ -106,11 +123,10 @@ public class MyProjekt implements EntryPoint {
 
 						showcase = new NewOrganisationseinheitForm(loginInfo.getEmailAddress());
 					}
-					
-					
+
 					RootPanel.get("content").clear();
 					RootPanel.get("content").add(showcase);
-					
+
 				}
 
 				@Override
@@ -122,8 +138,6 @@ public class MyProjekt implements EntryPoint {
 				}
 			});
 		}
-		
-
 
 	}
 
