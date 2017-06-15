@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
@@ -458,6 +460,21 @@ public class AusschreibungMapper {
 	 * @return
 	 */
 	public Vector<Ausschreibung> getByPartnerprofil(Partnerprofil pp) {
+		return null;
+	}
+
+	/**
+	 * @param oe
+	 */
+	public Vector<Ausschreibung> getByErsteller(Organisationseinheit oe) {
+		// TODO Auto-generated method stub
+		return null; 
+	}
+
+	/**
+	 * 
+	 */
+	public Vector<Ausschreibung> findByBewerbung(Bewerbung bw) {
 		return null;
 	}
 }
