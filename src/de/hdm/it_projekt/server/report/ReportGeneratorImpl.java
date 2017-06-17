@@ -13,6 +13,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.it_projekt.server.db.*;
 import de.hdm.it_projekt.shared.ReportGenerator;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
@@ -51,31 +52,32 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return
 	 * 
 	 */
-	public AusschreibungMapper getAlleAusschreibungen() {
-		asMapper.findAll();
-		return asMapper;
-	}
-
-	public AusschreibungMapper getAusschreibungenForPartnerprofil(Partnerprofil pp) {
-		asMapper.getByPartnerprofil(pp);
-		return asMapper;
-	}
-
-	public BewerbungMapper getBewerbungenOnAusschreibung(Organisationseinheit oe) {
-		asMapper.getByErsteller(oe);
-		int i;
-		while (i=0, i<asMapper.size(); i++){
-			
-		bwMapper.getByAusschreibung(a);
-		return bwMapper;}
-
-	}
-
-	public BewerbungMapper getBewerbungToAusschreibung(Organisationseinheit o) {
-		bwMapper.getByOrganisationseinheit(o);
+	public Vector<Ausschreibung> getAlleAusschreibungen() {
 		
-		asMapper.findByBewerbung(bw);
-		return bwMapper;
+		return asMapper.findAll();
+	}
+
+	public Vector<Ausschreibung> getAusschreibungenForPartnerprofil(Partnerprofil pp) {
+		
+		return asMapper.getByPartnerprofil(pp);
+	}
+
+	public Vector<Ausschreibung> getBewerbungenOnAusschreibung(Organisationseinheit oe) {
+		
+		return null;
+
+	}
+
+	public Vector<Ausschreibung> getBewerbungToAusschreibung(Organisationseinheit o) {
+		
+		Vector<Bewerbung> bwV = bwMapper.getByOrganisationseinheit(o);
+		Vector<Ausschreibung> asV = new Vector<Ausschreibung>();
+		
+		for(Bewerbung bw : bwV) {
+			asV.addAll(asMapper.findByBewerbung(bw));
+		}
+		
+		return asV;
 	}
 
 }
