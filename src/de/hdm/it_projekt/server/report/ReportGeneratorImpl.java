@@ -1,12 +1,23 @@
 package de.hdm.it_projekt.server.report;
 
+/**
+ * 
+ * To be Done
+ * getBewerbungToAusschreibung - Ausschreibungen auslesen
+ * Methode zum auslesen an welchen Projekten eines Marktplatzes eine OE beteiligt ist 
+ * Fan-In/Fan-Out Analyse
+ * 
+ */
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.it_projekt.server.db.*;
 import de.hdm.it_projekt.shared.ReportGenerator;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
+import de.hdm.it_projekt.shared.bo.Person;
+import java.util.Vector;
 
 @SuppressWarnings("serial")
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
@@ -41,28 +52,32 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return
 	 * 
 	 */
-	public AusschreibungMapper getAlleAusschreibungen() {
-		// TODO Auto-generated method stub
-		asMapper.findAll();
-		return asMapper;
+	public Vector<Ausschreibung> getAlleAusschreibungen() {
+		
+		return asMapper.findAll();
 	}
 
-	public AusschreibungMapper getAusschreibungenForPartnerprofil(Partnerprofil pp) {
+	public Vector<Ausschreibung> getAusschreibungenForPartnerprofil(Partnerprofil pp) {
+		
+		return asMapper.getByPartnerprofil(pp);
+	}
 
-		asMapper.getByPartnerprofil(pp);
-
-		return asMapper;
+	public Vector<Ausschreibung> getBewerbungenOnAusschreibung(Organisationseinheit oe) {
+		
+		return null;
 
 	}
 
-	public BewerbungMapper getBewerbungenOnAusschreibung(Ausschreibung a) {
-
-		bwMapper.getByAusschreibung(a);
-
-		return bwMapper;
-
+	public Vector<Ausschreibung> getBewerbungToAusschreibung(Organisationseinheit o) {
+		
+		Vector<Bewerbung> bwV = bwMapper.getByOrganisationseinheit(o);
+		Vector<Ausschreibung> asV = new Vector<Ausschreibung>();
+		
+		for(Bewerbung bw : bwV) {
+			asV.addAll(asMapper.findByBewerbung(bw));
+		}
+		
+		return asV;
 	}
-	
-	public 
 
 }

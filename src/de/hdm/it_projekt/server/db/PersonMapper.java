@@ -4,6 +4,7 @@
 package de.hdm.it_projekt.server.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,7 +12,6 @@ import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
-import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**
  * Mapper-Klasse, die <code>Person</code>-Objekte auf eine relationale Datenbank
@@ -89,7 +89,7 @@ public class PersonMapper {
 			 * Zunaechst schauen wir nach, welches der momentan hoechste
 			 * Primaerschluesselwert ist.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM organisationseinheit ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM organisationseinheit");
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
@@ -105,8 +105,8 @@ public class PersonMapper {
 				stmt.executeUpdate(
 						"INSERT INTO organisationseinheit (ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ) "
 								+ "VALUES ('" + p.getId() + "','" + p.getName() + "','" + p.getVorname() + "','"
-								+ p.getEmail() + "','" + p.getStrasse() + "'," + p.getPlz() + ",'" + p.getOrt()
-								+ "','" + p.getTel() + "','" + p.getGoogleID() + "',NULL,'" + SQLTYP + "')");
+								+ p.getEmail() + "','" + p.getStrasse() + "'," + p.getPlz() + ",'" + p.getOrt() + "','"
+								+ p.getTel() + "','" + p.getGoogleID() + "',NULL,'" + SQLTYP + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -128,13 +128,35 @@ public class PersonMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-			Statement stmt = con.createStatement();
+			/* Statement stmt = con.createStatement(); */
 
-			stmt.executeUpdate("UPDATE organisationseinheit SET Name= '" + p.getName() + ", SET Vorname= "
-					+ p.getVorname() + ", " + "SET Email = " + p.getEmail() + ", " + "SET Strasse = " + p.getStrasse()
-					+ ", " + "SET PLZ = " + p.getPlz() + ", " + "SET Ort = " + p.getOrt() + ", " + "SET Tel = "
-					+ p.getTel() + ", " + "SET GoogleID=\"" + p.getGoogleID() + ", " + "SET Partnerprofil_ID=\""
-					+ p.getPartnerprofilId() + ", ' WHERE ID=" + p.getId());
+			/*
+			 * stmt.executeUpdate("UPDATE organisationseinheit SET Name=\"" +
+			 * p.getName() + "\", SET Vorname=\"" + p.getVorname() + "\", " +
+			 * "SET Email=\"" + p.getEmail() + "\", " + "SET Strasse=\"" +
+			 * p.getStrasse() + "\", " + "SET PLZ=\"" + p.getPlz() + "\", " +
+			 * "SET Ort=\"" + p.getOrt() + "\", " + "SET Tel=\"" + p.getTel() +
+			 * "\", " + "SET GoogleID=\"" + p.getGoogleID() + "\", " +
+			 * "SET Partnerprofil_ID=\"" + p.getPartnerprofilId() +
+			 * "\", ' WHERE ID=\"" + p.getId());
+			 */
+
+			PreparedStatement pstmt = con.prepareStatement(
+					"UPDATE organisationseinheit SET Typ = ?, Name = ?, Vorname = ?, Email = ?, Strasse = ?, Plz = ?, Ort = ?, Tel = ?, GoogleID = ?, Partnerprofil_ID = ? WHERE ID = ?");
+			pstmt.setString(1, SQLTYP);
+			pstmt.setString(2, p.getName());
+			pstmt.setString(3, p.getVorname());
+			pstmt.setString(4, p.getEmail());
+			pstmt.setString(5, p.getStrasse());
+			pstmt.setInt(6, p.getPlz());
+			pstmt.setString(7, p.getOrt());
+			pstmt.setString(8, p.getTel());
+			pstmt.setString(9, p.getGoogleID());
+			pstmt.setInt(10, p.getPartnerprofilId());
+			pstmt.setInt(11, p.getId());
+
+			pstmt.executeUpdate();
+			pstmt.close();
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -226,11 +248,11 @@ public class PersonMapper {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
 		Person p = null;
-		
+
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			
+
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= '"
@@ -412,7 +434,7 @@ public class PersonMapper {
 		return result;
 
 	}
-	
+
 	public Person findByGoogleId(String googleID) {
 
 		// DB-Verbindung herstellen
@@ -447,8 +469,8 @@ public class PersonMapper {
 				p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
-		} catch (SQLException e7) {
-			e7.printStackTrace();
+		} catch (SQLException e9) {
+			e9.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
@@ -486,8 +508,8 @@ public class PersonMapper {
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(findById(rs.getInt("ID")));
 			}
-		} catch (SQLException e9) {
-			e9.printStackTrace();
+		} catch (SQLException e10) {
+			e10.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben

@@ -1,100 +1,104 @@
 package de.hdm.it_projekt.client.GUI;
 
+import java.util.List;
 import java.util.Vector;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.cell.client.Cell;
+import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.ProvidesKey;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
-import de.hdm.it_projekt.client.ClientsideSettings;
-import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
+import de.hdm.it_projekt.client.GUI.Cell.ProjektMarktplatzCell;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class Marktuebersicht extends Showcase {
-	
-	final VerticalPanel projekte = new VerticalPanel();
-	final Label ausgabe = new Label();
 
-	final ListBox marktplaetze = new ListBox();
+	final Label ausgabe = new Label();
+	final static VerticalPanel prVp= new VerticalPanel();
+	
+	final ProvidesKey<ProjektMarktplatz> KEY_PROVIDER = new ProvidesKey<ProjektMarktplatz>() {
+
+		@Override
+		public Integer getKey(ProjektMarktplatz item) {
+			
+			return item.getId();			
+		}		
+	};
 
 	public Marktuebersicht() {
 
+		Cell<ProjektMarktplatz> pmCell = new ProjektMarktplatzCell();
 		
+		final CellList<ProjektMarktplatz> memberPmCl = new CellList<ProjektMarktplatz>(pmCell, KEY_PROVIDER);
+		
+		final SingleSelectionModel<ProjektMarktplatz> pmSelectionModel = new SingleSelectionModel<ProjektMarktplatz>(KEY_PROVIDER);
+		memberPmCl.setSelectionModel(pmSelectionModel);
+		memberPmCl.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		pmSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
 
-		marktplaetze.addChangeHandler(new SelectChangeHandler());
+				pa.getAlleProjekteFor(pmSelectionModel.getSelectedObject(), new AsyncCallback<Vector<Projekt>>() {
 
-		ausgabe.setText("Bitte wählen Sie einen Marktplatz aus:");
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
 
+					@Override
+					public void onSuccess(Vector<Projekt> result) {
+
+						for(Projekt pr : result) {
+							prVp.add(new Label(pr.toString()));
+						}
+						
+					}
+				});				
+			}
+		});
+		
+		
+		
+		ListDataProvider<ProjektMarktplatz> pmDataProvider = new ListDataProvider<ProjektMarktplatz>();
+		pmDataProvider.addDataDisplay(memberPmCl);
+
+		final List<ProjektMarktplatz> pmL = pmDataProvider.getList();
+		
 		pa.getAlleProjektMarktplaetze(new AsyncCallback<Vector<ProjektMarktplatz>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 
-				ausgabe.setText(caught.getMessage());
+				Window.alert("Fehler beim Abruf der Projekt Marktplätze");
 			}
 
 			@Override
 			public void onSuccess(Vector<ProjektMarktplatz> result) {
-
-				marktplaetze.setVisibleItemCount(result.size());
-				for (ProjektMarktplatz pm : result) {
-					marktplaetze.addItem(pm.getBezeichnung(), Integer.toString(pm.getId()));
+				
+				for(ProjektMarktplatz pm : result) {
+					pmL.add(pm);
 				}
+
 			}
 		});
+		
+		
+		ausgabe.setText("Bitte wählen Sie einen Marktplatz aus:");
 
 		this.add(ausgabe);
-		this.add(marktplaetze);
-		this.add(projekte);
+		this.add(memberPmCl);
+		this.add(prVp);
 
 	}
-
-	private class SelectChangeHandler implements ChangeHandler {
-
-		@Override
-		public void onChange(ChangeEvent event) {
-
-			pa.getProjektMarktplatzById(Integer.parseInt(marktplaetze.getSelectedValue()),
-					new AsyncCallback<ProjektMarktplatz>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Fehler bei der Auswahl im Projektmarktplatz.");
-						}
-
-						@Override
-						public void onSuccess(ProjektMarktplatz pm_result) {
-
-							pa.getAlleProjekteFor(pm_result, new AsyncCallback<Vector<Projekt>>() {
-
-								@Override
-								public void onFailure(Throwable caught) {
-
-									projekte.add(new Label("Fehler bei den Projekte."));
-								}
-
-								public void onSuccess(Vector<Projekt> pr_result) {
-
-									projekte.clear();
-									projekte.add(new Label("Projekte:"));
-									for (Projekt p : pr_result) {
-										projekte.add(new Label(p.toString()));
-									}
-
-								}
-
-							});
-
-						}
-					});
-		}
-	}
-
 }
+

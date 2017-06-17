@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -23,6 +24,8 @@ import de.hdm.it_projekt.client.GUI_in_dev.GUI_alt.ProjektOrganisationseinheitTr
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
+import de.hdm.it_projekt.shared.bo.Team;
+import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**
  * @author Daniel Fleps
@@ -53,34 +56,32 @@ public class NewOrganisationseinheitForm extends Showcase {
 	public NewOrganisationseinheitForm() {
 		Window.alert("Es ist ein Fehler beim anlegen des Benutzerkontos aufgetreten.");
 	}
-	
-	
+
 	public NewOrganisationseinheitForm(String googleId) {
-		
+
 		googleIdTextBox.setText(googleId);
 		googleIdTextBox.setEnabled(false);
-		
+
 		Grid organisationseinheitGrid = new Grid(9, 2);
 		this.add(organisationseinheitGrid);
 
-		
 		o.insertItem("Person", "P", 1);
-		o.insertItem("Unternehmen",  "U", 2);
+		o.insertItem("Unternehmen", "U", 2);
 		o.insertItem("Team", "T", 3);
-		
+
 		o.addChangeHandler(new ChangeHandler() {
 
 			@Override
 			public void onChange(ChangeEvent event) {
-				
-				if(o.getSelectedValue() != "P")
+
+				if (o.getSelectedValue() != "P")
 					firstNameTextBox.setEnabled(false);
 				else
 					firstNameTextBox.setEnabled(true);
 			}
-			
+
 		});
-		
+
 		organisationseinheitGrid.setWidget(0, 0, new Label("Auswahl"));
 		organisationseinheitGrid.setWidget(0, 1, o);
 
@@ -111,7 +112,7 @@ public class NewOrganisationseinheitForm extends Showcase {
 		Label ortLabel = new Label("Ort");
 		organisationseinheitGrid.setWidget(7, 0, ortLabel);
 		organisationseinheitGrid.setWidget(7, 1, ortTextBox);
-		
+
 		Label googleIdLabel = new Label("GoogleID");
 		organisationseinheitGrid.setWidget(8, 0, googleIdLabel);
 		organisationseinheitGrid.setWidget(8, 1, googleIdTextBox);
@@ -129,22 +130,25 @@ public class NewOrganisationseinheitForm extends Showcase {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
-			if(o.getSelectedValue() == "P")
-				pa.createPerson(lastNameTextBox.getText(), 
-				firstNameTextBox.getText(), 
-				emailTextBox.getText(), 
-				strasseTextBox.getText(), 
-				Integer.parseInt(plzTextBox.getText()),
-				ortTextBox.getText(), 
-				telTextBox.getText(), 
-				googleIdTextBox.getText(),
-				new CreatePersonCallback());
 
+			if (o.getSelectedValue() == "P")
+				pa.createPerson(lastNameTextBox.getText(), firstNameTextBox.getText(), emailTextBox.getText(),
+						strasseTextBox.getText(), Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(),
+						telTextBox.getText(), googleIdTextBox.getText(), new CreatePersonCallback());
+
+			if (o.getSelectedValue() == "U")
+				pa.createUnternehmen(lastNameTextBox.getText(), emailTextBox.getText(), strasseTextBox.getText(),
+						Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(), telTextBox.getText(),
+						googleIdTextBox.getText(), new CreateUnternehmenCallback());
+
+			if (o.getSelectedValue() == "T")
+				pa.createTeam(lastNameTextBox.getText(), emailTextBox.getText(), strasseTextBox.getText(),
+						Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(), telTextBox.getText(),
+						googleIdTextBox.getText(), new CreateTeamCallback());
 		}
 
 	}
-	
+
 	private class CreatePersonCallback implements AsyncCallback<Person> {
 
 		@Override
@@ -155,11 +159,56 @@ public class NewOrganisationseinheitForm extends Showcase {
 
 		@Override
 		public void onSuccess(Person result) {
-			
+
 			Window.alert("Person angelegt");
-			
+			MyProjekt.cu = result;
+			Showcase showcase = new Marktuebersicht();
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(showcase);
+
 		}
-		
+
 	}
 
+	private class CreateUnternehmenCallback implements AsyncCallback<Unternehmen> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+
+			Window.alert("Es ist ein Fehler aufgetreten.");
+		}
+
+		@Override
+		public void onSuccess(Unternehmen result) {
+
+			Window.alert("Unternehmen angelegt");
+			MyProjekt.cu = result;
+			Showcase showcase = new Marktuebersicht();
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(showcase);
+
+		}
+
+	}
+
+	private class CreateTeamCallback implements AsyncCallback<Team> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+
+			Window.alert("Es ist ein Fehler aufgetreten.");
+		}
+
+		@Override
+		public void onSuccess(Team result) {
+
+			Window.alert("Team angelegt");
+			MyProjekt.cu = result;
+			Showcase showcase = new Marktuebersicht();
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(showcase);
+
+		}
+
+	}
 }
