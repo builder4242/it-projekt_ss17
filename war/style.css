@@ -7,6 +7,11 @@ h1{
     font-family: Verdana;
 }
 
+.ProjektMarktplatz-Cell{
+	font-weight: bold; 		/*�berschriften fett */
+    font-family: Verdana;
+}
+
 .myprojekt-headline{
     font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
