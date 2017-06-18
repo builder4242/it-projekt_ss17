@@ -17,6 +17,8 @@ import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
+import de.hdm.it_projekt.shared.bo.Projekt;
+
 import java.util.Vector;
 
 @SuppressWarnings("serial")
@@ -50,34 +52,66 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	/**
 	 * @return
-	 * 
+	 * Abfrage von allen Ausschreibugen
 	 */
 	public Vector<Ausschreibung> getAlleAusschreibungen() {
-		
+
 		return asMapper.findAll();
 	}
+	/**
+	 * 
+	 * Ausschreibung zu Partnerprofil suchen
+	 * @param pp
+	 * @return
+	 */
 
 	public Vector<Ausschreibung> getAusschreibungenForPartnerprofil(Partnerprofil pp) {
-		
+
 		return asMapper.getByPartnerprofil(pp);
 	}
 
+	/**
+	 * Abfragen aller Bewerbungen auf Ausschreibungen des Benutzers 
+	 * @param oe
+	 * @return
+	 */
 	public Vector<Ausschreibung> getBewerbungenOnAusschreibung(Organisationseinheit oe) {
-		
+
 		return null;
 
 	}
+	/**
+	 * Abfrage der eigenen Bewerbungen und den zugehörigen Ausschreibungen des Benutzers
+	 * @param o
+	 * @return
+	 */
 
 	public Vector<Ausschreibung> getBewerbungToAusschreibung(Organisationseinheit o) {
-		
+
 		Vector<Bewerbung> bwV = bwMapper.getByOrganisationseinheit(o);
 		Vector<Ausschreibung> asV = new Vector<Ausschreibung>();
-		
-		for(Bewerbung bw : bwV) {
+
+		for (Bewerbung bw : bwV) {
 			asV.addAll(asMapper.findByBewerbung(bw));
 		}
-		
+
 		return asV;
+	}
+	
+	/**
+	 * Abfrage von Projektverflechtungen (Teilnahmen und weitere Einreichungen/Bewerbungen)
+	 * eines Bewerbers durch den Ausschreibenden
+	 * @param o
+	 * @return
+	 */
+
+	public Vector<Projekt> getProjektVerflechtungen(Organisationseinheit o) {
+		
+		Vector<Bewerbung> bwV = bwMapper.getByOrganisationseinheit(o);
+		Vector<Projekt> prV = prMapper.findByTeilnehmer(o);
+		
+		return prV;
+
 	}
 
 }

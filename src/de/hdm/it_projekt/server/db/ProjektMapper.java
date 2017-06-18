@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
@@ -471,4 +472,17 @@ public class ProjektMapper {
 		return result;
 
 	}
+
+	/**
+	 * 
+	 * Methode um Projekte auszulesen an denen eine bestimmte Perosn beteiligt ist
+	 * @param o
+	 * @return
+	 */
+	public Vector<Projekt> findByTeilnehmer(Organisationseinheit o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }
