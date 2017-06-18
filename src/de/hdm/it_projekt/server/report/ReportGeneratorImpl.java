@@ -100,7 +100,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 	/**
 	 * Abfrage von Projektverflechtungen (Teilnahmen und weitere Einreichungen/Bewerbungen)
-	 * eines Bewerbers durch den Ausschreibenden
+	 * eines Bewerbers durch den Ausschreibenden.
 	 * @param o
 	 * @return
 	 */

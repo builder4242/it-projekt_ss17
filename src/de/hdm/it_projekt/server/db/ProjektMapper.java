@@ -475,7 +475,7 @@ public class ProjektMapper {
 
 	/**
 	 * 
-	 * Methode um Projekte auszulesen an denen eine bestimmte Perosn beteiligt ist
+	 * Methode um Projekte auszulesen an denen eine bestimmte Perosn beteiligt ist.
 	 * @param o
 	 * @return
 	 */
