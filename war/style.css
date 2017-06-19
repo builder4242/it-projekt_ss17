@@ -136,6 +136,10 @@ div#menu {
     margin: 5px;
     border: 1px dashed #000;
 }
+div#pminfo {
+    margin: 5px;
+    border: 1px dashed #000;
+}
 div#content {
     margin: 5px;
     border: 1px dashed #000;

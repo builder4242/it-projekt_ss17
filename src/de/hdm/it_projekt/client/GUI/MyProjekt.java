@@ -64,11 +64,21 @@ public class MyProjekt implements EntryPoint {
 		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
 		final HorizontalPanel loginHeader = new HorizontalPanel();
-
+		
 		final HorizontalPanel menu = new HorizontalPanel();
 		
 		RootPanel.get("userinfo").add(loginHeader);
 		RootPanel.get("menu").add(menu);
+		
+		final Button abmeldungButton = new Button("Abmelden");
+		abmeldungButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+
+				Window.Location.assign(loginInfo.getLogoutUrl());
+			}
+		});
 		
 		/* Menüleiste */ 
 		Button marktplaetzeButton = new Button("Marktplätze"); 
@@ -79,23 +89,11 @@ public class MyProjekt implements EntryPoint {
 		profilButton.setStyleName("myprojekt-menubutton");
 		Button bewerbungButton = new Button("Bewerbungn"); 
 		bewerbungButton.setStyleName("myprojekt-menubutton");
-		Button abmeldungButton = new Button("Abmelden"); 
-		abmeldungButton.setStyleName("myprojekt-menubutton");
-		abmeldungButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-
-				Window.Location.assign(loginInfo.getLogoutUrl());
-			}
-		});
-		
-		
+						
 		menu.add(marktplaetzeButton);
 		menu.add(projekteButton);
 		menu.add(profilButton);
 		menu.add(bewerbungButton);
-		menu.add(abmeldungButton);
 
 		
 		if (loginInfo.getCurrentUser() == null) {
@@ -109,7 +107,7 @@ public class MyProjekt implements EntryPoint {
 					if (result != null) {
 						loginInfo.setCurrentUser(result);
 						loginHeader.add(new Label(loginInfo.toString()));
-
+						loginHeader.add(abmeldungButton);
 						showcase = new Marktuebersicht();
 					} else {
 
@@ -129,8 +127,7 @@ public class MyProjekt implements EntryPoint {
 					loginPanel.run();
 				}
 			});
-		}
-
+		}		
 	}
 
 }
