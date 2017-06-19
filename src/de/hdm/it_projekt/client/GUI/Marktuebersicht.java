@@ -21,7 +21,6 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.it_projekt.client.GUI.Cell.ProjektMarktplatzCell;
-import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class Marktuebersicht extends Showcase {
@@ -69,6 +68,9 @@ public class Marktuebersicht extends Showcase {
 				
 				RootPanel.get("pminfo").clear();
 				RootPanel.get("pminfo").add(headerInfo);
+				
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new Projektuebersicht());
 			}			
 		});
 		

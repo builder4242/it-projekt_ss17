@@ -107,8 +107,7 @@ public class UnternehmenMapper {
 				stmt.executeUpdate(
 						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ) "
 								+ "VALUES ('" + u.getId() + "','" + u.getName() + "','" + u.getEmail() + "','"
-								+ u.getStrasse() + "','" + u.getPlz() + "','" + u.getOrt() + "','" + u.getTel() + "','"
-								+ u.getGoogleID() + "',NULL,'" + SQLTYP + "')");
+								+ u.getStrasse() + "','" + u.getPlz() + "','" + u.getOrt() + "','" + u.getTel() + "',NULL,'" + SQLTYP + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -142,7 +141,7 @@ public class UnternehmenMapper {
 			 */
 
 			PreparedStatement pstmt = con.prepareStatement(
-					"UPDATE organisationseinheit SET Typ = ?, Name = ?, Email = ?, Strasse = ?, Plz = ?, Ort = ?, Tel = ?, GoogleID = ?, Partnerprofil_ID = ? WHERE ID = ?");
+					"UPDATE organisationseinheit SET Typ = ?, Name = ?, Email = ?, Strasse = ?, Plz = ?, Ort = ?, Tel = ?, Partnerprofil_ID = ? WHERE ID = ?");
 			pstmt.setString(1, SQLTYP);
 			pstmt.setString(2, u.getName());
 			pstmt.setString(3, u.getEmail());
@@ -150,9 +149,8 @@ public class UnternehmenMapper {
 			pstmt.setInt(5, u.getPlz());
 			pstmt.setString(6, u.getOrt());
 			pstmt.setString(7, u.getTel());
-			pstmt.setString(8, u.getGoogleID());
-			pstmt.setInt(9, u.getPartnerprofilId());
-			pstmt.setInt(10, u.getId());
+			pstmt.setInt(8, u.getPartnerprofilId());
+			pstmt.setInt(9, u.getId());
 
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -206,7 +204,7 @@ public class UnternehmenMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ "
+					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ "
 							+ "FROM organisationseinheit WHERE Typ='" + SQLTYP + "' ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -221,7 +219,6 @@ public class UnternehmenMapper {
 				u.setPlz(rs.getInt("PLZ"));
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
-				u.setGoogleID(rs.getString("GoogleID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(u);
@@ -254,7 +251,7 @@ public class UnternehmenMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= "
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= "
 							+ id + "' AND Typ='" + SQLTYP + " ORDER BY ID");
 
 			/*
@@ -273,7 +270,6 @@ public class UnternehmenMapper {
 				u.setPlz(rs.getInt("PLZ"));
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
-				u.setGoogleID(rs.getString("GoogleID"));
 
 				return u;
 			}
@@ -303,7 +299,7 @@ public class UnternehmenMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
 							+ name + "' AND Typ='" + SQLTYP + "' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -320,7 +316,6 @@ public class UnternehmenMapper {
 				u.setPlz(rs.getInt("PLZ"));
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
-				u.setGoogleID(rs.getString("GoogleID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(u);
@@ -351,7 +346,7 @@ public class UnternehmenMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE email='"
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE email='"
 							+ email + "' AND Typ='" + SQLTYP + "' ORDER BY Email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -368,7 +363,6 @@ public class UnternehmenMapper {
 				u.setPlz(rs.getInt("PLZ"));
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
-				u.setGoogleID(rs.getString("GoogleID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(u);
