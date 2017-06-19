@@ -83,6 +83,17 @@ public class MyProjekt implements EntryPoint {
 		projekteButton.setStyleName("myprojekt-menubutton");
 		Button profilButton = new Button("Profil"); 
 		profilButton.setStyleName("myprojekt-menubutton");
+		profilButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				RootPanel.get("content").clear();
+				RootPanel.get("contetn").add(new PartnerprofilForm());
+				
+			}
+		});
+		
 		Button bewerbungButton = new Button("Bewerbungn"); 
 		bewerbungButton.setStyleName("myprojekt-menubutton");
 						
