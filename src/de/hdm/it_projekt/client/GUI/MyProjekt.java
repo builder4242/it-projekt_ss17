@@ -1,7 +1,5 @@
 package de.hdm.it_projekt.client.GUI;
 
-import java.util.Vector;
-
 import com.google.gwt.core.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -18,6 +16,7 @@ import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.LoginInfo;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
+import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.bo.Team;
@@ -28,9 +27,8 @@ public class MyProjekt implements EntryPoint {
 	/**
 	 * Begin Attribute fuer Login
 	 */
-	protected LoginInfo loginInfo = null;
+	protected static LoginInfo loginInfo = null;
 	protected static ProjektMarktplatz cpm = null;
-	protected static Organisationseinheit cu = null;
 
 	/* Ende Attribute fuer Login */
 
@@ -63,38 +61,27 @@ public class MyProjekt implements EntryPoint {
 	 */
 	private void loadMyProjekt() {
 
-		final HorizontalPanel menu = new HorizontalPanel();
-		menu.add(new Label("menü ??"));
-		RootPanel.get("menu").add(menu);
-		
-		/* Menüleiste */ 
-		Button marktplaetzeButton = new Button(); 
-		marktplaetzeButton.setStyleName("myprojekt-menubutton");
-		Button projekteButton = new Button(); 
-		projekteButton.setStyleName("myprojekt-menubutton");
-		Button profilButton = new Button(); 
-		profilButton.setStyleName("myprojekt-menubutton");
-		Button bewerbungButton = new Button(); 
-		bewerbungButton.setStyleName("myprojekt-menubutton");
-		Button abmeldungButton = new Button(); 
-		abmeldungButton.setStyleName("myprojekt-menubutton");
-		
-		menu.add(marktplaetzeButton);
-		menu.add(projekteButton);
-		menu.add(profilButton);
-		menu.add(bewerbungButton);
-		menu.add(abmeldungButton);
-		
-
 		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
 		final HorizontalPanel loginHeader = new HorizontalPanel();
 
-		final Label userInfo = new Label(loginInfo.toString());
-		loginHeader.add(userInfo);
-
-		final Button signOutBtn = new Button("Logout");
-		signOutBtn.addClickHandler(new ClickHandler() {
+		final HorizontalPanel menu = new HorizontalPanel();
+		
+		RootPanel.get("userinfo").add(loginHeader);
+		RootPanel.get("menu").add(menu);
+		
+		/* Menüleiste */ 
+		Button marktplaetzeButton = new Button("Marktplätze"); 
+		marktplaetzeButton.setStyleName("myprojekt-menubutton");
+		Button projekteButton = new Button("Projekte"); 
+		projekteButton.setStyleName("myprojekt-menubutton");
+		Button profilButton = new Button("Profil"); 
+		profilButton.setStyleName("myprojekt-menubutton");
+		Button bewerbungButton = new Button("Bewerbungn"); 
+		bewerbungButton.setStyleName("myprojekt-menubutton");
+		Button abmeldungButton = new Button("Abmelden"); 
+		abmeldungButton.setStyleName("myprojekt-menubutton");
+		abmeldungButton.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -102,26 +89,31 @@ public class MyProjekt implements EntryPoint {
 				Window.Location.assign(loginInfo.getLogoutUrl());
 			}
 		});
+		
+		
+		menu.add(marktplaetzeButton);
+		menu.add(projekteButton);
+		menu.add(profilButton);
+		menu.add(bewerbungButton);
+		menu.add(abmeldungButton);
 
-		loginHeader.add(signOutBtn);
-
-		RootPanel.get("userinfo").add(loginHeader);
-
-		if (cu == null) {
-			pa.findByGoogleId(loginInfo, new AsyncCallback<Organisationseinheit>() {
+		
+		if (loginInfo.getCurrentUser() == null) {
+			pa.findByGoogleId(loginInfo, new AsyncCallback<Person>() {
 
 				@Override
-				public void onSuccess(Organisationseinheit result) {
+				public void onSuccess(Person result) {
 
 					Showcase showcase;
 
 					if (result != null) {
-						cu = result;
+						loginInfo.setCurrentUser(result);
+						loginHeader.add(new Label(loginInfo.toString()));
 
 						showcase = new Marktuebersicht();
 					} else {
 
-						showcase = new NewOrganisationseinheitForm(loginInfo.getEmailAddress());
+						showcase = new NewPersonForm(loginInfo.getEmailAddress());
 					}
 
 					RootPanel.get("content").clear();

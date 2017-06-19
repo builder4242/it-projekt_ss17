@@ -103,10 +103,10 @@ public class PersonMapper {
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 				stmt.executeUpdate(
-						"INSERT INTO organisationseinheit (ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ) "
+						"INSERT INTO organisationseinheit (ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ) "
 								+ "VALUES ('" + p.getId() + "','" + p.getName() + "','" + p.getVorname() + "','"
 								+ p.getEmail() + "','" + p.getStrasse() + "'," + p.getPlz() + ",'" + p.getOrt() + "','"
-								+ p.getTel() + "','" + p.getGoogleID() + "',NULL,'" + SQLTYP + "')");
+								+ p.getTel() + "',NULL,'" + SQLTYP + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -142,7 +142,7 @@ public class PersonMapper {
 			 */
 
 			PreparedStatement pstmt = con.prepareStatement(
-					"UPDATE organisationseinheit SET Typ = ?, Name = ?, Vorname = ?, Email = ?, Strasse = ?, Plz = ?, Ort = ?, Tel = ?, GoogleID = ?, Partnerprofil_ID = ? WHERE ID = ?");
+					"UPDATE organisationseinheit SET Typ = ?, Name = ?, Vorname = ?, Email = ?, Strasse = ?, Plz = ?, Ort = ?, Tel = ?, Partnerprofil_ID = ? WHERE ID = ?");
 			pstmt.setString(1, SQLTYP);
 			pstmt.setString(2, p.getName());
 			pstmt.setString(3, p.getVorname());
@@ -151,9 +151,8 @@ public class PersonMapper {
 			pstmt.setInt(6, p.getPlz());
 			pstmt.setString(7, p.getOrt());
 			pstmt.setString(8, p.getTel());
-			pstmt.setString(9, p.getGoogleID());
-			pstmt.setInt(10, p.getPartnerprofilId());
-			pstmt.setInt(11, p.getId());
+			pstmt.setInt(9, p.getPartnerprofilId());
+			pstmt.setInt(10, p.getId());
 
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -206,7 +205,7 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ "
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ "
 							+ "FROM organisationseinheit WHERE Typ='" + SQLTYP + "' ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -222,7 +221,6 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
-				p.setGoogleID(rs.getString("GoogleID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(p);
@@ -255,7 +253,7 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= '"
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= '"
 							+ id + "' AND Typ='" + SQLTYP + "' ORDER BY email");
 
 			/*
@@ -275,7 +273,6 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
-				p.setGoogleID(rs.getString("GoogleID"));
 
 			}
 		} catch (SQLException e5) {
@@ -303,7 +300,7 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
 							+ name + "' AND Typ='" + SQLTYP + "' ORDER BY Name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -320,7 +317,6 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
-				p.setGoogleID(rs.getString("GoogleID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(p);
@@ -353,7 +349,7 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE name='"
 							+ vorname + "' AND Typ='" + SQLTYP + "' ORDER BY Vorname");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -371,7 +367,6 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
-				p.setGoogleID(rs.getString("GoogleID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(p);
@@ -404,7 +399,7 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE email='"
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE email='"
 							+ email + "' AND Typ='" + SQLTYP + "' ORDER BY email");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -421,7 +416,6 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
-				p.setGoogleID(rs.getString("GoogleID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(p);
@@ -448,7 +442,7 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ FROM organisationseinheit WHERE GoogleID='"
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE Email='"
 							+ googleID + "' AND Typ='" + SQLTYP + "'");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -465,7 +459,6 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
-				p.setGoogleID(rs.getString("GoogleID"));
 				p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}

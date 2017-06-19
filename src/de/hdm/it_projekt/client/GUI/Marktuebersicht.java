@@ -22,7 +22,7 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 public class Marktuebersicht extends Showcase {
 
 	final Label ausgabe = new Label();
-	final static VerticalPanel prVp= new VerticalPanel();
+	final VerticalPanel prVp= new VerticalPanel();
 	
 	final ProvidesKey<ProjektMarktplatz> KEY_PROVIDER = new ProvidesKey<ProjektMarktplatz>() {
 
@@ -47,7 +47,7 @@ public class Marktuebersicht extends Showcase {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 
-				pa.getAlleProjekteFor(pmSelectionModel.getSelectedObject(), new AsyncCallback<Vector<Projekt>>() {
+					pa.getAlleProjekteFor(pmSelectionModel.getSelectedObject(), new AsyncCallback<Vector<Projekt>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -60,8 +60,7 @@ public class Marktuebersicht extends Showcase {
 
 						for(Projekt pr : result) {
 							prVp.add(new Label(pr.toString()));
-						}
-						
+						}						
 					}
 				});				
 			}
