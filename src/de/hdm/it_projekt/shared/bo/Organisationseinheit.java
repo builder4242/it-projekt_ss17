@@ -45,11 +45,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Telefonnummer der Organisationseinheit
 	 */
 	private String tel;
-	
-	/**
-	 * GoogleID der Organisationseinheit
-	 */
-	private String googleId;
 
 	/**
 	 * Default Konstruktor
@@ -143,20 +138,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 		this.tel = tel;
 	}
 
-	/**
-	 * @return the googleID
-	 */
-	public String getGoogleID() {
-		return googleId;
-	}
-
-	/**
-	 * @param googleID the googleID to set
-	 */
-	public void setGoogleID(String googleId) {
-		this.googleId = googleId;
-	}
-	
 	/*Beginn Fremdschluessel Getter und Setter*/
 	/**
 	 * @return the partnerprofilId
@@ -177,6 +158,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Gibt zusaetzlich zu der in BusinessObject definierten toString Methode die spezifischen Attribute dieser Klasse aus
 	 */
 	public String toString() {
-	return super.toString() + " " + this.name + " " + this.email + " " + this.ort + " " + this.plz + " " + this.strasse + " " + this.tel + " " + this.googleId;
+	return super.toString() + " " + this.name + " " + this.email + " " + this.ort + " " + this.plz + " " + this.strasse + " " + this.tel;
 	  }
 }

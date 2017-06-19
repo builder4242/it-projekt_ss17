@@ -55,7 +55,6 @@ public class Testmain {
 		p1.setPlz(10100);
 		p1.setOrt("Hier");
 		p1.setTel("0711000000");
-		p1.setGoogleID("vgndgzmtumtdntz345t");
 		p1.setPartnerprofilId(2);
 		
 		psMapper.update(p1);
