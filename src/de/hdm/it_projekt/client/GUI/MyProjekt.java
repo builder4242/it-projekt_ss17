@@ -3,6 +3,7 @@ package de.hdm.it_projekt.client.GUI;
 import com.google.gwt.core.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -26,6 +27,9 @@ public class MyProjekt implements EntryPoint {
 	protected static LoginInfo loginInfo = null;
 	protected static ProjektMarktplatz cpm = null;
 
+	static interface ProjektTreeResources extends CellTree.Resources {
+		
+	}
 	/* Ende Attribute fuer Login */
 
 	/**
@@ -79,6 +83,22 @@ public class MyProjekt implements EntryPoint {
 		/* Menüleiste */ 
 		Button marktplaetzeButton = new Button("Marktplätze"); 
 		marktplaetzeButton.setStyleName("myprojekt-menubutton");
+		marktplaetzeButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				ProjektTreeViewModel ptvm = new ProjektTreeViewModel();
+				CellTree.Resources projektTreeRessource = GWT.create(CellTree.Resources.class);
+				CellTree cellTree = new CellTree(ptvm, "Root", projektTreeRessource);
+				cellTree.setAnimationEnabled(true);
+				
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(cellTree);			
+				
+			}
+		});
+		
 		Button projekteButton = new Button("Projekte"); 
 		projekteButton.setStyleName("myprojekt-menubutton");
 		Button profilButton = new Button("Profil"); 

@@ -16,7 +16,7 @@ public class AusschreibungCell extends AbstractCell<Ausschreibung>{
 		
 		
 		sb.appendHtmlConstant("<div class='xx-Cell'>");  //Test CSS Klasse
-		sb.appendEscaped(value.getBezeichnung());
+		sb.appendEscaped("Ausschreibung: " + value.getBezeichnung());
 		sb.appendHtmlConstant("</div class='xx-Cell'>");  //Test CSS Klasse
 		
 	}
