@@ -498,4 +498,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return pMapper.findByGoogleId(li.getEmailAddress());
 		
 	}
+
+	@Override
+	public Person getProjektleiterFor(Projekt pr) throws IllegalArgumentException {
+		return pMapper.findById(pr.getProjektleiterId());
+	}
 }

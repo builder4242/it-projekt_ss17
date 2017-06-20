@@ -16,6 +16,7 @@ import com.google.gwt.view.client.TreeViewModel;
 import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.client.GUI.Cell.AusschreibungCell;
 import de.hdm.it_projekt.client.GUI.Cell.ProjektCell;
+import de.hdm.it_projekt.client.GUI.Cell.ProjektleiterCell;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.*;
 
@@ -30,16 +31,15 @@ public class ProjektTreeViewModel implements TreeViewModel {
 
 	private ListDataProvider<Projekt> projektDataProvider = null;
 	private Map<Projekt, ListDataProvider<Ausschreibung>> ausschreibungDataProviders = null;
+	private Map<Projekt, ListDataProvider<Person>> projektleiterDataProviders = null;
 
 	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObject> {
 		@Override
 		public Integer getKey(BusinessObject bo) {
 			if (bo == null)
 				return null;
-			if(bo instanceof Projekt)
-				return new Integer(bo.getId());
 			else
-				return new Integer(-bo.getId());
+				return bo.getId();
 		}
 	};
 
@@ -63,6 +63,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEventHandler());
 		ausschreibungDataProviders = new HashMap<Projekt, ListDataProvider<Ausschreibung>>();
+		projektleiterDataProviders = new HashMap<Projekt, ListDataProvider<Person>>();
 	}
 
 	@Override
@@ -109,6 +110,27 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			});
 			
 			return new DefaultNodeInfo<Ausschreibung>(ausschreibungsProvider, new AusschreibungCell(), selectionModel, null);
+		}
+		
+		if(value instanceof Projekt) {
+			
+			final ListDataProvider<Person> projektleiterProvider = new ListDataProvider<Person>();
+			projektleiterDataProviders.put((Projekt) value, projektleiterProvider);
+			
+			pa.getProjektleiterFor((Projekt) value, new AsyncCallback<Person>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+
+				@Override
+				public void onSuccess(Person projektleiter) {
+					projektleiterProvider.getList().add(projektleiter);					
+				}
+			});
+			
+			return new DefaultNodeInfo<Person>(projektleiterProvider, new ProjektleiterCell(), selectionModel, null);
+			
 		}
 
 		return null;
