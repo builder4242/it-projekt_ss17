@@ -110,7 +110,6 @@ h1{
 	
 }
 
-
 div#main {
     margin: 10px;
     border: 1px dashed #000;
@@ -133,6 +132,10 @@ div#header p {
     align: right;
 }
 div#menu {
+    margin: 5px;
+    border: 1px dashed #000;
+}
+div#pminfo {
     margin: 5px;
     border: 1px dashed #000;
 }

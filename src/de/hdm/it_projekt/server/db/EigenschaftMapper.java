@@ -128,8 +128,7 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("UPDATE eigenschaft " + "SET Name=\"" + e.getName() + "\", " + "Wert=\"" + e.getWert()
-					+ "\", " + "Partnerprofil_ID=\"" + e.getPartnerprofilId() + "\" " + "WHERE ID=" + e.getId());
+			stmt.executeUpdate("UPDATE eigenschaft SET Name='" + e.getName() + "', Wert='" + e.getWert() + "' WHERE ID=" + e.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -359,7 +358,7 @@ public class EigenschaftMapper {
 
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Wert,  FROM eigenschaft" + "WHERE Partnerprofil_ID=" + pp.getId());
+					.executeQuery("SELECT ID, Name, Wert FROM eigenschaft WHERE Partnerprofil_ID=" + pp.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschhaft-Objekt

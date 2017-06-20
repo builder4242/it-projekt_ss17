@@ -50,7 +50,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Default Konstruktor
 	 */
 	public Organisationseinheit () {
-		
+		this.partnerprofilId = 0;
 	}
 	
 	/**
