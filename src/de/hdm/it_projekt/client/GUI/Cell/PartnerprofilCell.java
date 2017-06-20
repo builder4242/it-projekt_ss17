@@ -16,7 +16,7 @@ public class PartnerprofilCell extends AbstractCell<Partnerprofil>{
 		
 		
 		sb.appendHtmlConstant("<div class='xx-Cell'>Partnerprofil vom: ");  //Test CSS Klasse
-		sb.appendEscaped(value.getErstelldatum().toString());
+		sb.appendEscaped("Partnerprofil vom (" + value.getErstelldatum().toString() + ")");
 		sb.appendHtmlConstant("</div class='xx-Cell'>");  //Test CSS Klasse
 		
 	}
