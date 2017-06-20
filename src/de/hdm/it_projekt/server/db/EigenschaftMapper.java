@@ -128,8 +128,7 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("UPDATE eigenschaft " + "SET Name=\"" + e.getName() + "\", " + "Wert=\"" + e.getWert()
-					+ "\", " + "Partnerprofil_ID=\"" + e.getPartnerprofilId() + "\" " + "WHERE ID=" + e.getId());
+			stmt.executeUpdate("UPDATE eigenschaft SET Name='" + e.getName() + "', Wert='" + e.getWert() + "' WHERE ID=" + e.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

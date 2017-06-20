@@ -459,7 +459,9 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
-				p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+				
+				if(rs.getString("Partnerprofil_ID") != "NULL")
+					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
 		} catch (SQLException e9) {

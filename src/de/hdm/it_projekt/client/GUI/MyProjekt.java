@@ -89,7 +89,7 @@ public class MyProjekt implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				
 				RootPanel.get("content").clear();
-				RootPanel.get("contetn").add(new PartnerprofilForm());
+				RootPanel.get("content").add(new PartnerprofilForm());
 				
 			}
 		});

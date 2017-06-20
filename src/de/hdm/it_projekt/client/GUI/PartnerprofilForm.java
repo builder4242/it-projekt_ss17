@@ -3,19 +3,13 @@ package de.hdm.it_projekt.client.GUI;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.bcel.classfile.PMGClass;
-
 import com.google.gwt.cell.client.Cell;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
@@ -29,9 +23,11 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class PartnerprofilForm extends Showcase {
 
-	Partnerprofil pp = null;
+	static Partnerprofil pp = null;
 
-	final VerticalPanel vP = new VerticalPanel();
+	final HorizontalPanel p = new HorizontalPanel();
+	final VerticalPanel leftcol = new VerticalPanel();
+	final VerticalPanel content = new VerticalPanel();
 
 	final ProvidesKey<Eigenschaft> KEY_PROVIDER = new ProvidesKey<Eigenschaft>() {
 
@@ -43,7 +39,22 @@ public class PartnerprofilForm extends Showcase {
 
 	};
 
+	Cell<Eigenschaft> eCell = new EigenschaftCell();
+
+	final CellList<Eigenschaft> eCl = new CellList<Eigenschaft>(eCell, KEY_PROVIDER);
+
+	final SingleSelectionModel<Eigenschaft> eSelectionModel = new SingleSelectionModel<Eigenschaft>(KEY_PROVIDER);
+
+	static ListDataProvider<Eigenschaft> eDataProvider = new ListDataProvider<Eigenschaft>();
+
+	final static List<Eigenschaft> eL = eDataProvider.getList();
+
 	public PartnerprofilForm() {
+
+		eL.clear();
+		
+		p.add(leftcol);
+		p.add(content);
 
 		pa.getPartnerprofilById(MyProjekt.loginInfo.getCurrentUser().getPartnerprofilId(),
 				new AsyncCallback<Partnerprofil>() {
@@ -60,28 +71,26 @@ public class PartnerprofilForm extends Showcase {
 
 						if (result != null) {
 							pp = result;
-							vP.add(new Label("Partnerprofil zugewiesen " + pp.toString()));
 
 						} else {
 							pa.createPartnerprofilFor(MyProjekt.loginInfo.getCurrentUser(),
 									new createPartnerprofilCallback());
 						}
-						// vP.add(getEigenschaftCelllist());
+						leftcol.add(new Label("Partnerprofil"));
+						leftcol.add(new Label("angelegt: " + pp.getErstelldatum()));
+						leftcol.add(new Label("letzte Änderung: " + pp.getAenderungsdatum()));
+						leftcol.add(new Label(""));
+						leftcol.add(getEigenschaftCelllist());
+						content.add(new EigenschaftForm());
 					}
 				});
 
-		vP.add(new Label("PP ID: " + Integer.toString(MyProjekt.loginInfo.getCurrentUser().getPartnerprofilId())));
-		this.add(vP);
+		this.add(p);
 
 	}
 
 	private Widget getEigenschaftCelllist() {
 
-		Cell<Eigenschaft> eCell = new EigenschaftCell();
-
-		final CellList<Eigenschaft> eCl = new CellList<Eigenschaft>(eCell, KEY_PROVIDER);
-
-		final SingleSelectionModel<Eigenschaft> eSelectionModel = new SingleSelectionModel<Eigenschaft>(KEY_PROVIDER);
 		eCl.setSelectionModel(eSelectionModel);
 		eCl.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
@@ -89,15 +98,17 @@ public class PartnerprofilForm extends Showcase {
 
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				// TODO Auto-generated method stub
+
+				EigenschaftForm eForm = new EigenschaftForm();
+				eForm.setSelectedEigenschaft(eSelectionModel.getSelectedObject());
+
+				content.clear();
+				content.add(eForm);
 
 			}
 		});
 
-		ListDataProvider<Eigenschaft> eDataProvider = new ListDataProvider<Eigenschaft>();
 		eDataProvider.addDataDisplay(eCl);
-
-		final List<Eigenschaft> eL = eDataProvider.getList();
 
 		pa.getEigenschaftenFor(pp, new AsyncCallback<Vector<Eigenschaft>>() {
 
@@ -132,8 +143,6 @@ public class PartnerprofilForm extends Showcase {
 		public void onSuccess(Partnerprofil result) {
 
 			pp = result;
-			vP.add(new Label("partnerprofil angelegt" + pp.toString()));
-
 		}
 	}
 }
