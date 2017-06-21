@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
@@ -243,8 +245,8 @@ public class AusschreibungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Bezeichnung, Ausschreibungstext, Bewerbungsfrist, Projekt_ID, Partnerprofil_ID FROM ausschreibung WHERE ID= "
-							+ id + " ORDER BY ID");
+					"SELECT ID, Bezeichnung, Ausschreibungstext, Bewerbungsfrist, Projekt_ID, Partnerprofil_ID FROM ausschreibung WHERE ID="
+							+ id);
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -260,8 +262,8 @@ public class AusschreibungMapper {
 				as.setBezeichnung(rs.getString("Bezeichnung"));
 				as.setAusschreibungstext(rs.getString("Ausschreibungstext"));
 				as.setBewerbungsfrist(rs.getDate("Bewerbungsfrist"));
-				as.setProjektId(rs.getInt("ID"));
-				as.setPartnerprofilId(rs.getInt("ID"));
+				as.setProjektId(rs.getInt("Projekt_ID"));
+				as.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				return as;
 			}
@@ -434,7 +436,7 @@ public class AusschreibungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projekt.ID=" + pr.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM ausschreibung WHERE Projekt_ID=" + pr.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Ausschreibung-Objekt erstellt.
@@ -458,6 +460,21 @@ public class AusschreibungMapper {
 	 * @return
 	 */
 	public Vector<Ausschreibung> getByPartnerprofil(Partnerprofil pp) {
+		return null;
+	}
+
+	/**
+	 * @param oe
+	 */
+	public Vector<Ausschreibung> getByErsteller(Organisationseinheit oe) {
+		// TODO Auto-generated method stub
+		return null; 
+	}
+
+	/**
+	 * 
+	 */
+	public Vector<Ausschreibung> findByBewerbung(Bewerbung bw) {
 		return null;
 	}
 }

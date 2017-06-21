@@ -221,7 +221,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Person createPerson(String name, String vorname, String email, String strasse, int plz, String ort,
-			String tel, String googleId) throws IllegalArgumentException {
+			String tel) throws IllegalArgumentException {
 
 		Person p = new Person();
 		p.setName(name);
@@ -231,7 +231,6 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		p.setPlz(plz);
 		p.setOrt(ort);
 		p.setTel(tel);
-		p.setGoogleID(googleId);
 
 		p.setId(1);
 
@@ -239,7 +238,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel, String googleId)
+	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel)
 			throws IllegalArgumentException {
 
 		Unternehmen u = new Unternehmen();
@@ -249,7 +248,6 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		u.setPlz(plz);
 		u.setOrt(ort);
 		u.setTel(tel);
-		u.setGoogleID(googleId);
 
 		u.setId(1);
 
@@ -257,7 +255,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel, String googleId)
+	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel)
 			throws IllegalArgumentException {
 		Team t = new Team();
 
@@ -267,7 +265,6 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		t.setPlz(plz);
 		t.setOrt(ort);
 		t.setTel(tel);
-		t.setGoogleID(googleId);
 
 		t.setId(1);
 
@@ -496,22 +493,14 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Organisationseinheit findByGoogleId(LoginInfo li) throws IllegalArgumentException {
+	public Person findByGoogleId(LoginInfo li) throws IllegalArgumentException {
 
-		Organisationseinheit o = null;
+		return pMapper.findByGoogleId(li.getEmailAddress());
 		
-		Person p = pMapper.findByGoogleId(li.getEmailAddress());
-		Unternehmen u = uMapper.findByGoogleId(li.getEmailAddress());
-		Team t = tMapper.findByGoogleId(li.getEmailAddress());
-		
-		if(p != null)
-			o = p;
-		if(u != null)
-			o = u;
-		if(t != null)
-			o = t;		
-		
-		return o;
-		
+	}
+
+	@Override
+	public Person getProjektleiterFor(Projekt pr) throws IllegalArgumentException {
+		return pMapper.findById(pr.getProjektleiterId());
 	}
 }

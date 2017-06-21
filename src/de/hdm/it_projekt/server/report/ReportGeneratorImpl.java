@@ -13,9 +13,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.it_projekt.server.db.*;
 import de.hdm.it_projekt.shared.ReportGenerator;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
+import de.hdm.it_projekt.shared.bo.Projekt;
+
+import java.util.Vector;
 
 @SuppressWarnings("serial")
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
@@ -48,27 +52,66 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	/**
 	 * @return
-	 * 
+	 * Abfrage von allen Ausschreibugen
 	 */
-	public AusschreibungMapper getAlleAusschreibungen(){
-		asMapper.findAll();
-		return asMapper;
+	public Vector<Ausschreibung> getAlleAusschreibungen() {
+
+		return asMapper.findAll();
+	}
+	/**
+	 * 
+	 * Ausschreibung zu Partnerprofil suchen
+	 * @param pp
+	 * @return
+	 */
+
+	public Vector<Ausschreibung> getAusschreibungenForPartnerprofil(Partnerprofil pp) {
+
+		return asMapper.getByPartnerprofil(pp);
 	}
 
-	public AusschreibungMapper getAusschreibungenForPartnerprofil(Partnerprofil pp) {
-		asMapper.getByPartnerprofil(pp);
-		return asMapper;
+	/**
+	 * Abfragen aller Bewerbungen auf Ausschreibungen des Benutzers 
+	 * @param oe
+	 * @return
+	 */
+	public Vector<Ausschreibung> getBewerbungenOnAusschreibung(Organisationseinheit oe) {
+
+		return null;
+
 	}
+	/**
+	 * Abfrage der eigenen Bewerbungen und den zugehörigen Ausschreibungen des Benutzers
+	 * @param o
+	 * @return
+	 */
 
-	public BewerbungMapper getBewerbungenOnAusschreibung(Ausschreibung a) {
-		bwMapper.getByAusschreibung(a);
-		return bwMapper;
+	public Vector<Ausschreibung> getBewerbungToAusschreibung(Organisationseinheit o) {
 
+		Vector<Bewerbung> bwV = bwMapper.getByOrganisationseinheit(o);
+		Vector<Ausschreibung> asV = new Vector<Ausschreibung>();
+
+		for (Bewerbung bw : bwV) {
+			asV.addAll(asMapper.findByBewerbung(bw));
+		}
+
+		return asV;
 	}
+	
+	/**
+	 * Abfrage von Projektverflechtungen (Teilnahmen und weitere Einreichungen/Bewerbungen)
+	 * eines Bewerbers durch den Ausschreibenden.
+	 * @param o
+	 * @return
+	 */
 
-	public BewerbungMapper getBewerbungToAusschreibung(Organisationseinheit o) {
-		bwMapper.getByOrganisationseinheit(o);
-		return bwMapper;
+	public Vector<Projekt> getProjektVerflechtungen(Organisationseinheit o) {
+		
+		Vector<Bewerbung> bwV = bwMapper.getByOrganisationseinheit(o);
+		Vector<Projekt> prV = prMapper.findByTeilnehmer(o);
+		
+		return prV;
+
 	}
 
 }

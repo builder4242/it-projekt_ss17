@@ -3,35 +3,25 @@
  */
 package de.hdm.it_projekt.client.GUI;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.it_projekt.client.ClientsideSettings;
-import de.hdm.it_projekt.client.GUI_in_dev.GUI_alt.ProjektOrganisationseinheitTreeView;
-import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
-import de.hdm.it_projekt.shared.bo.Team;
-import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**
  * @author Daniel Fleps
  *
  */
-public class NewOrganisationseinheitForm extends Showcase {
+public class NewPersonForm extends Showcase {
 
 	Organisationseinheit organisationseinheitToDisplay = null;
 
@@ -45,45 +35,26 @@ public class NewOrganisationseinheitForm extends Showcase {
 	TextBox strasseTextBox = new TextBox();
 	TextBox plzTextBox = new TextBox();
 	TextBox ortTextBox = new TextBox();
-	TextBox googleIdTextBox = new TextBox();
-	ListBox o = new ListBox();
 
 	/*
 	 * Im Konstruktor werden die anderen Widgets erzeugt. Alle werden in einem
 	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
-	public NewOrganisationseinheitForm() {
+	public NewPersonForm() {
 		Window.alert("Es ist ein Fehler beim anlegen des Benutzerkontos aufgetreten.");
 	}
 
-	public NewOrganisationseinheitForm(String googleId) {
+	public NewPersonForm(String googleId) {
 
-		googleIdTextBox.setText(googleId);
-		googleIdTextBox.setEnabled(false);
+		this.add(new Label(
+				"Sie besitzen noch kein Benutzerprofil bei uns, bitte geben Sie in nachfolgendem Formular Ihre Daten ein."));
 
 		Grid organisationseinheitGrid = new Grid(9, 2);
 		this.add(organisationseinheitGrid);
 
-		o.insertItem("Person", "P", 1);
-		o.insertItem("Unternehmen", "U", 2);
-		o.insertItem("Team", "T", 3);
-
-		o.addChangeHandler(new ChangeHandler() {
-
-			@Override
-			public void onChange(ChangeEvent event) {
-
-				if (o.getSelectedValue() != "P")
-					firstNameTextBox.setEnabled(false);
-				else
-					firstNameTextBox.setEnabled(true);
-			}
-
-		});
-
-		organisationseinheitGrid.setWidget(0, 0, new Label("Auswahl"));
-		organisationseinheitGrid.setWidget(0, 1, o);
+		emailTextBox.setText(googleId);
+		emailTextBox.setEnabled(false);
 
 		Label firstNameLabel = new Label("Vorname");
 		organisationseinheitGrid.setWidget(1, 0, firstNameLabel);
@@ -113,10 +84,6 @@ public class NewOrganisationseinheitForm extends Showcase {
 		organisationseinheitGrid.setWidget(7, 0, ortLabel);
 		organisationseinheitGrid.setWidget(7, 1, ortTextBox);
 
-		Label googleIdLabel = new Label("GoogleID");
-		organisationseinheitGrid.setWidget(8, 0, googleIdLabel);
-		organisationseinheitGrid.setWidget(8, 1, googleIdTextBox);
-
 		HorizontalPanel customerButtonsPanel = new HorizontalPanel();
 		this.add(customerButtonsPanel);
 
@@ -131,22 +98,10 @@ public class NewOrganisationseinheitForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (o.getSelectedValue() == "P")
-				pa.createPerson(lastNameTextBox.getText(), firstNameTextBox.getText(), emailTextBox.getText(),
-						strasseTextBox.getText(), Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(),
-						telTextBox.getText(), googleIdTextBox.getText(), new CreatePersonCallback());
-
-			if (o.getSelectedValue() == "U")
-				pa.createUnternehmen(lastNameTextBox.getText(), emailTextBox.getText(), strasseTextBox.getText(),
-						Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(), telTextBox.getText(),
-						googleIdTextBox.getText(), new CreateUnternehmenCallback());
-
-			if (o.getSelectedValue() == "T")
-				pa.createTeam(lastNameTextBox.getText(), emailTextBox.getText(), strasseTextBox.getText(),
-						Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(), telTextBox.getText(),
-						googleIdTextBox.getText(), new CreateTeamCallback());
+			pa.createPerson(lastNameTextBox.getText(), firstNameTextBox.getText(), emailTextBox.getText(),
+					strasseTextBox.getText(), Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(),
+					telTextBox.getText(), new CreatePersonCallback());
 		}
-
 	}
 
 	private class CreatePersonCallback implements AsyncCallback<Person> {
@@ -161,43 +116,14 @@ public class NewOrganisationseinheitForm extends Showcase {
 		public void onSuccess(Person result) {
 
 			Window.alert("Person angelegt");
+
+			MyProjekt.loginInfo.setCurrentUser(result);
+
+			RootPanel.get("userinfo").add(new Label(MyProjekt.loginInfo.toString()));
+			
 			Showcase showcase = new Marktuebersicht();
 			RootPanel.get("content").clear();
 			RootPanel.get("content").add(showcase);
-
-		}
-
-	}
-
-	private class CreateUnternehmenCallback implements AsyncCallback<Unternehmen> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-
-			Window.alert("Es ist ein Fehler aufgetreten.");
-		}
-
-		@Override
-		public void onSuccess(Unternehmen result) {
-
-			Window.alert("Person angelegt");
-
-		}
-
-	}
-
-	private class CreateTeamCallback implements AsyncCallback<Team> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-
-			Window.alert("Es ist ein Fehler aufgetreten.");
-		}
-
-		@Override
-		public void onSuccess(Team result) {
-
-			Window.alert("Person angelegt");
 
 		}
 
