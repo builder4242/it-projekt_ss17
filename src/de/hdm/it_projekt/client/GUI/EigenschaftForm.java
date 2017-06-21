@@ -111,9 +111,7 @@ public class EigenschaftForm extends Showcase {
 					eToDisplay = null;
 				}
 			});
-
 		}
-
 	}
 
 	private class NewClickHandler implements ClickHandler {
