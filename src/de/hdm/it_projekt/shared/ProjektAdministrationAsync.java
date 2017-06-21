@@ -16,8 +16,7 @@ public interface ProjektAdministrationAsync {
 
 	void bewerten(Bewerbung bw, String stellungnahme, float wert, AsyncCallback<Bewertung> callback);
 
-	void createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist, String ausschreibungstext,
-			Partnerprofil profil, AsyncCallback<Ausschreibung> callback);
+	void createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist, String ausschreibungstext, AsyncCallback<Ausschreibung> callback);
 
 	void createPartnerprofilFor(Organisationseinheit or, AsyncCallback<Partnerprofil> callback);
 
@@ -119,6 +118,8 @@ public interface ProjektAdministrationAsync {
 	void findByGoogleId(LoginInfo li, AsyncCallback<Person> callback);
 
 	void getProjektleiterFor(Projekt pr, AsyncCallback<Person> callback);
+
+	void getAusschreibungby(Partnerprofil pp, AsyncCallback<Ausschreibung> callback);
 
 
 }

@@ -81,7 +81,7 @@ public class OPartnerprofilForm extends Showcase {
 						leftcol.add(new Label("letzte Änderung: " + pp.getAenderungsdatum()));
 						leftcol.add(new Label(""));
 						leftcol.add(getEigenschaftCelllist());
-						content.add(new EigenschaftForm());
+						content.add(new OEigenschaftForm());
 					}
 				});
 
@@ -99,8 +99,8 @@ public class OPartnerprofilForm extends Showcase {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 
-				EigenschaftForm eForm = new EigenschaftForm();
-				eForm.setSelectedEigenschaft(eSelectionModel.getSelectedObject());
+				OEigenschaftForm eForm = new OEigenschaftForm();
+				eForm.setSelected(eSelectionModel.getSelectedObject());
 
 				content.clear();
 				content.add(eForm);

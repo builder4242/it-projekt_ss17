@@ -12,42 +12,38 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Projekt;
 
-public class ProjektForm extends Showcase {
+public class AusschreibungForm extends Showcase {
 
-	Projekt prToDisplay = null;
+	Ausschreibung asToDisplay = null;
 	ProjektTreeViewModel ptvm = null;
 
 	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
-	
-	Label formTitel = new Label();
-	TextBox nameTb = new TextBox();
-	DateBox startDb = new DateBox();
-	DateBox endDb = new DateBox();
-	TextBox beschreibungTb = new TextBox();
 
-	public ProjektForm() {
-		
-		formTitel.setText("Projekt");
+	Label formTitel = new Label();
+	TextBox bezeichnungTb = new TextBox();
+	DateBox fristDb = new DateBox();
+	TextBox astextgTb = new TextBox();
+
+	public AusschreibungForm() {
+
+		formTitel.setText("Ausschreibung");
 		this.add(formTitel);
-		
-		Grid form = new Grid(4, 2);
+
+		Grid form = new Grid(3, 2);
 		this.add(form);
 
-		form.setWidget(0, 0, new Label("Name"));
-		form.setWidget(0, 1, nameTb);
+		form.setWidget(0, 0, new Label("Bezeichnung"));
+		form.setWidget(0, 1, bezeichnungTb);
 
-		form.setWidget(1, 0, new Label("Startdatum"));
-		form.setWidget(1, 1, startDb);
-		startDb.setFormat(new DateBox.DefaultFormat(fmt));
-		
-		form.setWidget(2, 0, new Label("Enddatum"));
-		form.setWidget(2, 1, endDb);
-		endDb.setFormat(new DateBox.DefaultFormat(fmt));
+		form.setWidget(1, 0, new Label("Bewerbungsfrist"));
+		form.setWidget(1, 1, fristDb);
+		fristDb.setFormat(new DateBox.DefaultFormat(fmt));
 
-		form.setWidget(3, 0, new Label("Beschreibung"));
-		form.setWidget(3, 1, beschreibungTb);
+		form.setWidget(2, 0, new Label("Ausschreibungstext"));
+		form.setWidget(2, 1, astextgTb);
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
@@ -66,19 +62,17 @@ public class ProjektForm extends Showcase {
 
 	}
 
-	void setSelected(Projekt pr) {
+	void setSelected(Ausschreibung as) {
 
-		if (pr != null) {
-			this.prToDisplay = pr;
-			nameTb.setText(pr.getName());
-			startDb.setValue(pr.getStartdatum());
-			endDb.setValue(pr.getEnddatum());
-			beschreibungTb.setText(pr.getBeschreibung());
+		if (as != null) {
+			this.asToDisplay = as;
+			bezeichnungTb.setText(as.getBezeichnung());
+			fristDb.setValue(as.getBewerbungsfrist());
+			astextgTb.setText(as.getAusschreibungstext());
 		} else {
-			nameTb.setText("");
-			startDb.setValue(null);
-			endDb.setValue(null);
-			beschreibungTb.setText("");
+			bezeichnungTb.setText("");
+			fristDb.setValue(null);
+			astextgTb.setText("");
 		}
 	}
 
@@ -91,13 +85,12 @@ public class ProjektForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (prToDisplay != null) {
-				prToDisplay.setName(nameTb.getText());
-				prToDisplay.setStartdatum(startDb.getValue());
-				prToDisplay.setEnddatum(endDb.getValue());
-				prToDisplay.setBeschreibung(beschreibungTb.getText());
+			if (asToDisplay != null) {
+				asToDisplay.setBezeichnung(bezeichnungTb.getText());
+				asToDisplay.setBewerbungsfrist(fristDb.getValue());
+				asToDisplay.setAusschreibungstext(astextgTb.getText());
 
-				pa.save(prToDisplay, new SaveCallback());
+				pa.save(asToDisplay, new SaveCallback());
 				Window.alert("Änderungen gespeichert.");
 			} else
 				Window.alert("Es wurde nichts ausgewählt");
@@ -113,7 +106,7 @@ public class ProjektForm extends Showcase {
 
 		@Override
 		public void onSuccess(Void result) {
-			ptvm.updateProjekt(prToDisplay);
+			ptvm.updateAusschreibung(asToDisplay);
 		}
 	}
 
@@ -122,20 +115,22 @@ public class ProjektForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (prToDisplay != null) {
-				pa.delete(prToDisplay, new DeleteProjektCallback(prToDisplay));
+			if (asToDisplay != null) {
+				pa.delete(asToDisplay, new DeleteAusschreibungCallback(asToDisplay, ptvm.getSelectedProjekt()));
 			} else {
 				Window.alert("Es wurde nichts ausgewählt.");
 			}
 		}
 	}
 
-	class DeleteProjektCallback implements AsyncCallback<Void> {
+	class DeleteAusschreibungCallback implements AsyncCallback<Void> {
 
+		Ausschreibung ausschreibung = null;
 		Projekt projekt = null;
-
-		public DeleteProjektCallback(Projekt pr) {
-			this.projekt = pr;
+		
+		public DeleteAusschreibungCallback(Ausschreibung as, Projekt pr) {
+			ausschreibung = as;
+			projekt = pr;
 		}
 
 		@Override
@@ -145,9 +140,9 @@ public class ProjektForm extends Showcase {
 
 		@Override
 		public void onSuccess(Void result) {
-			if (projekt != null) {
+			if (ausschreibung != null && projekt != null) {
 				setSelected(null);
-				ptvm.removeProjekt(prToDisplay);
+				ptvm.removeAusschreibungForProjekt(ausschreibung, projekt);
 			}
 		}
 	}
@@ -156,23 +151,29 @@ public class ProjektForm extends Showcase {
 
 		@Override
 		public void onClick(ClickEvent event) {
-
-			pa.createProjektFor(MyProjekt.cpm, nameTb.getText(), startDb.getValue(), endDb.getValue(), beschreibungTb.getText(), new CreateProjektCallback());
+			Projekt selectedProjekt = ptvm.getSelectedProjekt();
+			pa.createAusschreibungFor(selectedProjekt, bezeichnungTb.getText(), fristDb.getValue(), astextgTb.getText(), new CreateAusschreibungCallback(selectedProjekt));
 		}
 	}
-	
-	class CreateProjektCallback implements AsyncCallback<Projekt> {
 
+	class CreateAusschreibungCallback implements AsyncCallback<Ausschreibung> {
+
+		Projekt projekt = null;
+		
+		public CreateAusschreibungCallback(Projekt pr) {
+			projekt = pr;
+		}
+		
 		@Override
 		public void onFailure(Throwable caught) {
 
 			Window.alert("Anlegen fehlgeschlagen");
-
 		}
 
 		@Override
-		public void onSuccess(Projekt projekt) {
-			ptvm.addProjekt(projekt);
+		public void onSuccess(Ausschreibung ausschreibung) {
+			if(ausschreibung != null && projekt != null)
+				ptvm.addAusschreibungForProjekt(ausschreibung, projekt);
 
 		}
 	}

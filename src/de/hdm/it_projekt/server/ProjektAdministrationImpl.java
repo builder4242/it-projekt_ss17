@@ -145,13 +145,12 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Ausschreibung createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist,
-			String ausschreibungstext, Partnerprofil profil) throws IllegalArgumentException {
+			String ausschreibungstext) throws IllegalArgumentException {
 
 		Ausschreibung as = new Ausschreibung();
 		as.setBezeichnung(bezeichnung);
 		as.setBewerbungsfrist(bewerbungsfrist);
 		as.setAusschreibungstext(ausschreibungstext);
-		as.setPartnerprofilId(profil.getId());
 		as.setProjektId(pr.getId());
 
 		as.setId(1);
@@ -507,5 +506,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public Person getProjektleiterFor(Projekt pr) throws IllegalArgumentException {
 		return pMapper.findById(pr.getProjektleiterId());
+	}
+
+	@Override
+	public Ausschreibung getAusschreibungby(Partnerprofil pp) throws IllegalArgumentException {
+		return asMapper.getByPartnerprofil(pp);
 	}
 }

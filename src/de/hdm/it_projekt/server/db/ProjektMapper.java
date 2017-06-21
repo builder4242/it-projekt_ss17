@@ -207,9 +207,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
-				pr.setProjektMarktplatzId(rs.getInt("ID"));
-				pr.setProjektbetreiberId(rs.getInt("ID"));
-				pr.setProjektleiterId(rs.getInt("ID"));
+				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
+				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
+				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pr);
@@ -260,9 +260,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
-				pr.setProjektMarktplatzId(rs.getInt("ID"));
-				pr.setProjektbetreiberId(rs.getInt("ID"));
-				pr.setProjektleiterId(rs.getInt("ID"));
+				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
+				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
+				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				return pr;
 			}
@@ -302,9 +302,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
-				pr.setProjektMarktplatzId(rs.getInt("ID"));
-				pr.setProjektbetreiberId(rs.getInt("ID"));
-				pr.setProjektleiterId(rs.getInt("ID"));
+				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
+				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
+				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pr);
@@ -349,9 +349,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
-				pr.setProjektMarktplatzId(rs.getInt("ID"));
-				pr.setProjektbetreiberId(rs.getInt("ID"));
-				pr.setProjektleiterId(rs.getInt("ID"));
+				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
+				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
+				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pr);

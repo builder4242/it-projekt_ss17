@@ -16,6 +16,7 @@ import de.hdm.it_projekt.shared.LoginService;
 import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.LoginInfo;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.client.ClientsideSettings;
@@ -84,6 +85,16 @@ public class MyProjekt implements EntryPoint {
 		/* Menüleiste */ 
 		Button marktplaetzeButton = new Button("Marktplätze"); 
 		marktplaetzeButton.setStyleName("myprojekt-menubutton");
+		marktplaetzeButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new Marktuebersicht());
+				
+			}			
+		});
 		
 		Button projekteButton = new Button("Projekte"); 
 		projekteButton.setStyleName("myprojekt-menubutton");
@@ -110,6 +121,21 @@ public class MyProjekt implements EntryPoint {
 				projektForm.setProjektTreeViewModel(ptvm);
 				contentPanel.add(projektForm);
 				ptvm.setProjektForm(projektForm);
+				
+				AusschreibungForm ausschreibungForm = new AusschreibungForm();
+				ausschreibungForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(ausschreibungForm);
+				ptvm.setAusschreibungForm(ausschreibungForm);
+				
+				PartnerprofilForm partnerprofilForm = new PartnerprofilForm();
+				partnerprofilForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(partnerprofilForm);
+				ptvm.setPartnerprofilForm(partnerprofilForm);
+				
+				EigenschaftForm eigenschaftForm = new EigenschaftForm();
+				eigenschaftForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(eigenschaftForm);
+				ptvm.setEigenschaftForm(eigenschaftForm);
 				
 				
 				RootPanel.get("content").clear();
