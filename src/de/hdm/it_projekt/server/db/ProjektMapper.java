@@ -180,7 +180,6 @@ public class ProjektMapper {
 	 *         repraesentieren. Bei evtl. Exceptions wird eine partiell
 	 *         gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
 	 */
-
 	public Vector<Projekt> findAll() {
 
 		// DB-Verbindung herstellen
@@ -231,7 +230,6 @@ public class ProjektMapper {
 	 * @return Projekt-Objekt, das dem uebergebenen Schluessel entspricht, null
 	 *         bei nicht vorhandenem DB-Tupel.
 	 */
-
 	public Projekt findById(int id) {
 
 		// DB-Verbindung herstellen
@@ -475,7 +473,9 @@ public class ProjektMapper {
 
 	/**
 	 * 
-	 * Methode um Projekte auszulesen an denen eine bestimmte Perosn beteiligt ist.
+	 * Methode um Projekte auszulesen an denen eine bestimmte Perosn beteiligt
+	 * ist.
+	 * 
 	 * @param o
 	 * @return
 	 */
@@ -483,6 +483,5 @@ public class ProjektMapper {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

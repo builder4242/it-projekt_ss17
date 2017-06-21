@@ -5,7 +5,11 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 
-
+/**
+ * 
+ * @author Daniel
+ *
+ */
 public class AusschreibungCell extends AbstractCell<Ausschreibung>{
 
 	@Override

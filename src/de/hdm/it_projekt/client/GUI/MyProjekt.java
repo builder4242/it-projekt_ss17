@@ -83,7 +83,10 @@ public class MyProjekt implements EntryPoint {
 		/* Menüleiste */ 
 		Button marktplaetzeButton = new Button("Marktplätze"); 
 		marktplaetzeButton.setStyleName("myprojekt-menubutton");
-		marktplaetzeButton.addClickHandler(new ClickHandler() {
+		
+		Button projekteButton = new Button("Projekte"); 
+		projekteButton.setStyleName("myprojekt-menubutton");
+		projekteButton.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -99,8 +102,6 @@ public class MyProjekt implements EntryPoint {
 			}
 		});
 		
-		Button projekteButton = new Button("Projekte"); 
-		projekteButton.setStyleName("myprojekt-menubutton");
 		Button profilButton = new Button("Profil"); 
 		profilButton.setStyleName("myprojekt-menubutton");
 		profilButton.addClickHandler(new ClickHandler() {
