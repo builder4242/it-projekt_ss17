@@ -9,33 +9,45 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.datepicker.client.DateBox;
 
-import de.hdm.it_projekt.shared.bo.Eigenschaft;
+import de.hdm.it_projekt.shared.bo.Projekt;
 
-public class EigenschaftForm extends Showcase {
+public class ProjektForm extends Showcase {
 
-	Eigenschaft eToDisplay = null;
+	Projekt prToDisplay = null;
 	ProjektTreeViewModel ptvm = null;
 
+	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	
 	Label formTitel = new Label();
 	TextBox nameTb = new TextBox();
-	TextBox wertTb = new TextBox();
+	DateBox startDb = new DateBox();
+	DateBox endDb = new DateBox();
+	TextBox beschreibungTb = new TextBox();
 
-	public EigenschaftForm() {
-
-		formTitel.setText("Eigenschaft");
+	public ProjektForm() {
+		
+		formTitel.setText("Projekt");
 		this.add(formTitel);
-
-		Grid form = new Grid(2, 2);
+		
+		Grid form = new Grid(4, 2);
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Name"));
 		form.setWidget(0, 1, nameTb);
 
-		form.setWidget(1, 0, new Label("Wert"));
-		form.setWidget(1, 1, wertTb);
+		form.setWidget(1, 0, new Label("Startdatum"));
+		form.setWidget(1, 1, startDb);
+		startDb.setFormat(new DateBox.DefaultFormat(fmt));
+		
+		form.setWidget(2, 0, new Label("Enddatum"));
+		form.setWidget(2, 1, endDb);
+		endDb.setFormat(new DateBox.DefaultFormat(fmt));
+
+		form.setWidget(3, 0, new Label("Beschreibung"));
+		form.setWidget(3, 1, beschreibungTb);
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
@@ -54,18 +66,22 @@ public class EigenschaftForm extends Showcase {
 
 	}
 
-	void setSelected(Eigenschaft e) {
+	void setSelected(Projekt pr) {
 
-		if (e != null) {
-			this.eToDisplay = e;
-			nameTb.setText(eToDisplay.getName());
-			wertTb.setText(eToDisplay.getWert());
+		if (pr != null) {
+			this.prToDisplay = pr;
+			nameTb.setText(pr.getName());
+			startDb.setValue(pr.getStartdatum());
+			endDb.setValue(pr.getEnddatum());
+			beschreibungTb.setText(pr.getBeschreibung());
 		} else {
 			nameTb.setText("");
-			wertTb.setText("");
+			startDb.setValue(null);
+			endDb.setValue(null);
+			beschreibungTb.setText("");
 		}
 	}
-	
+
 	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
 		this.ptvm = ptvm;
 	}
@@ -75,27 +91,29 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (eToDisplay != null) {
-				eToDisplay.setName(nameTb.getText());
-				eToDisplay.setWert(wertTb.getText());
+			if (prToDisplay != null) {
+				prToDisplay.setName(nameTb.getText());
+				prToDisplay.setStartdatum(startDb.getValue());
+				prToDisplay.setEnddatum(endDb.getValue());
+				prToDisplay.setBeschreibung(beschreibungTb.getText());
 
-				pa.save(eToDisplay, new SaveEigenschaftCallback());
+				pa.save(prToDisplay, new SaveCallback());
+				Window.alert("Änderungen gespeichert.");
 			} else
 				Window.alert("Es wurde nichts ausgewählt");
 		}
 	}
-	
-	class SaveEigenschaftCallback implements AsyncCallback<Void> {
+
+	class SaveCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
 			Window.alert("Es ist ein Fehler aufgetreten.");
-
 		}
 
 		@Override
 		public void onSuccess(Void result) {
-			ptvm.updateEigenschaft(eToDisplay);						
+			ptvm.updateProjekt(prToDisplay);
 		}
 	}
 
@@ -103,32 +121,33 @@ public class EigenschaftForm extends Showcase {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if(eToDisplay != null)
-				pa.delete(eToDisplay, new DeleteEigenschaftCallback(eToDisplay));
-			else
+
+			if (prToDisplay != null) {
+				pa.delete(prToDisplay, new DeleteProjektCallback(prToDisplay));
+			} else {
 				Window.alert("Es wurde nichts ausgewählt.");
+			}
 		}
 	}
-	
-	class DeleteEigenschaftCallback implements AsyncCallback<Void> {
 
-		Eigenschaft eigenschaft = null;
-		
-		public DeleteEigenschaftCallback(Eigenschaft e) {
-			eigenschaft = e;
+	class DeleteProjektCallback implements AsyncCallback<Void> {
+
+		Projekt projekt = null;
+
+		public DeleteProjektCallback(Projekt pr) {
+			this.projekt = pr;
 		}
-		
+
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Es ist ein Fehler aufgetreten.");					
+			Window.alert("Es ist ein Fehler aufgetreten.");
 		}
 
 		@Override
 		public void onSuccess(Void result) {
-
-			if(eigenschaft != null) {
+			if (projekt != null) {
 				setSelected(null);
-				ptvm.removeEigenschaft(eigenschaft);
+				ptvm.removeProjekt(prToDisplay);
 			}
 		}
 	}
@@ -138,21 +157,23 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			pa.createEigenschaftFor(ptvm.getSelectedPartnerprofil(), nameTb.getText(), wertTb.getText(), new CreateEigenschaftCallback());
+			pa.createProjektFor(MyProjekt.cpm, nameTb.getText(), startDb.getValue(), endDb.getValue(), beschreibungTb.getText(), new CreateProjektCallback());
 		}
 	}
 	
-	class CreateEigenschaftCallback implements AsyncCallback<Eigenschaft> {
+	class CreateProjektCallback implements AsyncCallback<Projekt> {
 
 		@Override
 		public void onFailure(Throwable caught) {
 
 			Window.alert("Anlegen fehlgeschlagen");
+
 		}
 
 		@Override
-		public void onSuccess(Eigenschaft eigenschaft) {
-			ptvm.addEigenschaft(eigenschaft);
+		public void onSuccess(Projekt projekt) {
+			ptvm.addProjekt(projekt);
+
 		}
 	}
 }

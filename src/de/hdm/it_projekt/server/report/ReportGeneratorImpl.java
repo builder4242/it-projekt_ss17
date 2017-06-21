@@ -65,7 +65,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return
 	 */
 
-	public Vector<Ausschreibung> getAusschreibungenForPartnerprofil(Partnerprofil pp) {
+	public Ausschreibung getAusschreibungenForPartnerprofil(Partnerprofil pp) {
 
 		return asMapper.getByPartnerprofil(pp);
 	}

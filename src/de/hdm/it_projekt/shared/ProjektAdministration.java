@@ -34,6 +34,8 @@ public interface ProjektAdministration extends RemoteService {
 	public Vector<Ausschreibung> getAusschreibungFor(Projekt pr) throws IllegalArgumentException;
 
 	public Ausschreibung getAusschreibungById(int id) throws IllegalArgumentException;
+	
+	public Ausschreibung getAusschreibungby(Partnerprofil pp) throws IllegalArgumentException;
 
 	public Partnerprofil getPartnerprofilById(int id) throws IllegalArgumentException;
 
@@ -65,7 +67,7 @@ public interface ProjektAdministration extends RemoteService {
 			String beschreibung) throws IllegalArgumentException;
 
 	public Ausschreibung createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist,
-			String ausschreibungstext, Partnerprofil profil) throws IllegalArgumentException;
+			String ausschreibungstext) throws IllegalArgumentException;
 
 	public Partnerprofil createPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException;
 
