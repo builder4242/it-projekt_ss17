@@ -26,6 +26,8 @@ public class ProjektTreeViewModel implements TreeViewModel {
 
 	ProjektAdministrationAsync pa = null;
 
+	ProjektForm projektForm = null;
+	
 	private Projekt selectedProjekt = null;
 	private Ausschreibung selectedAusschreibung = null;
 	private Partnerprofil selectedPartnerprofil = null;
@@ -54,7 +56,10 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		@Override
 		public void onSelectionChange(SelectionChangeEvent event) {
 
-			Window.alert(selectionModel.getSelectedObject().toString());
+			BusinessObject selection = selectionModel.getSelectedObject();
+			
+			if(selection instanceof Projekt)
+				setSelectedProjekt((Projekt) selection);	
 
 		}
 	}
@@ -68,6 +73,38 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		ausschreibungDataProviders = new HashMap<Projekt, ListDataProvider<Ausschreibung>>();
 		partnerprofilDataProviders = new HashMap<Ausschreibung, ListDataProvider<Partnerprofil>>();
 		eigenschaftDataProviders = new HashMap<Partnerprofil, ListDataProvider<Eigenschaft>>();
+	}
+	
+	public void setProjektForm(ProjektForm pf) {
+		projektForm = pf;
+	}
+	
+	void setSelectedProjekt(Projekt pr) {
+		selectedProjekt = pr;
+		projektForm.setSelected(pr);
+	}
+	
+	Projekt getSelectedProjekt() {
+		return selectedProjekt;
+	}
+	
+	void addProjekt(Projekt pr) {
+		projektDataProvider.getList().add(pr);
+		selectionModel.setSelected(pr, true);
+	}
+	void updateProjekt(Projekt pr) {
+		List<Projekt> projektList = projektDataProvider.getList();
+
+		projektList.set(projektList.indexOf(pr), pr);
+		
+		projektDataProvider.refresh();
+	}
+	
+	void removeProjekt(Projekt pr) {
+		projektDataProvider.getList().remove(pr);
+		ausschreibungDataProviders.remove(pr);
+		partnerprofilDataProviders.remove(pr);
+		eigenschaftDataProviders.remove(pr);
 	}
 
 	@Override

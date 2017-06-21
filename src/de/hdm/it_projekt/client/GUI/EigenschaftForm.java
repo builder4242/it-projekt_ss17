@@ -81,8 +81,8 @@ public class EigenschaftForm extends Showcase {
 					@Override
 					public void onSuccess(Void result) {
 
-						PartnerprofilForm.eL.remove(eToDisplay);
-						PartnerprofilForm.eL.add(eToDisplay);
+						OPartnerprofilForm.eL.remove(eToDisplay);
+						OPartnerprofilForm.eL.add(eToDisplay);
 
 					}
 				});
@@ -105,7 +105,7 @@ public class EigenschaftForm extends Showcase {
 				@Override
 				public void onSuccess(Void result) {
 
-					PartnerprofilForm.eL.remove(eToDisplay);
+					OPartnerprofilForm.eL.remove(eToDisplay);
 					nameTb.setText("");
 					wertTb.setText("");
 					eToDisplay = null;
@@ -119,7 +119,7 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			pa.createEigenschaftFor(PartnerprofilForm.pp, nameTb.getText(), wertTb.getText(),
+			pa.createEigenschaftFor(OPartnerprofilForm.pp, nameTb.getText(), wertTb.getText(),
 					new AsyncCallback<Eigenschaft>() {
 
 						@Override
@@ -133,7 +133,7 @@ public class EigenschaftForm extends Showcase {
 						public void onSuccess(Eigenschaft result) {
 
 							if (result != null) {
-								PartnerprofilForm.eL.add(result);
+								OPartnerprofilForm.eL.add(result);
 								
 								nameTb.setText("");
 								wertTb.setText("");
@@ -141,7 +141,6 @@ public class EigenschaftForm extends Showcase {
 
 						}
 					});
-
 		}
 	}
 }

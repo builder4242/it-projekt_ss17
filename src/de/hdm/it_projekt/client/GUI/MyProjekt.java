@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
 import de.hdm.it_projekt.shared.LoginService;
@@ -91,13 +92,28 @@ public class MyProjekt implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				
+				HorizontalPanel hPanel = new HorizontalPanel();
+				
+				VerticalPanel treePanel = new VerticalPanel();
+				hPanel.add(treePanel);
+				
+				VerticalPanel contentPanel = new VerticalPanel();
+				hPanel.add(contentPanel);
+				
 				ProjektTreeViewModel ptvm = new ProjektTreeViewModel();
 				CellTree.Resources projektTreeRessource = GWT.create(CellTree.Resources.class);
 				CellTree cellTree = new CellTree(ptvm, "Root", projektTreeRessource);
 				cellTree.setAnimationEnabled(true);
+				treePanel.add(cellTree);
+				
+				ProjektForm projektForm = new ProjektForm();
+				projektForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(projektForm);
+				ptvm.setProjektForm(projektForm);
+				
 				
 				RootPanel.get("content").clear();
-				RootPanel.get("content").add(cellTree);			
+				RootPanel.get("content").add(hPanel);			
 				
 			}
 		});
@@ -110,7 +126,7 @@ public class MyProjekt implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				
 				RootPanel.get("content").clear();
-				RootPanel.get("content").add(new PartnerprofilForm());
+				RootPanel.get("content").add(new OPartnerprofilForm());
 				
 			}
 		});

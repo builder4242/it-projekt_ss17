@@ -21,7 +21,7 @@ import de.hdm.it_projekt.client.GUI.Cell.EigenschaftCell;
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
-public class PartnerprofilForm extends Showcase {
+public class OPartnerprofilForm extends Showcase {
 
 	static Partnerprofil pp = null;
 
@@ -49,7 +49,7 @@ public class PartnerprofilForm extends Showcase {
 
 	final static List<Eigenschaft> eL = eDataProvider.getList();
 
-	public PartnerprofilForm() {
+	public OPartnerprofilForm() {
 
 		eL.clear();
 		

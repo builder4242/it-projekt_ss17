@@ -135,7 +135,8 @@ public class ProjektMapper {
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 			stmt.executeUpdate("UPDATE projekt " + "SET Name=\"" + pr.getName() + "\", " + "Startdatum=\""
-					+ pr.getStartdatum() + "\", " + "Enddatum=\"" + pr.getEnddatum() + "\", " + "Beschreibung=\""
+					+ DBConnection.convertToSQLDateString(pr.getStartdatum()) + "\", " + "Enddatum=\""
+					+ DBConnection.convertToSQLDateString(pr.getEnddatum()) + "\", " + "Beschreibung=\""
 					+ pr.getBeschreibung() + "\", " + "Projektmarktplatz_ID=\"" + pr.getProjektMarktplatzId() + "\", "
 					+ "Projektbetreiber_ID=\"" + pr.getProjektbetreiberId() + "\", " + "Projektleiter_ID=\""
 					+ pr.getProjektleiterId() + "\" " + "WHERE ID=" + pr.getId());

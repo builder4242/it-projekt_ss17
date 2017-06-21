@@ -352,12 +352,17 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void save(Partnerprofil pp) throws IllegalArgumentException {
 
+		pp.setAenderungsdatum(new Date());
 		this.ppMapper.update(pp);
 	}
 
 	@Override
 	public void save(Eigenschaft e) throws IllegalArgumentException {
 
+		Partnerprofil pp = getPartnerprofilById(e.getPartnerprofilId());
+		pp.setAenderungsdatum(new Date());
+		save(pp);
+		
 		this.eMapper.update(e);
 	}
 
