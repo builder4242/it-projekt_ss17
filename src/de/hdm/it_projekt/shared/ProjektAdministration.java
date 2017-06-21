@@ -51,6 +51,8 @@ public interface ProjektAdministration extends RemoteService {
 	
 	public Person findByGoogleId(LoginInfo li) throws IllegalArgumentException;
 	
+	public Person getProjektleiterFor(Projekt pr) throws IllegalArgumentException;
+	
 	/**
 	 * 
 	 * @param bez

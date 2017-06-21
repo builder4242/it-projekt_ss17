@@ -118,5 +118,7 @@ public interface ProjektAdministrationAsync {
 
 	void findByGoogleId(LoginInfo li, AsyncCallback<Person> callback);
 
+	void getProjektleiterFor(Projekt pr, AsyncCallback<Person> callback);
+
 
 }
