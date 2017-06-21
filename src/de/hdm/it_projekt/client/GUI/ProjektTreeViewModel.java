@@ -15,6 +15,8 @@ import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.client.GUI.Cell.AusschreibungCell;
+import de.hdm.it_projekt.client.GUI.Cell.EigenschaftCell;
+import de.hdm.it_projekt.client.GUI.Cell.PartnerprofilCell;
 import de.hdm.it_projekt.client.GUI.Cell.ProjektCell;
 import de.hdm.it_projekt.client.GUI.Cell.ProjektleiterCell;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
@@ -31,7 +33,8 @@ public class ProjektTreeViewModel implements TreeViewModel {
 
 	private ListDataProvider<Projekt> projektDataProvider = null;
 	private Map<Projekt, ListDataProvider<Ausschreibung>> ausschreibungDataProviders = null;
-	private Map<Projekt, ListDataProvider<Person>> projektleiterDataProviders = null;
+	private Map<Ausschreibung, ListDataProvider<Partnerprofil>> partnerprofilDataProviders = null;
+	private Map<Partnerprofil, ListDataProvider<Eigenschaft>> eigenschaftDataProviders = null;
 
 	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObject> {
 		@Override
@@ -63,7 +66,8 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEventHandler());
 		ausschreibungDataProviders = new HashMap<Projekt, ListDataProvider<Ausschreibung>>();
-		projektleiterDataProviders = new HashMap<Projekt, ListDataProvider<Person>>();
+		partnerprofilDataProviders = new HashMap<Ausschreibung, ListDataProvider<Partnerprofil>>();
+		eigenschaftDataProviders = new HashMap<Partnerprofil, ListDataProvider<Eigenschaft>>();
 	}
 
 	@Override
@@ -112,25 +116,49 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			return new DefaultNodeInfo<Ausschreibung>(ausschreibungsProvider, new AusschreibungCell(), selectionModel, null);
 		}
 		
-		if(value instanceof Projekt) {
+		if(value instanceof Ausschreibung) {
 			
-			final ListDataProvider<Person> projektleiterProvider = new ListDataProvider<Person>();
-			projektleiterDataProviders.put((Projekt) value, projektleiterProvider);
+			final ListDataProvider<Partnerprofil> partnerprofilProvider = new ListDataProvider<Partnerprofil>();
+			partnerprofilDataProviders.put((Ausschreibung) value, partnerprofilProvider);
 			
-			pa.getProjektleiterFor((Projekt) value, new AsyncCallback<Person>() {
+			pa.getPartnerprofilById(((Ausschreibung) value).getPartnerprofilId(), new AsyncCallback<Partnerprofil>() {
 
 				@Override
-				public void onFailure(Throwable caught) {
+				public void onFailure(Throwable caught) {					
 				}
 
 				@Override
-				public void onSuccess(Person projektleiter) {
-					projektleiterProvider.getList().add(projektleiter);					
+				public void onSuccess(Partnerprofil partnerprofil) {
+					partnerprofilProvider.getList().add(partnerprofil);
 				}
 			});
 			
-			return new DefaultNodeInfo<Person>(projektleiterProvider, new ProjektleiterCell(), selectionModel, null);
+			return new DefaultNodeInfo<Partnerprofil>(partnerprofilProvider, new PartnerprofilCell(), selectionModel, null);
 			
+		}
+		
+		if(value instanceof Partnerprofil) {
+			
+			final ListDataProvider<Eigenschaft> eigenschaftProvider = new ListDataProvider<Eigenschaft>();
+			eigenschaftDataProviders.put((Partnerprofil) value, eigenschaftProvider);
+			
+			pa.getEigenschaftenFor((Partnerprofil) value, new AsyncCallback<Vector<Eigenschaft>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {					
+				}
+
+				@Override
+				public void onSuccess(Vector<Eigenschaft> eigenschaften) {
+
+					for(Eigenschaft e : eigenschaften) {
+						eigenschaftProvider.getList().add(e);
+					}
+				}
+			});
+			
+			
+			return new DefaultNodeInfo<Eigenschaft>(eigenschaftProvider, new EigenschaftCell(), selectionModel, null);
 		}
 
 		return null;
@@ -139,7 +167,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 	@Override
 	public boolean isLeaf(Object value) {
 
-		return (value instanceof Ausschreibung);
+		return (value instanceof Eigenschaft);
 	}
 
 }
