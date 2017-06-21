@@ -137,11 +137,20 @@ public class AusschreibungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("UPDATE ausschreibung " + "SET Bezeichnung=\"" + as.getBezeichnung() + "\", "
-					+ "Ausschreibungstext=\"" + as.getAusschreibungstext() + "\", " + "Bewerbungsfrist=\""
-					+ DBConnection.convertToSQLDateString(as.getBewerbungsfrist()) + "\", " + "Projekt_ID=\"" + as.getProjektId() + "\", "
-					+ "Partnerprofil_ID=\"" + as.getPartnerprofilId() + "\" " + "WHERE ID=" + as.getId());
+			if (as.getPartnerprofilId() == 0) {
+				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+				stmt.executeUpdate("UPDATE ausschreibung " + "SET Bezeichnung=\"" + as.getBezeichnung() + "\", "
+						+ "Ausschreibungstext=\"" + as.getAusschreibungstext() + "\", " + "Bewerbungsfrist=\""
+						+ DBConnection.convertToSQLDateString(as.getBewerbungsfrist()) + "\", " + "Projekt_ID="
+						+ as.getProjektId() + " " + "WHERE ID="	+ as.getId());
+			} else {
+				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
+				stmt.executeUpdate("UPDATE ausschreibung " + "SET Bezeichnung=\"" + as.getBezeichnung() + "\", "
+						+ "Ausschreibungstext=\"" + as.getAusschreibungstext() + "\", " + "Bewerbungsfrist=\""
+						+ DBConnection.convertToSQLDateString(as.getBewerbungsfrist()) + "\", " + "Projekt_ID="
+						+ as.getProjektId() + ", " + "Partnerprofil_ID=" + as.getPartnerprofilId() + " " + "WHERE ID="
+						+ as.getId());
+			}
 
 		}
 
@@ -172,7 +181,7 @@ public class AusschreibungMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
-			stmt.executeUpdate("DELETE FROM ausschreibung" + "WHERE ID=" + as.getId());
+			stmt.executeUpdate("DELETE FROM ausschreibung  WHERE ID=" + as.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -199,13 +208,12 @@ public class AusschreibungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery(
-					"SELECT ID FROM ausschreibung");
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM ausschreibung");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Ausschreibung-Objekt erstellt.
 			while (rs.next()) {
-				
+
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(findById(rs.getInt("ID")));
 			}
@@ -255,7 +263,7 @@ public class AusschreibungMapper {
 				as.setAusschreibungstext(rs.getString("Ausschreibungstext"));
 				as.setBewerbungsfrist(rs.getDate("Bewerbungsfrist"));
 				as.setProjektId(rs.getInt("Projekt_ID"));
-				if(rs.getString("Partnerprofil_ID") != "NULL")
+				if (rs.getString("Partnerprofil_ID") != "NULL")
 					as.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				return as;

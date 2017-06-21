@@ -319,8 +319,11 @@ public class ProjektTreeViewModel implements TreeViewModel {
 	}
 
 	void removeAusschreibungForProjekt(Ausschreibung as, Projekt pr) {
-		if (!ausschreibungDataProviders.containsKey(pr))
+		
+		if (!ausschreibungDataProviders.containsKey(pr)) {
+			Window.alert("hier ");
 			return;
+		}
 
 		ausschreibungDataProviders.get(pr).getList().remove(as);
 		selectionModel.setSelected(pr, true);
