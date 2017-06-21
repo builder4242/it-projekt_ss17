@@ -16,9 +16,9 @@ public class EigenschaftCell extends AbstractCell<Eigenschaft>{
 			return;
 		
 		
-		sb.appendHtmlConstant("<div class='xx-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("<div class='Eigenschaft-Cell'>");  //Test CSS Klasse
 		sb.appendEscaped("Eigenschaft: " + value.getName() + " -> " + value.getWert());
-		sb.appendHtmlConstant("</div class='xx-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("</div class='Eigenschaft-Cell'>");  //Test CSS Klasse
 		
 	}
 
