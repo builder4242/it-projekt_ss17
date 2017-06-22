@@ -48,10 +48,12 @@ public class PartnerprofilForm extends Showcase {
 		this.add(buttonsPanel);
 
 		Button deleteButton = new Button("Löschen");
+		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
 		Button newButton = new Button("Neu");
+		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
 

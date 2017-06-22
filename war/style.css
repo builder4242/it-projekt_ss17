@@ -170,6 +170,13 @@ h1{
     color: white;
 }
 
+
+.myprojekt-formbutton{
+	font-family: Verdana;
+    background-color: blue;
+    border: none;
+    border-radius: 5px;
+}
 /* LABEL  */ 
 
 .myprojekt-label{
