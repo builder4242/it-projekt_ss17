@@ -41,14 +41,17 @@ public class EigenschaftForm extends Showcase {
 		this.add(buttonsPanel);
 
 		Button changeButton = new Button("Ändern");
+		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		changeButton.addClickHandler(new ChangeClickHandler());
 		buttonsPanel.add(changeButton);
 
 		Button deleteButton = new Button("Löschen");
+		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
 		Button newButton = new Button("Neu");
+		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
 
