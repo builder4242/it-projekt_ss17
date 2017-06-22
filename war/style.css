@@ -10,6 +10,43 @@ h1{
 .ProjektMarktplatz-Cell{
 	font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
+    font-color: blue; 
+    font-size: 18px; 
+}
+
+.Eigenschaft-Cell{
+	font-weight: bold; 		/*�berschriften fett */
+    font-family: Verdana;
+    font-color: blue; 
+    font-size: 18px; 
+}
+
+.Ausschreibung-Cell{
+	font-weight: bold; 		/*�berschriften fett */
+    font-family: Verdana;
+    font-color: blue; 
+    font-size: 18px; 
+}
+
+.Partnerprofil-Cell{
+	font-weight: bold; 		/*�berschriften fett */
+    font-family: Verdana;
+    font-color: blue; 
+    font-size: 18px; 
+}
+
+.Projekt-Cell{
+	font-weight: bold; 		/*�berschriften fett */
+    font-family: Verdana;
+    font-color: blue; 
+    font-size: 18px; 
+}
+
+.Projektleiter-Cell{
+	font-weight: bold; 		/*�berschriften fett */
+    font-family: Verdana;
+    font-color: blue; 
+    font-size: 18px; 
 }
 
 .myprojekt-headline{

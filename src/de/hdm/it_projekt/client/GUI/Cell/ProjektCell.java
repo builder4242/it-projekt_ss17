@@ -14,9 +14,9 @@ public class ProjektCell extends AbstractCell<Projekt>{
 			return;
 		
 		
-		sb.appendHtmlConstant("<div class='xx-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("<div class='Projekt-Cell'>");  //Test CSS Klasse
 		sb.appendEscaped(value.getName());
-		sb.appendHtmlConstant("</div class='xx-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("</div class='Projekt-Cell'>");  //Test CSS Klasse
 		
 	}
 
