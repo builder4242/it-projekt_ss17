@@ -67,6 +67,7 @@ public class AusschreibungForm extends Showcase {
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 	}
 

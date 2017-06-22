@@ -89,10 +89,21 @@
 .myproject-textfield{
 	font-family: Verdana;
 	color: red; 
+	display: inline-block; 
+}
+
+
+/* Panels */ 
+
+.myprojekt-horizontalpanel
+
+.myprojekt-buttonspanel{
+	padding: 2px 2px; 
 }
 
 
 /* BUTTONS */ 
+
 
 .myprojekt-button{
     font-family: Verdana;
