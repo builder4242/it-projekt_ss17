@@ -95,10 +95,13 @@
 
 /* Panels */ 
 
-.myprojekt-horizontalpanel
+.myprojekt-horizontalpanel{
+	padding: 6px 1px; 
+}
 
 .myprojekt-buttonspanel{
-	padding: 2px 2px; 
+	padding: 20px 2px; 
+	display: inline-block; 
 }
 
 
