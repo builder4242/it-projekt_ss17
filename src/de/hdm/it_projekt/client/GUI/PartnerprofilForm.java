@@ -1,148 +1,138 @@
 package de.hdm.it_projekt.client.GUI;
 
-import java.util.List;
-import java.util.Vector;
-
-import com.google.gwt.cell.client.Cell;
-import com.google.gwt.user.cellview.client.CellList;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.ListDataProvider;
-import com.google.gwt.view.client.ProvidesKey;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 
-import de.hdm.it_projekt.client.GUI.Cell.EigenschaftCell;
-import de.hdm.it_projekt.shared.bo.Eigenschaft;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class PartnerprofilForm extends Showcase {
 
-	static Partnerprofil pp = null;
+	Partnerprofil ppToDisplay = null;
+	ProjektTreeViewModel ptvm = null;
 
-	final HorizontalPanel p = new HorizontalPanel();
-	final VerticalPanel leftcol = new VerticalPanel();
-	final VerticalPanel content = new VerticalPanel();
+	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
-	final ProvidesKey<Eigenschaft> KEY_PROVIDER = new ProvidesKey<Eigenschaft>() {
-
-		@Override
-		public Object getKey(Eigenschaft item) {
-			// TODO Auto-generated method stub
-			return item.getId();
-		}
-
-	};
-
-	Cell<Eigenschaft> eCell = new EigenschaftCell();
-
-	final CellList<Eigenschaft> eCl = new CellList<Eigenschaft>(eCell, KEY_PROVIDER);
-
-	final SingleSelectionModel<Eigenschaft> eSelectionModel = new SingleSelectionModel<Eigenschaft>(KEY_PROVIDER);
-
-	static ListDataProvider<Eigenschaft> eDataProvider = new ListDataProvider<Eigenschaft>();
-
-	final static List<Eigenschaft> eL = eDataProvider.getList();
+	Label formTitel = new Label();
+	DateBox erstellDb = new DateBox();
+	DateBox aenderungDb = new DateBox();
 
 	public PartnerprofilForm() {
 
-		eL.clear();
-		
-		p.add(leftcol);
-		p.add(content);
+		formTitel.setText("Partnerprofil");
+		this.add(formTitel);
 
-		pa.getPartnerprofilById(MyProjekt.loginInfo.getCurrentUser().getPartnerprofilId(),
-				new AsyncCallback<Partnerprofil>() {
+		Grid form = new Grid(2, 2);
+		this.add(form);
 
-					@Override
-					public void onFailure(Throwable caught) {
+		form.setWidget(0, 0, new Label("Erstellt"));
+		form.setWidget(0, 1, erstellDb);
+		erstellDb.setFormat(new DateBox.DefaultFormat(fmt));
+		erstellDb.setEnabled(false);
 
-						Window.alert("Es ist leider ein Fehler aufgetreten.");
+		form.setWidget(1, 0, new Label("letzte Änderung:"));
+		form.setWidget(1, 1, aenderungDb);
+		aenderungDb.setFormat(new DateBox.DefaultFormat(fmt));
+		aenderungDb.setEnabled(false);
 
-					}
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		this.add(buttonsPanel);
 
-					@Override
-					public void onSuccess(Partnerprofil result) {
+		Button deleteButton = new Button("Löschen");
+		deleteButton.addClickHandler(new DeleteClickHandler());
+		buttonsPanel.add(deleteButton);
 
-						if (result != null) {
-							pp = result;
-
-						} else {
-							pa.createPartnerprofilFor(MyProjekt.loginInfo.getCurrentUser(),
-									new createPartnerprofilCallback());
-						}
-						leftcol.add(new Label("Partnerprofil"));
-						leftcol.add(new Label("angelegt: " + pp.getErstelldatum()));
-						leftcol.add(new Label("letzte Änderung: " + pp.getAenderungsdatum()));
-						leftcol.add(new Label(""));
-						leftcol.add(getEigenschaftCelllist());
-						content.add(new EigenschaftForm());
-					}
-				});
-
-		this.add(p);
+		Button newButton = new Button("Neu");
+		newButton.addClickHandler(new NewClickHandler());
+		buttonsPanel.add(newButton);
 
 	}
 
-	private Widget getEigenschaftCelllist() {
+	void setSelected(Partnerprofil pp) {
 
-		eCl.setSelectionModel(eSelectionModel);
-		eCl.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-
-		eSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-
-			@Override
-			public void onSelectionChange(SelectionChangeEvent event) {
-
-				EigenschaftForm eForm = new EigenschaftForm();
-				eForm.setSelectedEigenschaft(eSelectionModel.getSelectedObject());
-
-				content.clear();
-				content.add(eForm);
-
-			}
-		});
-
-		eDataProvider.addDataDisplay(eCl);
-
-		pa.getEigenschaftenFor(pp, new AsyncCallback<Vector<Eigenschaft>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Es ist ein Fehler aufgetreten.");
-
-			}
-
-			@Override
-			public void onSuccess(Vector<Eigenschaft> result) {
-
-				for (Eigenschaft e : result) {
-					eL.add(e);
-				}
-
-			}
-		});
-
-		return eCl;
-
+		if (pp != null) {
+			this.ppToDisplay = pp;
+			erstellDb.setValue(ppToDisplay.getErstelldatum());
+			aenderungDb.setValue(ppToDisplay.getAenderungsdatum());
+		} else {
+			erstellDb.setValue(null);
+			aenderungDb.setValue(null);
+		}
 	}
 
-	private class createPartnerprofilCallback implements AsyncCallback<Partnerprofil> {
+	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
+		this.ptvm = ptvm;
+	}
+
+	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Es ist ein Fehler aufgetreten");
+		public void onClick(ClickEvent event) {
+
+			if (ppToDisplay != null) {
+				pa.delete(ppToDisplay, new DeletePartnerprofilCallback(ppToDisplay));
+			} else {
+				Window.alert("Es wurde nichts ausgewählt.");
+			}
+		}
+	}
+
+	class DeletePartnerprofilCallback implements AsyncCallback<Void> {
+
+		Partnerprofil partnerprofil = null;
+
+		public DeletePartnerprofilCallback(Partnerprofil pp) {
+			this.partnerprofil = pp;
 		}
 
 		@Override
-		public void onSuccess(Partnerprofil result) {
+		public void onFailure(Throwable caught) {
+			Window.alert("Es ist ein Fehler aufgetreten.");
+		}
 
-			pp = result;
+		@Override
+		public void onSuccess(Void result) {
+			if (partnerprofil != null) {
+				setSelected(null);
+				ptvm.removePartnerprofil(ppToDisplay);
+			}
+		}
+	}
+
+	private class NewClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+
+			if (ptvm.getSelectedAusschreibung().getPartnerprofilId() != 0)
+				Window.alert("Es existiert schon ein Partnerprofil.");
+			else
+				pa.createPartnerprofilFor(ptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback());
+		}
+	}
+
+	class CreatePartnerprofilCallback implements AsyncCallback<Partnerprofil> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+
+			Window.alert("Anlegen fehlgeschlagen");
+
+		}
+
+		@Override
+		public void onSuccess(Partnerprofil partnerprofil) {
+			ptvm.addPartnerprofil(partnerprofil);
+
 		}
 	}
 }
