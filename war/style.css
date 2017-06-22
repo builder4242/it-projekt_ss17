@@ -7,6 +7,8 @@ h1{
     font-family: Verdana;
 }
 
+/* CSS CELL KLASSEN */
+
 .ProjektMarktplatz-Cell{
 	font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
@@ -49,6 +51,9 @@ h1{
     font-size: 18px; 
 }
 
+
+/*  TEXT  */ 
+
 .myprojekt-headline{
     font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
@@ -79,9 +84,14 @@ h1{
 	font-family: Verdana;
 }
 
+/* TEXTFELD */ 
+
 .myproject-textfield{
 	font-family: Verdana;
 }
+
+
+/* BUTTONS */ 
 
 .myprojekt-button{
     font-family: Verdana;
@@ -143,11 +153,11 @@ h1{
     border: none;
     border-radius: 2px;
     color: white;
-    padding: 15px 32px;
+    padding: 8px 16px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 12px;
 }
 
 .myprojekt-abmeldebutton:active{
@@ -160,7 +170,7 @@ h1{
     color: white;
 }
 
-
+/* LABEL  */ 
 
 .myprojekt-label{
 	font-family: Verdana;
