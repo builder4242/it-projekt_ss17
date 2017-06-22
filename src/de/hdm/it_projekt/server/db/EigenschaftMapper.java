@@ -192,7 +192,7 @@ public class EigenschaftMapper {
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
-				e.setPartnerprofilId(rs.getInt("ID"));
+				e.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);
@@ -227,7 +227,7 @@ public class EigenschaftMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE ID= " + id + " ORDER BY ID");
+					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE ID= " + id);
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -241,7 +241,7 @@ public class EigenschaftMapper {
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
-				e.setPartnerprofilId(rs.getInt("ID"));
+				e.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				return e;
 			}
@@ -358,19 +358,15 @@ public class EigenschaftMapper {
 
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Wert FROM eigenschaft WHERE Partnerprofil_ID=" + pp.getId());
+					.executeQuery("SELECT ID FROM eigenschaft WHERE Partnerprofil_ID=" + pp.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschhaft-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Eigenschaft e = new Eigenschaft();
-				e.setId(rs.getInt("ID"));
-				e.setName(rs.getString("Name"));
-				e.setWert(rs.getString("Wert"));
-
+				
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(e);
+				result.addElement(findById(rs.getInt("ID")));
 			}
 		} catch (SQLException e7) {
 			e7.printStackTrace();

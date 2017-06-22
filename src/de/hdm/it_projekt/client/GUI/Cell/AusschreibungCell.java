@@ -5,7 +5,11 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 
-
+/**
+ * 
+ * @author Daniel
+ *
+ */
 public class AusschreibungCell extends AbstractCell<Ausschreibung>{
 
 	@Override
@@ -15,9 +19,9 @@ public class AusschreibungCell extends AbstractCell<Ausschreibung>{
 			return;
 		
 		
-		sb.appendHtmlConstant("<div class='xx-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("<div class='Ausschreibung-Cell'>");  //Test CSS Klasse
 		sb.appendEscaped("Ausschreibung: " + value.getBezeichnung());
-		sb.appendHtmlConstant("</div class='xx-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("</div class='Ausschreibung-Cell'>");  //Test CSS Klasse
 		
 	}
 

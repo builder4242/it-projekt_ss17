@@ -88,6 +88,7 @@ public class NewPersonForm extends Showcase {
 		this.add(customerButtonsPanel);
 
 		Button newButton = new Button("Neu");
+		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		customerButtonsPanel.add(newButton);
 

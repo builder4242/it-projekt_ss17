@@ -22,6 +22,7 @@ public class LoginPanel extends Showcase {
 	protected void run() {
 
 		final Button loginButton = new Button("Login");
+		loginButton.setStyleName("myprojekt-loginbutton");
 		loginButton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -36,7 +37,9 @@ public class LoginPanel extends Showcase {
 		VerticalPanel loginPanel = new VerticalPanel();
 		Label greeting = new Label();
 		
-		greeting.setText("Hallo hier kommt eine Begrüßungstext mit Beschreibung des Logins.....");
+		greeting.setText("Willkommen bei getLinked, der profesionellen Plattform für Projekte aller Art. Melden Sie sich an"
+				+ " und entdecken Sie tausende von spannenden Projekten oder suchen Sie ganz einfach Mitarbeiter für Ihr eigenes Projekt."
+				+ " Mit getLinked wird jedes Projekt zu einem Erfolg!");
 		
 		// Assemble login panel
 		RootPanel.get("content").clear();

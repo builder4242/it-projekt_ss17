@@ -2,7 +2,6 @@ package de.hdm.it_projekt.client.GUI;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -14,27 +13,22 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
-public class EigenschaftForm extends Showcase {
+public class OEigenschaftForm extends Showcase {
 
 	Eigenschaft eToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
 
-	Label formTitel = new Label();
 	TextBox nameTb = new TextBox();
 	TextBox wertTb = new TextBox();
 
-	public EigenschaftForm() {
-
-		formTitel.setText("Eigenschaft");
-		this.add(formTitel);
+	public OEigenschaftForm() {
 
 		Grid form = new Grid(2, 2);
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Name"));
-		form.setWidget(0, 1, nameTb);
+		form.setWidget(0, 1, new Label("Wert"));
 
-		form.setWidget(1, 0, new Label("Wert"));
+		form.setWidget(1, 0, nameTb);
 		form.setWidget(1, 1, wertTb);
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
@@ -68,10 +62,6 @@ public class EigenschaftForm extends Showcase {
 			wertTb.setText("");
 		}
 	}
-	
-	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
-		this.ptvm = ptvm;
-	}
 
 	private class ChangeClickHandler implements ClickHandler {
 
@@ -82,23 +72,24 @@ public class EigenschaftForm extends Showcase {
 				eToDisplay.setName(nameTb.getText());
 				eToDisplay.setWert(wertTb.getText());
 
-				pa.save(eToDisplay, new SaveEigenschaftCallback());
+				pa.save(eToDisplay, new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Es ist ein Fehler aufgetreten.");
+
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+
+						OPartnerprofilForm.eL.remove(eToDisplay);
+						OPartnerprofilForm.eL.add(eToDisplay);
+
+					}
+				});
 			} else
 				Window.alert("Es wurde nichts ausgewählt");
-		}
-	}
-	
-	class SaveEigenschaftCallback implements AsyncCallback<Void> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Es ist ein Fehler aufgetreten.");
-
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-			ptvm.updateEigenschaft(eToDisplay);						
 		}
 	}
 
@@ -106,33 +97,22 @@ public class EigenschaftForm extends Showcase {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if(eToDisplay != null)
-				pa.delete(eToDisplay, new DeleteEigenschaftCallback(eToDisplay));
-			else
-				Window.alert("Es wurde nichts ausgewählt.");
-		}
-	}
-	
-	class DeleteEigenschaftCallback implements AsyncCallback<Void> {
+			pa.delete(eToDisplay, new AsyncCallback<Void>() {
 
-		Eigenschaft eigenschaft = null;
-		
-		public DeleteEigenschaftCallback(Eigenschaft e) {
-			eigenschaft = e;
-		}
-		
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Es ist ein Fehler aufgetreten.");					
-		}
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Es ist ein Fehler aufgetreten.");					
+				}
 
-		@Override
-		public void onSuccess(Void result) {
+				@Override
+				public void onSuccess(Void result) {
 
-			if(eigenschaft != null) {
-				setSelected(null);
-				ptvm.removeEigenschaft(eigenschaft);
-			}
+					OPartnerprofilForm.eL.remove(eToDisplay);
+					nameTb.setText("");
+					wertTb.setText("");
+					eToDisplay = null;
+				}
+			});
 		}
 	}
 
@@ -141,21 +121,28 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			pa.createEigenschaftFor(ptvm.getSelectedPartnerprofil(), nameTb.getText(), wertTb.getText(), new CreateEigenschaftCallback());
-		}
-	}
-	
-	class CreateEigenschaftCallback implements AsyncCallback<Eigenschaft> {
+			pa.createEigenschaftFor(OPartnerprofilForm.pp, nameTb.getText(), wertTb.getText(),
+					new AsyncCallback<Eigenschaft>() {
 
-		@Override
-		public void onFailure(Throwable caught) {
+						@Override
+						public void onFailure(Throwable caught) {
 
-			Window.alert("Anlegen fehlgeschlagen");
-		}
+							Window.alert("Anlegen fehlgeschlagen");
 
-		@Override
-		public void onSuccess(Eigenschaft eigenschaft) {
-			ptvm.addEigenschaft(eigenschaft);
+						}
+
+						@Override
+						public void onSuccess(Eigenschaft result) {
+
+							if (result != null) {
+								OPartnerprofilForm.eL.add(result);
+								
+								nameTb.setText("");
+								wertTb.setText("");
+							}
+
+						}
+					});
 		}
 	}
 }
