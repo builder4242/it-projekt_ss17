@@ -73,6 +73,7 @@ public class MyProjekt implements EntryPoint {
 		RootPanel.get("menu").add(menu);
 		
 		final Button abmeldungButton = new Button("Abmelden");
+		abmeldungButton.setStyleName("myprojekt-abmeldebutton"); /** Verknüft CSS Klasse auf Button */
 		abmeldungButton.addClickHandler(new ClickHandler() {
 
 			@Override
