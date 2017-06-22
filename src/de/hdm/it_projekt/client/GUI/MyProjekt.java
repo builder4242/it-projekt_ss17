@@ -158,7 +158,7 @@ public class MyProjekt implements EntryPoint {
 			}
 		});
 		
-		Button bewerbungButton = new Button("Bewerbungn"); 
+		Button bewerbungButton = new Button("Bewerbungen"); 
 		bewerbungButton.setStyleName("myprojekt-menubutton");
 						
 		menu.add(marktplaetzeButton);
