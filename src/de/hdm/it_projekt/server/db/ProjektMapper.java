@@ -135,7 +135,8 @@ public class ProjektMapper {
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 			stmt.executeUpdate("UPDATE projekt " + "SET Name=\"" + pr.getName() + "\", " + "Startdatum=\""
-					+ pr.getStartdatum() + "\", " + "Enddatum=\"" + pr.getEnddatum() + "\", " + "Beschreibung=\""
+					+ DBConnection.convertToSQLDateString(pr.getStartdatum()) + "\", " + "Enddatum=\""
+					+ DBConnection.convertToSQLDateString(pr.getEnddatum()) + "\", " + "Beschreibung=\""
 					+ pr.getBeschreibung() + "\", " + "Projektmarktplatz_ID=\"" + pr.getProjektMarktplatzId() + "\", "
 					+ "Projektbetreiber_ID=\"" + pr.getProjektbetreiberId() + "\", " + "Projektleiter_ID=\""
 					+ pr.getProjektleiterId() + "\" " + "WHERE ID=" + pr.getId());
@@ -180,7 +181,6 @@ public class ProjektMapper {
 	 *         repraesentieren. Bei evtl. Exceptions wird eine partiell
 	 *         gefuellter oder ggf. auch leerer Vektor zurueckgeliefert.
 	 */
-
 	public Vector<Projekt> findAll() {
 
 		// DB-Verbindung herstellen
@@ -207,9 +207,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
-				pr.setProjektMarktplatzId(rs.getInt("ID"));
-				pr.setProjektbetreiberId(rs.getInt("ID"));
-				pr.setProjektleiterId(rs.getInt("ID"));
+				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
+				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
+				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pr);
@@ -231,7 +231,6 @@ public class ProjektMapper {
 	 * @return Projekt-Objekt, das dem uebergebenen Schluessel entspricht, null
 	 *         bei nicht vorhandenem DB-Tupel.
 	 */
-
 	public Projekt findById(int id) {
 
 		// DB-Verbindung herstellen
@@ -261,9 +260,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
-				pr.setProjektMarktplatzId(rs.getInt("ID"));
-				pr.setProjektbetreiberId(rs.getInt("ID"));
-				pr.setProjektleiterId(rs.getInt("ID"));
+				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
+				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
+				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				return pr;
 			}
@@ -303,9 +302,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
-				pr.setProjektMarktplatzId(rs.getInt("ID"));
-				pr.setProjektbetreiberId(rs.getInt("ID"));
-				pr.setProjektleiterId(rs.getInt("ID"));
+				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
+				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
+				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pr);
@@ -350,9 +349,9 @@ public class ProjektMapper {
 				pr.setStartdatum(rs.getDate("Startdatum"));
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
-				pr.setProjektMarktplatzId(rs.getInt("ID"));
-				pr.setProjektbetreiberId(rs.getInt("ID"));
-				pr.setProjektleiterId(rs.getInt("ID"));
+				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
+				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
+				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pr);
@@ -475,7 +474,9 @@ public class ProjektMapper {
 
 	/**
 	 * 
-	 * Methode um Projekte auszulesen an denen eine bestimmte Perosn beteiligt ist.
+	 * Methode um Projekte auszulesen an denen eine bestimmte Perosn beteiligt
+	 * ist.
+	 * 
 	 * @param o
 	 * @return
 	 */
@@ -483,6 +484,5 @@ public class ProjektMapper {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

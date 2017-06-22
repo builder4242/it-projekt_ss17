@@ -1,10 +1,9 @@
 package de.hdm.it_projekt.client.GUI;
 
-import java.util.Vector;
-
 import com.google.gwt.core.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -17,10 +16,9 @@ import de.hdm.it_projekt.shared.LoginService;
 import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.LoginInfo;
-import de.hdm.it_projekt.shared.bo.Organisationseinheit;
-import de.hdm.it_projekt.shared.bo.Projekt;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
+import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
-import de.hdm.it_projekt.shared.bo.Team;
 import de.hdm.it_projekt.client.ClientsideSettings;
 
 public class MyProjekt implements EntryPoint {
@@ -28,10 +26,12 @@ public class MyProjekt implements EntryPoint {
 	/**
 	 * Begin Attribute fuer Login
 	 */
-	protected LoginInfo loginInfo = null;
+	protected static LoginInfo loginInfo = null;
 	protected static ProjektMarktplatz cpm = null;
-	protected static Organisationseinheit cu = null;
 
+	static interface ProjektTreeResources extends CellTree.Resources {
+		
+	}
 	/* Ende Attribute fuer Login */
 
 	/**
@@ -63,38 +63,17 @@ public class MyProjekt implements EntryPoint {
 	 */
 	private void loadMyProjekt() {
 
-		final HorizontalPanel menu = new HorizontalPanel();
-		menu.add(new Label("menü ??"));
-		RootPanel.get("menu").add(menu);
-		
-		/* Menüleiste */ 
-		Button marktplaetzeButton = new Button(); 
-		marktplaetzeButton.setStyleName("myprojekt-menubutton");
-		Button projekteButton = new Button(); 
-		projekteButton.setStyleName("myprojekt-menubutton");
-		Button profilButton = new Button(); 
-		profilButton.setStyleName("myprojekt-menubutton");
-		Button bewerbungButton = new Button(); 
-		bewerbungButton.setStyleName("myprojekt-menubutton");
-		Button abmeldungButton = new Button(); 
-		abmeldungButton.setStyleName("myprojekt-menubutton");
-		
-		menu.add(marktplaetzeButton);
-		menu.add(projekteButton);
-		menu.add(profilButton);
-		menu.add(bewerbungButton);
-		menu.add(abmeldungButton);
-		
-
 		final ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
 		final HorizontalPanel loginHeader = new HorizontalPanel();
-
-		final Label userInfo = new Label(loginInfo.toString());
-		loginHeader.add(userInfo);
-
-		final Button signOutBtn = new Button("Logout");
-		signOutBtn.addClickHandler(new ClickHandler() {
+		
+		final HorizontalPanel menu = new HorizontalPanel();
+		
+		RootPanel.get("userinfo").add(loginHeader);
+		RootPanel.get("menu").add(menu);
+		
+		final Button abmeldungButton = new Button("Abmelden");
+		abmeldungButton.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -102,26 +81,107 @@ public class MyProjekt implements EntryPoint {
 				Window.Location.assign(loginInfo.getLogoutUrl());
 			}
 		});
+		
+		/* Menüleiste */ 
+		Button marktplaetzeButton = new Button("Marktplätze"); 
+		marktplaetzeButton.setStyleName("myprojekt-menubutton");
+		marktplaetzeButton.addClickHandler(new ClickHandler() {
 
-		loginHeader.add(signOutBtn);
+			@Override
+			public void onClick(ClickEvent event) {
 
-		RootPanel.get("userinfo").add(loginHeader);
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new Marktuebersicht());
+				
+			}			
+		});
+		
+		Button projekteButton = new Button("Projekte"); 
+		projekteButton.setStyleName("myprojekt-menubutton");
+		projekteButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				HorizontalPanel hPanel = new HorizontalPanel();
+				
+				VerticalPanel treePanel = new VerticalPanel();
+				hPanel.add(treePanel);
+				
+				VerticalPanel contentPanel = new VerticalPanel();
+				hPanel.add(contentPanel);
+				
+				ProjektTreeViewModel ptvm = new ProjektTreeViewModel();
+				CellTree.Resources projektTreeRessource = GWT.create(CellTree.Resources.class);
+				CellTree cellTree = new CellTree(ptvm, "Root", projektTreeRessource);
+				cellTree.setAnimationEnabled(true);
+				treePanel.add(cellTree);
+				
+				ProjektForm projektForm = new ProjektForm();
+				projektForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(projektForm);
+				ptvm.setProjektForm(projektForm);
+				
+				AusschreibungForm ausschreibungForm = new AusschreibungForm();
+				ausschreibungForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(ausschreibungForm);
+				ptvm.setAusschreibungForm(ausschreibungForm);
+				
+				PartnerprofilForm partnerprofilForm = new PartnerprofilForm();
+				partnerprofilForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(partnerprofilForm);
+				ptvm.setPartnerprofilForm(partnerprofilForm);
+				
+				EigenschaftForm eigenschaftForm = new EigenschaftForm();
+				eigenschaftForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(eigenschaftForm);
+				ptvm.setEigenschaftForm(eigenschaftForm);
+				
+				
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(hPanel);			
+				
+			}
+		});
+		
+		Button profilButton = new Button("Profil"); 
+		profilButton.setStyleName("myprojekt-menubutton");
+		profilButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new OPartnerprofilForm());
+				
+			}
+		});
+		
+		Button bewerbungButton = new Button("Bewerbungn"); 
+		bewerbungButton.setStyleName("myprojekt-menubutton");
+						
+		menu.add(marktplaetzeButton);
+		menu.add(projekteButton);
+		menu.add(profilButton);
+		menu.add(bewerbungButton);
 
-		if (cu == null) {
-			pa.findByGoogleId(loginInfo, new AsyncCallback<Organisationseinheit>() {
+		
+		if (loginInfo.getCurrentUser() == null) {
+			pa.findByGoogleId(loginInfo, new AsyncCallback<Person>() {
 
 				@Override
-				public void onSuccess(Organisationseinheit result) {
+				public void onSuccess(Person result) {
 
 					Showcase showcase;
 
 					if (result != null) {
-						cu = result;
-
+						loginInfo.setCurrentUser(result);
+						loginHeader.add(new Label(loginInfo.toString()));
+						loginHeader.add(abmeldungButton);
 						showcase = new Marktuebersicht();
 					} else {
 
-						showcase = new NewOrganisationseinheitForm(loginInfo.getEmailAddress());
+						showcase = new NewPersonForm(loginInfo.getEmailAddress());
 					}
 
 					RootPanel.get("content").clear();
@@ -137,8 +197,7 @@ public class MyProjekt implements EntryPoint {
 					loginPanel.run();
 				}
 			});
-		}
-
+		}		
 	}
 
 }

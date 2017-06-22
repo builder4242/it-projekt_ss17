@@ -16,8 +16,7 @@ public interface ProjektAdministrationAsync {
 
 	void bewerten(Bewerbung bw, String stellungnahme, float wert, AsyncCallback<Bewertung> callback);
 
-	void createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist, String ausschreibungstext,
-			Partnerprofil profil, AsyncCallback<Ausschreibung> callback);
+	void createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist, String ausschreibungstext, AsyncCallback<Ausschreibung> callback);
 
 	void createPartnerprofilFor(Organisationseinheit or, AsyncCallback<Partnerprofil> callback);
 
@@ -28,17 +27,17 @@ public interface ProjektAdministrationAsync {
 	void createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum, String beschreibung,
 			AsyncCallback<Projekt> callback);
 
-	void createPerson(String name, String vorname, String email, String strasse, int plz, String ort, String tel, String googleId,
+	void createPerson(String name, String vorname, String email, String strasse, int plz, String ort, String tel,
 			AsyncCallback<Person> callback);
 
-	void createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel, String googleId,
+	void createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel,
 			AsyncCallback<Unternehmen> callback);
 
 	void delete(Partnerprofil pp, AsyncCallback<Void> callback);
 
 	void createProjektMarktplatz(String bez, AsyncCallback<ProjektMarktplatz> callback);
 
-	void createTeam(String name, String email, String strasse, int plz, String ort, String tel, String googleId,
+	void createTeam(String name, String email, String strasse, int plz, String ort, String tel,
 			AsyncCallback<Team> callback);
 
 	void delete(Bewertung bwt, AsyncCallback<Void> callback);
@@ -116,7 +115,11 @@ public interface ProjektAdministrationAsync {
 	void getProjektMarktplaetzeByOrganisation(Organisationseinheit o,
 			AsyncCallback<Vector<ProjektMarktplatz>> callback);
 
-	void findByGoogleId(LoginInfo li, AsyncCallback<Organisationseinheit> callback);
+	void findByGoogleId(LoginInfo li, AsyncCallback<Person> callback);
+
+	void getProjektleiterFor(Projekt pr, AsyncCallback<Person> callback);
+
+	void getAusschreibungby(Partnerprofil pp, AsyncCallback<Ausschreibung> callback);
 
 
 }

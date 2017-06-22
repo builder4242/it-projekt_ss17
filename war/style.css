@@ -7,6 +7,11 @@ h1{
     font-family: Verdana;
 }
 
+.ProjektMarktplatz-Cell{
+	font-weight: bold; 		/*�berschriften fett */
+    font-family: Verdana;
+}
+
 .myprojekt-headline{
     font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
@@ -105,7 +110,6 @@ h1{
 	
 }
 
-
 div#main {
     margin: 10px;
     border: 1px dashed #000;
@@ -129,7 +133,10 @@ div#header p {
 }
 div#menu {
     margin: 5px;
-    height: 30px;
+    border: 1px dashed #000;
+}
+div#pminfo {
+    margin: 5px;
     border: 1px dashed #000;
 }
 div#content {

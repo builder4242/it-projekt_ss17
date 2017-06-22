@@ -128,8 +128,7 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("UPDATE eigenschaft " + "SET Name=\"" + e.getName() + "\", " + "Wert=\"" + e.getWert()
-					+ "\", " + "Partnerprofil_ID=\"" + e.getPartnerprofilId() + "\" " + "WHERE ID=" + e.getId());
+			stmt.executeUpdate("UPDATE eigenschaft SET Name='" + e.getName() + "', Wert='" + e.getWert() + "' WHERE ID=" + e.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -193,7 +192,7 @@ public class EigenschaftMapper {
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
-				e.setPartnerprofilId(rs.getInt("ID"));
+				e.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);
@@ -228,7 +227,7 @@ public class EigenschaftMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE ID= " + id + " ORDER BY ID");
+					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE ID= " + id);
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -242,7 +241,7 @@ public class EigenschaftMapper {
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
-				e.setPartnerprofilId(rs.getInt("ID"));
+				e.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				return e;
 			}
@@ -359,19 +358,15 @@ public class EigenschaftMapper {
 
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Wert,  FROM eigenschaft" + "WHERE Partnerprofil_ID=" + pp.getId());
+					.executeQuery("SELECT ID FROM eigenschaft WHERE Partnerprofil_ID=" + pp.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschhaft-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Eigenschaft e = new Eigenschaft();
-				e.setId(rs.getInt("ID"));
-				e.setName(rs.getString("Name"));
-				e.setWert(rs.getString("Wert"));
-
+				
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(e);
+				result.addElement(findById(rs.getInt("ID")));
 			}
 		} catch (SQLException e7) {
 			e7.printStackTrace();

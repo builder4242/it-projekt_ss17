@@ -1,6 +1,5 @@
 package de.hdm.it_projekt.shared;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.Vector;
 
@@ -35,6 +34,8 @@ public interface ProjektAdministration extends RemoteService {
 	public Vector<Ausschreibung> getAusschreibungFor(Projekt pr) throws IllegalArgumentException;
 
 	public Ausschreibung getAusschreibungById(int id) throws IllegalArgumentException;
+	
+	public Ausschreibung getAusschreibungby(Partnerprofil pp) throws IllegalArgumentException;
 
 	public Partnerprofil getPartnerprofilById(int id) throws IllegalArgumentException;
 
@@ -50,7 +51,9 @@ public interface ProjektAdministration extends RemoteService {
 	
 	public Vector<ProjektMarktplatz> getProjektMarktplaetzeByOrganisation(Organisationseinheit o) throws IllegalArgumentException;
 	
-	public Organisationseinheit findByGoogleId(LoginInfo li) throws IllegalArgumentException;
+	public Person findByGoogleId(LoginInfo li) throws IllegalArgumentException;
+	
+	public Person getProjektleiterFor(Projekt pr) throws IllegalArgumentException;
 	
 	/**
 	 * 
@@ -64,7 +67,7 @@ public interface ProjektAdministration extends RemoteService {
 			String beschreibung) throws IllegalArgumentException;
 
 	public Ausschreibung createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist,
-			String ausschreibungstext, Partnerprofil profil) throws IllegalArgumentException;
+			String ausschreibungstext) throws IllegalArgumentException;
 
 	public Partnerprofil createPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException;
 
@@ -74,12 +77,12 @@ public interface ProjektAdministration extends RemoteService {
 			throws IllegalArgumentException;
 
 	public Person createPerson(String name, String vorname, String email, String strasse, int plz, String ort,
-			String tel, String googleId) throws IllegalArgumentException;
+			String tel) throws IllegalArgumentException;
 
-	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel, String googleId)
+	public Unternehmen createUnternehmen(String name, String email, String strasse, int plz, String ort, String tel)
 			throws IllegalArgumentException;
 
-	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel, String googleId)
+	public Team createTeam(String name, String email, String strasse, int plz, String ort, String tel)
 			throws IllegalArgumentException;
 
 	public Bewerbung bewerben(Ausschreibung as, Organisationseinheit organisation, String bewerbungstext) throws IllegalArgumentException;
