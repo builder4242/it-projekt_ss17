@@ -10,7 +10,9 @@ package de.hdm.it_projekt.server.report;
  */
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.it_projekt.server.ProjektAdministrationImpl;
 import de.hdm.it_projekt.server.db.*;
+import de.hdm.it_projekt.shared.ProjektAdministration;
 import de.hdm.it_projekt.shared.ReportGenerator;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
@@ -18,7 +20,13 @@ import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
+import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.Column;
+import de.hdm.it_projekt.shared.report.CompositeParagraph;
+import de.hdm.it_projekt.shared.report.Row;
+import de.hdm.it_projekt.shared.report.SimpleParagraph;
 
+import java.util.Date;
 import java.util.Vector;
 
 @SuppressWarnings("serial")
@@ -36,7 +44,14 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	private TeamMapper tMapper = null;
 	private UnternehmenMapper uMapper = null;
 
+	private ProjektAdministration administration = null;
+
+	public ReportGeneratorImpl() throws IllegalArgumentException {
+
+	}
+
 	public void init() throws IllegalArgumentException {
+
 		this.asMapper = AusschreibungMapper.ausschreibungMapper();
 		this.btMapper = BeteiligungMapper.beteiligungMapper();
 		this.bwMapper = BewerbungMapper.bewerbungMapper();
@@ -48,70 +63,38 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		this.pmMapper = ProjektMarktplatzMapper.projektMarktplatzMapper();
 		this.tMapper = TeamMapper.teamMapper();
 		this.uMapper = UnternehmenMapper.unternehmenMapper();
+
+		ProjektAdministrationImpl a = new ProjektAdministrationImpl();
+		a.init();
+		this.administration = a;
 	}
 
-	/**
-	 * @return
-	 * Abfrage von allen Ausschreibugen
-	 */
-	public Vector<Ausschreibung> getAlleAusschreibungen() {
-
-		return asMapper.findAll();
-	}
-	/**
-	 * 
-	 * Ausschreibung zu Partnerprofil suchen
-	 * @param pp
-	 * @return
-	 */
-
-	public Ausschreibung getAusschreibungenForPartnerprofil(Partnerprofil pp) {
-
-		return asMapper.getByPartnerprofil(pp);
+	protected ProjektAdministration getProjektAdministration() {
+		return this.administration;
 	}
 
-	/**
-	 * Abfragen aller Bewerbungen auf Ausschreibungen des Benutzers 
-	 * @param oe
-	 * @return
-	 */
-	public Vector<Ausschreibung> getBewerbungenOnAusschreibung(Organisationseinheit oe) {
+	public AlleAusschreibungenReport createAlleAusschreibungenReport(Projekt p) throws IllegalArgumentException {
 
-		return null;
+		if (this.getProjektAdministration() == null)
+			return null;
+		AlleAusschreibungenReport result = new AlleAusschreibungenReport();
+		result.setTitle("Alle Ausschreibungen des Projekts");
+		result.setCreated(new Date());
 
-	}
-	/**
-	 * Abfrage der eigenen Bewerbungen und den zugehörigen Ausschreibungen des Benutzers
-	 * @param o
-	 * @return
-	 */
+		CompositeParagraph header = new CompositeParagraph();
+		header.addSubParagraph(new SimpleParagraph(p.getName()));
+		Row headline = new Row();
 
-	public Vector<Ausschreibung> getBewerbungToAusschreibung(Organisationseinheit o) {
+		headline.addColumn(new Column("Ausschreibung"));
 
-		Vector<Bewerbung> bwV = bwMapper.getByOrganisationseinheit(o);
-		Vector<Ausschreibung> asV = new Vector<Ausschreibung>();
+		result.addRow(headline);
+		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungFor(p);
 
-		for (Bewerbung bw : bwV) {
-			asV.addAll(asMapper.findByBewerbung(bw));
+		for (Ausschreibung a : ausschreibung) {
+			Row ausschreibungRow = new Row();
+			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungFor(p))));
+			result.addRow(ausschreibungRow);
 		}
-
-		return asV;
+		return result;
 	}
-	
-	/**
-	 * Abfrage von Projektverflechtungen (Teilnahmen und weitere Einreichungen/Bewerbungen)
-	 * eines Bewerbers durch den Ausschreibenden.
-	 * @param o
-	 * @return
-	 */
-
-	public Vector<Projekt> getProjektVerflechtungen(Organisationseinheit o) {
-		
-		Vector<Bewerbung> bwV = bwMapper.getByOrganisationseinheit(o);
-		Vector<Projekt> prV = prMapper.findByTeilnehmer(o);
-		
-		return prV;
-
-	}
-
 }
