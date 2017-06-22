@@ -21,6 +21,7 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
 import de.hdm.it_projekt.shared.report.Column;
 import de.hdm.it_projekt.shared.report.CompositeParagraph;
 import de.hdm.it_projekt.shared.report.Row;
@@ -97,4 +98,58 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 		return result;
 	}
+	
+	public AlleAusschreibungenReport createMatchingAusschreibungenReport(Partnerprofil pp) throws IllegalArgumentException
+	{
+		if (this.getProjektAdministration() == null)
+			return null;
+		AlleAusschreibungenReport result = new AlleAusschreibungenReport();
+		result.setTitle("Alle Ausschreibungen passend zum Partnerprofil");
+		result.setCreated(new Date());
+
+		CompositeParagraph header = new CompositeParagraph();
+		header.addSubParagraph(new SimpleParagraph("Profil ID:" + pp.getId()));
+		Row headline = new Row();
+
+		headline.addColumn(new Column("Ausschreibung"));
+
+		result.addRow(headline);
+		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungby(pp);
+
+		for (Ausschreibung a : ausschreibung) {
+			Row ausschreibungRow = new Row();
+			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungby(p))));
+			result.addRow(ausschreibungRow);
+		}
+		return result;
+	}
+	
+	public AlleBewerbungenReport createBewerbungenAufAusschreibungReport(Ausschreibung as) throws IllegalArgumentException
+	{
+		if (this.getProjektAdministration() == null)
+			return null;
+		AlleBewerbungenReport result = new AlleBewerbungenReport();
+		result.setTitle("Alle Bewerbungen auf Ausschreibungen");
+		result.setCreated(new Date());
+
+		CompositeParagraph header = new CompositeParagraph();
+		header.addSubParagraph(new SimpleParagraph("Bewerbungen auf Aussreibung"));
+		Row headline = new Row();
+
+		headline.addColumn(new Column("Ausschreibung"));
+		headline.addColumn(new Column("Bewerbung"));
+
+		result.addRow(headline);
+		
+		Vector<Bewerbung> bewerbung = this.administration.getBewerbungFor(as);
+
+		for (Bewerbung b : bewerbung) {
+			Row bewerbungRow = new Row();
+			bewerbungRow.addColumn(new Column(String.valueOf(as)));
+			bewerbungRow.addColumn(new Column(String.valueOf(this.administration.getBewerbungFor(as))));
+			result.addRow(bewerbungRow);
+		}
+		return result;
+	}
+	
 }
