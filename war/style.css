@@ -173,10 +173,27 @@ h1{
 
 .myprojekt-formbutton{
 	font-family: Verdana;
-    background-color: blue;
+    background-color: #008CBA;
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 2px;
+    padding: 4px 8px; 
+    display: inline-block;
+    font-size: 9px;
+    border-radius: 2px; 
 }
+
+.myprojekt-formbutton:active{
+    position: relative;
+    top: 1px;
+}
+
+.myprojekt-formbutton:hover{
+    background-color: #5fb3ba; /* blau */
+    color: white;
+}
+
+
 /* LABEL  */ 
 
 .myprojekt-label{
