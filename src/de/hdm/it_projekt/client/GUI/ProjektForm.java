@@ -30,24 +30,31 @@ public class ProjektForm extends Showcase {
 	public ProjektForm() {
 		
 		formTitel.setText("Projekt");
+		formTitel.setStyleName("h1");
 		this.add(formTitel);
 		
 		Grid form = new Grid(4, 2);
+		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
+		
 		form.setWidget(0, 0, new Label("Name"));
 		form.setWidget(0, 1, nameTb);
+		nameTb.setStyleName("myproject-textfield");
 
 		form.setWidget(1, 0, new Label("Startdatum"));
 		form.setWidget(1, 1, startDb);
+		startDb.setStyleName("myproject-textfield");
 		startDb.setFormat(new DateBox.DefaultFormat(fmt));
 		
 		form.setWidget(2, 0, new Label("Enddatum"));
 		form.setWidget(2, 1, endDb);
+		endDb.setStyleName("myproject-textfield");
 		endDb.setFormat(new DateBox.DefaultFormat(fmt));
 
 		form.setWidget(3, 0, new Label("Beschreibung"));
 		form.setWidget(3, 1, beschreibungTb);
+		beschreibungTb.setStyleName("myproject-textfield");
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);

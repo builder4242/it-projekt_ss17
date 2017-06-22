@@ -26,16 +26,20 @@ public class EigenschaftForm extends Showcase {
 	public EigenschaftForm() {
 
 		formTitel.setText("Eigenschaft");
+		formTitel.setStyleName("h1");
 		this.add(formTitel);
 
 		Grid form = new Grid(2, 2);
+		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Name"));
 		form.setWidget(0, 1, nameTb);
+		nameTb.setStyleName("myproject-textfield");
 
 		form.setWidget(1, 0, new Label("Wert"));
 		form.setWidget(1, 1, wertTb);
+		wertTb.setStyleName("myproject-textfield");
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);

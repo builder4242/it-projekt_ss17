@@ -23,6 +23,7 @@ public class OEigenschaftForm extends Showcase {
 	public OEigenschaftForm() {
 
 		Grid form = new Grid(2, 2);
+		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Name"));

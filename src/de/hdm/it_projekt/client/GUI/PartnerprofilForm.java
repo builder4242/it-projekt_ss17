@@ -29,18 +29,22 @@ public class PartnerprofilForm extends Showcase {
 	public PartnerprofilForm() {
 
 		formTitel.setText("Partnerprofil");
+		formTitel.setStyleName("h1");
 		this.add(formTitel);
 
 		Grid form = new Grid(2, 2);
+		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Erstellt"));
 		form.setWidget(0, 1, erstellDb);
+		erstellDb.setStyleName("myproject-textfield");
 		erstellDb.setFormat(new DateBox.DefaultFormat(fmt));
 		erstellDb.setEnabled(false);
 
 		form.setWidget(1, 0, new Label("letzte Änderung:"));
 		form.setWidget(1, 1, aenderungDb);
+		aenderungDb.setStyleName("myproject-textfield");
 		aenderungDb.setFormat(new DateBox.DefaultFormat(fmt));
 		aenderungDb.setEnabled(false);
 
