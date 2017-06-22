@@ -1,8 +1,8 @@
 
-h1{
+.h1{
 
     font-weight: bold; 		/*Überschriften fett */
-    color: blue;             /*Farbe der ï¿½berschrift blau*/
+    color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
     text-aligin: center; 	/*ï¿½berschriften zentreiren*/
     font-family: Verdana;
 }
@@ -88,6 +88,7 @@ h1{
 
 .myproject-textfield{
 	font-family: Verdana;
+	color: red; 
 }
 
 
@@ -222,6 +223,13 @@ h1{
 
 .myprojekt-label{
 	font-family: Verdana;
+}
+
+.myprojekt-formlabel{
+	font-family: Verdana;
+	color: #004080;
+	display: center; 
+	
 }
 
 .myprojekt-ListBox {
