@@ -147,9 +147,9 @@ h1{
     color: white;
 }
 
-.myprojekt-abmeldebutton{
+.myprojekt-loginbutton{
 	font-family: Verdana;
-    background-color: red;
+    background-color: #008000;
     border: none;
     border-radius: 2px;
     color: white;
@@ -166,18 +166,42 @@ h1{
 }
 
 .myprojekt-abmeldebutton:hover{
-    background-color: #5fb3ba; /* blau */
+    background-color: #00ff40; /* grün */
+    color: white;
+}
+
+
+.myprojekt-abmeldebutton{
+	font-family: Verdana;
+    background-color: #008CBA;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.myprojekt-abmeldebutton:active{
+    position: relative;
+    top: 2px;
+}
+
+.myprojekt-abmeldebutton:hover{
+    background-color: #0A4766; /* blau */
     color: white;
 }
 
 
 .myprojekt-formbutton{
 	font-family: Verdana;
-    background-color: #008CBA;
+    background-color: #008CBA ;
     color: white;
     border: none;
     border-radius: 2px;
-    padding: 4px 8px; 
+    padding: 8px 10px; 
     display: inline-block;
     font-size: 12px;
     border-radius: 2px; 
