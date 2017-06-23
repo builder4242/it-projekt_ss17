@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
@@ -25,7 +26,7 @@ public class ProjektForm extends Showcase {
 	TextBox nameTb = new TextBox();
 	DateBox startDb = new DateBox();
 	DateBox endDb = new DateBox();
-	TextBox beschreibungTb = new TextBox();
+	TextArea beschreibungTb = new TextArea();
 
 	public ProjektForm() {
 		
