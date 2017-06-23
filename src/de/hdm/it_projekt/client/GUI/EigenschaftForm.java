@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class EigenschaftForm extends Showcase {
 
@@ -112,7 +113,7 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 			if(eToDisplay != null)
-				pa.delete(eToDisplay, new DeleteEigenschaftCallback(eToDisplay));
+				pa.delete(eToDisplay, new DeleteEigenschaftCallback(eToDisplay, ptvm.getSelectedPartnerprofil()));
 			else
 				Window.alert("Es wurde nichts ausgewählt.");
 		}
@@ -121,9 +122,11 @@ public class EigenschaftForm extends Showcase {
 	class DeleteEigenschaftCallback implements AsyncCallback<Void> {
 
 		Eigenschaft eigenschaft = null;
+		Partnerprofil partnerprofil = null;
 		
-		public DeleteEigenschaftCallback(Eigenschaft e) {
+		public DeleteEigenschaftCallback(Eigenschaft e, Partnerprofil pp) {
 			eigenschaft = e;
+			partnerprofil = pp;
 		}
 		
 		@Override
@@ -134,9 +137,9 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onSuccess(Void result) {
 
-			if(eigenschaft != null) {
+			if(eigenschaft != null && partnerprofil != null) {
 				setSelected(null);
-				ptvm.removeEigenschaft(eigenschaft);
+				ptvm.removeEigenschaftForPartnerprofil(eigenschaft, partnerprofil);
 			}
 		}
 	}
@@ -146,12 +149,18 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			pa.createEigenschaftFor(ptvm.getSelectedPartnerprofil(), nameTb.getText(), wertTb.getText(), new CreateEigenschaftCallback());
+			pa.createEigenschaftFor(ptvm.getSelectedPartnerprofil(), nameTb.getText(), wertTb.getText(), new CreateEigenschaftCallback(ptvm.getSelectedPartnerprofil()));
 		}
 	}
 	
 	class CreateEigenschaftCallback implements AsyncCallback<Eigenschaft> {
 
+		Partnerprofil partnerprofil = null;
+		
+		public CreateEigenschaftCallback(Partnerprofil pp) {
+			partnerprofil = pp;
+		}
+		
 		@Override
 		public void onFailure(Throwable caught) {
 
@@ -160,7 +169,7 @@ public class EigenschaftForm extends Showcase {
 
 		@Override
 		public void onSuccess(Eigenschaft eigenschaft) {
-			ptvm.addEigenschaft(eigenschaft);
+			ptvm.addEigenschaftForPartnerprofil(eigenschaft, partnerprofil);
 		}
 	}
 }

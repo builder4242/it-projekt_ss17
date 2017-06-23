@@ -223,7 +223,7 @@ public class PartnerprofilMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Erstelldatum, Aenderungsdatum FROM partnerprofil WHERE ID= " + id + " ORDER BY ID");
+					"SELECT ID, Erstelldatum, Aenderungsdatum FROM partnerprofil WHERE ID=" + id);
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
