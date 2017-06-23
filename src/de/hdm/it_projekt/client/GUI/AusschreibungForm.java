@@ -65,7 +65,7 @@ public class AusschreibungForm extends Showcase {
 	void setSelected(Ausschreibung as) {
 
 		if (as != null) {
-			this.asToDisplay = as;
+			asToDisplay = as;
 			bezeichnungTb.setText(as.getBezeichnung());
 			fristDb.setValue(as.getBewerbungsfrist());
 			astextgTb.setText(as.getAusschreibungstext());
