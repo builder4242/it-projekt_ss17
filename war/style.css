@@ -1,11 +1,13 @@
 
-h1{
+.h1{
 
     font-weight: bold; 		/*Überschriften fett */
-    color: blue;             /*Farbe der ï¿½berschrift blau*/
+    color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
     text-aligin: center; 	/*ï¿½berschriften zentreiren*/
     font-family: Verdana;
 }
+
+/* CSS CELL KLASSEN */
 
 .ProjektMarktplatz-Cell{
 	font-weight: bold; 		/*ï¿½berschriften fett */
@@ -49,6 +51,9 @@ h1{
     font-size: 18px; 
 }
 
+
+/*  TEXT  */ 
+
 .myprojekt-headline{
     font-weight: bold; 		/*ï¿½berschriften fett */
     font-family: Verdana;
@@ -79,9 +84,29 @@ h1{
 	font-family: Verdana;
 }
 
+/* TEXTFELD */ 
+
 .myproject-textfield{
 	font-family: Verdana;
+	color: red; 
+	display: inline-block; 
 }
+
+
+/* Panels */ 
+
+.myprojekt-horizontalpanel{
+	padding: 6px 1px; 
+}
+
+.myprojekt-buttonspanel{
+	padding: 20px 2px; 
+	display: inline-block; 
+}
+
+
+/* BUTTONS */ 
+
 
 .myprojekt-button{
     font-family: Verdana;
@@ -106,6 +131,7 @@ h1{
 .myprojekt-button:hover{
     background-color: #5fb3ba; /* blau */
     color: white;
+    font-size:25px; 
 }
 
 
@@ -136,8 +162,88 @@ h1{
     color: white;
 }
 
+.myprojekt-loginbutton{
+	font-family: Verdana;
+    background-color: #008000;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.myprojekt-abmeldebutton:active{
+    position: relative;
+    top: 2px;
+}
+
+.myprojekt-abmeldebutton:hover{
+    background-color: #00ff40; /* grün */
+    color: white;
+}
+
+
+.myprojekt-abmeldebutton{
+	font-family: Verdana;
+    background-color: #008CBA;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.myprojekt-abmeldebutton:active{
+    position: relative;
+    top: 2px;
+}
+
+.myprojekt-abmeldebutton:hover{
+    background-color: #0A4766; /* blau */
+    color: white;
+}
+
+
+.myprojekt-formbutton{
+	font-family: Verdana;
+    background-color: #008CBA ;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    padding: 8px 10px; 
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 2px; 
+}
+
+.myprojekt-formbutton:active{
+    position: relative;
+    top: 1px;
+}
+
+.myprojekt-formbutton:hover{
+    background-color: #5fb3ba; /* blau */
+    color: white;
+}
+
+
+/* LABEL  */ 
+
 .myprojekt-label{
 	font-family: Verdana;
+}
+
+.myprojekt-formlabel{
+	font-family: Verdana;
+	color: #004080;
+	display: center; 
+	
 }
 
 .myprojekt-ListBox {

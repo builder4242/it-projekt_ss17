@@ -30,42 +30,51 @@ public class AusschreibungForm extends Showcase {
 	public AusschreibungForm() {
 
 		formTitel.setText("Ausschreibung");
+		formTitel.setStyleName("h1");
 		this.add(formTitel);
 
 		Grid form = new Grid(3, 2);
+		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Bezeichnung"));
 		form.setWidget(0, 1, bezeichnungTb);
+		bezeichnungTb.setStyleName("myproject-textfield");
 
 		form.setWidget(1, 0, new Label("Bewerbungsfrist"));
 		form.setWidget(1, 1, fristDb);
+		fristDb.setStyleName("myproject-textfield");
 		fristDb.setFormat(new DateBox.DefaultFormat(fmt));
 
 		form.setWidget(2, 0, new Label("Ausschreibungstext"));
 		form.setWidget(2, 1, astextgTb);
+		astextgTb.setStyleName("myproject-textfield");
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
 
 		Button changeButton = new Button("Ändern");
+		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		changeButton.addClickHandler(new ChangeClickHandler());
 		buttonsPanel.add(changeButton);
 
 		Button deleteButton = new Button("Löschen");
+		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
 		Button newButton = new Button("Neu");
+		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 	}
 
 	void setSelected(Ausschreibung as) {
 
 		if (as != null) {
-			this.asToDisplay = as;
+			asToDisplay = as;
 			bezeichnungTb.setText(as.getBezeichnung());
 			fristDb.setValue(as.getBewerbungsfrist());
 			astextgTb.setText(as.getAusschreibungstext());

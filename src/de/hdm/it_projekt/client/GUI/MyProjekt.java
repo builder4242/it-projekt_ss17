@@ -73,6 +73,7 @@ public class MyProjekt implements EntryPoint {
 		RootPanel.get("menu").add(menu);
 		
 		final Button abmeldungButton = new Button("Abmelden");
+		abmeldungButton.setStyleName("myprojekt-abmeldebutton"); /** Verknüft CSS Klasse auf Button */
 		abmeldungButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -157,7 +158,7 @@ public class MyProjekt implements EntryPoint {
 			}
 		});
 		
-		Button bewerbungButton = new Button("Bewerbungn"); 
+		Button bewerbungButton = new Button("Bewerbungen"); 
 		bewerbungButton.setStyleName("myprojekt-menubutton");
 						
 		menu.add(marktplaetzeButton);

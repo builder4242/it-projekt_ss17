@@ -127,7 +127,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Projekt createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum,
-			String beschreibung) throws IllegalArgumentException {
+			String beschreibung, Person projektleiter) throws IllegalArgumentException {
 
 		Projekt pr = new Projekt();
 		pr.setName(name);
@@ -135,6 +135,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		pr.setEnddatum(enddatum);
 		pr.setBeschreibung(beschreibung);
 		pr.setProjektMarktplatzId(pm.getId());
+		pr.setProjektleiterId(projektleiter.getId());
 
 		pr.setId(1);
 

@@ -64,7 +64,7 @@ public interface ProjektAdministration extends RemoteService {
 	public ProjektMarktplatz createProjektMarktplatz(String bez) throws IllegalArgumentException;
 
 	public Projekt createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum,
-			String beschreibung) throws IllegalArgumentException;
+			String beschreibung, Person projektleiter) throws IllegalArgumentException;
 
 	public Ausschreibung createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist,
 			String ausschreibungstext) throws IllegalArgumentException;

@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class PartnerprofilForm extends Showcase {
@@ -29,18 +30,22 @@ public class PartnerprofilForm extends Showcase {
 	public PartnerprofilForm() {
 
 		formTitel.setText("Partnerprofil");
+		formTitel.setStyleName("h1");
 		this.add(formTitel);
 
 		Grid form = new Grid(2, 2);
+		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Erstellt"));
 		form.setWidget(0, 1, erstellDb);
+		erstellDb.setStyleName("myproject-textfield");
 		erstellDb.setFormat(new DateBox.DefaultFormat(fmt));
 		erstellDb.setEnabled(false);
 
 		form.setWidget(1, 0, new Label("letzte Änderung:"));
 		form.setWidget(1, 1, aenderungDb);
+		aenderungDb.setStyleName("myproject-textfield");
 		aenderungDb.setFormat(new DateBox.DefaultFormat(fmt));
 		aenderungDb.setEnabled(false);
 
@@ -48,12 +53,15 @@ public class PartnerprofilForm extends Showcase {
 		this.add(buttonsPanel);
 
 		Button deleteButton = new Button("Löschen");
+		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
 		Button newButton = new Button("Neu");
+		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 	}
 
@@ -79,7 +87,7 @@ public class PartnerprofilForm extends Showcase {
 		public void onClick(ClickEvent event) {
 
 			if (ppToDisplay != null) {
-				pa.delete(ppToDisplay, new DeletePartnerprofilCallback(ppToDisplay));
+				pa.delete(ppToDisplay, new DeletePartnerprofilCallback(ppToDisplay, ptvm.getSelectedAusschreibung()));
 			} else {
 				Window.alert("Es wurde nichts ausgewählt.");
 			}
@@ -89,9 +97,11 @@ public class PartnerprofilForm extends Showcase {
 	class DeletePartnerprofilCallback implements AsyncCallback<Void> {
 
 		Partnerprofil partnerprofil = null;
+		Ausschreibung ausschreibung = null;
 
-		public DeletePartnerprofilCallback(Partnerprofil pp) {
-			this.partnerprofil = pp;
+		public DeletePartnerprofilCallback(Partnerprofil pp, Ausschreibung as) {
+			partnerprofil = pp;
+			ausschreibung = as;
 		}
 
 		@Override
@@ -101,9 +111,9 @@ public class PartnerprofilForm extends Showcase {
 
 		@Override
 		public void onSuccess(Void result) {
-			if (partnerprofil != null) {
+			if (partnerprofil != null && ausschreibung != null) {
 				setSelected(null);
-				ptvm.removePartnerprofil(ppToDisplay);
+				ptvm.removePartnerprofilForAusschreibung(ppToDisplay, ausschreibung);
 			}
 		}
 	}
@@ -116,12 +126,17 @@ public class PartnerprofilForm extends Showcase {
 			if (ptvm.getSelectedAusschreibung().getPartnerprofilId() != 0)
 				Window.alert("Es existiert schon ein Partnerprofil.");
 			else
-				pa.createPartnerprofilFor(ptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback());
+				pa.createPartnerprofilFor(ptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback(ptvm.getSelectedAusschreibung()));
 		}
 	}
 
 	class CreatePartnerprofilCallback implements AsyncCallback<Partnerprofil> {
 
+		Ausschreibung ausschreibung = null;
+		
+		public CreatePartnerprofilCallback(Ausschreibung as) {
+			ausschreibung = as;
+		}
 		@Override
 		public void onFailure(Throwable caught) {
 
@@ -131,7 +146,8 @@ public class PartnerprofilForm extends Showcase {
 
 		@Override
 		public void onSuccess(Partnerprofil partnerprofil) {
-			ptvm.addPartnerprofil(partnerprofil);
+			setSelected(partnerprofil);
+			ptvm.addPartnerprofilForAusschreibung(partnerprofil, ausschreibung);
 
 		}
 	}

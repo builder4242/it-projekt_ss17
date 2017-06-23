@@ -319,38 +319,124 @@ public class ProjektTreeViewModel implements TreeViewModel {
 	}
 
 	void removeAusschreibungForProjekt(Ausschreibung as, Projekt pr) {
-		
+
 		if (!ausschreibungDataProviders.containsKey(pr)) {
-			Window.alert("hier ");
+			Window.alert("hier " + as.getId());
 			return;
 		}
 
 		ausschreibungDataProviders.get(pr).getList().remove(as);
+		ausschreibungDataProviders.get(pr).refresh();
 		selectionModel.setSelected(pr, true);
 	}
 
-	void addPartnerprofil(Partnerprofil pp) {
+	void addPartnerprofilForAusschreibung(Partnerprofil pp, Ausschreibung as) {
+		if (!partnerprofilDataProviders.containsKey(as))
+			return;
 
+		ListDataProvider<Partnerprofil> partnerprofilProvider = partnerprofilDataProviders.get(as);
+
+		if (!partnerprofilProvider.getList().contains(pp))
+			partnerprofilProvider.getList().add(pp);
+
+		selectionModel.setSelected(pp, true);
 	}
 
 	void updatePartnerprofil(Partnerprofil pp) {
 
-	}
-
-	void removePartnerprofil(Partnerprofil pp) {
+		pa.getAusschreibungby(pp, new UpdatePartnerprofilCallback(pp));
 
 	}
 
-	void addEigenschaft(Eigenschaft e) {
+	class UpdatePartnerprofilCallback implements AsyncCallback<Ausschreibung> {
 
+		Partnerprofil partnerprofil = null;
+
+		public UpdatePartnerprofilCallback(Partnerprofil pp) {
+			partnerprofil = pp;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(Ausschreibung ausschreibung) {
+
+			if (ausschreibung != null && partnerprofil != null) {
+				List<Partnerprofil> partnerprofilList = partnerprofilDataProviders.get(ausschreibung).getList();
+				partnerprofilList.set(partnerprofilList.indexOf(partnerprofil), partnerprofil);
+				partnerprofilDataProviders.get(ausschreibung).refresh();
+				selectionModel.setSelected(partnerprofil, true);
+			}
+		}
+	}
+
+	void removePartnerprofilForAusschreibung(Partnerprofil pp, Ausschreibung as) {
+
+		if (!partnerprofilDataProviders.containsKey(as))
+			return;
+
+		partnerprofilDataProviders.get(as).getList().remove(pp);
+		selectionModel.setSelected(as, true);
+	}
+
+	void addEigenschaftForPartnerprofil(Eigenschaft e, Partnerprofil pp) {
+
+		if (!eigenschaftDataProviders.containsKey(pp))
+			return;
+
+		ListDataProvider<Eigenschaft> eigenschaftProvider = eigenschaftDataProviders.get(pp);
+
+		if (!eigenschaftProvider.getList().contains(e))
+			eigenschaftProvider.getList().add(e);
+
+		selectionModel.setSelected(e, true);
 	}
 
 	void updateEigenschaft(Eigenschaft e) {
-
+		pa.getPartnerprofilById(e.getPartnerprofilId(), new UpdateEigenschaftCallback(e));
 	}
 
-	void removeEigenschaft(Eigenschaft e) {
+	class UpdateEigenschaftCallback implements AsyncCallback<Partnerprofil> {
 
+		Eigenschaft eigenschaft = null;
+
+		public UpdateEigenschaftCallback(Eigenschaft e) {
+			eigenschaft = e;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(Partnerprofil partnerprofil) {
+			
+			if(eigenschaft != null && partnerprofil != null) {
+				List<Eigenschaft> eigenschaftList = eigenschaftDataProviders.get(partnerprofil).getList();
+				
+				if(!eigenschaftList.contains(eigenschaft)) 
+					eigenschaftList.set(eigenschaftList.indexOf(eigenschaft), eigenschaft);
+				
+				selectionModel.setSelected(eigenschaft, true);
+			}
+
+		}
+	}
+
+	void removeEigenschaftForPartnerprofil(Eigenschaft e, Partnerprofil pp) {
+
+		if (!eigenschaftDataProviders.containsKey(pp))
+			return;
+
+		eigenschaftDataProviders.get(pp).getList().remove(e);
+		eigenschaftDataProviders.get(pp).refresh();
+		selectionModel.setSelected(pp, true);
 	}
 
 	@Override
