@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
@@ -25,7 +26,7 @@ public class AusschreibungForm extends Showcase {
 	Label formTitel = new Label();
 	TextBox bezeichnungTb = new TextBox();
 	DateBox fristDb = new DateBox();
-	TextBox astextgTb = new TextBox();
+	TextArea astextgTb = new TextArea();
 
 	public AusschreibungForm() {
 
@@ -48,7 +49,7 @@ public class AusschreibungForm extends Showcase {
 
 		form.setWidget(2, 0, new Label("Ausschreibungstext"));
 		form.setWidget(2, 1, astextgTb);
-		astextgTb.setStyleName("myproject-textfield");
+		astextgTb.setStyleName("myprojekt-textarea");
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
