@@ -3,10 +3,13 @@ package de.hdm.it_projekt.server.report;
 /**
  * 
  * To be Done
- * getBewerbungToAusschreibung - Ausschreibungen auslesen
- * Methode zum auslesen an welchen Projekten eines Marktplatzes eine OE beteiligt ist 
- * Fan-In/Fan-Out Analyse
- * 
+ * createMatchingAusschreibungenReport - Methode die Vektor zurück gibt in Projektadministartion
+ * createbAusschreibungZuBewerbungReport - methode für das auslesen einer ausschreibung auf die sich beworben wurde
+ * createbAusschreibungZuBewerbungReport - fertig machen 
+ * Abfrage von Projektverflechtungen (Teilnahmen und weitere Einreichungen/Bewerbungen) eines Bewerbers durch den Ausschreibenden. 
+ * Durchführung einer Fan-in/Fan-out-Analyse: Zu allen Teilnehmern kann jeweils die Anzahl von Bewerbungen 
+ * (laufende, abgelehnte, ange- nommene) (eine Art Fan-out) und deren Anzahl von Ausschreibungen (erfolgreich besetzte, ab- gebrochene, laufende, also Fan-out) 
+ * tabellarisch aufgeführt werden.
  */
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -74,6 +77,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return this.administration;
 	}
 
+	
+	/** 
+	 * Report für alle Ausschreibungen die im Projekt vorhanden sind 
+	 */
 	public AlleAusschreibungenReport createAlleAusschreibungenReport(Projekt p) throws IllegalArgumentException {
 
 		if (this.getProjektAdministration() == null)
@@ -99,6 +106,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return result;
 	}
 	
+	/**
+	 * Report über alle Ausschreibungen die zum eigenen Partnerprofil passen.
+	 * @param pp
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	
 	public AlleAusschreibungenReport createMatchingAusschreibungenReport(Partnerprofil pp) throws IllegalArgumentException
 	{
 		if (this.getProjektAdministration() == null)
@@ -123,7 +137,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 		return result;
 	}
-	
+	/**
+	 * Report über alle Bewerbungen auf eigene Ausschreibung
+	 * @param as
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public AlleBewerbungenReport createBewerbungenAufAusschreibungReport(Ausschreibung as) throws IllegalArgumentException
 	{
 		if (this.getProjektAdministration() == null)
@@ -151,5 +170,38 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 		return result;
 	}
-	
+	/**
+	 *Abfrage der eigenen Bewerbungen und den zu- gehörigen Ausschreibungen 
+	 * @param bw
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public AlleBewerbungenReport createbAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException
+	{
+		if (this.getProjektAdministration() == null)
+			return null;
+		AlleBewerbungenReport result = new AlleBewerbungenReport();
+		result.setTitle("Ausschreibung zu Bewerbung");
+		result.setCreated(new Date());
+
+		CompositeParagraph header = new CompositeParagraph();
+		header.addSubParagraph(new SimpleParagraph("Ausschreibung zu Bewerbung"));
+		Row headline = new Row();
+
+		headline.addColumn(new Column("Ausschreibung"));
+		headline.addColumn(new Column("Bewerbung"));
+
+		result.addRow(headline);
+		
+		Vector<Bewerbung> bewerbung = this.administration.getAusschreibungFor(bw);
+
+		for (Bewerbung b : bewerbung) {
+			Row bewerbungRow = new Row();
+			bewerbungRow.addColumn(new Column(String.valueOf(bw)));
+			bewerbungRow.addColumn(new Column(String.valueOf(this.administration.getBewerbungFor(bw))));
+			result.addRow(bewerbungRow);
+		}
+		return result;
+	}
+
 }
