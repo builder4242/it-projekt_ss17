@@ -28,7 +28,7 @@ public class ProjektForm extends Showcase {
 	DateBox startDb = new DateBox();
 	DateBox endDb = new DateBox();
 
-	Label projektLeiterL = new Label();
+	TextBox projektLeiterL = new TextBox();
 	TextArea beschreibungTb = new TextArea();
 
 
@@ -59,10 +59,11 @@ public class ProjektForm extends Showcase {
 
 		form.setWidget(3, 0, new Label("Beschreibung"));
 		form.setWidget(3, 1, beschreibungTb);
-		beschreibungTb.setStyleName("myproject-textfield");
+		beschreibungTb.setStyleName("myprojekt-textarea");
 
 		form.setWidget(4, 0, new Label("Projektleiter"));
 		form.setWidget(4, 1, projektLeiterL);
+		projektLeiterL.setStyleName("myproject-textfield");
 		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
