@@ -19,7 +19,7 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 public class PartnerprofilForm extends Showcase {
 
 	Partnerprofil ppToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	PartnerprofilTreeViewModel pptvm = null;
 
 	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
@@ -77,8 +77,8 @@ public class PartnerprofilForm extends Showcase {
 		}
 	}
 
-	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
-		this.ptvm = ptvm;
+	void setPartnerprofilTreeViewModel(PartnerprofilTreeViewModel pptvm) {
+		this.pptvm = pptvm;
 	}
 
 	private class DeleteClickHandler implements ClickHandler {
@@ -87,7 +87,7 @@ public class PartnerprofilForm extends Showcase {
 		public void onClick(ClickEvent event) {
 
 			if (ppToDisplay != null) {
-				pa.delete(ppToDisplay, new DeletePartnerprofilCallback(ppToDisplay, ptvm.getSelectedAusschreibung()));
+				pa.delete(ppToDisplay, new DeletePartnerprofilCallback(ppToDisplay, pptvm.getSelectedAusschreibung()));
 			} else {
 				Window.alert("Es wurde nichts ausgewählt.");
 			}
@@ -113,7 +113,7 @@ public class PartnerprofilForm extends Showcase {
 		public void onSuccess(Void result) {
 			if (partnerprofil != null && ausschreibung != null) {
 				setSelected(null);
-				ptvm.removePartnerprofilForAusschreibung(ppToDisplay, ausschreibung);
+				pptvm.removePartnerprofilForAusschreibung(ppToDisplay, ausschreibung);
 			}
 		}
 	}
@@ -123,10 +123,10 @@ public class PartnerprofilForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (ptvm.getSelectedAusschreibung().getPartnerprofilId() != 0)
+			if (pptvm.getSelectedAusschreibung().getPartnerprofilId() != 0)
 				Window.alert("Es existiert schon ein Partnerprofil.");
 			else
-				pa.createPartnerprofilFor(ptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback(ptvm.getSelectedAusschreibung()));
+				pa.createPartnerprofilFor(pptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback(pptvm.getSelectedAusschreibung()));
 		}
 	}
 
@@ -147,7 +147,7 @@ public class PartnerprofilForm extends Showcase {
 		@Override
 		public void onSuccess(Partnerprofil partnerprofil) {
 			setSelected(partnerprofil);
-			ptvm.addPartnerprofilForAusschreibung(partnerprofil, ausschreibung);
+			pptvm.addPartnerprofilForAusschreibung(partnerprofil, ausschreibung);
 
 		}
 	}

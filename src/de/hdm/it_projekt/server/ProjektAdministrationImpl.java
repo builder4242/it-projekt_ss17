@@ -214,6 +214,8 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 		e.setId(1);
 
+		save(pp);
+
 		return this.eMapper.insert(e);
 
 	}
@@ -358,9 +360,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void save(Eigenschaft e) throws IllegalArgumentException {
 
-		Partnerprofil pp = getPartnerprofilById(e.getPartnerprofilId());
-		pp.setAenderungsdatum(new Date());
-		save(pp);
+		save(getPartnerprofilById(e.getPartnerprofilId()));
 
 		this.eMapper.update(e);
 	}
@@ -457,6 +457,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Eigenschaft e) throws IllegalArgumentException {
 
+		save(getPartnerprofilById(e.getPartnerprofilId()));
 		this.eMapper.delete(e);
 	}
 
@@ -516,5 +517,53 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public Ausschreibung getAusschreibungby(Partnerprofil pp) throws IllegalArgumentException {
 		return asMapper.getByPartnerprofil(pp);
+	}
+
+	@Override
+	public Bewertung createBewertungFor(Bewerbung bw, float wert, String stellungnahme)
+			throws IllegalArgumentException {
+
+		Bewertung bwt = new Bewertung();
+		bwt.setId(1);
+		bwt.setWert(wert);
+		bwt.setStellungnahme(stellungnahme);
+		bwt.setErstelldatum(new Date());
+		bwt.setBewerbungId(bw.getId());
+
+		return bwtMapper.insert(bwt);
+	}
+
+	@Override
+	public Ausschreibung getAusschreibungBy(Bewerbung bw) throws IllegalArgumentException {
+		return asMapper.findById(bw.getAusschreibungId());
+	}
+
+	@Override
+	public Bewerbung getBewerbungById(int id) throws IllegalArgumentException {
+		return bwMapper.findById(id);
+	}
+
+	@Override
+	public Vector<Bewerbung> getBewerbungBy(Ausschreibung as) throws IllegalArgumentException {
+		return bwMapper.getByAusschreibung(as);
+	}
+
+	@Override
+	public Organisationseinheit getBewerberFor(Bewerbung bw) throws IllegalArgumentException {
+
+		Person p = pMapper.findById(bw.getId());
+		Team t = tMapper.findById(bw.getId());
+		Unternehmen u = uMapper.findById(bw.getId());
+
+		Organisationseinheit o = null;
+
+		if (p != null)
+			o = p;
+		if (t != null)
+			o = t;
+		if (u != null)
+			o = u;
+
+		return o;
 	}
 }

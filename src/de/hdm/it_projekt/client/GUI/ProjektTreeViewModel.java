@@ -5,8 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -15,8 +21,8 @@ import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.client.GUI.Cell.AusschreibungCell;
-import de.hdm.it_projekt.client.GUI.Cell.EigenschaftCell;
-import de.hdm.it_projekt.client.GUI.Cell.PartnerprofilCell;
+import de.hdm.it_projekt.client.GUI.Cell.BewerbungCell;
+import de.hdm.it_projekt.client.GUI.Cell.BewertungCell;
 import de.hdm.it_projekt.client.GUI.Cell.ProjektCell;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.*;
@@ -27,18 +33,19 @@ public class ProjektTreeViewModel implements TreeViewModel {
 
 	ProjektForm projektForm = null;
 	AusschreibungForm ausschreibungForm = null;
-	PartnerprofilForm partnerprofilForm = null;
-	EigenschaftForm eigenschaftForm = null;
+	BewerbungForm bewerbungForm = null;
+	BewertungForm bewertungForm = null;
+	VerticalPanel rightPanel = null;
 
 	private Projekt selectedProjekt = null;
 	private Ausschreibung selectedAusschreibung = null;
-	private Partnerprofil selectedPartnerprofil = null;
-	private Eigenschaft selectedEigenschaft = null;
+	private Bewerbung selectedBewerbung = null;
+	private Bewertung selectedBewertung = null;
 
 	private ListDataProvider<Projekt> projektDataProvider = null;
 	private Map<Projekt, ListDataProvider<Ausschreibung>> ausschreibungDataProviders = null;
-	private Map<Ausschreibung, ListDataProvider<Partnerprofil>> partnerprofilDataProviders = null;
-	private Map<Partnerprofil, ListDataProvider<Eigenschaft>> eigenschaftDataProviders = null;
+	private Map<Ausschreibung, ListDataProvider<Bewerbung>> bewerbungDataProviders = null;
+	private Map<Bewerbung, ListDataProvider<Bewertung>> bewertungDataProviders = null;
 
 	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObject> {
 		@Override
@@ -49,10 +56,10 @@ public class ProjektTreeViewModel implements TreeViewModel {
 				return "PR" + Integer.toString(bo.getId());
 			if (bo instanceof Ausschreibung)
 				return "AS" + Integer.toString(bo.getId());
-			if (bo instanceof Partnerprofil)
-				return "PP" + Integer.toString(bo.getId());
-			if (bo instanceof Eigenschaft)
-				return "ES" + Integer.toString(bo.getId());
+			if (bo instanceof Bewerbung)
+				return "BW" + Integer.toString(bo.getId());
+			if (bo instanceof Bewertung)
+				return "BT" + Integer.toString(bo.getId());
 			else
 				return null;
 		}
@@ -72,10 +79,10 @@ public class ProjektTreeViewModel implements TreeViewModel {
 				setSelectedProjekt((Projekt) selection);
 			if (selection instanceof Ausschreibung)
 				setSelectedAusschreibung((Ausschreibung) selection);
-			if (selection instanceof Partnerprofil)
-				setSelectedPartnerprofil((Partnerprofil) selection);
-			if (selection instanceof Eigenschaft)
-				setSelectedEigenschaft((Eigenschaft) selection);
+			if (selection instanceof Bewerbung)
+				setSelectedBewerbung((Bewerbung) selection);
+			if (selection instanceof Bewertung)
+				setSelectedBewertung((Bewertung) selection);
 		}
 	}
 
@@ -85,9 +92,10 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEventHandler());
+
 		ausschreibungDataProviders = new HashMap<Projekt, ListDataProvider<Ausschreibung>>();
-		partnerprofilDataProviders = new HashMap<Ausschreibung, ListDataProvider<Partnerprofil>>();
-		eigenschaftDataProviders = new HashMap<Partnerprofil, ListDataProvider<Eigenschaft>>();
+		bewerbungDataProviders = new HashMap<Ausschreibung, ListDataProvider<Bewerbung>>();
+		bewertungDataProviders = new HashMap<Bewerbung, ListDataProvider<Bewertung>>();
 	}
 
 	public void setProjektForm(ProjektForm pf) {
@@ -98,12 +106,15 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		ausschreibungForm = af;
 	}
 
-	public void setPartnerprofilForm(PartnerprofilForm pf) {
-		partnerprofilForm = pf;
+	public void setBewerbungForm(BewerbungForm bwf) {
+		bewerbungForm = bwf;
 	}
 
-	public void setEigenschaftForm(EigenschaftForm ef) {
-		eigenschaftForm = ef;
+	public void setBewertungForm(BewertungForm bwtf) {
+		bewertungForm = bwtf;
+	}
+	public void setRightPanel(VerticalPanel rP) {
+		rightPanel = rP;
 	}
 
 	void setSelectedProjekt(Projekt pr) {
@@ -113,11 +124,13 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		selectedAusschreibung = null;
 		ausschreibungForm.setSelected(null);
 
-		selectedPartnerprofil = null;
-		partnerprofilForm.setSelected(null);
+		selectedBewerbung = null;
+		bewerbungForm.setSelected(null);
 
-		selectedEigenschaft = null;
-		eigenschaftForm.setSelected(null);
+		selectedBewertung = null;
+		bewertungForm.setSelected(null);
+		
+		rightPanel.clear();
 
 	}
 
@@ -141,15 +154,39 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			public void onSuccess(Projekt projekt) {
 				selectedProjekt = projekt;
 				projektForm.setSelected(projekt);
-
 			}
 		});
 
-		selectedPartnerprofil = null;
-		partnerprofilForm.setSelected(null);
+		selectedBewerbung = null;
+		bewerbungForm.setSelected(null);
 
-		selectedEigenschaft = null;
-		eigenschaftForm.setSelected(null);
+		selectedBewertung = null;
+		bewertungForm.setSelected(null);
+		
+		
+		PartnerprofilTreeViewModel pptvm = new PartnerprofilTreeViewModel(selectedAusschreibung);
+		CellTree.Resources partnerprofilTreeRessource = GWT.create(CellTree.Resources.class);
+		CellTree cellTree = new CellTree(pptvm, "Root", partnerprofilTreeRessource);
+		cellTree.setAnimationEnabled(true);
+		
+		HorizontalPanel hP = new HorizontalPanel();
+		hP.add(cellTree);
+		
+		VerticalPanel vP = new VerticalPanel();
+		hP.add(vP);
+		
+		PartnerprofilForm partnerprofilForm = new PartnerprofilForm();
+		partnerprofilForm.setPartnerprofilTreeViewModel(pptvm);
+		pptvm.setPartnerprofilForm(partnerprofilForm);
+		vP.add(partnerprofilForm);
+		
+		EigenschaftForm eigenschaftForm = new EigenschaftForm();
+		eigenschaftForm.setPartnerprofilTreeViewModel(pptvm);
+		pptvm.setEigenschaftForm(eigenschaftForm);
+		vP.add(eigenschaftForm);
+		
+		rightPanel.clear();
+		rightPanel.add(hP);
 
 	}
 
@@ -157,12 +194,12 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		return selectedAusschreibung;
 	}
 
-	void setSelectedPartnerprofil(Partnerprofil pp) {
+	void setSelectedBewerbung(Bewerbung bw) {
 
-		selectedPartnerprofil = pp;
-		partnerprofilForm.setSelected(pp);
+		selectedBewerbung = bw;
+		bewerbungForm.setSelected(bw);
 
-		pa.getAusschreibungby(pp, new AsyncCallback<Ausschreibung>() {
+		pa.getAusschreibungBy(bw, new AsyncCallback<Ausschreibung>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -193,19 +230,19 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			}
 		});
 
-		selectedEigenschaft = null;
-		eigenschaftForm.setSelected(null);
+		selectedBewertung = null;
+		bewertungForm.setSelected(null);
 	}
 
-	Partnerprofil getSelectedPartnerprofil() {
-		return selectedPartnerprofil;
+	Bewerbung getSelectedBewerbung() {
+		return selectedBewerbung;
 	}
 
-	void setSelectedEigenschaft(Eigenschaft e) {
-		selectedEigenschaft = e;
-		eigenschaftForm.setSelected(e);
+	void setSelectedBewertung(Bewertung bwt) {
+		selectedBewertung = bwt;
+		bewertungForm.setSelected(bwt);
 
-		pa.getPartnerprofilById(e.getPartnerprofilId(), new AsyncCallback<Partnerprofil>() {
+		pa.getBewerbungById(bwt.getBewerbungId(), new AsyncCallback<Bewerbung>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -214,11 +251,11 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			}
 
 			@Override
-			public void onSuccess(Partnerprofil partnerprofil) {
-				selectedPartnerprofil = partnerprofil;
-				partnerprofilForm.setSelected(partnerprofil);
+			public void onSuccess(Bewerbung bewerbung) {
+				selectedBewerbung = bewerbung;
+				bewerbungForm.setSelected(bewerbung);
 
-				pa.getAusschreibungby(selectedPartnerprofil, new AsyncCallback<Ausschreibung>() {
+				pa.getAusschreibungBy(selectedBewerbung, new AsyncCallback<Ausschreibung>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -252,8 +289,8 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		});
 	}
 
-	Eigenschaft getSelectedEigenschaft() {
-		return selectedEigenschaft;
+	Bewertung getSelectedBewertung() {
+		return selectedBewertung;
 	}
 
 	void addProjekt(Projekt pr) {
@@ -272,8 +309,8 @@ public class ProjektTreeViewModel implements TreeViewModel {
 	void removeProjekt(Projekt pr) {
 		projektDataProvider.getList().remove(pr);
 		ausschreibungDataProviders.remove(pr);
-		partnerprofilDataProviders.remove(pr);
-		eigenschaftDataProviders.remove(pr);
+		bewerbungDataProviders.remove(pr);
+		bewertungDataProviders.remove(pr);
 	}
 
 	void addAusschreibungForProjekt(Ausschreibung as, Projekt pr) {
@@ -321,7 +358,6 @@ public class ProjektTreeViewModel implements TreeViewModel {
 	void removeAusschreibungForProjekt(Ausschreibung as, Projekt pr) {
 
 		if (!ausschreibungDataProviders.containsKey(pr)) {
-			Window.alert("hier " + as.getId());
 			return;
 		}
 
@@ -330,82 +366,38 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		selectionModel.setSelected(pr, true);
 	}
 
-	void addPartnerprofilForAusschreibung(Partnerprofil pp, Ausschreibung as) {
-		if (!partnerprofilDataProviders.containsKey(as))
+	void removeBewerbungForAusschreibung(Bewerbung bw, Ausschreibung as) {
+
+		if (!bewerbungDataProviders.containsKey(as))
 			return;
 
-		ListDataProvider<Partnerprofil> partnerprofilProvider = partnerprofilDataProviders.get(as);
-
-		if (!partnerprofilProvider.getList().contains(pp))
-			partnerprofilProvider.getList().add(pp);
-
-		selectionModel.setSelected(pp, true);
-	}
-
-	void updatePartnerprofil(Partnerprofil pp) {
-
-		pa.getAusschreibungby(pp, new UpdatePartnerprofilCallback(pp));
-
-	}
-
-	class UpdatePartnerprofilCallback implements AsyncCallback<Ausschreibung> {
-
-		Partnerprofil partnerprofil = null;
-
-		public UpdatePartnerprofilCallback(Partnerprofil pp) {
-			partnerprofil = pp;
-		}
-
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onSuccess(Ausschreibung ausschreibung) {
-
-			if (ausschreibung != null && partnerprofil != null) {
-				List<Partnerprofil> partnerprofilList = partnerprofilDataProviders.get(ausschreibung).getList();
-				partnerprofilList.set(partnerprofilList.indexOf(partnerprofil), partnerprofil);
-				partnerprofilDataProviders.get(ausschreibung).refresh();
-				selectionModel.setSelected(partnerprofil, true);
-			}
-		}
-	}
-
-	void removePartnerprofilForAusschreibung(Partnerprofil pp, Ausschreibung as) {
-
-		if (!partnerprofilDataProviders.containsKey(as))
-			return;
-
-		partnerprofilDataProviders.get(as).getList().remove(pp);
+		bewerbungDataProviders.get(as).getList().remove(bw);
 		selectionModel.setSelected(as, true);
 	}
 
-	void addEigenschaftForPartnerprofil(Eigenschaft e, Partnerprofil pp) {
+	void addBewertungForBewerbung(Bewertung bwt, Bewerbung bw) {
 
-		if (!eigenschaftDataProviders.containsKey(pp))
+		if (!bewertungDataProviders.containsKey(bw))
 			return;
 
-		ListDataProvider<Eigenschaft> eigenschaftProvider = eigenschaftDataProviders.get(pp);
+		ListDataProvider<Bewertung> bewertungtProvider = bewertungDataProviders.get(bw);
 
-		if (!eigenschaftProvider.getList().contains(e))
-			eigenschaftProvider.getList().add(e);
+		if (!bewertungtProvider.getList().contains(bwt))
+			bewertungtProvider.getList().add(bwt);
 
-		selectionModel.setSelected(e, true);
+		selectionModel.setSelected(bwt, true);
 	}
 
-	void updateEigenschaft(Eigenschaft e) {
-		pa.getPartnerprofilById(e.getPartnerprofilId(), new UpdateEigenschaftCallback(e));
+	void updateBewertung(Bewertung bwt) {
+		pa.getBewerbungById(bwt.getBewerbungId(), new UpdateBewertungCallback(bwt));
 	}
 
-	class UpdateEigenschaftCallback implements AsyncCallback<Partnerprofil> {
+	class UpdateBewertungCallback implements AsyncCallback<Bewerbung> {
 
-		Eigenschaft eigenschaft = null;
+		Bewertung bewertung = null;
 
-		public UpdateEigenschaftCallback(Eigenschaft e) {
-			eigenschaft = e;
+		public UpdateBewertungCallback(Bewertung bwt) {
+			bewertung = bwt;
 		}
 
 		@Override
@@ -415,28 +407,29 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		}
 
 		@Override
-		public void onSuccess(Partnerprofil partnerprofil) {
-			
-			if(eigenschaft != null && partnerprofil != null) {
-				List<Eigenschaft> eigenschaftList = eigenschaftDataProviders.get(partnerprofil).getList();
-				
-				if(!eigenschaftList.contains(eigenschaft)) 
-					eigenschaftList.set(eigenschaftList.indexOf(eigenschaft), eigenschaft);
-				
-				selectionModel.setSelected(eigenschaft, true);
+		public void onSuccess(Bewerbung bewerbung) {
+
+			if (bewertung != null && bewerbung != null) {
+				List<Bewertung> bewertungList = bewertungDataProviders.get(bewerbung).getList();
+
+				if (!bewertungList.contains(bewertung))
+					bewertungList.set(bewertungList.indexOf(bewertung), bewertung);
+
+				selectionModel.setSelected(bewertung, true);
 			}
 
 		}
 	}
 
-	void removeEigenschaftForPartnerprofil(Eigenschaft e, Partnerprofil pp) {
+	void removeBewertungForBewerbung(Bewertung bwt, Bewerbung bw) {
 
-		if (!eigenschaftDataProviders.containsKey(pp))
+		if (!bewertungDataProviders.containsKey(bw))
 			return;
 
-		eigenschaftDataProviders.get(pp).getList().remove(e);
-		eigenschaftDataProviders.get(pp).refresh();
-		selectionModel.setSelected(pp, true);
+		bewertungDataProviders.get(bw).getList().remove(bwt);
+		bewertungDataProviders.get(bw).refresh();
+
+		selectionModel.setSelected(bw, true);
 	}
 
 	@Override
@@ -488,47 +481,46 @@ public class ProjektTreeViewModel implements TreeViewModel {
 
 		if (value instanceof Ausschreibung) {
 
-			final ListDataProvider<Partnerprofil> partnerprofilProvider = new ListDataProvider<Partnerprofil>();
-			partnerprofilDataProviders.put((Ausschreibung) value, partnerprofilProvider);
+			final ListDataProvider<Bewerbung> bewerbungProvider = new ListDataProvider<Bewerbung>();
+			bewerbungDataProviders.put((Ausschreibung) value, bewerbungProvider);
 
-			pa.getPartnerprofilById(((Ausschreibung) value).getPartnerprofilId(), new AsyncCallback<Partnerprofil>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-				}
-
-				@Override
-				public void onSuccess(Partnerprofil partnerprofil) {
-					partnerprofilProvider.getList().add(partnerprofil);
-				}
-			});
-
-			return new DefaultNodeInfo<Partnerprofil>(partnerprofilProvider, new PartnerprofilCell(), selectionModel,
-					null);
-
-		}
-
-		if (value instanceof Partnerprofil) {
-
-			final ListDataProvider<Eigenschaft> eigenschaftProvider = new ListDataProvider<Eigenschaft>();
-			eigenschaftDataProviders.put((Partnerprofil) value, eigenschaftProvider);
-
-			pa.getEigenschaftenFor((Partnerprofil) value, new AsyncCallback<Vector<Eigenschaft>>() {
+			pa.getBewerbungBy(((Ausschreibung) value), new AsyncCallback<Vector<Bewerbung>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
 				}
 
 				@Override
-				public void onSuccess(Vector<Eigenschaft> eigenschaften) {
-
-					for (Eigenschaft e : eigenschaften) {
-						eigenschaftProvider.getList().add(e);
+				public void onSuccess(Vector<Bewerbung> bewerbungen) {
+					for (Bewerbung bw : bewerbungen) {
+						bewerbungProvider.getList().add(bw);
 					}
 				}
 			});
 
-			return new DefaultNodeInfo<Eigenschaft>(eigenschaftProvider, new EigenschaftCell(), selectionModel, null);
+			return new DefaultNodeInfo<Bewerbung>(bewerbungProvider, new BewerbungCell(), selectionModel, null);
+
+		}
+
+		if (value instanceof Bewerbung) {
+
+			final ListDataProvider<Bewertung> bewertungProvider = new ListDataProvider<Bewertung>();
+			bewertungDataProviders.put((Bewerbung) value, bewertungProvider);
+
+			pa.getBewertungFor((Bewerbung) value, new AsyncCallback<Bewertung>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+
+				@Override
+				public void onSuccess(Bewertung bwt) {
+
+					bewertungProvider.getList().add(bwt);
+				}
+			});
+
+			return new DefaultNodeInfo<Bewertung>(bewertungProvider, new BewertungCell(), selectionModel, null);
 		}
 
 		return null;
@@ -537,7 +529,6 @@ public class ProjektTreeViewModel implements TreeViewModel {
 	@Override
 	public boolean isLeaf(Object value) {
 
-		return (value instanceof Eigenschaft);
+		return (value instanceof Bewertung);
 	}
-
 }
