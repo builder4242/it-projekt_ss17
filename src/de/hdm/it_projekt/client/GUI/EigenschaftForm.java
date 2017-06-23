@@ -18,7 +18,7 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 public class EigenschaftForm extends Showcase {
 
 	Eigenschaft eToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	PartnerprofilTreeViewModel pptvm = null;
 
 	Label formTitel = new Label();
 	TextBox nameTb = new TextBox();
@@ -75,8 +75,8 @@ public class EigenschaftForm extends Showcase {
 		}
 	}
 	
-	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
-		this.ptvm = ptvm;
+	void setPartnerprofilTreeViewModel(PartnerprofilTreeViewModel pptvm) {
+		this.pptvm = pptvm;
 	}
 
 	private class ChangeClickHandler implements ClickHandler {
@@ -104,7 +104,7 @@ public class EigenschaftForm extends Showcase {
 
 		@Override
 		public void onSuccess(Void result) {
-			ptvm.updateEigenschaft(eToDisplay);						
+			pptvm.updateEigenschaft(eToDisplay);						
 		}
 	}
 
@@ -113,7 +113,7 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 			if(eToDisplay != null)
-				pa.delete(eToDisplay, new DeleteEigenschaftCallback(eToDisplay, ptvm.getSelectedPartnerprofil()));
+				pa.delete(eToDisplay, new DeleteEigenschaftCallback(eToDisplay, pptvm.getSelectedPartnerprofil()));
 			else
 				Window.alert("Es wurde nichts ausgewählt.");
 		}
@@ -139,7 +139,7 @@ public class EigenschaftForm extends Showcase {
 
 			if(eigenschaft != null && partnerprofil != null) {
 				setSelected(null);
-				ptvm.removeEigenschaftForPartnerprofil(eigenschaft, partnerprofil);
+				pptvm.removeEigenschaftForPartnerprofil(eigenschaft, partnerprofil);
 			}
 		}
 	}
@@ -149,7 +149,7 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			pa.createEigenschaftFor(ptvm.getSelectedPartnerprofil(), nameTb.getText(), wertTb.getText(), new CreateEigenschaftCallback(ptvm.getSelectedPartnerprofil()));
+			pa.createEigenschaftFor(pptvm.getSelectedPartnerprofil(), nameTb.getText(), wertTb.getText(), new CreateEigenschaftCallback(pptvm.getSelectedPartnerprofil()));
 		}
 	}
 	
@@ -169,7 +169,7 @@ public class EigenschaftForm extends Showcase {
 
 		@Override
 		public void onSuccess(Eigenschaft eigenschaft) {
-			ptvm.addEigenschaftForPartnerprofil(eigenschaft, partnerprofil);
+			pptvm.addEigenschaftForPartnerprofil(eigenschaft, partnerprofil);
 		}
 	}
 }
