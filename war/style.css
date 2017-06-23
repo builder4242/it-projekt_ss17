@@ -90,7 +90,7 @@
 	font-family: Verdana;
 	color: red; 
 	display: inline-block; 
-	width: 120%
+	width: 280px; 
 	padding: 5px 8px;
     margin: 2px 0;
     box-sizing: border-box;
@@ -106,7 +106,7 @@
 	font-family: Verdana;
 	color: red; 
 	display: inline-block; 
-	width: 120%
+	width: 280px; 
 	padding: 5px 8px;
     margin: 2px 0;
     box-sizing: border-box;
@@ -247,7 +247,7 @@
     display: inline-block;
     font-size: 12px;
     border-radius: 2px; 
-    margin-right:3px;
+    margin-right:2px;
 }
 
 .myprojekt-formbutton:active{
