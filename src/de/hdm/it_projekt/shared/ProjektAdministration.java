@@ -23,6 +23,8 @@ public interface ProjektAdministration extends RemoteService {
 
 	public Vector<ProjektMarktplatz> getAlleProjektMarktplaetze() throws IllegalArgumentException;
 
+	public Organisationseinheit getBewerberFor(Bewerbung bw) throws IllegalArgumentException;
+	
 	public ProjektMarktplatz getProjektMarktplatzById(int id) throws IllegalArgumentException;
 
 	public Vector<Projekt> getAlleProjekteFor(ProjektMarktplatz pm) throws IllegalArgumentException;
@@ -54,6 +56,15 @@ public interface ProjektAdministration extends RemoteService {
 	public Person findByGoogleId(LoginInfo li) throws IllegalArgumentException;
 	
 	public Person getProjektleiterFor(Projekt pr) throws IllegalArgumentException;
+	
+	public Bewertung createBewertungFor(Bewerbung bw, float wert, String stellungnahme) throws IllegalArgumentException;
+	
+	public Ausschreibung getAusschreibungBy(Bewerbung bw) throws IllegalArgumentException;
+	
+	public Bewerbung getBewerbungById(int id) throws IllegalArgumentException;
+	
+	public Vector<Bewerbung> getBewerbungBy(Ausschreibung as) throws IllegalArgumentException;
+	
 	
 	/**
 	 * 

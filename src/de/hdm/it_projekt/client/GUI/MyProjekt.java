@@ -84,7 +84,7 @@ public class MyProjekt implements EntryPoint {
 		});
 		
 		/* Menüleiste */ 
-		Button marktplaetzeButton = new Button("Marktplätze"); 
+		Button marktplaetzeButton = new Button("Projektmarktplätze"); 
 		marktplaetzeButton.setStyleName("myprojekt-menubutton");
 		marktplaetzeButton.addClickHandler(new ClickHandler() {
 
@@ -97,7 +97,7 @@ public class MyProjekt implements EntryPoint {
 			}			
 		});
 		
-		Button projekteButton = new Button("Projekte"); 
+		Button projekteButton = new Button("Meine Ausschreibungen"); 
 		projekteButton.setStyleName("myprojekt-menubutton");
 		projekteButton.addClickHandler(new ClickHandler() {
 			
@@ -112,6 +112,7 @@ public class MyProjekt implements EntryPoint {
 				VerticalPanel contentPanel = new VerticalPanel();
 				hPanel.add(contentPanel);
 				
+			
 				ProjektTreeViewModel ptvm = new ProjektTreeViewModel();
 				CellTree.Resources projektTreeRessource = GWT.create(CellTree.Resources.class);
 				CellTree cellTree = new CellTree(ptvm, "Root", projektTreeRessource);
@@ -128,16 +129,19 @@ public class MyProjekt implements EntryPoint {
 				contentPanel.add(ausschreibungForm);
 				ptvm.setAusschreibungForm(ausschreibungForm);
 				
-				PartnerprofilForm partnerprofilForm = new PartnerprofilForm();
-				partnerprofilForm.setProjektTreeViewModel(ptvm);
-				contentPanel.add(partnerprofilForm);
-				ptvm.setPartnerprofilForm(partnerprofilForm);
+				BewerbungForm bewerbungForm = new BewerbungForm();
+				bewerbungForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(bewerbungForm);
+				ptvm.setBewerbungForm(bewerbungForm);
 				
-				EigenschaftForm eigenschaftForm = new EigenschaftForm();
-				eigenschaftForm.setProjektTreeViewModel(ptvm);
-				contentPanel.add(eigenschaftForm);
-				ptvm.setEigenschaftForm(eigenschaftForm);
+				BewertungForm bewertungForm = new BewertungForm();
+				bewertungForm.setProjektTreeViewModel(ptvm);
+				contentPanel.add(bewertungForm);
+				ptvm.setBewertungForm(bewertungForm);
 				
+				VerticalPanel rightPanel = new VerticalPanel();
+				ptvm.setRightPanel(rightPanel);
+				hPanel.add(rightPanel);
 				
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(hPanel);			
@@ -145,7 +149,13 @@ public class MyProjekt implements EntryPoint {
 			}
 		});
 		
-		Button profilButton = new Button("Profil"); 
+		
+		Button bewerbungButton = new Button("Meine Bewerbungen"); 
+		bewerbungButton.setStyleName("myprojekt-menubutton");
+		
+		
+		
+		Button profilButton = new Button("Eigenes Profil verwalten"); 
 		profilButton.setStyleName("myprojekt-menubutton");
 		profilButton.addClickHandler(new ClickHandler() {
 			
@@ -157,14 +167,11 @@ public class MyProjekt implements EntryPoint {
 				
 			}
 		});
-		
-		Button bewerbungButton = new Button("Bewerbungen"); 
-		bewerbungButton.setStyleName("myprojekt-menubutton");
-						
+				
 		menu.add(marktplaetzeButton);
 		menu.add(projekteButton);
-		menu.add(profilButton);
 		menu.add(bewerbungButton);
+		menu.add(profilButton);
 
 		
 		if (loginInfo.getCurrentUser() == null) {
