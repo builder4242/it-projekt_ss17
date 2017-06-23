@@ -90,6 +90,32 @@
 	font-family: Verdana;
 	color: red; 
 	display: inline-block; 
+	width: 120%
+	padding: 5px 8px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    
+}
+
+.myproject-textfield:focus {
+    background-color: lightblue;
+    border: 3px solid #555;
+}
+
+.myprojekt-textarea{
+	font-family: Verdana;
+	color: red; 
+	display: inline-block; 
+	width: 120%
+	padding: 5px 8px;
+    margin: 2px 0;
+    box-sizing: border-box;
+
+	}
+	
+	.myproject-textarea:focus {
+    background-color: lightblue;
+    border: 3px solid #555;
 }
 
 
@@ -102,6 +128,7 @@
 .myprojekt-buttonspanel{
 	padding: 20px 2px; 
 	display: inline-block; 
+	
 }
 
 
@@ -139,7 +166,7 @@
     font-family: Verdana;
     background-color: #008CBA;
     border: none;
-    border-radius: 2px;
+    /* border-radius: 2px; */
     color: white;
     padding: 15px 32px;
     text-align: center;
@@ -220,6 +247,7 @@
     display: inline-block;
     font-size: 12px;
     border-radius: 2px; 
+    margin-right:3px;
 }
 
 .myprojekt-formbutton:active{
