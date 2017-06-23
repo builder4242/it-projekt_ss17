@@ -99,11 +99,11 @@ public class ProjektMapper {
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 				stmt.executeUpdate(
-						"INSERT INTO projekt (ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID) "
+						"INSERT INTO projekt (ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektleiter_ID) "
 								+ "VALUES ('" + pr.getId() + "','" + pr.getName() + "','"
 								+ DBConnection.convertToSQLDateString(pr.getStartdatum()) + "','"
 								+ DBConnection.convertToSQLDateString(pr.getEnddatum()) + "','" + pr.getBeschreibung()
-								+ "','" + pr.getProjektMarktplatzId() + "','" + pr.getProjektbetreiberId() + "','"
+								+ "','" + pr.getProjektMarktplatzId() + "','"
 								+ pr.getProjektleiterId() + "')");
 
 			}
@@ -138,8 +138,7 @@ public class ProjektMapper {
 					+ DBConnection.convertToSQLDateString(pr.getStartdatum()) + "\", " + "Enddatum=\""
 					+ DBConnection.convertToSQLDateString(pr.getEnddatum()) + "\", " + "Beschreibung=\""
 					+ pr.getBeschreibung() + "\", " + "Projektmarktplatz_ID=\"" + pr.getProjektMarktplatzId() + "\", "
-					+ "Projektbetreiber_ID=\"" + pr.getProjektbetreiberId() + "\", " + "Projektleiter_ID=\""
-					+ pr.getProjektleiterId() + "\" " + "WHERE ID=" + pr.getId());
+					+ "Projektleiter_ID=\""	+ pr.getProjektleiterId() + "\" " + "WHERE ID=" + pr.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -195,7 +194,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID FROM projekt "
+					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektleiter_ID FROM projekt "
 							+ "ORDER BY Name ");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -208,7 +207,6 @@ public class ProjektMapper {
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
 				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
-				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
 				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
@@ -243,7 +241,7 @@ public class ProjektMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID FROM projekt WHERE ID= "
+					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektleiter_ID FROM projekt WHERE ID= "
 							+ id + " ORDER BY ID");
 
 			/*
@@ -261,7 +259,6 @@ public class ProjektMapper {
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
 				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
-				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
 				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				return pr;
@@ -290,7 +287,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektbetreiber_ID, Projektleiter_ID FROM projekt WHERE name='"
+					"SELECT ID, Name, Startdatum, Enddatum, Beschreibung, Projektmarktplatz_ID, Projektleiter_ID FROM projekt WHERE name='"
 							+ name + "' ORDER BY name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -303,7 +300,6 @@ public class ProjektMapper {
 				pr.setEnddatum(rs.getDate("Enddatum"));
 				pr.setBeschreibung(rs.getString("Beschreibung"));
 				pr.setProjektMarktplatzId(rs.getInt("Projektmarktplatz_ID"));
-				pr.setProjektbetreiberId(rs.getInt("Projektbetreiber_ID"));
 				pr.setProjektleiterId(rs.getInt("Projektleiter_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
