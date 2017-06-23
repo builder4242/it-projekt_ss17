@@ -7,7 +7,7 @@
     font-family: Verdana;
 }
 
-/* CSS CELL KLASSEN */
+/* CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN */
 
 .ProjektMarktplatz-Cell{
 	font-weight: bold; 		/*�berschriften fett */
@@ -52,7 +52,7 @@
 }
 
 
-/*  TEXT  */ 
+/* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
 
 .myprojekt-headline{
     font-weight: bold; 		/*�berschriften fett */
@@ -84,42 +84,54 @@
 	font-family: Verdana;
 }
 
-/* TEXTFELD */ 
+/* TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD */ 
 
 .myproject-textfield{
 	font-family: Verdana;
 	color: red; 
 	display: inline-block; 
-	width: 280px; 
+	width: 200px; 
 	padding: 5px 8px;
     margin: 2px 0;
-    box-sizing: border-box;
+    box-sizing: border-box; 
+    transition: width 0.4s ease-in-out; 
     
 }
 
 .myproject-textfield:focus {
     background-color: lightblue;
     border: 3px solid #555;
+    width: 300px; 
 }
 
 .myprojekt-textarea{
 	font-family: Verdana;
 	color: red; 
 	display: inline-block; 
-	width: 280px; 
+	width: 200px; 
+	height: 50px;
 	padding: 5px 8px;
     margin: 2px 0;
     box-sizing: border-box;
+    resize: vertical;
+    overflow: auto;
+    transition: height 0.4s ease-in-out;
+    -webkit-transition: heigt 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out; 
+   
 
 	}
 	
-	.myproject-textarea:focus {
+.myprojekt-textarea:focus {
     background-color: lightblue;
     border: 3px solid #555;
+    height: 150px;
+    width:300px; 
+     
 }
 
 
-/* Panels */ 
+/* Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels */ 
 
 .myprojekt-horizontalpanel{
 	padding: 6px 1px; 
@@ -132,7 +144,7 @@
 }
 
 
-/* BUTTONS */ 
+/* BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS */ 
 
 
 .myprojekt-button{
@@ -261,7 +273,7 @@
 }
 
 
-/* LABEL  */ 
+/* LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL  */ 
 
 .myprojekt-label{
 	font-family: Verdana;
