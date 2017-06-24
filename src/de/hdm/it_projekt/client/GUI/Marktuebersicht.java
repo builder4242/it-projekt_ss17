@@ -57,6 +57,7 @@ public class Marktuebersicht extends Showcase {
 				MyProjekt.cpm = pmSelectionModel.getSelectedObject();
 								
 				Label pmTextLabel = new Label("Sie befinden sich aktuell im Projektmarktplatz: ");
+				pmTextLabel.setStyleName("myprojekt-infoleistelabel");
 				headerInfo.add(pmTextLabel);
 				
 				Label pmLabel = new Label(MyProjekt.cpm.getBezeichnung());				
@@ -96,6 +97,7 @@ public class Marktuebersicht extends Showcase {
 		
 		
 		ausgabe.setText("Bitte wählen Sie einen Marktplatz aus:");
+		ausgabe.setStyleName("h2"); 
 
 		this.add(ausgabe);
 		this.add(memberPmCl);
