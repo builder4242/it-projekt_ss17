@@ -46,6 +46,7 @@ public class BewerbungForm extends Showcase {
 
 		form.setWidget(1, 0, new Label("Bewerber"));
 		form.setWidget(1, 1, bewerberLb);
+		bewerberLb.setStyleName("myprojekt-formlabel2"); 
 
 		form.setWidget(2, 0, new Label("Bewerbungstext"));
 		form.setWidget(2, 1, textTb);

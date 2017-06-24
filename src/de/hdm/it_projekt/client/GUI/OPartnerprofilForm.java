@@ -78,9 +78,10 @@ public class OPartnerprofilForm extends Showcase {
 						}
 						leftcol.add(new Label("Partnerprofil"));
 						leftcol.add(new Label("angelegt: " + pp.getErstelldatum()));
-						leftcol.add(new Label("letzte Änderung: " + pp.getAenderungsdatum()));
+						leftcol.add(new Label("letzte Änderung " + pp.getAenderungsdatum()));
 						leftcol.add(new Label(""));
 						leftcol.add(getEigenschaftCelllist());
+						leftcol.addStyleName("myprojekt-opartnerprofil");
 						content.add(new OEigenschaftForm());
 					}
 				});
