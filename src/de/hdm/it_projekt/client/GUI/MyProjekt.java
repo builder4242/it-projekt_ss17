@@ -154,7 +154,6 @@ public class MyProjekt implements EntryPoint {
 		bewerbungButton.setStyleName("myprojekt-menubutton");
 		
 		
-		
 		Button profilButton = new Button("Eigenes Profil verwalten"); 
 		profilButton.setStyleName("myprojekt-menubutton");
 		profilButton.addClickHandler(new ClickHandler() {
@@ -207,5 +206,4 @@ public class MyProjekt implements EntryPoint {
 			});
 		}		
 	}
-
 }
