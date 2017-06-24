@@ -9,9 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-//import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
-//import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
@@ -48,7 +46,8 @@ public class PartnerprofilForm extends Showcase {
 		aenderungDb.setStyleName("myproject-textfield");
 		aenderungDb.setFormat(new DateBox.DefaultFormat(fmt));
 		aenderungDb.setEnabled(false);
-
+		
+		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
 
@@ -126,29 +125,21 @@ public class PartnerprofilForm extends Showcase {
 			if (pptvm.getSelectedAusschreibung().getPartnerprofilId() != 0)
 				Window.alert("Es existiert schon ein Partnerprofil.");
 			else
-				pa.createPartnerprofilFor(pptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback(pptvm.getSelectedAusschreibung()));
+				pa.createPartnerprofilFor(pptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback());
 		}
 	}
 
 	class CreatePartnerprofilCallback implements AsyncCallback<Partnerprofil> {
 
-		Ausschreibung ausschreibung = null;
-		
-		public CreatePartnerprofilCallback(Ausschreibung as) {
-			ausschreibung = as;
-		}
 		@Override
 		public void onFailure(Throwable caught) {
 
 			Window.alert("Anlegen fehlgeschlagen");
-
 		}
 
 		@Override
 		public void onSuccess(Partnerprofil partnerprofil) {
-			setSelected(partnerprofil);
-			pptvm.addPartnerprofilForAusschreibung(partnerprofil, ausschreibung);
-
+			pptvm.addPartnerprofilForAusschreibung(partnerprofil);
 		}
 	}
 }
