@@ -40,6 +40,8 @@ public interface ProjektAdministration extends RemoteService {
 	public Ausschreibung getAusschreibungby(Partnerprofil pp) throws IllegalArgumentException;
 
 	public Partnerprofil getPartnerprofilById(int id) throws IllegalArgumentException;
+	
+	public Partnerprofil getPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException;
 
 	public Vector<Eigenschaft> getEigenschaftenFor(Partnerprofil pr) throws IllegalArgumentException;
 

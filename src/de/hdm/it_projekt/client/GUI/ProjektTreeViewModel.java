@@ -12,7 +12,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -322,6 +321,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		if (!ausschreibungProvider.getList().contains(as))
 			ausschreibungProvider.getList().add(as);
 
+		setSelectedAusschreibung(as);
 		selectionModel.setSelected(as, true);
 	}
 
