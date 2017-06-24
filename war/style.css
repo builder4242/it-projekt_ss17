@@ -5,7 +5,19 @@
     color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
     text-aligin: center; 	/*ï¿½berschriften zentreiren*/
     font-family: Verdana;
-    font-size: 20px; 
+    font-size: 17px; 
+    margin-top: 10px; 
+    margin-bottom: 5px; 
+}
+
+.h2{
+	font-weight: bold; 		/*Überschriften fett */
+    color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
+    text-aligin: center; 	/*ï¿½berschriften zentreiren*/
+    font-family: Verdana;
+    font-size: 16px; 
+    margin-top: 10px; 
+    margin-bottom: 5px; 
 }
 
 /* CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN */
@@ -188,6 +200,7 @@
     font-size: 16px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
+    margin-right:2px;
 
 
 }
@@ -303,6 +316,21 @@
 	font-family: Verdana;
 	color: #004080;
 	margin-right: 20px; 
+}
+
+.myprojekt-infoleistelabel{
+	font-family: Verdana;
+	color: #0498b7;  
+	font-size: 15px; 
+	margin-right: 2px; 
+}
+
+.myprojekt-bezichungmarktplatzlabel{
+	font-family: Verdana;
+	color: #004080;
+	display: center; 
+	margin-right: 5px; 
+
 }
 
 div#main {
