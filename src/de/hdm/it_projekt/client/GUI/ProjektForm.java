@@ -63,7 +63,7 @@ public class ProjektForm extends Showcase {
 
 		form.setWidget(4, 0, new Label("Projektleiter"));
 		form.setWidget(4, 1, projektLeiterL);
-		projektLeiterL.setStyleName("myproject-textfield");
+		projektLeiterL.setStyleName("myprojekt-formlabel2");
 		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);

@@ -293,6 +293,17 @@
 	
 }
 
+.myprojekt-formlabel2{
+	font-family: Verdana;
+	color: grey; 
+}
+
+.myprojekt-opartnerprofil{
+	font-family: Verdana;
+	color: #004080;
+	margin-right: 20px; 
+}
+
 div#main {
     margin: 10px;
     border: 1px dashed #000;
