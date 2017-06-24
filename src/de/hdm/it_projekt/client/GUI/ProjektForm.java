@@ -28,7 +28,7 @@ public class ProjektForm extends Showcase {
 	DateBox startDb = new DateBox();
 	DateBox endDb = new DateBox();
 
-	Label projektLeiterL = new Label();
+	Label projektLeiterL = new Label("nicht angelegt");
 	TextArea beschreibungTb = new TextArea();
 
 
