@@ -26,7 +26,7 @@ public class BewerbungForm extends Showcase {
 	Label formTitel = new Label();
 	DateBox erstellDb = new DateBox();
 	TextArea textTb = new TextArea();
-	Label bewerberLb = new Label();
+	Label bewerberLb = new Label("nicht angelegt");
 
 	public BewerbungForm() {
 
@@ -56,10 +56,10 @@ public class BewerbungForm extends Showcase {
 		this.add(buttonsPanel);
 
 		Button deleteButton = new Button("Löschen");
-		deleteButton.setStyleName(
-				"myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 	}
 
