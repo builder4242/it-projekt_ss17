@@ -450,7 +450,11 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 				delete(e);
 			}
 		}
-
+		
+		Ausschreibung as = getAusschreibungby(pp);
+		as.setPartnerprofilId(0);
+		save(as);
+		
 		this.ppMapper.delete(pp);
 	}
 
@@ -565,5 +569,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 			o = u;
 
 		return o;
+	}
+
+	@Override
+	public Partnerprofil getPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException {
+		return ppMapper.getByAusschreibung(as);
 	}
 }

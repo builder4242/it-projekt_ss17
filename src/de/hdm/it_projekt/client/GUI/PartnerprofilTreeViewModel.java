@@ -127,9 +127,10 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 	}
 
 
-	void addPartnerprofilForAusschreibung(Partnerprofil pp, Ausschreibung as) {
+	void addPartnerprofilForAusschreibung(Partnerprofil pp) {
 
 		partnerprofilDataProviders.getList().add(pp);
+		partnerprofilDataProviders.refresh();
 		selectionModel.setSelected(pp, true);
 	}
 
@@ -217,7 +218,7 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 
 			partnerprofilDataProviders = new ListDataProvider<Partnerprofil>();
 			
-			pa.getPartnerprofilById(selectedAusschreibung.getPartnerprofilId(), new AsyncCallback<Partnerprofil>() {
+			pa.getPartnerprofilFor(selectedAusschreibung, new AsyncCallback<Partnerprofil>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -229,6 +230,7 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 				public void onSuccess(Partnerprofil partnerprofil) {
 					partnerprofilDataProviders.getList().add(partnerprofil);
 					
+					selectionModel.setSelected(partnerprofil, true);
 				}
 			});
 
@@ -266,5 +268,4 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 
 		return (value instanceof Eigenschaft);
 	}
-
 }
