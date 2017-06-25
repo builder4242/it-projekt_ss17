@@ -133,5 +133,7 @@ public interface ProjektAdministrationAsync {
 
 	void getPartnerprofilFor(Ausschreibung as, AsyncCallback<Partnerprofil> callback);
 
+	void getBeteiligterFor(Beteiligung bt, AsyncCallback<Organisationseinheit> callback);
+
 
 }

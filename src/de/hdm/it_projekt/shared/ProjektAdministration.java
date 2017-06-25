@@ -25,6 +25,8 @@ public interface ProjektAdministration extends RemoteService {
 
 	public Organisationseinheit getBewerberFor(Bewerbung bw) throws IllegalArgumentException;
 	
+	public Organisationseinheit getBeteiligterFor(Beteiligung bt) throws IllegalArgumentException;
+	
 	public ProjektMarktplatz getProjektMarktplatzById(int id) throws IllegalArgumentException;
 
 	public Vector<Projekt> getAlleProjekteFor(ProjektMarktplatz pm) throws IllegalArgumentException;

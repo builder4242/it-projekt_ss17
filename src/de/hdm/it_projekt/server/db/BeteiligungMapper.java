@@ -132,7 +132,7 @@ public class BeteiligungMapper {
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 			stmt.executeUpdate("UPDATE beteiligung " + "SET Personentage=\"" + bet.getPersonentage() + "\", "
-					+ "Startdatum=\"" + bet.getStartdatum() + "\", " + "Enddatum=\"" + bet.getEnddatum() + "\", "
+					+ "Startdatum=\"" + DBConnection.convertToSQLDateString(bet.getStartdatum()) + "\", " + "Enddatum=\"" + DBConnection.convertToSQLDateString(bet.getEnddatum()) + "\", "
 					+ "Projekt_ID=\"" + bet.getProjektId() + "\", " + "Organisationseinheit_ID=\""
 					+ bet.getOrganisationseinheitId() + "\" " + "WHERE ID=" + bet.getId());
 
@@ -237,11 +237,10 @@ public class BeteiligungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organisationseinheit_ID FROM beteiligung WHERE ID= "
-							+ id + " ORDER BY ID");
+					"SELECT ID, Personentage, Startdatum, Enddatum, Projekt_ID, Organisationseinheit_ID FROM beteiligung WHERE ID="	+ id);
 
 			/*
-			 * Da id Primäerschluessel ist, kann max. nur ein Tupel
+			 * Da id Primï¿½erschluessel ist, kann max. nur ein Tupel
 			 * zurueckgegeben werden. Pruefe, ob ein Ergebnis vorliegt
 			 */
 
@@ -253,8 +252,8 @@ public class BeteiligungMapper {
 				bet.setPersonentage(rs.getInt("Personentage"));
 				bet.setEnddatum(rs.getDate("Enddatum"));
 				bet.setStartdatum(rs.getDate("Startdatum"));
-				bet.setProjektId(rs.getInt("ID"));
-				bet.setOrganisationseinheitId(rs.getInt("ID"));
+				bet.setProjektId(rs.getInt("Projekt_ID"));
+				bet.setOrganisationseinheitId(rs.getInt("Organisationseinheit_ID"));
 
 				return bet;
 			}
@@ -423,7 +422,7 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projekt.ID=" + pr.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM beteiligung WHERE Projekt_ID=" + pr.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt.

@@ -129,8 +129,19 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		selectedBewertung = null;
 		bewertungForm.setSelected(null);
 		
+		HorizontalPanel hP = new HorizontalPanel();		
+		
+		BeteiligungForm beteiligungForm = new BeteiligungForm();		
+		ProjektBeteiligungListView pblv = new ProjektBeteiligungListView(selectedProjekt);
+		
+		beteiligungForm.setProjektBeteiligungListView(pblv);
+		pblv.setBeteiligungForm(beteiligungForm);
+		
+		hP.add(pblv.getBeteiligungenCellList());
+		hP.add(beteiligungForm);
+		
 		rightPanel.clear();
-
+		rightPanel.add(hP);
 	}
 
 	Projekt getSelectedProjekt() {

@@ -36,7 +36,6 @@ public class OPartnerprofilForm extends Showcase {
 			// TODO Auto-generated method stub
 			return item.getId();
 		}
-
 	};
 
 	Cell<Eigenschaft> eCell = new EigenschaftCell();
@@ -105,7 +104,6 @@ public class OPartnerprofilForm extends Showcase {
 
 				content.clear();
 				content.add(eForm);
-
 			}
 		});
 
