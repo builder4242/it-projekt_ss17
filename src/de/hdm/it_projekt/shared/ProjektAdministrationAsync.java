@@ -121,5 +121,19 @@ public interface ProjektAdministrationAsync {
 
 	void getAusschreibungby(Partnerprofil pp, AsyncCallback<Ausschreibung> callback);
 
+	void createBewertungFor(Bewerbung bw, float wert, String stellungnahme, AsyncCallback<Bewertung> callback);
+
+	void getAusschreibungBy(Bewerbung bw, AsyncCallback<Ausschreibung> callback);
+
+	void getBewerbungBy(Ausschreibung as, AsyncCallback<Vector<Bewerbung>> callback);
+
+	void getBewerbungById(int id, AsyncCallback<Bewerbung> callback);
+
+	void getBewerberFor(Bewerbung bw, AsyncCallback<Organisationseinheit> callback);
+
+	void getPartnerprofilFor(Ausschreibung as, AsyncCallback<Partnerprofil> callback);
+
+	void getBeteiligterFor(Beteiligung bt, AsyncCallback<Organisationseinheit> callback);
+
 
 }

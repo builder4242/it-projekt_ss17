@@ -1,7 +1,6 @@
 package de.hdm.it_projekt.shared.bo;
 
 import java.util.Date;
-import java.util.Vector;
 
 /**
  * 

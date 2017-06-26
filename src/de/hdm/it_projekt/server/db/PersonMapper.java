@@ -253,8 +253,7 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= '"
-							+ id + "' AND Typ='" + SQLTYP + "' ORDER BY email");
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID=" + id);
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel

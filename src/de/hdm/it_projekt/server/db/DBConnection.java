@@ -6,6 +6,7 @@ import java.util.Date;
 
 import com.google.appengine.api.utils.SystemProperty;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -121,6 +122,20 @@ public class DBConnection {
 	public static String convertToSQLDateString(Date d) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		return sdf.format(d);
+	}
+	
+	public static Date convertFromSQLDateString(String d) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");	
+		
+		try {
+			return sdf.parse(d);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }

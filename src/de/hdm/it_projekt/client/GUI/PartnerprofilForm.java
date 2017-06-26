@@ -9,9 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
-import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
@@ -19,7 +17,7 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 public class PartnerprofilForm extends Showcase {
 
 	Partnerprofil ppToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	PartnerprofilTreeViewModel pptvm = null;
 
 	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
@@ -48,7 +46,8 @@ public class PartnerprofilForm extends Showcase {
 		aenderungDb.setStyleName("myproject-textfield");
 		aenderungDb.setFormat(new DateBox.DefaultFormat(fmt));
 		aenderungDb.setEnabled(false);
-
+		
+		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
 
@@ -77,8 +76,8 @@ public class PartnerprofilForm extends Showcase {
 		}
 	}
 
-	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
-		this.ptvm = ptvm;
+	void setPartnerprofilTreeViewModel(PartnerprofilTreeViewModel pptvm) {
+		this.pptvm = pptvm;
 	}
 
 	private class DeleteClickHandler implements ClickHandler {
@@ -87,7 +86,7 @@ public class PartnerprofilForm extends Showcase {
 		public void onClick(ClickEvent event) {
 
 			if (ppToDisplay != null) {
-				pa.delete(ppToDisplay, new DeletePartnerprofilCallback(ppToDisplay, ptvm.getSelectedAusschreibung()));
+				pa.delete(ppToDisplay, new DeletePartnerprofilCallback(ppToDisplay, pptvm.getSelectedAusschreibung()));
 			} else {
 				Window.alert("Es wurde nichts ausgewählt.");
 			}
@@ -113,7 +112,7 @@ public class PartnerprofilForm extends Showcase {
 		public void onSuccess(Void result) {
 			if (partnerprofil != null && ausschreibung != null) {
 				setSelected(null);
-				ptvm.removePartnerprofilForAusschreibung(ppToDisplay, ausschreibung);
+				pptvm.removePartnerprofilForAusschreibung(ppToDisplay, ausschreibung);
 			}
 		}
 	}
@@ -123,32 +122,24 @@ public class PartnerprofilForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (ptvm.getSelectedAusschreibung().getPartnerprofilId() != 0)
+			if (pptvm.getSelectedAusschreibung().getPartnerprofilId() != 0)
 				Window.alert("Es existiert schon ein Partnerprofil.");
 			else
-				pa.createPartnerprofilFor(ptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback(ptvm.getSelectedAusschreibung()));
+				pa.createPartnerprofilFor(pptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback());
 		}
 	}
 
 	class CreatePartnerprofilCallback implements AsyncCallback<Partnerprofil> {
 
-		Ausschreibung ausschreibung = null;
-		
-		public CreatePartnerprofilCallback(Ausschreibung as) {
-			ausschreibung = as;
-		}
 		@Override
 		public void onFailure(Throwable caught) {
 
 			Window.alert("Anlegen fehlgeschlagen");
-
 		}
 
 		@Override
 		public void onSuccess(Partnerprofil partnerprofil) {
-			setSelected(partnerprofil);
-			ptvm.addPartnerprofilForAusschreibung(partnerprofil, ausschreibung);
-
+			pptvm.addPartnerprofilForAusschreibung(partnerprofil);
 		}
 	}
 }

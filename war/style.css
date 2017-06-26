@@ -5,9 +5,22 @@
     color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
     text-aligin: center; 	/*ï¿½berschriften zentreiren*/
     font-family: Verdana;
+    font-size: 17px; 
+    margin-top: 10px; 
+    margin-bottom: 5px; 
 }
 
-/* CSS CELL KLASSEN */
+.h2{
+	font-weight: bold; 		/*Überschriften fett */
+    color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
+    text-aligin: center; 	/*ï¿½berschriften zentreiren*/
+    font-family: Verdana;
+    font-size: 16px; 
+    margin-top: 10px; 
+    margin-bottom: 5px; 
+}
+
+/* CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN */
 
 .ProjektMarktplatz-Cell{
 	font-weight: bold; 		/*ï¿½berschriften fett */
@@ -52,7 +65,7 @@
 }
 
 
-/*  TEXT  */ 
+/* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
 
 .myprojekt-headline{
     font-weight: bold; 		/*ï¿½berschriften fett */
@@ -84,16 +97,54 @@
 	font-family: Verdana;
 }
 
-/* TEXTFELD */ 
+/* TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD */ 
 
 .myproject-textfield{
 	font-family: Verdana;
 	color: red; 
 	display: inline-block; 
+	width: 200px; 
+	padding: 5px 8px;
+    margin: 2px 0;
+    box-sizing: border-box; 
+    transition: width 0.4s ease-in-out; 
+    
+}
+
+.myproject-textfield:focus {
+    background-color: lightblue;
+    border: 3px solid #555;
+    width: 300px; 
+}
+
+.myprojekt-textarea{
+	font-family: Verdana;
+	color: red; 
+	display: inline-block; 
+	width: 200px; 
+	height: 50px;
+	padding: 5px 8px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    resize: vertical;
+    overflow: auto;
+    transition: height 0.4s ease-in-out;
+    -webkit-transition: heigt 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out; 
+   
+
+	}
+	
+.myprojekt-textarea:focus {
+    background-color: lightblue;
+    border: 3px solid #555;
+    height: 150px;
+    width:300px; 
+     
 }
 
 
-/* Panels */ 
+/* Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels */ 
 
 .myprojekt-horizontalpanel{
 	padding: 6px 1px; 
@@ -102,10 +153,11 @@
 .myprojekt-buttonspanel{
 	padding: 20px 2px; 
 	display: inline-block; 
+	
 }
 
 
-/* BUTTONS */ 
+/* BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS */ 
 
 
 .myprojekt-button{
@@ -139,7 +191,7 @@
     font-family: Verdana;
     background-color: #008CBA;
     border: none;
-    border-radius: 2px;
+    /* border-radius: 2px; */
     color: white;
     padding: 15px 32px;
     text-align: center;
@@ -148,6 +200,7 @@
     font-size: 16px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
+    margin-right:2px;
 
 
 }
@@ -220,6 +273,7 @@
     display: inline-block;
     font-size: 12px;
     border-radius: 2px; 
+    margin-right:2px;
 }
 
 .myprojekt-formbutton:active{
@@ -233,7 +287,7 @@
 }
 
 
-/* LABEL  */ 
+/* LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL  */ 
 
 .myprojekt-label{
 	font-family: Verdana;
@@ -251,6 +305,33 @@
 	font-size: 15px; 
 	
 	
+}
+
+.myprojekt-formlabel2{
+	font-family: Verdana;
+	color: grey; 
+}
+
+.myprojekt-opartnerprofil{
+	font-family: Verdana;
+	color: #004080;
+	margin-right: 20px; 
+	font-size: 15px; 
+}
+
+.myprojekt-infoleistelabel{
+	font-family: Verdana;
+	color: #0498b7;  
+	font-size: 15px; 
+	margin-right: 2px; 
+}
+
+.myprojekt-bezichungmarktplatzlabel{
+	font-family: Verdana;
+	color: #004080;
+	display: center; 
+	margin-right: 5px; 
+
 }
 
 div#main {
