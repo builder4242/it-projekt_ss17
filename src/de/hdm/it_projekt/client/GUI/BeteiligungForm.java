@@ -31,7 +31,7 @@ public class BeteiligungForm extends Showcase {
 	DateBox endDb = new DateBox();
 	Label beteiligterLb = new Label();
 
-	public BeteiligungForm() {
+	public BeteiligungForm(boolean ausschreibender) {
 
 		formTitel.setText("Beteiligung");
 		formTitel.setStyleName("h1");
@@ -79,6 +79,10 @@ public class BeteiligungForm extends Showcase {
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 		
 		newButton.setEnabled(false);
+		
+		if(ausschreibender == false) {
+			pTageIb.setEnabled(false);
+		}
 	}
 
 	void setSelected(Beteiligung bt) {

@@ -31,8 +31,7 @@ public class ProjektForm extends Showcase {
 	Label projektLeiterL = new Label("nicht angelegt");		/** Label deklarieren  und Text hinzugefügt*/
 	TextArea beschreibungTb = new TextArea();				/** TextArea deklariert */ 
 
-
-	public ProjektForm() {
+	public ProjektForm(boolean ausschreibender) {
 		
 		formTitel.setText("Projekt");      /** Form Titel festgelegt */ 
 		formTitel.setStyleName("h1");		/** CSS verknüpft */ 
@@ -41,7 +40,6 @@ public class ProjektForm extends Showcase {
 		Grid form = new Grid(5, 2);						/** Gird zum anordnen der Elemente erstellen */ 
 		form.addStyleName("myprojekt-formlabel");		/** CSS auf Grid anwenden */ 
 		this.add(form);
-
 		
 		/** Formular wird im Grid aufgebaut */ 
 		form.setWidget(0, 0, new Label("Name"));	
@@ -85,7 +83,14 @@ public class ProjektForm extends Showcase {
 		newButton.addClickHandler(new NewClickHandler()); /** Click Handler für Button erstellen */ 
 		buttonsPanel.add(newButton);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
-
+		
+		if(ausschreibender == false) {
+			nameTb.setEnabled(false);
+			startDb.setEnabled(false);
+			endDb.setEnabled(false);
+			beschreibungTb.setEnabled(false);
+			buttonsPanel.setVisible(false);
+		}
 	}
 
 	void setSelected(Projekt pr) {

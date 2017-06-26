@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -14,10 +13,8 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
-import de.hdm.it_projekt.client.GUI.Cell.AusschreibungCell;
 import de.hdm.it_projekt.client.GUI.Cell.EigenschaftCell;
 import de.hdm.it_projekt.client.GUI.Cell.PartnerprofilCell;
-import de.hdm.it_projekt.client.GUI.Cell.ProjektCell;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.*;
 
