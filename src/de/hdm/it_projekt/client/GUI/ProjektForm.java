@@ -160,11 +160,11 @@ public class ProjektForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			/** wird beim Klick auf den Button ausgeführt */ 
+			/** wird beim Klick auf den Button "Löschen" ausgeführt */ 
 			if (prToDisplay != null) {
 				pa.delete(prToDisplay, new DeleteProjektCallback(prToDisplay));
 			} else {
-				Window.alert("Es wurde nichts ausgewählt.");
+				Window.alert("Es wurde nichts ausgewählt.");      /** Fehlermeldung wird als Popup ausgegen */
 			}
 		}
 	}
@@ -193,6 +193,7 @@ public class ProjektForm extends Showcase {
 
 	private class NewClickHandler implements ClickHandler {
 
+		/** wird beim Klick auf den Button "Neu" ausgeführt */ 
 		@Override
 		public void onClick(ClickEvent event) {
 
@@ -201,7 +202,8 @@ public class ProjektForm extends Showcase {
 	}
 	
 	class CreateProjektCallback implements AsyncCallback<Projekt> {
-
+		
+		/** wird beim Klick auf den Button "Anlegen" ausgeführt */ 
 		@Override
 		public void onFailure(Throwable caught) {
 
