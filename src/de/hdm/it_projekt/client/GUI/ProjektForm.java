@@ -1,5 +1,14 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse ProjektForm dient dem Aufbau und der interaktion mit 
+ * dem Formular "Projekt" unter "Meine Ausschreibungen" in der GUI
+ * die Klasse stellt ein Textfeld, eine Text Area sowei drei Buttons bereit. 
+ * Desweiteren gibt es ein Label für den Projektleiter das automatisch gesetzt
+ * wird, da dieser automatisch gesetzt wird. Die Anordung wird über ein Grid gelöst. 
+ * Die drei ClickHandler für die drei Buttons regeln, was beim Drücken eines Buttons 
+ * passiert. Die Optik von Lables, Textfeltern und Buttons wird durch das Einbinden von 
+ * CSS umgestzt.   */ 
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
