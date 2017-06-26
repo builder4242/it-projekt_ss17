@@ -32,11 +32,12 @@ public class NewProjektMarktplatzForm extends Showcase {
 		HorizontalPanel insertHp = new HorizontalPanel();
 		formVp.add(insertHp);
 		
+		
 		Label pmLabel = new Label("Bezeichnung");
 		pmLabel.setStyleName("myprojekt-bezichungmarktplatzlabel");
 		insertHp.add(pmLabel);
 		insertHp.add(bezeichnungTextBox);
-		bezeichnungTextBox.setStyleName("myproject-textfield");
+		bezeichnungTextBox.setStyleName("myproject-anlegentextfield");
 	
 		
 		Button newBtn = new Button("anlegen");
