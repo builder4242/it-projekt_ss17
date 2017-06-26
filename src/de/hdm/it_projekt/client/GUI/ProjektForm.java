@@ -21,29 +21,30 @@ public class ProjektForm extends Showcase {
 	Projekt prToDisplay = null;
 	ProjektTreeViewModel ptvm = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");   
 	
-	Label formTitel = new Label();
-	TextBox nameTb = new TextBox();
-	DateBox startDb = new DateBox();
-	DateBox endDb = new DateBox();
+	Label formTitel = new Label();     /** Label deklarieren */
+	TextBox nameTb = new TextBox();		/** TextBox deklarieren */
+	DateBox startDb = new DateBox();    /** DateBox (Date picker) deklarieren */ 
+	DateBox endDb = new DateBox();		 /** DateBox (Date picker) deklarieren */ 
 
-	Label projektLeiterL = new Label("nicht angelegt");
-	TextArea beschreibungTb = new TextArea();
+	Label projektLeiterL = new Label("nicht angelegt");		/** Label deklarieren  und Text hinzugefügt*/
+	TextArea beschreibungTb = new TextArea();				/** TextArea deklariert */ 
 
 
 	public ProjektForm() {
 		
-		formTitel.setText("Projekt");
-		formTitel.setStyleName("h1");
+		formTitel.setText("Projekt");      /** Form Titel festgelegt */ 
+		formTitel.setStyleName("h1");		/** CSS verknüpft */ 
 		this.add(formTitel);
 		
-		Grid form = new Grid(5, 2);
-		form.addStyleName("myprojekt-formlabel");
+		Grid form = new Grid(5, 2);						/** Gird zum anordnen der Elemente erstellen */ 
+		form.addStyleName("myprojekt-formlabel");		/** CSS auf Grid anwenden */ 
 		this.add(form);
 
 		
-		form.setWidget(0, 0, new Label("Name"));
+		/** Formular wird im Grid aufgebaut */ 
+		form.setWidget(0, 0, new Label("Name"));	
 		form.setWidget(0, 1, nameTb);
 		nameTb.setStyleName("myproject-textfield");
 
@@ -66,22 +67,22 @@ public class ProjektForm extends Showcase {
 		projektLeiterL.setStyleName("myprojekt-formlabel2");
 		
 		
-		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		HorizontalPanel buttonsPanel = new HorizontalPanel();		/** neues HorizontalPanel für Buttons */ 
 		this.add(buttonsPanel);
 
 		Button changeButton = new Button("Ändern");
 		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		changeButton.addClickHandler(new ChangeClickHandler());
+		changeButton.addClickHandler(new ChangeClickHandler());  /** Click Handler für Button erstellen */ 
 		buttonsPanel.add(changeButton);
 
 		Button deleteButton = new Button("Löschen");
 		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		deleteButton.addClickHandler(new DeleteClickHandler());
+		deleteButton.addClickHandler(new DeleteClickHandler()); /** Click Handler für Button erstellen */ 
 		buttonsPanel.add(deleteButton);
 
 		Button newButton = new Button("Neu");
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		newButton.addClickHandler(new NewClickHandler());
+		newButton.addClickHandler(new NewClickHandler()); /** Click Handler für Button erstellen */ 
 		buttonsPanel.add(newButton);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
@@ -159,6 +160,7 @@ public class ProjektForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
+			/** wird beim Klick auf den Button ausgeführt */ 
 			if (prToDisplay != null) {
 				pa.delete(prToDisplay, new DeleteProjektCallback(prToDisplay));
 			} else {
