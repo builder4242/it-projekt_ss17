@@ -24,7 +24,7 @@ public class EigenschaftForm extends Showcase {
 	TextBox nameTb = new TextBox();
 	TextBox wertTb = new TextBox();
 
-	public EigenschaftForm() {
+	public EigenschaftForm(boolean ausschreibender) {
 
 		formTitel.setText("Eigenschaft");
 		formTitel.setStyleName("h1");
@@ -60,6 +60,12 @@ public class EigenschaftForm extends Showcase {
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
+		
+		if (ausschreibender == false) {
+			nameTb.setEnabled(false);
+			wertTb.setEnabled(false);
+			buttonsPanel.setVisible(false);
+		}
 
 	}
 

@@ -195,7 +195,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		pptvm.setPartnerprofilForm(partnerprofilForm);
 		vP.add(partnerprofilForm);
 		
-		EigenschaftForm eigenschaftForm = new EigenschaftForm();
+		EigenschaftForm eigenschaftForm = new EigenschaftForm(ausschreibender);
 		eigenschaftForm.setPartnerprofilTreeViewModel(pptvm);
 		pptvm.setEigenschaftForm(eigenschaftForm);
 		vP.add(eigenschaftForm);
