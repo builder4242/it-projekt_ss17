@@ -19,20 +19,26 @@ public class NewProjektMarktplatzForm extends Showcase {
 	
 	TextBox bezeichnungTextBox = new TextBox();
 	
+	
 	public NewProjektMarktplatzForm() {
 		
 		VerticalPanel formVp = new VerticalPanel();
 		this.add(formVp);
 		
 		Label beschreibungLabel = new Label("Hier können Sie einen neuen Projektmarktplatz anlegen: ");
+		beschreibungLabel.setStyleName("h2");
 		formVp.add(beschreibungLabel);
 		
 		HorizontalPanel insertHp = new HorizontalPanel();
 		formVp.add(insertHp);
 		
+		
 		Label pmLabel = new Label("Bezeichnung");
+		pmLabel.setStyleName("myprojekt-bezichungmarktplatzlabel");
 		insertHp.add(pmLabel);
 		insertHp.add(bezeichnungTextBox);
+		bezeichnungTextBox.setStyleName("myproject-anlegentextfield");
+	
 		
 		Button newBtn = new Button("anlegen");
 		newBtn.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */

@@ -142,7 +142,7 @@ public class AusschreibungMapper {
 				stmt.executeUpdate("UPDATE ausschreibung " + "SET Bezeichnung=\"" + as.getBezeichnung() + "\", "
 						+ "Ausschreibungstext=\"" + as.getAusschreibungstext() + "\", " + "Bewerbungsfrist=\""
 						+ DBConnection.convertToSQLDateString(as.getBewerbungsfrist()) + "\", " + "Projekt_ID="
-						+ as.getProjektId() + " " + "WHERE ID="	+ as.getId());
+						+ as.getProjektId() + ", Partnerprofil_ID=NULL " + "WHERE ID="	+ as.getId());
 			} else {
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 				stmt.executeUpdate("UPDATE ausschreibung " + "SET Bezeichnung=\"" + as.getBezeichnung() + "\", "
@@ -239,6 +239,8 @@ public class AusschreibungMapper {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 
+		Ausschreibung as = null;
+		
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
@@ -257,7 +259,7 @@ public class AusschreibungMapper {
 				// Umwandlung des Ergebnis-Tupel in ein Objekt und
 				// Ausgabe des Ergebnis-Objekts.
 
-				Ausschreibung as = new Ausschreibung();
+				as = new Ausschreibung();
 				as.setId(rs.getInt("ID"));
 				as.setBezeichnung(rs.getString("Bezeichnung"));
 				as.setAusschreibungstext(rs.getString("Ausschreibungstext"));
@@ -266,14 +268,13 @@ public class AusschreibungMapper {
 				if (rs.getString("Partnerprofil_ID") != "NULL")
 					as.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
-				return as;
 			}
 		} catch (SQLException e5) {
 			e5.printStackTrace();
 			return null;
 		}
 
-		return null;
+		return as;
 	}
 
 	/**

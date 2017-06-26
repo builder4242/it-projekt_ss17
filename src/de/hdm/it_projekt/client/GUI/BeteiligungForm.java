@@ -8,64 +8,57 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.it_projekt.shared.bo.Beteiligung;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
-import de.hdm.it_projekt.shared.bo.Projekt;
 
-public class ProjektForm extends Showcase {
+public class BeteiligungForm extends Showcase {
 
-	Projekt prToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	Beteiligung btToDisplay = null;
+	ProjektBeteiligungListView pblv = null;
 
 	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
-	
 	Label formTitel = new Label();
-	TextBox nameTb = new TextBox();
+	
+	IntegerBox pTageIb = new IntegerBox();
 	DateBox startDb = new DateBox();
 	DateBox endDb = new DateBox();
+	Label beteiligterLb = new Label();
 
-	Label projektLeiterL = new Label("nicht angelegt");
-	TextArea beschreibungTb = new TextArea();
+	public BeteiligungForm() {
 
-
-	public ProjektForm() {
-		
-		formTitel.setText("Projekt");
+		formTitel.setText("Beteiligung");
 		formTitel.setStyleName("h1");
 		this.add(formTitel);
-		
-		Grid form = new Grid(5, 2);
+
+		Grid form = new Grid(4, 2);
 		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
-		
-		form.setWidget(0, 0, new Label("Name"));
-		form.setWidget(0, 1, nameTb);
-		nameTb.setStyleName("myproject-textfield");
+		form.setWidget(0, 0, new Label("Beteiligter"));
+		form.setWidget(0, 1, beteiligterLb);
+		beteiligterLb.setStyleName("myproject-textfield");
 
-		form.setWidget(1, 0, new Label("Startdatum"));
-		form.setWidget(1, 1, startDb);
+		form.setWidget(1, 0, new Label("Personentage"));
+		form.setWidget(1, 1, pTageIb);
+		pTageIb.setStyleName("myproject-textfield");
+
+		form.setWidget(2, 0, new Label("Startdatum"));
+		form.setWidget(2, 1, startDb);
 		startDb.setStyleName("myproject-textfield");
 		startDb.setFormat(new DateBox.DefaultFormat(fmt));
-		
-		form.setWidget(2, 0, new Label("Enddatum"));
-		form.setWidget(2, 1, endDb);
+
+		form.setWidget(3, 0, new Label("Enddatum"));
+		form.setWidget(3, 1, endDb);
 		endDb.setStyleName("myproject-textfield");
 		endDb.setFormat(new DateBox.DefaultFormat(fmt));
 
-		form.setWidget(3, 0, new Label("Beschreibung"));
-		form.setWidget(3, 1, beschreibungTb);
-		beschreibungTb.setStyleName("myprojekt-textarea");
-
-		form.setWidget(4, 0, new Label("Projektleiter"));
-		form.setWidget(4, 1, projektLeiterL);
-		projektLeiterL.setStyleName("myprojekt-formlabel2");
-		
-		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
 
@@ -84,43 +77,46 @@ public class ProjektForm extends Showcase {
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
-
+		
+		newButton.setEnabled(false);
 	}
 
-	void setSelected(Projekt pr) {
+	void setSelected(Beteiligung bt) {
 
-		if (pr != null) {
-			this.prToDisplay = pr;
-			nameTb.setText(pr.getName());
-			startDb.setValue(pr.getStartdatum());
-			endDb.setValue(pr.getEnddatum());
-			beschreibungTb.setText(pr.getBeschreibung());
+		if (bt != null) {
+			btToDisplay = bt;
+			pTageIb.setValue(btToDisplay.getPersonentage());
+			startDb.setValue(btToDisplay.getStartdatum());
+			endDb.setValue(btToDisplay.getEnddatum());
 			
-			pa.getProjektleiterFor(prToDisplay, new AsyncCallback<Person>() {
+			pa.getBeteiligterFor(btToDisplay, new AsyncCallback<Organisationseinheit>() {
+
+				@Override
+				public void onSuccess(Organisationseinheit result) {
+					if (result != null) {
+						if (result instanceof Person) {
+							Person p = (Person) result;
+							beteiligterLb.setText(p.getName() + ", " + p.getVorname());
+						} else {
+							beteiligterLb.setText(result.getName());
+						}
+					}
+				}
 
 				@Override
 				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onSuccess(Person result) {
-					projektLeiterL.setText(result.getName() + ", " + result.getVorname());					
 				}
 			});
-			
 		} else {
-			nameTb.setText("");
+			pTageIb.setValue(null);
 			startDb.setValue(null);
 			endDb.setValue(null);
-			beschreibungTb.setText("");
-			projektLeiterL.setText("");
+			beteiligterLb.setText("");
 		}
 	}
 
-	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
-		this.ptvm = ptvm;
+	void setProjektBeteiligungListView(ProjektBeteiligungListView pblv) {
+		this.pblv = pblv;
 	}
 
 	private class ChangeClickHandler implements ClickHandler {
@@ -128,13 +124,12 @@ public class ProjektForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (prToDisplay != null) {
-				prToDisplay.setName(nameTb.getText());
-				prToDisplay.setStartdatum(startDb.getValue());
-				prToDisplay.setEnddatum(endDb.getValue());
-				prToDisplay.setBeschreibung(beschreibungTb.getText());
+			if (btToDisplay != null) {
+				btToDisplay.setPersonentage(pTageIb.getValue());
+				btToDisplay.setStartdatum(startDb.getValue());
+				btToDisplay.setEnddatum(endDb.getValue());
 
-				pa.save(prToDisplay, new SaveCallback());
+				pa.save(btToDisplay, new SaveCallback());
 				Window.alert("Änderungen gespeichert.");
 			} else
 				Window.alert("Es wurde nichts ausgewählt");
@@ -150,7 +145,7 @@ public class ProjektForm extends Showcase {
 
 		@Override
 		public void onSuccess(Void result) {
-			ptvm.updateProjekt(prToDisplay);
+			pblv.updateBeteiligung(btToDisplay);
 		}
 	}
 
@@ -159,20 +154,20 @@ public class ProjektForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (prToDisplay != null) {
-				pa.delete(prToDisplay, new DeleteProjektCallback(prToDisplay));
+			if (btToDisplay != null) {
+				pa.delete(btToDisplay, new DeleteBeteiligungCallback(btToDisplay));
 			} else {
 				Window.alert("Es wurde nichts ausgewählt.");
 			}
 		}
 	}
 
-	class DeleteProjektCallback implements AsyncCallback<Void> {
+	class DeleteBeteiligungCallback implements AsyncCallback<Void> {
 
-		Projekt projekt = null;
-
-		public DeleteProjektCallback(Projekt pr) {
-			this.projekt = pr;
+		Beteiligung beteiligung = null;
+		
+		public DeleteBeteiligungCallback(Beteiligung bt) {
+			beteiligung = bt;
 		}
 
 		@Override
@@ -182,9 +177,9 @@ public class ProjektForm extends Showcase {
 
 		@Override
 		public void onSuccess(Void result) {
-			if (projekt != null) {
+			if (beteiligung != null) {
 				setSelected(null);
-				ptvm.removeProjekt(prToDisplay);
+				pblv.removeBeteiligung(beteiligung);
 			}
 		}
 	}
@@ -193,24 +188,6 @@ public class ProjektForm extends Showcase {
 
 		@Override
 		public void onClick(ClickEvent event) {
-
-			pa.createProjektFor(MyProjekt.cpm, nameTb.getText(), startDb.getValue(), endDb.getValue(), beschreibungTb.getText(), MyProjekt.loginInfo.getCurrentUser(), new CreateProjektCallback());
-		}
-	}
-	
-	class CreateProjektCallback implements AsyncCallback<Projekt> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-
-			Window.alert("Anlegen fehlgeschlagen");
-
-		}
-
-		@Override
-		public void onSuccess(Projekt projekt) {
-			ptvm.addProjekt(projekt);
-
 		}
 	}
 }

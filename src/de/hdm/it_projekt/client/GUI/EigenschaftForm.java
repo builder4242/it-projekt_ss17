@@ -13,11 +13,12 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class EigenschaftForm extends Showcase {
 
 	Eigenschaft eToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	PartnerprofilTreeViewModel pptvm = null;
 
 	Label formTitel = new Label();
 	TextBox nameTb = new TextBox();
@@ -26,16 +27,20 @@ public class EigenschaftForm extends Showcase {
 	public EigenschaftForm() {
 
 		formTitel.setText("Eigenschaft");
+		formTitel.setStyleName("h1");
 		this.add(formTitel);
 
 		Grid form = new Grid(2, 2);
+		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Name"));
 		form.setWidget(0, 1, nameTb);
+		nameTb.setStyleName("myproject-textfield");
 
 		form.setWidget(1, 0, new Label("Wert"));
 		form.setWidget(1, 1, wertTb);
+		wertTb.setStyleName("myproject-textfield");
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
@@ -54,6 +59,7 @@ public class EigenschaftForm extends Showcase {
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 	}
 
@@ -69,8 +75,8 @@ public class EigenschaftForm extends Showcase {
 		}
 	}
 	
-	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
-		this.ptvm = ptvm;
+	void setPartnerprofilTreeViewModel(PartnerprofilTreeViewModel pptvm) {
+		this.pptvm = pptvm;
 	}
 
 	private class ChangeClickHandler implements ClickHandler {
@@ -98,7 +104,7 @@ public class EigenschaftForm extends Showcase {
 
 		@Override
 		public void onSuccess(Void result) {
-			ptvm.updateEigenschaft(eToDisplay);						
+			pptvm.updateEigenschaft(eToDisplay);						
 		}
 	}
 
@@ -107,7 +113,7 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 			if(eToDisplay != null)
-				pa.delete(eToDisplay, new DeleteEigenschaftCallback(eToDisplay));
+				pa.delete(eToDisplay, new DeleteEigenschaftCallback(eToDisplay, pptvm.getSelectedPartnerprofil()));
 			else
 				Window.alert("Es wurde nichts ausgewählt.");
 		}
@@ -116,9 +122,11 @@ public class EigenschaftForm extends Showcase {
 	class DeleteEigenschaftCallback implements AsyncCallback<Void> {
 
 		Eigenschaft eigenschaft = null;
+		Partnerprofil partnerprofil = null;
 		
-		public DeleteEigenschaftCallback(Eigenschaft e) {
+		public DeleteEigenschaftCallback(Eigenschaft e, Partnerprofil pp) {
 			eigenschaft = e;
+			partnerprofil = pp;
 		}
 		
 		@Override
@@ -129,9 +137,9 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onSuccess(Void result) {
 
-			if(eigenschaft != null) {
+			if(eigenschaft != null && partnerprofil != null) {
 				setSelected(null);
-				ptvm.removeEigenschaft(eigenschaft);
+				pptvm.removeEigenschaftForPartnerprofil(eigenschaft, partnerprofil);
 			}
 		}
 	}
@@ -141,12 +149,18 @@ public class EigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			pa.createEigenschaftFor(ptvm.getSelectedPartnerprofil(), nameTb.getText(), wertTb.getText(), new CreateEigenschaftCallback());
+			pa.createEigenschaftFor(pptvm.getSelectedPartnerprofil(), nameTb.getText(), wertTb.getText(), new CreateEigenschaftCallback(pptvm.getSelectedPartnerprofil()));
 		}
 	}
 	
 	class CreateEigenschaftCallback implements AsyncCallback<Eigenschaft> {
 
+		Partnerprofil partnerprofil = null;
+		
+		public CreateEigenschaftCallback(Partnerprofil pp) {
+			partnerprofil = pp;
+		}
+		
 		@Override
 		public void onFailure(Throwable caught) {
 
@@ -155,7 +169,7 @@ public class EigenschaftForm extends Showcase {
 
 		@Override
 		public void onSuccess(Eigenschaft eigenschaft) {
-			ptvm.addEigenschaft(eigenschaft);
+			pptvm.addEigenschaftForPartnerprofil(eigenschaft, partnerprofil);
 		}
 	}
 }

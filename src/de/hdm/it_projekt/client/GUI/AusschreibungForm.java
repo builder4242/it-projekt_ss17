@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
@@ -25,25 +26,30 @@ public class AusschreibungForm extends Showcase {
 	Label formTitel = new Label();
 	TextBox bezeichnungTb = new TextBox();
 	DateBox fristDb = new DateBox();
-	TextBox astextgTb = new TextBox();
+	TextArea astextgTb = new TextArea();
 
 	public AusschreibungForm() {
 
 		formTitel.setText("Ausschreibung");
+		formTitel.setStyleName("h1");
 		this.add(formTitel);
 
 		Grid form = new Grid(3, 2);
+		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Bezeichnung"));
 		form.setWidget(0, 1, bezeichnungTb);
+		bezeichnungTb.setStyleName("myproject-textfield");
 
 		form.setWidget(1, 0, new Label("Bewerbungsfrist"));
 		form.setWidget(1, 1, fristDb);
+		fristDb.setStyleName("myproject-textfield");
 		fristDb.setFormat(new DateBox.DefaultFormat(fmt));
 
 		form.setWidget(2, 0, new Label("Ausschreibungstext"));
 		form.setWidget(2, 1, astextgTb);
+		astextgTb.setStyleName("myprojekt-textarea");
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
@@ -62,13 +68,14 @@ public class AusschreibungForm extends Showcase {
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 	}
 
 	void setSelected(Ausschreibung as) {
 
 		if (as != null) {
-			this.asToDisplay = as;
+			asToDisplay = as;
 			bezeichnungTb.setText(as.getBezeichnung());
 			fristDb.setValue(as.getBewerbungsfrist());
 			astextgTb.setText(as.getAusschreibungstext());

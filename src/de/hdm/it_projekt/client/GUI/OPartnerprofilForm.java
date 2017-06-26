@@ -36,7 +36,6 @@ public class OPartnerprofilForm extends Showcase {
 			// TODO Auto-generated method stub
 			return item.getId();
 		}
-
 	};
 
 	Cell<Eigenschaft> eCell = new EigenschaftCell();
@@ -78,9 +77,10 @@ public class OPartnerprofilForm extends Showcase {
 						}
 						leftcol.add(new Label("Partnerprofil"));
 						leftcol.add(new Label("angelegt: " + pp.getErstelldatum()));
-						leftcol.add(new Label("letzte Änderung: " + pp.getAenderungsdatum()));
+						leftcol.add(new Label("letzte Änderung " + pp.getAenderungsdatum()));
 						leftcol.add(new Label(""));
 						leftcol.add(getEigenschaftCelllist());
+						leftcol.addStyleName("myprojekt-opartnerprofil");
 						content.add(new OEigenschaftForm());
 					}
 				});
@@ -104,7 +104,6 @@ public class OPartnerprofilForm extends Showcase {
 
 				content.clear();
 				content.add(eForm);
-
 			}
 		});
 

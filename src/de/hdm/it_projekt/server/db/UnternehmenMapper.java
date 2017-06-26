@@ -251,8 +251,7 @@ public class UnternehmenMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID= "
-							+ id + "' AND Typ='" + SQLTYP + " ORDER BY ID");
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID="	+ id);
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -271,7 +270,6 @@ public class UnternehmenMapper {
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
 
-				return u;
 			}
 		} catch (SQLException e5) {
 			e5.printStackTrace();

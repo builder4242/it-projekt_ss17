@@ -127,7 +127,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Projekt createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum,
-			String beschreibung) throws IllegalArgumentException {
+			String beschreibung, Person projektleiter) throws IllegalArgumentException {
 
 		Projekt pr = new Projekt();
 		pr.setName(name);
@@ -135,6 +135,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		pr.setEnddatum(enddatum);
 		pr.setBeschreibung(beschreibung);
 		pr.setProjektMarktplatzId(pm.getId());
+		pr.setProjektleiterId(projektleiter.getId());
 
 		pr.setId(1);
 
@@ -212,6 +213,8 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		e.setPartnerprofilId(pp.getId());
 
 		e.setId(1);
+
+		save(pp);
 
 		return this.eMapper.insert(e);
 
@@ -357,9 +360,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void save(Eigenschaft e) throws IllegalArgumentException {
 
-		Partnerprofil pp = getPartnerprofilById(e.getPartnerprofilId());
-		pp.setAenderungsdatum(new Date());
-		save(pp);
+		save(getPartnerprofilById(e.getPartnerprofilId()));
 
 		this.eMapper.update(e);
 	}
@@ -449,13 +450,18 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 				delete(e);
 			}
 		}
-
+		
+		Ausschreibung as = getAusschreibungby(pp);
+		as.setPartnerprofilId(0);
+		save(as);
+		
 		this.ppMapper.delete(pp);
 	}
 
 	@Override
 	public void delete(Eigenschaft e) throws IllegalArgumentException {
 
+		save(getPartnerprofilById(e.getPartnerprofilId()));
 		this.eMapper.delete(e);
 	}
 
@@ -515,5 +521,77 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public Ausschreibung getAusschreibungby(Partnerprofil pp) throws IllegalArgumentException {
 		return asMapper.getByPartnerprofil(pp);
+	}
+
+	@Override
+	public Bewertung createBewertungFor(Bewerbung bw, float wert, String stellungnahme)
+			throws IllegalArgumentException {
+
+		Bewertung bwt = new Bewertung();
+		bwt.setId(1);
+		bwt.setWert(wert);
+		bwt.setStellungnahme(stellungnahme);
+		bwt.setErstelldatum(new Date());
+		bwt.setBewerbungId(bw.getId());
+
+		return bwtMapper.insert(bwt);
+	}
+
+	@Override
+	public Ausschreibung getAusschreibungBy(Bewerbung bw) throws IllegalArgumentException {
+		return asMapper.findById(bw.getAusschreibungId());
+	}
+
+	@Override
+	public Bewerbung getBewerbungById(int id) throws IllegalArgumentException {
+		return bwMapper.findById(id);
+	}
+
+	@Override
+	public Vector<Bewerbung> getBewerbungBy(Ausschreibung as) throws IllegalArgumentException {
+		return bwMapper.getByAusschreibung(as);
+	}
+
+	@Override
+	public Organisationseinheit getBewerberFor(Bewerbung bw) throws IllegalArgumentException {
+
+		Person p = pMapper.findById(bw.getId());
+		Team t = tMapper.findById(bw.getId());
+		Unternehmen u = uMapper.findById(bw.getId());
+
+		Organisationseinheit o = null;
+
+		if (p != null)
+			o = p;
+		if (t != null)
+			o = t;
+		if (u != null)
+			o = u;
+
+		return o;
+	}
+
+	@Override
+	public Partnerprofil getPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException {
+		return ppMapper.getByAusschreibung(as);
+	}
+
+	@Override
+	public Organisationseinheit getBeteiligterFor(Beteiligung bt) throws IllegalArgumentException {
+
+		Person p = pMapper.findById(bt.getOrganisationseinheitId());
+		Team t = tMapper.findById(bt.getOrganisationseinheitId());
+		Unternehmen u = uMapper.findById(bt.getOrganisationseinheitId());
+
+		Organisationseinheit o = null;
+
+		if (p != null)
+			o = p;
+		if (t != null)
+			o = t;
+		if (u != null)
+			o = u;
+
+		return o;
 	}
 }

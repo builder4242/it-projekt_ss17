@@ -26,8 +26,7 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 public class Marktuebersicht extends Showcase {
 
 	final HorizontalPanel headerInfo = new HorizontalPanel();
-	final Button wechselnBtn = new Button("wechseln");
-	
+		
 	final Label ausgabe = new Label();
 	final VerticalPanel prVp= new VerticalPanel();
 	
@@ -58,14 +57,12 @@ public class Marktuebersicht extends Showcase {
 				MyProjekt.cpm = pmSelectionModel.getSelectedObject();
 								
 				Label pmTextLabel = new Label("Sie befinden sich aktuell im Projektmarktplatz: ");
+				pmTextLabel.setStyleName("myprojekt-infoleistelabel");
 				headerInfo.add(pmTextLabel);
 				
 				Label pmLabel = new Label(MyProjekt.cpm.getBezeichnung());				
 				headerInfo.add(pmLabel);
-				
-				wechselnBtn.addClickHandler(new wechselnClickHandler());
-				headerInfo.add(wechselnBtn);
-				
+					
 				RootPanel.get("pminfo").clear();
 				RootPanel.get("pminfo").add(headerInfo);
 				
@@ -73,7 +70,6 @@ public class Marktuebersicht extends Showcase {
 				RootPanel.get("content").add(new Projektuebersicht());
 			}			
 		});
-		
 		
 		
 		ListDataProvider<ProjektMarktplatz> pmDataProvider = new ListDataProvider<ProjektMarktplatz>();
@@ -101,24 +97,13 @@ public class Marktuebersicht extends Showcase {
 		
 		
 		ausgabe.setText("Bitte wählen Sie einen Marktplatz aus:");
+		ausgabe.setStyleName("h2"); 
 
 		this.add(ausgabe);
 		this.add(memberPmCl);
 		this.add(prVp);
 		this.add(new NewProjektMarktplatzForm());
 
-	}
-	
-	private class wechselnClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-
-			RootPanel.get("pminfo").clear();
-			RootPanel.get("content").clear();
-			RootPanel.get("content").add(new Marktuebersicht());
-		}
-		
 	}
 }
 

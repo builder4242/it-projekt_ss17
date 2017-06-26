@@ -24,7 +24,7 @@ public interface ProjektAdministrationAsync {
 
 	void createPartnerprofilFor(Ausschreibung as, AsyncCallback<Partnerprofil> callback);
 
-	void createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum, String beschreibung,
+	void createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum, String beschreibung, Person projektleiter,
 			AsyncCallback<Projekt> callback);
 
 	void createPerson(String name, String vorname, String email, String strasse, int plz, String ort, String tel,
@@ -120,6 +120,20 @@ public interface ProjektAdministrationAsync {
 	void getProjektleiterFor(Projekt pr, AsyncCallback<Person> callback);
 
 	void getAusschreibungby(Partnerprofil pp, AsyncCallback<Ausschreibung> callback);
+
+	void createBewertungFor(Bewerbung bw, float wert, String stellungnahme, AsyncCallback<Bewertung> callback);
+
+	void getAusschreibungBy(Bewerbung bw, AsyncCallback<Ausschreibung> callback);
+
+	void getBewerbungBy(Ausschreibung as, AsyncCallback<Vector<Bewerbung>> callback);
+
+	void getBewerbungById(int id, AsyncCallback<Bewerbung> callback);
+
+	void getBewerberFor(Bewerbung bw, AsyncCallback<Organisationseinheit> callback);
+
+	void getPartnerprofilFor(Ausschreibung as, AsyncCallback<Partnerprofil> callback);
+
+	void getBeteiligterFor(Beteiligung bt, AsyncCallback<Organisationseinheit> callback);
 
 
 }

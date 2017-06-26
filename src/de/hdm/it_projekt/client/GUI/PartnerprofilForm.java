@@ -9,16 +9,15 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
-import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class PartnerprofilForm extends Showcase {
 
 	Partnerprofil ppToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	PartnerprofilTreeViewModel pptvm = null;
 
 	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
@@ -29,21 +28,26 @@ public class PartnerprofilForm extends Showcase {
 	public PartnerprofilForm() {
 
 		formTitel.setText("Partnerprofil");
+		formTitel.setStyleName("h1");
 		this.add(formTitel);
 
 		Grid form = new Grid(2, 2);
+		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Erstellt"));
 		form.setWidget(0, 1, erstellDb);
+		erstellDb.setStyleName("myproject-textfield");
 		erstellDb.setFormat(new DateBox.DefaultFormat(fmt));
 		erstellDb.setEnabled(false);
 
 		form.setWidget(1, 0, new Label("letzte Änderung:"));
 		form.setWidget(1, 1, aenderungDb);
+		aenderungDb.setStyleName("myproject-textfield");
 		aenderungDb.setFormat(new DateBox.DefaultFormat(fmt));
 		aenderungDb.setEnabled(false);
-
+		
+		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
 
@@ -56,6 +60,7 @@ public class PartnerprofilForm extends Showcase {
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 	}
 
@@ -71,8 +76,8 @@ public class PartnerprofilForm extends Showcase {
 		}
 	}
 
-	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
-		this.ptvm = ptvm;
+	void setPartnerprofilTreeViewModel(PartnerprofilTreeViewModel pptvm) {
+		this.pptvm = pptvm;
 	}
 
 	private class DeleteClickHandler implements ClickHandler {
@@ -81,7 +86,7 @@ public class PartnerprofilForm extends Showcase {
 		public void onClick(ClickEvent event) {
 
 			if (ppToDisplay != null) {
-				pa.delete(ppToDisplay, new DeletePartnerprofilCallback(ppToDisplay));
+				pa.delete(ppToDisplay, new DeletePartnerprofilCallback(ppToDisplay, pptvm.getSelectedAusschreibung()));
 			} else {
 				Window.alert("Es wurde nichts ausgewählt.");
 			}
@@ -91,9 +96,11 @@ public class PartnerprofilForm extends Showcase {
 	class DeletePartnerprofilCallback implements AsyncCallback<Void> {
 
 		Partnerprofil partnerprofil = null;
+		Ausschreibung ausschreibung = null;
 
-		public DeletePartnerprofilCallback(Partnerprofil pp) {
-			this.partnerprofil = pp;
+		public DeletePartnerprofilCallback(Partnerprofil pp, Ausschreibung as) {
+			partnerprofil = pp;
+			ausschreibung = as;
 		}
 
 		@Override
@@ -103,9 +110,9 @@ public class PartnerprofilForm extends Showcase {
 
 		@Override
 		public void onSuccess(Void result) {
-			if (partnerprofil != null) {
+			if (partnerprofil != null && ausschreibung != null) {
 				setSelected(null);
-				ptvm.removePartnerprofil(ppToDisplay);
+				pptvm.removePartnerprofilForAusschreibung(ppToDisplay, ausschreibung);
 			}
 		}
 	}
@@ -115,10 +122,10 @@ public class PartnerprofilForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (ptvm.getSelectedAusschreibung().getPartnerprofilId() != 0)
+			if (pptvm.getSelectedAusschreibung().getPartnerprofilId() != 0)
 				Window.alert("Es existiert schon ein Partnerprofil.");
 			else
-				pa.createPartnerprofilFor(ptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback());
+				pa.createPartnerprofilFor(pptvm.getSelectedAusschreibung(), new CreatePartnerprofilCallback());
 		}
 	}
 
@@ -128,13 +135,11 @@ public class PartnerprofilForm extends Showcase {
 		public void onFailure(Throwable caught) {
 
 			Window.alert("Anlegen fehlgeschlagen");
-
 		}
 
 		@Override
 		public void onSuccess(Partnerprofil partnerprofil) {
-			ptvm.addPartnerprofil(partnerprofil);
-
+			pptvm.addPartnerprofilForAusschreibung(partnerprofil);
 		}
 	}
 }
