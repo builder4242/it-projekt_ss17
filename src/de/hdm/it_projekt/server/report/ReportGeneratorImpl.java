@@ -7,6 +7,7 @@ package de.hdm.it_projekt.server.report;
  * createbAusschreibungZuBewerbungReport - methode für das auslesen einer ausschreibung auf die sich beworben wurde
  * createbAusschreibungZuBewerbungReport - fertig machen 
  * Abfrage von Projektverflechtungen (Teilnahmen und weitere Einreichungen/Bewerbungen) eines Bewerbers durch den Ausschreibenden. 
+ *
  * Durchführung einer Fan-in/Fan-out-Analyse: Zu allen Teilnehmern kann jeweils die Anzahl von Bewerbungen 
  * (laufende, abgelehnte, ange- nommene) (eine Art Fan-out) und deren Anzahl von Ausschreibungen (erfolgreich besetzte, ab- gebrochene, laufende, also Fan-out) 
  * tabellarisch aufgeführt werden.
@@ -18,6 +19,7 @@ import de.hdm.it_projekt.server.db.*;
 import de.hdm.it_projekt.shared.ProjektAdministration;
 import de.hdm.it_projekt.shared.ReportGenerator;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Beteiligung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
@@ -200,6 +202,32 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			bewerbungRow.addColumn(new Column(String.valueOf(bw)));
 			bewerbungRow.addColumn(new Column(String.valueOf(this.administration.getBewerbungFor(bw))));
 			result.addRow(bewerbungRow);
+		}
+		return result;
+	}
+	
+	public AlleBewerbungenReport fanInReport(Organisationseinheit oe){
+		if (this.getProjektAdministration() == null)
+			return null;
+		AlleBewerbungenReport result = new AlleBewerbungenReport();
+		result.setTitle("Fan Out Analyse");
+		result.setCreated(new Date());
+
+		CompositeParagraph header = new CompositeParagraph();
+		header.addSubParagraph(new SimpleParagraph("Abgelehnte Bewerbungen"));
+		Row headline = new Row();
+
+		headline.addColumn(new Column("Ausschreibung"));
+		
+		result.addRow(headline);
+		
+		Vector<Beteiligung> beteiligung = this.administration.getBeteiligungenFor(oe);
+
+		for (Beteiligung b : beteiligung) {
+			Row beteiligungRow = new Row();
+			beteiligungRow.addColumn(new Column(String.valueOf(oe)));
+			beteiligungRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
+			result.addRow(beteiligungRow);
 		}
 		return result;
 	}
