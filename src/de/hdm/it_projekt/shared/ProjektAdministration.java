@@ -30,6 +30,8 @@ public interface ProjektAdministration extends RemoteService {
 	public ProjektMarktplatz getProjektMarktplatzById(int id) throws IllegalArgumentException;
 
 	public Vector<Projekt> getAlleProjekteFor(ProjektMarktplatz pm) throws IllegalArgumentException;
+	
+	public Vector<Projekt> getProjektByProjektleiter(Person p, ProjektMarktplatz pm) throws IllegalArgumentException;
 
 	public Vector<Projekt> getProjektByName(String name) throws IllegalArgumentException;
 
@@ -83,6 +85,8 @@ public interface ProjektAdministration extends RemoteService {
 
 	public Ausschreibung createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist,
 			String ausschreibungstext) throws IllegalArgumentException;
+	
+	public Bewerbung createBewerbungFor(Ausschreibung as, Organisationseinheit o, String bewerbungstext) throws IllegalArgumentException;
 
 	public Partnerprofil createPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException;
 

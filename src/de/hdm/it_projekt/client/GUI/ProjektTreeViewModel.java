@@ -45,6 +45,8 @@ public class ProjektTreeViewModel implements TreeViewModel {
 	private Map<Projekt, ListDataProvider<Ausschreibung>> ausschreibungDataProviders = null;
 	private Map<Ausschreibung, ListDataProvider<Bewerbung>> bewerbungDataProviders = null;
 	private Map<Bewerbung, ListDataProvider<Bewertung>> bewertungDataProviders = null;
+	
+	private boolean ausschreibender;
 
 	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObject> {
 		@Override
@@ -85,9 +87,11 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		}
 	}
 
-	public ProjektTreeViewModel() {
+	public ProjektTreeViewModel(boolean ab) {
 
 		pa = ClientsideSettings.getProjektAdministration();
+		ausschreibender = ab;
+		
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEventHandler());
@@ -95,6 +99,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		ausschreibungDataProviders = new HashMap<Projekt, ListDataProvider<Ausschreibung>>();
 		bewerbungDataProviders = new HashMap<Ausschreibung, ListDataProvider<Bewerbung>>();
 		bewertungDataProviders = new HashMap<Bewerbung, ListDataProvider<Bewertung>>();
+	
 	}
 
 	public void setProjektForm(ProjektForm pf) {
@@ -131,7 +136,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		
 		HorizontalPanel hP = new HorizontalPanel();		
 		
-		BeteiligungForm beteiligungForm = new BeteiligungForm();		
+		BeteiligungForm beteiligungForm = new BeteiligungForm(ausschreibender);		
 		ProjektBeteiligungListView pblv = new ProjektBeteiligungListView(selectedProjekt);
 		
 		beteiligungForm.setProjektBeteiligungListView(pblv);
@@ -185,7 +190,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		VerticalPanel vP = new VerticalPanel();
 		hP.add(vP);
 		
-		PartnerprofilForm partnerprofilForm = new PartnerprofilForm();
+		PartnerprofilForm partnerprofilForm = new PartnerprofilForm(ausschreibender);
 		partnerprofilForm.setPartnerprofilTreeViewModel(pptvm);
 		pptvm.setPartnerprofilForm(partnerprofilForm);
 		vP.add(partnerprofilForm);
@@ -449,20 +454,11 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		if (value.equals("Root")) {
 
 			projektDataProvider = new ListDataProvider<Projekt>();
-
-			pa.getAlleProjekteFor(MyProjekt.cpm, new AsyncCallback<Vector<Projekt>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-				}
-
-				@Override
-				public void onSuccess(Vector<Projekt> projekte) {
-					for (Projekt pr : projekte) {
-						projektDataProvider.getList().add(pr);
-					}
-				}
-			});
+			
+			if(ausschreibender == true) 
+				pa.getProjektByProjektleiter(MyProjekt.loginInfo.getCurrentUser() ,MyProjekt.cpm, new GetProjekteCallback());
+			else
+				pa.getAlleProjekteFor(MyProjekt.cpm, new GetProjekteCallback());
 
 			return new DefaultNodeInfo<Projekt>(projektDataProvider, new ProjektCell(), selectionModel, null);
 		}
@@ -541,5 +537,19 @@ public class ProjektTreeViewModel implements TreeViewModel {
 	public boolean isLeaf(Object value) {
 
 		return (value instanceof Bewertung);
+	}
+	
+	private class GetProjekteCallback implements  AsyncCallback<Vector<Projekt>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+		}
+
+		@Override
+		public void onSuccess(Vector<Projekt> projekte) {
+			for (Projekt pr : projekte) {
+				projektDataProvider.getList().add(pr);
+			}
+		}
 	}
 }

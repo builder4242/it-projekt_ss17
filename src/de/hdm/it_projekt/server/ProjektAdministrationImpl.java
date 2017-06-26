@@ -594,4 +594,24 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 		return o;
 	}
+
+	@Override
+	public Vector<Projekt> getProjektByProjektleiter(Person p, ProjektMarktplatz pm) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return prMapper.getByProjektleiter(p, pm);
+	}
+
+	@Override
+	public Bewerbung createBewerbungFor(Ausschreibung as, Organisationseinheit o, String bewerbungstext)
+			throws IllegalArgumentException {
+
+		Bewerbung bw = new Bewerbung();
+		bw.setId(1);
+		bw.setAusschreibungId(as.getId());
+		bw.setErstelldatum(new Date());
+		bw.setOrganisationseinheitId(o.getId());
+		bw.setBewerbungstext(bewerbungstext);
+		
+		return bwMapper.insert(bw);
+	}
 }

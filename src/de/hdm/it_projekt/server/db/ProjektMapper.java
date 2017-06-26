@@ -404,7 +404,7 @@ public class ProjektMapper {
 	 * @param p
 	 * @return
 	 */
-	public Vector<Projekt> getByProjektleiter(Person p) {
+	public Vector<Projekt> getByProjektleiter(Person p, ProjektMarktplatz pm) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Projekt> result = new Vector<Projekt>();
@@ -415,7 +415,7 @@ public class ProjektMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE projekt.ID=" + p.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM projekt WHERE Projektleiter_ID=" + p.getId() + " AND Projektmarktplatz_ID=" + pm.getId());
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projekt-Objekt erstellt.
 			while (rs.next()) {

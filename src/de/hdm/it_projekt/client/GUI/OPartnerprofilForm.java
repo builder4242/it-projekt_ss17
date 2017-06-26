@@ -142,6 +142,7 @@ public class OPartnerprofilForm extends Showcase {
 		public void onSuccess(Partnerprofil result) {
 
 			pp = result;
+			MyProjekt.loginInfo.getCurrentUser().setPartnerprofilId(result.getId());
 		}
 	}
 }
