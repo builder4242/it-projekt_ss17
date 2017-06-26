@@ -6,7 +6,7 @@ package de.hdm.it_projekt.client.GUI;
  * Desweiteren gibt es ein Label für den Projektleiter das automatisch gesetzt
  * wird, da dieser automatisch gesetzt wird. Die Anordung wird über ein Grid gelöst. 
  * Die drei ClickHandler für die drei Buttons regeln, was beim Drücken eines Buttons 
- * passier. Die Optik von Lables, Textfeltern und Buttons wird durch das Einbinden von 
+ * passiert. Die Optik von Lables, Textfeltern und Buttons wird durch das Einbinden von 
  * CSS umgestzt.   */ 
 
 import com.google.gwt.event.dom.client.ClickEvent;
