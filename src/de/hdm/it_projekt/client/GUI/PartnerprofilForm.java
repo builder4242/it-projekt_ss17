@@ -35,7 +35,7 @@ public class PartnerprofilForm extends Showcase {
 	DateBox erstellDb = new DateBox();
 	DateBox aenderungDb = new DateBox();
 
-	public PartnerprofilForm() {
+	public PartnerprofilForm(boolean ausschreibender) {
 
 		formTitel.setText("Partnerprofil");
 		formTitel.setStyleName("h1");
@@ -71,6 +71,10 @@ public class PartnerprofilForm extends Showcase {
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
+		
+		if(ausschreibender == false) {
+			buttonsPanel.setVisible(false);
+		}
 
 	}
 
