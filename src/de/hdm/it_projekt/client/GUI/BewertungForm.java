@@ -1,5 +1,11 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse  BewertungForm dient dem Aufbau und der Interaktion mit dem Formular "Bewertung"
+ * auf der Seite "Meine Ausschreibungen" in der GUI. Die Klasse stellt eine DateBox für das Erstelldatum,
+ * ein Textfeld für die Bewertung sowie eine TextArea für die Stellungsnahme bereit. Desweiteren 
+ * gibt es drei Buttons mit jeweiligen ClickHandlern zum Ändern, Löschen und Anlegen. Die Optik würd 
+ * über Einbinden von CSS angepasst. */
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -10,6 +16,7 @@ import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
@@ -25,7 +32,7 @@ public class BewertungForm extends Showcase {
 
 	Label formTitel = new Label();
 	DateBox erstellDb = new DateBox();
-	TextBox textTb = new TextBox();
+	TextArea textTb = new TextArea();
 	DoubleBox wertDb = new DoubleBox();
 
 	public BewertungForm(boolean ausschreibender) {
@@ -50,7 +57,7 @@ public class BewertungForm extends Showcase {
 
 		form.setWidget(2, 0, new Label("Stellungnahme"));
 		form.setWidget(2, 1, textTb);
-		textTb.setStyleName("myproject-textfield");
+		textTb.setStyleName("myprojekt-textarea");
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
