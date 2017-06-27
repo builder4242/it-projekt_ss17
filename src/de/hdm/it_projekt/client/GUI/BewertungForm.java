@@ -6,14 +6,15 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.it_projekt.shared.bo.Beteiligung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Bewertung;
 
@@ -28,6 +29,7 @@ public class BewertungForm extends Showcase {
 	DateBox erstellDb = new DateBox();
 	TextArea textTb = new TextArea();
 	DoubleBox wertDb = new DoubleBox();
+	CheckBox beteiligenCb = new CheckBox();
 
 	public BewertungForm(boolean ausschreibender) {
 
@@ -35,7 +37,7 @@ public class BewertungForm extends Showcase {
 		formTitel.setStyleName("h1");
 		this.add(formTitel);
 
-		Grid form = new Grid(3, 2);
+		Grid form = new Grid(4, 2);
 		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
@@ -51,7 +53,11 @@ public class BewertungForm extends Showcase {
 
 		form.setWidget(2, 0, new Label("Stellungnahme"));
 		form.setWidget(2, 1, textTb);
-		textTb.setStyleName("myprojekt-textarea");
+		textTb.setStyleName("myprojekt-textarea");		
+
+		form.setWidget(3, 0, new Label("beteiligen"));
+		form.setWidget(3, 1, beteiligenCb);
+		beteiligenCb.setValue(false);
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
@@ -78,6 +84,7 @@ public class BewertungForm extends Showcase {
 		if(ausschreibender == false) {
 			wertDb.setEnabled(false);
 			textTb.setEnabled(false);
+			beteiligenCb.setVisible(false);
 			buttonsPanel.setVisible(false);
 		}
 		
@@ -94,11 +101,68 @@ public class BewertungForm extends Showcase {
 			erstellDb.setValue(null);
 			textTb.setText("");
 			wertDb.setValue(null);
+			beteiligenCb.setValue(false);
 		}
 	}
 
 	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
 		this.ptvm = ptvm;
+	}
+	
+	private void createBeteiligung() {
+		
+		Bewerbung bw = ptvm.getSelectedBewerbung();
+		
+		pa.getBeteiligungFor(bw, new GetBeteiligungCallback(bw));
+	}
+	
+	private class GetBeteiligungCallback implements AsyncCallback<Beteiligung> {
+
+		Bewerbung bewerbung = null;
+		
+		public GetBeteiligungCallback(Bewerbung bw) {
+			bewerbung = bw;
+		}
+		
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Beteiligung beteiligung) {
+
+			if(bewerbung != null && beteiligung == null) {
+				pa.createBeteiligungFor(bewerbung, new CreateBeteiligungCallback());
+			} else {
+				Window.alert("Es existiert schon eine Beteiligung für diese Bewerbung.");
+			}
+			
+		}
+		
+	}
+	
+	private class CreateBeteiligungCallback implements AsyncCallback<Beteiligung> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Beteiligung result) {
+
+			if(result != null) {
+				Window.alert("Die Beteiligung wurde erfolgreich angelegt.");
+				ptvm.setSelectedBeteiligung(result);
+			} else {
+				Window.alert("Es ist ein Fehler aufgetreten.");
+			}
+			
+		}
+		
 	}
 
 	private class ChangeClickHandler implements ClickHandler {
@@ -127,6 +191,10 @@ public class BewertungForm extends Showcase {
 		@Override
 		public void onSuccess(Void result) {
 			ptvm.updateBewertung(bwtToDisplay);
+			
+			if(beteiligenCb.getValue() == true) {
+				createBeteiligung();
+			}
 		}
 	}
 
@@ -213,6 +281,10 @@ public class BewertungForm extends Showcase {
 			if (bewertung != null && bewerbung != null) {
 				setSelected(bewertung);
 				ptvm.addBewertungForBewerbung(bewertung, bewerbung);
+
+				if(beteiligenCb.getValue() == true) {
+					createBeteiligung();
+				}
 			}
 		}
 	}
