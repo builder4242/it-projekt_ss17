@@ -381,6 +381,19 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		ausschreibungDataProviders.get(pr).refresh();
 		selectionModel.setSelected(pr, true);
 	}
+	
+	void addBewerbungForAusschreibung(Ausschreibung as, Bewerbung bw) {
+		if (!bewerbungDataProviders.containsKey(as))
+			return;
+
+		ListDataProvider<Bewerbung> bewerbungProvider = bewerbungDataProviders.get(as);
+
+		if (!bewerbungProvider.getList().contains(bw)) {
+			bewerbungProvider.getList().add(bw);
+		}
+		setSelectedBewerbung(bw);
+		selectionModel.setSelected(as, true);
+	}
 
 	void removeBewerbungForAusschreibung(Bewerbung bw, Ausschreibung as) {
 

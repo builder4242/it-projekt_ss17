@@ -18,7 +18,7 @@ public class PartnerprofilCell extends AbstractCell<Partnerprofil>{
 		DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");		
 		
 		sb.appendHtmlConstant("<div class='Partnerprofil-Cell'>");  //Test CSS Klasse
-		sb.appendEscaped("Partnerprofil vom (" + fmt.format(value.getErstelldatum()) + ")");
+		sb.appendEscaped("Partnerprofil");
 		sb.appendHtmlConstant("</div class='Partnerprofil-Cell'>");  //Test CSS Klasse
 		
 	}
