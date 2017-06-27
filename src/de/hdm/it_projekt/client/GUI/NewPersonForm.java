@@ -57,7 +57,8 @@ public class NewPersonForm extends Showcase {
 		menu = m;
 		this.add(new Label(
 				"Sie besitzen noch kein Benutzerprofil bei uns, bitte geben Sie in nachfolgendem Formular Ihre Daten ein."));
-
+		this.addStyleName("myprojekt-formlabel");
+		
 		Grid organisationseinheitGrid = new Grid(9, 2);
 		this.add(organisationseinheitGrid);
 
