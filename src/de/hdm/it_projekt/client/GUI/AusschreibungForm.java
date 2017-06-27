@@ -1,5 +1,11 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse AusschreibungForm dient dem Aufbau und der Interaktion mit dem Formular "Ausschreibung
+ * auf der Seite "Meine Ausschreibungen" in der GUI. Die Klasse beinhaltet eine TextBox für die Bezeichung
+ * des Projekts, eine DateBox für die Bewerbungsfrist, sowie eine TextArea für den Ausschreibungstext.
+ * Desweiteren gibt es drei Buttons mit jeweiligen ClickHandlern zum Ändern, Löschen und Anlegen. Die Optik würd 
+ * über Einbinden von CSS angepasst.  */ 
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;

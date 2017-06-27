@@ -1,5 +1,11 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse  BewertungForm dient dem Aufbau und der Interaktion mit dem Formular "Bewertung"
+ * auf der Seite "Meine Ausschreibungen" in der GUI. Die Klasse stellt eine DateBox für das Erstelldatum,
+ * ein Textfeld für die Bewertung sowie eine TextArea für die Stellungsnahme bereit. Desweiteren 
+ * gibt es drei Buttons mit jeweiligen ClickHandlern zum Ändern, Löschen und Anlegen. Die Optik würd 
+ * über Einbinden von CSS angepasst. */
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
