@@ -304,6 +304,29 @@
     color: white;
 }
 
+.myprojekt-reportbutton{
+	font-family: Verdana;
+    background-color: #008CBA ;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    padding: 8px 10px; 
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 2px; 
+    margin-right:2px;
+    width: 250px; 
+}
+
+.myprojekt-reportbutton:active{
+    position: relative;
+    top: 1px;
+}
+
+.myprojekt-reportbutton:hover{
+    background-color: #5fb3ba; /* blau */
+    color: white;
+}
 
 /* LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL  */ 
 
