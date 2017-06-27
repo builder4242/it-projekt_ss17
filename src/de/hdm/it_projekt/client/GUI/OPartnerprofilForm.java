@@ -1,5 +1,11 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse OPartnerprofilForm dient dem Aufbau des Infotextes (Labels) auf der Seite
+ * "Eigens Profil verwalten" in der GUI.
+ * Desweiteren gibt es Labeles für das Anlegedatum sowie das Datum der letzten
+ * Änderung, diese werden automatisch gesetzt, in dem sie sich ihren Wert über Get-Methoden abfragen.
+ * Die Optik der Lables, wird durch das Einbinden von CSS angepasst.   */ 
+
 import java.util.List;
 import java.util.Vector;
 
