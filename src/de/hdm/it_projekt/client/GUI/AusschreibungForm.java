@@ -57,8 +57,10 @@ public class AusschreibungForm extends Showcase {
 		form.setWidget(2, 1, astextgTb);
 		astextgTb.setStyleName("myprojekt-textarea");
 
+		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 		Button changeButton = new Button("Ändern");
 		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
@@ -70,17 +72,32 @@ public class AusschreibungForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
-		Button newButton = new Button("Neu");
+		Button newButton = new Button("Anlegen");
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
-		buttonsPanel.addStyleName("myprojekt-buttonspanel");
+
+		HorizontalPanel buttonOPanel = new HorizontalPanel();
+		this.add(buttonOPanel);
+		Button newBewerbungButton = new Button("Bewerbung anlegen");
+		newBewerbungButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		newBewerbungButton.addClickHandler(new NewBewerbungClickHandler());
+		buttonOPanel.add(newBewerbungButton);
+		
+		Button showPartnerprofilButton = new Button();
+		showPartnerprofilButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		showPartnerprofilButton.addClickHandler(new showPartnerprofilClickHandler());
+		buttonOPanel.add(showPartnerprofilButton);
 
 		if(ausschreibender == false) {
 			bezeichnungTb.setEnabled(false);
 			fristDb.setEnabled(false);
 			astextgTb.setEnabled(false);
 			buttonsPanel.setVisible(false);
+			showPartnerprofilButton.setText("Partnerprofil anzeigen");
+			this.add(newBewerbungButton);
+		} else {
+			showPartnerprofilButton.setText("Partnerprofil verwalten");
 		}
 	}
 
@@ -100,6 +117,25 @@ public class AusschreibungForm extends Showcase {
 
 	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
 		this.ptvm = ptvm;
+	}
+	
+	private class NewBewerbungClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ptvm.ausschreibungForm.setVisible(false);
+			ptvm.bewerbungForm.setVisible(true);
+		}		
+	}
+	
+	private class showPartnerprofilClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ptvm.ausschreibungForm.setVisible(false);
+			ptvm.showPartnerprofilTree();
+		}
+		
 	}
 
 	private class ChangeClickHandler implements ClickHandler {

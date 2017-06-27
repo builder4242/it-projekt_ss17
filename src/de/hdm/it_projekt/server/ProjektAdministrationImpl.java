@@ -636,4 +636,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		
 		return btMapper.insert(bt);
 	}
+
+	@Override
+	public Vector<Ausschreibung> getAusschreibungByMatch(Partnerprofil pp) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
