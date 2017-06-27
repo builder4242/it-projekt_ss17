@@ -21,6 +21,16 @@
     margin-bottom: 5px; 
 }
 
+.h2_margin-top{
+	font-weight: bold; 		/*Überschriften fett */
+    color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
+    text-aligin: center; 	/*ï¿½berschriften zentreiren*/
+    font-family: Verdana;
+    font-size: 16px; 
+    margin-top: 28px; 
+    margin-bottom: 5px; 
+}
+
 /* CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN */
 
 .ProjektMarktplatz-Cell{
@@ -253,14 +263,15 @@
     font-size: 12px;
 }
 
-.myprojekt-abmeldebutton:active{
+.myprojekt-loginbutton:active{
     position: relative;
     top: 2px;
 }
 
-.myprojekt-abmeldebutton:hover{
+.myprojekt-loginbutton:hover{
     background-color: #00ff40; /* grün */
     color: white;
+    
 }
 
 
@@ -277,16 +288,20 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
+    margin-left: 445px; 
+ 	
 }
 
 .myprojekt-abmeldebutton:active{
     position: relative;
     top: 2px;
+  
 }
 
 .myprojekt-abmeldebutton:hover{
     background-color: #0A4766; /* blau */
     color: white;
+     
 }
 
 /* Style der Buttons die unter Fromularen verwendet werden. */ 
@@ -386,6 +401,7 @@
 	color: #004080;
 	display: center; 
 	margin-right: 5px; 
+	font-size: 16px; 
 
 }
 

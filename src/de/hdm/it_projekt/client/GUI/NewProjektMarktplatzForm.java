@@ -31,7 +31,7 @@ public class NewProjektMarktplatzForm extends Showcase {
 		this.add(formVp);
 		
 		Label beschreibungLabel = new Label("Hier können Sie einen neuen Projektmarktplatz anlegen: ");
-		beschreibungLabel.setStyleName("h2");
+		beschreibungLabel.setStyleName("h2_margin-top");
 		formVp.add(beschreibungLabel);
 		
 		HorizontalPanel insertHp = new HorizontalPanel();
