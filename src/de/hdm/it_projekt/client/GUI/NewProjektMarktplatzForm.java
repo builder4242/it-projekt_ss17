@@ -1,5 +1,10 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse NewProjektMarktplatzForm dient dem Aufbau und der Interaktion mit dem Formular zum Anlegen 
+ * eines neuen Marktplatzes auf der Startseite "Projektmarktplätze" der GUI. Es wird eine TextBox für die 
+ * Bezeichung einens neuen Marktplatzes sowie ein Button mit zugeörigem ClickHandler zum Anlegen bereitgestellt.
+ * Die Optik wird durch das Einbinden von CSS angepasst. */ 
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -26,7 +31,7 @@ public class NewProjektMarktplatzForm extends Showcase {
 		this.add(formVp);
 		
 		Label beschreibungLabel = new Label("Hier können Sie einen neuen Projektmarktplatz anlegen: ");
-		beschreibungLabel.setStyleName("h2");
+		beschreibungLabel.setStyleName("h2_margin-top");
 		formVp.add(beschreibungLabel);
 		
 		HorizontalPanel insertHp = new HorizontalPanel();
