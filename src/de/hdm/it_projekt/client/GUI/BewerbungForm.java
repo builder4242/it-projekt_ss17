@@ -155,7 +155,37 @@ public class BewerbungForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 			
+			Ausschreibung as = ptvm.getSelectedAusschreibung();
+			
+			if(as != null) {
+				pa.createBewerbungFor(as, MyProjekt.loginInfo.getCurrentUser(), textTb.getText(), new CreateBewerbungCallback(as));
+			} else {
+				Window.alert("Es wurde keine Ausschreibung ausgewählt.");
+			}
+		}
+	}
+	
+	private class CreateBewerbungCallback implements AsyncCallback<Bewerbung> {
+
+		Ausschreibung ausschreibung = null;
+		
+		public CreateBewerbungCallback(Ausschreibung as) {
+			ausschreibung = as;
+		}
+		
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
 			
 		}
+
+		@Override
+		public void onSuccess(Bewerbung bewerbung) {
+
+			if(ausschreibung != null && bewerbung != null)
+				ptvm.addBewerbungForAusschreibung(ausschreibung, bewerbung);
+			
+		}
+		
 	}
 }
