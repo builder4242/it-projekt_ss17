@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
@@ -25,7 +26,7 @@ public class BewertungForm extends Showcase {
 
 	Label formTitel = new Label();
 	DateBox erstellDb = new DateBox();
-	TextBox textTb = new TextBox();
+	TextArea textTb = new TextArea();
 	DoubleBox wertDb = new DoubleBox();
 
 	public BewertungForm(boolean ausschreibender) {
@@ -50,7 +51,7 @@ public class BewertungForm extends Showcase {
 
 		form.setWidget(2, 0, new Label("Stellungnahme"));
 		form.setWidget(2, 1, textTb);
-		textTb.setStyleName("myproject-textfield");
+		textTb.setStyleName("myprojekt-textarea");
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
