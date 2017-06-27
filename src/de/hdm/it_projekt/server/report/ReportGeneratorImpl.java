@@ -249,7 +249,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return result;
 	}
 
-	public AlleAusschreibungenReport fanInAnalyse(Organisationseinheit oe) {
+	public AlleAusschreibungenReport fanInAnalyse(Projekt pr) {
 
 		if (this.getProjektAdministration() == null)
 			return null;
@@ -258,27 +258,47 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		result.setCreated(new Date());
 		
 		CompositeParagraph header = new CompositeParagraph();
-		header.addSubParagraph(new SimpleParagraph("Laufende Ausschreibungen"));
+		header.addSubParagraph(new SimpleParagraph("Laufende Ausschreibungen:"));
 		Row headline = new Row();
-		
+		//laufende Ausschreibungen anzeigen
 		headline.addColumn(new Column ("Ausschreibung"));
 		headline.addColumn(new Column ("Status"));
 		result.addRow(headline);
 	
-		Vector<Ausschreibung> laufende = this.administration.getAusschreibungBy(oe);
+		Vector<Ausschreibung> laufende = this.administration.getAusschreibungFor(pr);
 				
 				for(Ausschreibung a : laufende){
 					Row laufendeRow = new Row();
-					laufendeRow.addColumn(new Column(String.valueOf(oe)));
-					laufendeRow.addColumn(String.valueOf(this.administration.getAusschreibungBy(oe)));
+					laufendeRow.addColumn(new Column(String.valueOf(pr)));
+					laufendeRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungFor(pr))));
 				}
-		header.addSubParagraph(new SimpleParagraph("Erfolgreiche Ausschreibungen"));
+		// erfolgreiche Ausschreibungen anzeigen
+		header.addSubParagraph(new SimpleParagraph("Erfolgreiche Ausschreibungen:"));
 		headline.addColumn(new Column("Ausschreibung"));
 		headline.addColumn(new Column("Erfolgreich"));
 		result.addRow(headline);
 		
-		Vector<Ausschreibung> erfolgreich =  
+		Vector<Beteiligung> erfolgreich =  this.administration.getBeteiligungenFor(pr);
+				for ( Beteiligung b : erfolgreich){
+					Row erfolgreichRow = new Row();
+					erfolgreichRow.addColumn(new Column( String.valueOf(pr)));
+					erfolgreichRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(pr))));
+				}
+		// abgebrochene Ausschreibungen anzeigen 
+		header.addSubParagraph( new SimpleParagraph("Abgebrochene Ausschreibungen:"));
+		headline.addColumn(new Column("Ausschreibung"));
+		headline.addColumn(new Column("Abgebrochene"));
+		result.addRow(headline);
+		
+		Vector<Ausschreibung> abgebrochen = this.administration
 				
+			for (Ausschreibung a : abgebrochen){
+				Row abgebrochenRow = new Row();
+				abgebrochenRow.addColumn(new Column (String.valueOf(pr)));
+				abgebrochenRow.addColumn(new Column(String.valueOf(this.administration.)));
+				result.addRow(headline);
+			}
+		
 		return result;
 
 	}
