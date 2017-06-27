@@ -28,7 +28,7 @@ public class AusschreibungForm extends Showcase {
 	DateBox fristDb = new DateBox();
 	TextArea astextgTb = new TextArea();
 
-	public AusschreibungForm() {
+	public AusschreibungForm(boolean ausschreibender) {
 
 		formTitel.setText("Ausschreibung");
 		formTitel.setStyleName("h1");
@@ -70,6 +70,12 @@ public class AusschreibungForm extends Showcase {
 		buttonsPanel.add(newButton);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
+		if(ausschreibender == false) {
+			bezeichnungTb.setEnabled(false);
+			fristDb.setEnabled(false);
+			astextgTb.setEnabled(false);
+			buttonsPanel.setVisible(false);
+		}
 	}
 
 	void setSelected(Ausschreibung as) {

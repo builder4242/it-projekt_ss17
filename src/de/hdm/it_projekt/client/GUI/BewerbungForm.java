@@ -3,6 +3,7 @@ package de.hdm.it_projekt.client.GUI;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -12,6 +13,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
@@ -28,7 +30,7 @@ public class BewerbungForm extends Showcase {
 	TextArea textTb = new TextArea();
 	Label bewerberLb = new Label("nicht angelegt");
 
-	public BewerbungForm() {
+	public BewerbungForm(boolean ausschreibender) {
 
 		formTitel.setText("Bewerbung");
 		formTitel.setStyleName("h1");
@@ -54,14 +56,25 @@ public class BewerbungForm extends Showcase {
 		textTb.setEnabled(false);
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 		this.add(buttonsPanel);
 
 		Button deleteButton = new Button("Löschen");
 		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
-		buttonsPanel.addStyleName("myprojekt-buttonspanel");
+		
+		Button newButton = new Button("Neu");
+		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		newButton.addClickHandler(new NewClickHandler());
+		newButton.setVisible(false);
+		buttonsPanel.add(newButton);
 
+		if(ausschreibender == false) {
+			textTb.setEnabled(true);
+			bewerberLb.setText(MyProjekt.loginInfo.getCurrentUser().getName());
+			newButton.setVisible(true);
+		}
 	}
 
 	void setSelected(Bewerbung bw) {
@@ -107,9 +120,42 @@ public class BewerbungForm extends Showcase {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			if(bwToDisplay != null)
+				pa.delete(bwToDisplay, new DeleteCallback(bwToDisplay, ptvm.getSelectedAusschreibung()));
+			else
+				Window.alert("Es wurde nichts ausgewählt.");
+		}
+	}
+	
+	class DeleteCallback implements AsyncCallback<Void> {
 
+		Ausschreibung ausschreibung = null;
+		Bewerbung bewerbung = null;
+		
+		public DeleteCallback(Bewerbung bw, Ausschreibung as) {
+			ausschreibung = as;
+			bewerbung = bw;
+		}
+		
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
 		}
 
+		@Override
+		public void onSuccess(Void result) {
+			if(bewerbung != null && ausschreibung != null)
+				ptvm.removeBewerbungForAusschreibung(bewerbung, ausschreibung);			
+		}		
+	}
+	
+	private class NewClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			
+		}
 	}
 }

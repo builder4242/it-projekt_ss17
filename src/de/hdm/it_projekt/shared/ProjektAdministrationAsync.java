@@ -135,5 +135,10 @@ public interface ProjektAdministrationAsync {
 
 	void getBeteiligterFor(Beteiligung bt, AsyncCallback<Organisationseinheit> callback);
 
+	void getProjektByProjektleiter(Person p, ProjektMarktplatz pm, AsyncCallback<Vector<Projekt>> callback);
+
+	void createBewerbungFor(Ausschreibung as, Organisationseinheit o, String bewerbungstext,
+			AsyncCallback<Bewerbung> callback);
+
 
 }
