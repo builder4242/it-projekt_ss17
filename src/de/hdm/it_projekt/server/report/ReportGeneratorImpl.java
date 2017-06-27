@@ -8,6 +8,7 @@ package de.hdm.it_projekt.server.report;
  * createbAusschreibungZuBewerbungReport - fertig machen 
  * Abfrage von Projektverflechtungen (Teilnahmen und weitere Einreichungen/Bewerbungen) eines Bewerbers durch den Ausschreibenden. 
  * fan out - warten wie status von bewerbung ausgelesen werden kann 
+ * fan in - methode auslesen der Ausschreibungen nach oe fehlt
  * 
  *
  * Durchführung einer Fan-in/Fan-out-Analyse: Zu allen Teilnehmern kann jeweils die Anzahl von Bewerbungen 
@@ -132,11 +133,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Ausschreibung"));
 
 		result.addRow(headline);
-		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungby(pp);
+		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungBy(pp);
 
 		for (Ausschreibung a : ausschreibung) {
 			Row ausschreibungRow = new Row();
-			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungby(p))));
+			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungBy(pp))));
 			result.addRow(ausschreibungRow);
 		}
 		return result;
@@ -248,7 +249,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return result;
 	}
 
-	public AlleAusschreibungenReport fanInAnalyse(Organisationseinheit oe) {
+	public AlleAusschreibungenReport fanInAnalyse(Projekt pr) {
 
 		if (this.getProjektAdministration() == null)
 			return null;
@@ -257,12 +258,47 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		result.setCreated(new Date());
 		
 		CompositeParagraph header = new CompositeParagraph();
-		header.addSubParagraph(new SimpleParagraph("Laufende Ausschreibungen"));
+		header.addSubParagraph(new SimpleParagraph("Laufende Ausschreibungen:"));
 		Row headline = new Row();
-		
+		//laufende Ausschreibungen anzeigen
 		headline.addColumn(new Column ("Ausschreibung"));
 		headline.addColumn(new Column ("Status"));
+		result.addRow(headline);
+	
+		Vector<Ausschreibung> laufende = this.administration.getAusschreibungFor(pr);
 				
+				for(Ausschreibung a : laufende){
+					Row laufendeRow = new Row();
+					laufendeRow.addColumn(new Column(String.valueOf(pr)));
+					laufendeRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungFor(pr))));
+				}
+		// erfolgreiche Ausschreibungen anzeigen
+		header.addSubParagraph(new SimpleParagraph("Erfolgreiche Ausschreibungen:"));
+		headline.addColumn(new Column("Ausschreibung"));
+		headline.addColumn(new Column("Erfolgreich"));
+		result.addRow(headline);
+		
+		Vector<Beteiligung> erfolgreich =  this.administration.getBeteiligungenFor(pr);
+				for ( Beteiligung b : erfolgreich){
+					Row erfolgreichRow = new Row();
+					erfolgreichRow.addColumn(new Column( String.valueOf(pr)));
+					erfolgreichRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(pr))));
+				}
+		// abgebrochene Ausschreibungen anzeigen 
+		header.addSubParagraph( new SimpleParagraph("Abgebrochene Ausschreibungen:"));
+		headline.addColumn(new Column("Ausschreibung"));
+		headline.addColumn(new Column("Abgebrochene"));
+		result.addRow(headline);
+		
+		Vector<Ausschreibung> abgebrochen = this.administration
+				
+			for (Ausschreibung a : abgebrochen){
+				Row abgebrochenRow = new Row();
+				abgebrochenRow.addColumn(new Column (String.valueOf(pr)));
+				abgebrochenRow.addColumn(new Column(String.valueOf(this.administration.)));
+				result.addRow(headline);
+			}
+		
 		return result;
 
 	}
