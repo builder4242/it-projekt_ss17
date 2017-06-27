@@ -3,6 +3,12 @@
  */
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse NewPersonForm wird benötigt um ein Profil an zu legen, wenn sich ein Nutzer zum
+ *  ersten mal einloggt. Die Klasse stellt 7 TextBoxes für Informationen wie Name und Adresse bereit. 
+ *  Über den Button Neu, mit zugehörigem ClickHandler, werden die Daten aus den Textfelden in die Datenbank
+ *  gespeichert und der Nutzer wird zur Marktplatzübersicht weitergeleitet. Die Optik wird druch das 
+ *  einbinden von CSS angepasst.   */
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -51,7 +57,8 @@ public class NewPersonForm extends Showcase {
 		menu = m;
 		this.add(new Label(
 				"Sie besitzen noch kein Benutzerprofil bei uns, bitte geben Sie in nachfolgendem Formular Ihre Daten ein."));
-
+		this.addStyleName("myprojekt-formlabel");
+		
 		Grid organisationseinheitGrid = new Grid(9, 2);
 		this.add(organisationseinheitGrid);
 

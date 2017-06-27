@@ -140,5 +140,9 @@ public interface ProjektAdministrationAsync {
 	void createBewerbungFor(Ausschreibung as, Organisationseinheit o, String bewerbungstext,
 			AsyncCallback<Bewerbung> callback);
 
+	void getBeteiligungFor(Bewerbung bw, AsyncCallback<Beteiligung> callback);
+
+	void createBeteiligungFor(Bewerbung bw, AsyncCallback<Beteiligung> callback);
+
 
 }
