@@ -1,7 +1,7 @@
 package de.hdm.it_projekt.client.GUI_Report;
 
 
-import com.google.gwt.core.client.*;
+import com.google.gwt.core.client.*; 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -9,8 +9,11 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import de.hdm.it_projekt.server.report.*;
 
 
 public class ReportGenerator implements EntryPoint {
@@ -23,6 +26,7 @@ public class ReportGenerator implements EntryPoint {
 		 * Definition der Panels
 		 */
 		final VerticalPanel vertPanelNav = new VerticalPanel();
+		
 
 		
 		/**
@@ -78,11 +82,28 @@ public class ReportGenerator implements EntryPoint {
 		 */
 		RootPanel.get("content").add(ueberschriftLabel);
 		RootPanel.get("content").add(vertPanelNav);
+		
 	}
 		
 	private class ChangeClickhandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
-			Window.alert("tbd");
+			ListBox lb1 = new ListBox();
+			lb1.addItem("test");
+			lb1.addItem("test2");
+			lb1.addItem("test2");
+			lb1.addItem("test2");
+			lb1.addItem("test2");
+			lb1.addItem("test2");
+			lb1.addItem("test2");
+			lb1.addItem("test2");
+			lb1.setVisibleItemCount(5);
+			final VerticalPanel vertPanelAuswahl = new VerticalPanel();
+			vertPanelAuswahl.add(lb1);
+			RootPanel.get("content").add(vertPanelAuswahl);
+					//ReportGeneratorImpl.createAlleAusschreibungenReport().toString();
+		
+			
+			//Window.alert("tbd");
 		}
 	}	
 
