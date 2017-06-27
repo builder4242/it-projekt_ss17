@@ -288,7 +288,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    margin-left: 445px; 
+    margin-left: 372px; 
  	
 }
 
@@ -403,6 +403,14 @@
 	margin-right: 5px; 
 	font-size: 16px; 
 
+}
+
+.myprojekt-loginlabel{
+	font-family: Verdana;
+	margin-left: 22px; 
+	font-size: 16px; 
+	color: #0498b7;             /*Farbe der �berschrift blau*/
+    text-aligin: center; 	/*�berschriften zentreiren*/
 }
 
 

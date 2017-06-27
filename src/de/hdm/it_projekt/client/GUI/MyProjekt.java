@@ -245,7 +245,9 @@ public class MyProjekt implements EntryPoint {
 
 					if (result != null) {
 						loginInfo.setCurrentUser(result);
-						loginHeader.add(new Label(loginInfo.toString()));
+						Label LoginInfoLabel = new Label(loginInfo.toString()); 
+						LoginInfoLabel.setStyleName("myprojekt-loginlabel");
+						loginHeader.add(LoginInfoLabel);
 						loginHeader.add(abmeldungButton);
 						showcase = new Marktuebersicht();
 					} else {
