@@ -30,6 +30,8 @@ import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
+import de.hdm.it_projekt.shared.report.AnzahlAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.AnzahlBewerbungenReport;
 import de.hdm.it_projekt.shared.report.Column;
 import de.hdm.it_projekt.shared.report.CompositeParagraph;
 import de.hdm.it_projekt.shared.report.Row;
@@ -213,20 +215,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	/**
-	 * * Durchführung einer Fan-in/Fan-out-Analyse: Zu allen Teilnehmern kann
+	 * Durchführung einer Fan-out-Analyse: Zu allen Teilnehmern kann
 	 * jeweils die Anzahl von Bewerbungen (laufende, abgelehnte, ange- nommene)
-	 * (eine Art Fan-out) und deren Anzahl von Ausschreibungen (erfolgreich
-	 * besetzte, ab- gebrochene, laufende, also Fan-in) tabellarisch aufgeführt
-	 * werden.(Fan out gibt ab 1: n, fan in nimmt auf n:1 FAn in analyse
+	 * (eine Art Fan-out) 
 	 * 
 	 * @param oe
 	 * @return
 	 */
 
-	public AlleBewerbungenReport fanOutReport(Organisationseinheit oe) {
+	public AnzahlBewerbungenReport fanOutReport(Organisationseinheit oe) throws IllegalArgumentException {
 		if (this.getProjektAdministration() == null)
 			return null;
-		AlleBewerbungenReport result = new AlleBewerbungenReport();
+		AnzahlBewerbungenReport result = new AnzahlBewerbungenReport();
 		result.setTitle("Fan Out Analyse");
 		result.setCreated(new Date());
 
@@ -234,6 +234,35 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		header.addSubParagraph(new SimpleParagraph("Abgelehnte Bewerbungen"));
 		Row headline = new Row();
 
+		headline.addColumn(new Column("Ausschreibung"));
+		headline.addColumn(new Column("Laufende"));
+		
+		result.addRow(headline);
+
+		Vector<Beteiligung> laufende = this.administration.getBeteiligungenFor(oe);
+
+		for (Beteiligung b : laufende) {
+			Row beteiligungRow = new Row();
+			beteiligungRow.addColumn(new Column(String.valueOf(oe)));
+			beteiligungRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
+			result.addRow(beteiligungRow);
+		}
+		headline = null;
+		
+		headline.addColumn(new Column("Ausschreibung"));
+		headline.addColumn(new Column("Abgelehnt"));
+		result.addRow(headline);
+
+		Vector<Beteiligung> abgelehnt = this.administration.getBeteiligungenFor(oe);
+
+		for (Beteiligung b : abgelehnt) {
+			Row beteiligungRow = new Row();
+			beteiligungRow.addColumn(new Column(String.valueOf(oe)));
+			beteiligungRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
+			result.addRow(beteiligungRow);
+		}
+		headline = null;
+		
 		headline.addColumn(new Column("Ausschreibung"));
 
 		result.addRow(headline);
@@ -246,14 +275,22 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			beteiligungRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
 			result.addRow(beteiligungRow);
 		}
+
+		
 		return result;
 	}
+	/**
+	 * und deren Anzahl von Ausschreibungen (erfolgreich
+	 * besetzte, ab- gebrochene, laufende, also Fan-in) tabellarisch aufgeführt
+	 * werden.(Fan out gibt ab 1: n, fan in nimmt auf n:1 FAn in analyse
+	 * 
+	 */
 
-	public AlleAusschreibungenReport fanInAnalyse(Projekt pr) {
+	public AnzahlAusschreibungenReport fanInAnalyse(Projekt pr) throws IllegalArgumentException  {
 
 		if (this.getProjektAdministration() == null)
 			return null;
-		AlleAusschreibungenReport result = new AlleAusschreibungenReport();
+		AnzahlAusschreibungenReport result = new AnzahlAusschreibungenReport();
 		result.setTitle("Fan In Analyse");
 		result.setCreated(new Date());
 		
@@ -295,7 +332,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			for (Ausschreibung a : abgebrochen){
 				Row abgebrochenRow = new Row();
 				abgebrochenRow.addColumn(new Column (String.valueOf(pr)));
-				abgebrochenRow.addColumn(new Column(String.valueOf(this.administration.)));
+				abgebrochenRow.addColumn(new Column(String.valueOf(this.administration.)));// ergänzen!!!
 				result.addRow(headline);
 			}
 		
@@ -311,4 +348,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public 
 }
