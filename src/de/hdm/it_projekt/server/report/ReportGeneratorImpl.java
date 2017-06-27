@@ -7,10 +7,12 @@ package de.hdm.it_projekt.server.report;
  * createbAusschreibungZuBewerbungReport - methode für das auslesen einer ausschreibung auf die sich beworben wurde
  * createbAusschreibungZuBewerbungReport - fertig machen 
  * Abfrage von Projektverflechtungen (Teilnahmen und weitere Einreichungen/Bewerbungen) eines Bewerbers durch den Ausschreibenden. 
+ * fan out - warten wie status von bewerbung ausgelesen werden kann 
+ * 
  *
  * Durchführung einer Fan-in/Fan-out-Analyse: Zu allen Teilnehmern kann jeweils die Anzahl von Bewerbungen 
- * (laufende, abgelehnte, ange- nommene) (eine Art Fan-out) und deren Anzahl von Ausschreibungen (erfolgreich besetzte, ab- gebrochene, laufende, also Fan-out) 
- * tabellarisch aufgeführt werden.
+ * (laufende, abgelehnte, ange- nommene) (eine Art Fan-out) und deren Anzahl von Ausschreibungen (erfolgreich besetzte, ab- gebrochene, laufende, also Fan-in) 
+ * tabellarisch aufgeführt werden.(Fan out gibt ab 1: n, fan in nimmt auf n:1 
  */
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -79,9 +81,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return this.administration;
 	}
 
-	
-	/** 
-	 * Report für alle Ausschreibungen die im Projekt vorhanden sind 
+	/**
+	 * Report für alle Ausschreibungen die im Projekt vorhanden sind
 	 */
 	public AlleAusschreibungenReport createAlleAusschreibungenReport(Projekt p) throws IllegalArgumentException {
 
@@ -107,16 +108,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Report über alle Ausschreibungen die zum eigenen Partnerprofil passen.
+	 * 
 	 * @param pp
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	
-	public AlleAusschreibungenReport createMatchingAusschreibungenReport(Partnerprofil pp) throws IllegalArgumentException
-	{
+
+	public AlleAusschreibungenReport createMatchingAusschreibungenReport(Partnerprofil pp)
+			throws IllegalArgumentException {
 		if (this.getProjektAdministration() == null)
 			return null;
 		AlleAusschreibungenReport result = new AlleAusschreibungenReport();
@@ -139,14 +141,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 		return result;
 	}
+
 	/**
 	 * Report über alle Bewerbungen auf eigene Ausschreibung
+	 * 
 	 * @param as
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public AlleBewerbungenReport createBewerbungenAufAusschreibungReport(Ausschreibung as) throws IllegalArgumentException
-	{
+	public AlleBewerbungenReport createBewerbungenAufAusschreibungReport(Ausschreibung as)
+			throws IllegalArgumentException {
 		if (this.getProjektAdministration() == null)
 			return null;
 		AlleBewerbungenReport result = new AlleBewerbungenReport();
@@ -161,7 +165,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Bewerbung"));
 
 		result.addRow(headline);
-		
+
 		Vector<Bewerbung> bewerbung = this.administration.getBewerbungFor(as);
 
 		for (Bewerbung b : bewerbung) {
@@ -172,14 +176,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 		return result;
 	}
+
 	/**
-	 *Abfrage der eigenen Bewerbungen und den zu- gehörigen Ausschreibungen 
+	 * Abfrage der eigenen Bewerbungen und den zu- gehörigen Ausschreibungen
+	 * 
 	 * @param bw
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public AlleBewerbungenReport createbAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException
-	{
+	public AlleBewerbungenReport createbAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException {
 		if (this.getProjektAdministration() == null)
 			return null;
 		AlleBewerbungenReport result = new AlleBewerbungenReport();
@@ -194,7 +199,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Bewerbung"));
 
 		result.addRow(headline);
-		
+
 		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungBy(bw);
 
 		for (Ausschreibung a : ausschreibung) {
@@ -205,8 +210,19 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 		return result;
 	}
-	
-	public AlleBewerbungenReport fanOutReport(Organisationseinheit oe){
+
+	/**
+	 * * Durchführung einer Fan-in/Fan-out-Analyse: Zu allen Teilnehmern kann
+	 * jeweils die Anzahl von Bewerbungen (laufende, abgelehnte, ange- nommene)
+	 * (eine Art Fan-out) und deren Anzahl von Ausschreibungen (erfolgreich
+	 * besetzte, ab- gebrochene, laufende, also Fan-in) tabellarisch aufgeführt
+	 * werden.(Fan out gibt ab 1: n, fan in nimmt auf n:1 FAn in analyse
+	 * 
+	 * @param oe
+	 * @return
+	 */
+
+	public AlleBewerbungenReport fanOutReport(Organisationseinheit oe) {
 		if (this.getProjektAdministration() == null)
 			return null;
 		AlleBewerbungenReport result = new AlleBewerbungenReport();
@@ -218,9 +234,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Row headline = new Row();
 
 		headline.addColumn(new Column("Ausschreibung"));
-		
+
 		result.addRow(headline);
-		
+
 		Vector<Beteiligung> beteiligung = this.administration.getBeteiligungenFor(oe);
 
 		for (Beteiligung b : beteiligung) {
@@ -229,7 +245,34 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			beteiligungRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
 			result.addRow(beteiligungRow);
 		}
-	return result;	
+		return result;
 	}
 
+	public AlleAusschreibungenReport fanInAnalyse(Organisationseinheit oe) {
+
+		if (this.getProjektAdministration() == null)
+			return null;
+		AlleAusschreibungenReport result = new AlleAusschreibungenReport();
+		result.setTitle("Fan In Analyse");
+		result.setCreated(new Date());
+		
+		CompositeParagraph header = new CompositeParagraph();
+		header.addSubParagraph(new SimpleParagraph("Laufende Ausschreibungen"));
+		Row headline = new Row();
+		
+		headline.addColumn(new Column ("Ausschreibung"));
+		headline.addColumn(new Column ("Status"));
+				
+		return result;
+
+	}
+
+	/* (non-Javadoc)
+	 * @see de.hdm.it_projekt.shared.ReportGenerator#createAlleBewerbungenReport(de.hdm.it_projekt.shared.bo.Ausschreibung)
+	 */
+	@Override
+	public AlleBewerbungenReport createAlleBewerbungenReport(Ausschreibung as) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
