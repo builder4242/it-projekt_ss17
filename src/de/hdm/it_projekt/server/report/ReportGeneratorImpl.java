@@ -185,7 +185,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public AlleBewerbungenReport createbAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException {
+	public AlleBewerbungenReport createAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException {
 		if (this.getProjektAdministration() == null)
 			return null;
 		AlleBewerbungenReport result = new AlleBewerbungenReport();
