@@ -1,5 +1,7 @@
 package de.hdm.it_projekt.client.GUI_Report;
 
+import java.util.Vector;
+
 import com.google.gwt.core.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -9,11 +11,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
 import de.hdm.it_projekt.server.report.*;
+import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.ReportGeneratorAsync;
 import de.hdm.it_projekt.shared.bo.*;
 import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
@@ -22,11 +26,26 @@ import de.hdm.it_projekt.shared.report.SimpleReport;
 
 public class ReportGenerator implements EntryPoint {
 
-	 HorizontalPanel hPanel = null;
-	 VerticalPanel menuPanel = null;
-	 VerticalPanel contentPanel = null;
+	/**
+	 * Begin Attribute fuer Login
+	 */
+	protected static LoginInfo loginInfo = null;
+	protected static ProjektMarktplatz cpm = null;
 
-	public void onModuleLoad() { 
+	HorizontalPanel hPanel = null;
+	VerticalPanel menuPanel = null;
+	VerticalPanel contentPanel = null;
+
+	ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
+
+	public void onModuleLoad() {
+
+		/**
+		 * Ueberschirft fuer den Rpeort Generator
+		 */
+		Label ueberschriftLabel = new Label("Report Generator");
+		ueberschriftLabel.setStyleName("h1");
+		RootPanel.get("menu").add(ueberschriftLabel);
 
 		/**
 		 * Definition der Panels
@@ -34,10 +53,15 @@ public class ReportGenerator implements EntryPoint {
 		hPanel = new HorizontalPanel();
 		menuPanel = new VerticalPanel();
 		contentPanel = new VerticalPanel();
-		
+
 		hPanel.add(menuPanel);
 		hPanel.add(contentPanel);
 
+
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(hPanel);
+		
+		
 		/**
 		 * Button Definitionen
 		 */
@@ -79,29 +103,21 @@ public class ReportGenerator implements EntryPoint {
 		menuPanel.add(fanOutButton);
 		menuPanel.add(fanInButton);
 		menuPanel.add(zugehoerigeProjekteButton);
-
-		/**
-		 * Ueberschirft fuer den Rpeort Generator
-		 */
-		Label ueberschriftLabel = new Label("Report Generator");
-		ueberschriftLabel.setStyleName("h1");
-
-		/**
-		 * Zusammenfuegen des Panels
-		 */
-		RootPanel.get("menu").add(ueberschriftLabel);
-		RootPanel.get("content").add(hPanel);
+		
+		
+		if(cpm == null) {
+			contentPanel.add(new ReportMarktuebersicht(menuPanel));
+			menuPanel.setVisible(false);
+		} 
 
 	}
 
 	private class ChangeClickhandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
-			
-			
+
 			contentPanel.clear();
-			//contentPanel.add(new Label("test"));
 			contentPanel.add(new AlleAusschreibungenReportForm());
-			
+
 		}
 	}
 
