@@ -21,7 +21,7 @@ public class BeteiligungCell extends AbstractCell<Beteiligung> {
 			return;
 
 		sb.appendHtmlConstant("<div class='xx-Cell'>"); // Test CSS Klasse
-		sb.appendEscaped("Beteiligung: " + context.getIndex());
+		sb.appendEscaped("Beteiligung: " + Integer.toString(context.getIndex()+1));
 		sb.appendHtmlConstant("</div class='xx-Cell'>"); // Test CSS Klasse
 	}
 

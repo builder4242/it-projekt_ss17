@@ -7,10 +7,8 @@ import java.util.Vector;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTree;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -306,6 +304,25 @@ public class ProjektTreeViewModel implements TreeViewModel {
 
 	Bewertung getSelectedBewertung() {
 		return selectedBewertung;
+	}
+	
+	void setSelectedBeteiligung(Beteiligung bt) {
+		
+		HorizontalPanel hP = new HorizontalPanel();		
+		
+		BeteiligungForm beteiligungForm = new BeteiligungForm(ausschreibender);		
+		ProjektBeteiligungListView pblv = new ProjektBeteiligungListView(selectedProjekt);
+		
+		beteiligungForm.setProjektBeteiligungListView(pblv);
+		pblv.setBeteiligungForm(beteiligungForm);
+		
+		hP.add(pblv.getBeteiligungenCellList());
+		hP.add(beteiligungForm);
+		
+		pblv.setSelectedBeteiligung(bt);
+		
+		rightPanel.clear();
+		rightPanel.add(hP);
 	}
 
 	void addProjekt(Projekt pr) {

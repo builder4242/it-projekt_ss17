@@ -25,6 +25,8 @@ public interface ProjektAdministration extends RemoteService {
 
 	public Organisationseinheit getBewerberFor(Bewerbung bw) throws IllegalArgumentException;
 	
+	public Beteiligung createBeteiligungFor(Bewerbung bw) throws IllegalArgumentException;
+	
 	public Organisationseinheit getBeteiligterFor(Beteiligung bt) throws IllegalArgumentException;
 	
 	public ProjektMarktplatz getProjektMarktplatzById(int id) throws IllegalArgumentException;
@@ -34,6 +36,8 @@ public interface ProjektAdministration extends RemoteService {
 	public Vector<Projekt> getProjektByProjektleiter(Person p, ProjektMarktplatz pm) throws IllegalArgumentException;
 
 	public Vector<Projekt> getProjektByName(String name) throws IllegalArgumentException;
+	
+	public Beteiligung getBeteiligungFor(Bewerbung bw) throws IllegalArgumentException;
 
 	public Projekt getProjektById(int id) throws IllegalArgumentException;
 
