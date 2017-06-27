@@ -11,9 +11,9 @@ package de.hdm.it_projekt.server.report;
  * fan in - methode auslesen der Ausschreibungen nach oe fehlt
  * 
  *
- * Durchführung einer Fan-in/Fan-out-Analyse: Zu allen Teilnehmern kann jeweils die Anzahl von Bewerbungen 
+ * Durchführung einer Fan-in/Fan-out-Analyse: Zu allen Teilnehmern kann jeweils die Anzahl von Bewerbungen 
  * (laufende, abgelehnte, ange- nommene) (eine Art Fan-out) und deren Anzahl von Ausschreibungen (erfolgreich besetzte, ab- gebrochene, laufende, also Fan-in) 
- * tabellarisch aufgeführt werden.(Fan out gibt ab 1: n, fan in nimmt auf n:1 
+ * tabellarisch aufgeführt werden.(Fan out gibt ab 1: n, fan in nimmt auf n:1 
  */
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -181,41 +181,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	/**
-	 * Abfrage der eigenen Bewerbungen und den zu- gehörigen Ausschreibungen
+	 * Abfrage der eigenen Bewerbungen und den zu- gehörigen Ausschreibungen
 	 * 
 	 * @param bw
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-//	public AlleBewerbungenReport createbAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException {
-//		if (this.getProjektAdministration() == null)
-//			return null;
-//		AlleBewerbungenReport result = new AlleBewerbungenReport();
-//		result.setTitle("Ausschreibung zu Bewerbung");
-//		result.setCreated(new Date());
-//
-//		CompositeParagraph header = new CompositeParagraph();
-//		header.addSubParagraph(new SimpleParagraph("Ausschreibung zu Bewerbung"));
-//		Row headline = new Row();
-//
-//		headline.addColumn(new Column("Ausschreibung"));
-//		headline.addColumn(new Column("Bewerbung"));
-//
-//		result.addRow(headline);
-//
-//		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungBy(bw);
-//
-//		for (Ausschreibung a : ausschreibung) {
-//			Row ausschreibungRow = new Row();
-//			ausschreibungRow.addColumn(new Column(String.valueOf(bw)));
-//			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungBy(bw))));
-//			result.addRow(ausschreibungRow);
-//		}
-//		return result;
-//	}
+
 
 	/**
-	 * Durchführung einer Fan-out-Analyse: Zu allen Teilnehmern kann
+	 * Durchführung einer Fan-out-Analyse: Zu allen Teilnehmern kann
 	 * jeweils die Anzahl von Bewerbungen (laufende, abgelehnte, ange- nommene)
 	 * (eine Art Fan-out) 
 	 * 
@@ -282,7 +257,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	/**
 	 * und deren Anzahl von Ausschreibungen (erfolgreich
-	 * besetzte, ab- gebrochene, laufende, also Fan-in) tabellarisch aufgeführt
+	 * besetzte, ab- gebrochene, laufende, also Fan-in) tabellarisch aufgeführt
 	 * werden.(Fan out gibt ab 1: n, fan in nimmt auf n:1 FAn in analyse
 	 * 
 	 */
