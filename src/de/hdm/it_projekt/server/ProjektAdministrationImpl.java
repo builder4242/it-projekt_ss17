@@ -614,4 +614,26 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		
 		return bwMapper.insert(bw);
 	}
+
+	@Override
+	public Beteiligung getBeteiligungFor(Bewerbung bw) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return btMapper.getByBewerbung(bw);
+	}
+
+	@Override
+	public Beteiligung createBeteiligungFor(Bewerbung bw) throws IllegalArgumentException {
+		
+		Ausschreibung as = getAusschreibungBy(bw);
+		Beteiligung bt = new Beteiligung();
+		
+		bt.setId(1);
+		bt.setProjektId(as.getProjektId());
+		bt.setOrganisationseinheitId(bw.getOrganisationseinheitId());
+		bt.setEnddatum(null);
+		bt.setStartdatum(null);
+		bt.setPersonentage(0);
+		
+		return btMapper.insert(bt);
+	}
 }

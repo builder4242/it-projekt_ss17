@@ -262,8 +262,8 @@ public class BewerbungMapper {
 				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
-				bw.setAusschreibungId(rs.getInt("ID"));
-				bw.setOrganisationseinheitId(rs.getInt("ID"));
+				bw.setAusschreibungId(rs.getInt("Ausschreibung_ID"));
+				bw.setOrganisationseinheitId(rs.getInt("Organisationseinheit_ID"));
 
 				return bw;
 			}
@@ -385,7 +385,7 @@ public class BewerbungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM ausschreibung WHERE ausschreibung.ID=" + as.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM bewerbung WHERE Ausschreibung_ID=" + as.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewerbungs-Objekt erstellt.

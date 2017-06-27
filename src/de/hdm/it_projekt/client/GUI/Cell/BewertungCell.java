@@ -15,7 +15,7 @@ public class BewertungCell extends AbstractCell<Bewertung>{
 			return;
 		
 		sb.appendHtmlConstant("<div class='Partnerprofil-Cell'>");  //Test CSS Klasse
-		sb.appendEscaped("Bewertung: " + value.getWert() + " Punkte");
+		sb.appendEscaped("Bewertung");
 		sb.appendHtmlConstant("</div class='Partnerprofil-Cell'>");  //Test CSS Klasse		
 	}
 }

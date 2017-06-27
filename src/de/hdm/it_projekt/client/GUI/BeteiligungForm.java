@@ -6,6 +6,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.IntegerBox;
@@ -72,16 +73,11 @@ public class BeteiligungForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
-		Button newButton = new Button("Neu");
-		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		newButton.addClickHandler(new NewClickHandler());
-		buttonsPanel.add(newButton);
-		buttonsPanel.addStyleName("myprojekt-buttonspanel");
-		
-		newButton.setEnabled(false);
-		
 		if(ausschreibender == false) {
 			pTageIb.setEnabled(false);
+			startDb.setEnabled(false);
+			endDb.setEnabled(false);
+			buttonsPanel.setVisible(false);
 		}
 	}
 
@@ -185,13 +181,6 @@ public class BeteiligungForm extends Showcase {
 				setSelected(null);
 				pblv.removeBeteiligung(beteiligung);
 			}
-		}
-	}
-
-	private class NewClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
 		}
 	}
 }
