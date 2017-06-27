@@ -195,18 +195,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		result.addRow(headline);
 		
-		Vector<Bewerbung> bewerbung = this.administration.getAusschreibungFor(bw);
+		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungBy(bw);
 
-		for (Bewerbung b : bewerbung) {
-			Row bewerbungRow = new Row();
-			bewerbungRow.addColumn(new Column(String.valueOf(bw)));
-			bewerbungRow.addColumn(new Column(String.valueOf(this.administration.getBewerbungFor(bw))));
-			result.addRow(bewerbungRow);
+		for (Ausschreibung a : ausschreibung) {
+			Row ausschreibungRow = new Row();
+			ausschreibungRow.addColumn(new Column(String.valueOf(bw)));
+			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungBy(bw))));
+			result.addRow(ausschreibungRow);
 		}
 		return result;
 	}
 	
-	public AlleBewerbungenReport fanInReport(Organisationseinheit oe){
+	public AlleBewerbungenReport fanOutReport(Organisationseinheit oe){
 		if (this.getProjektAdministration() == null)
 			return null;
 		AlleBewerbungenReport result = new AlleBewerbungenReport();
@@ -229,7 +229,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			beteiligungRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
 			result.addRow(beteiligungRow);
 		}
-		return result;
+	return result;	
 	}
 
 }
