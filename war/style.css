@@ -117,6 +117,24 @@
     width: 300px; 
 }
 
+.myproject-anlegentextfield{
+	font-family: Verdana;
+	color: blue; 
+	display: inline-block; 
+	width: 200px; 
+	padding: 5px 8px;
+    margin: 2px 0;
+    margin-right: 5px; 
+    box-sizing: border-box; 
+    transition: width 0.4s ease-in-out; 
+}
+
+.myproject-anmeldentextfield:focus {
+    background-color: lightblue;
+    border: 3px solid #555;
+    
+}
+
 .myprojekt-textarea{
 	font-family: Verdana;
 	color: red; 

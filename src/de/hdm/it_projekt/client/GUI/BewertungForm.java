@@ -28,7 +28,7 @@ public class BewertungForm extends Showcase {
 	TextBox textTb = new TextBox();
 	DoubleBox wertDb = new DoubleBox();
 
-	public BewertungForm() {
+	public BewertungForm(boolean ausschreibender) {
 
 		formTitel.setText("Bewertung");
 		formTitel.setStyleName("h1");
@@ -74,6 +74,12 @@ public class BewertungForm extends Showcase {
 		buttonsPanel.add(newButton);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
+		if(ausschreibender == false) {
+			wertDb.setEnabled(false);
+			textTb.setEnabled(false);
+			buttonsPanel.setVisible(false);
+		}
+		
 	}
 
 	void setSelected(Bewertung bwt) {

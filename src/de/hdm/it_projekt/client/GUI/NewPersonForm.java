@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
@@ -24,7 +25,7 @@ import de.hdm.it_projekt.shared.bo.Person;
 public class NewPersonForm extends Showcase {
 
 	Organisationseinheit organisationseinheitToDisplay = null;
-
+	Widget menu = null;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
@@ -45,8 +46,9 @@ public class NewPersonForm extends Showcase {
 		Window.alert("Es ist ein Fehler beim anlegen des Benutzerkontos aufgetreten.");
 	}
 
-	public NewPersonForm(String googleId) {
+	public NewPersonForm(String googleId, Widget m) {
 
+		menu = m;
 		this.add(new Label(
 				"Sie besitzen noch kein Benutzerprofil bei uns, bitte geben Sie in nachfolgendem Formular Ihre Daten ein."));
 
@@ -125,6 +127,8 @@ public class NewPersonForm extends Showcase {
 			Showcase showcase = new Marktuebersicht();
 			RootPanel.get("content").clear();
 			RootPanel.get("content").add(showcase);
+			menu.setVisible(true);
+			
 
 		}
 

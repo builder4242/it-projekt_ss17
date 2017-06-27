@@ -1,5 +1,15 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse PartnerprofilForm dient dem Aufbau und der interaktion mit 
+ * dem Formular "Partnerprofil" unter "Eigenes Profil verwalten" in der GUI
+ * die Klasse stellt zwei Textfelder sowei drei Buttons bereit. 
+ * Desweiteren gibt es Labeles für das Anlegedatum sowie das Datum der letzten
+ * Änderung, diese werden automatisch gesetzt.
+ * Die Anordung wird über ein Grid gelöst. Die drei ClickHandler für die drei Buttons regeln,
+ * was beim Drücken eines Buttons passiert.
+ *  Die Optik von Lables, Textfeltern und Buttons wird durch das Einbinden von 
+ * CSS umgestzt.   */ 
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -25,7 +35,7 @@ public class PartnerprofilForm extends Showcase {
 	DateBox erstellDb = new DateBox();
 	DateBox aenderungDb = new DateBox();
 
-	public PartnerprofilForm() {
+	public PartnerprofilForm(boolean ausschreibender) {
 
 		formTitel.setText("Partnerprofil");
 		formTitel.setStyleName("h1");
@@ -61,6 +71,10 @@ public class PartnerprofilForm extends Showcase {
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
+		
+		if(ausschreibender == false) {
+			buttonsPanel.setVisible(false);
+		}
 
 	}
 

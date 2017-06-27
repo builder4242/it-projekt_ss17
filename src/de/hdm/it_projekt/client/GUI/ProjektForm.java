@@ -1,5 +1,14 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse ProjektForm dient dem Aufbau und der interaktion mit 
+ * dem Formular "Projekt" unter "Meine Ausschreibungen" in der GUI
+ * die Klasse stellt ein Textfeld, eine Text Area sowei drei Buttons bereit. 
+ * Desweiteren gibt es ein Label für den Projektleiter das automatisch gesetzt
+ * wird, da dieser automatisch gesetzt wird. Die Anordung wird über ein Grid gelöst. 
+ * Die drei ClickHandler für die drei Buttons regeln, was beim Drücken eines Buttons 
+ * passiert. Die Optik von Lables, Textfeltern und Buttons wird durch das Einbinden von 
+ * CSS umgestzt.   */ 
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -21,29 +30,28 @@ public class ProjektForm extends Showcase {
 	Projekt prToDisplay = null;
 	ProjektTreeViewModel ptvm = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");   
 	
-	Label formTitel = new Label();
-	TextBox nameTb = new TextBox();
-	DateBox startDb = new DateBox();
-	DateBox endDb = new DateBox();
+	Label formTitel = new Label();     /** Label deklarieren */
+	TextBox nameTb = new TextBox();		/** TextBox deklarieren */
+	DateBox startDb = new DateBox();    /** DateBox (Date picker) deklarieren */ 
+	DateBox endDb = new DateBox();		 /** DateBox (Date picker) deklarieren */ 
 
-	Label projektLeiterL = new Label("nicht angelegt");
-	TextArea beschreibungTb = new TextArea();
+	Label projektLeiterL = new Label("nicht angelegt");		/** Label deklarieren  und Text hinzugefügt*/
+	TextArea beschreibungTb = new TextArea();				/** TextArea deklariert */ 
 
-
-	public ProjektForm() {
+	public ProjektForm(boolean ausschreibender) {
 		
-		formTitel.setText("Projekt");
-		formTitel.setStyleName("h1");
+		formTitel.setText("Projekt");      /** Form Titel festgelegt */ 
+		formTitel.setStyleName("h1");		/** CSS verknüpft */ 
 		this.add(formTitel);
 		
-		Grid form = new Grid(5, 2);
-		form.addStyleName("myprojekt-formlabel");
+		Grid form = new Grid(5, 2);						/** Gird zum anordnen der Elemente erstellen */ 
+		form.addStyleName("myprojekt-formlabel");		/** CSS auf Grid anwenden */ 
 		this.add(form);
-
 		
-		form.setWidget(0, 0, new Label("Name"));
+		/** Formular wird im Grid aufgebaut */ 
+		form.setWidget(0, 0, new Label("Name"));	
 		form.setWidget(0, 1, nameTb);
 		nameTb.setStyleName("myproject-textfield");
 
@@ -66,25 +74,32 @@ public class ProjektForm extends Showcase {
 		projektLeiterL.setStyleName("myprojekt-formlabel2");
 		
 		
-		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		HorizontalPanel buttonsPanel = new HorizontalPanel();		/** neues HorizontalPanel für Buttons */ 
 		this.add(buttonsPanel);
 
 		Button changeButton = new Button("Ändern");
 		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		changeButton.addClickHandler(new ChangeClickHandler());
+		changeButton.addClickHandler(new ChangeClickHandler());  /** Click Handler für Button erstellen */ 
 		buttonsPanel.add(changeButton);
 
 		Button deleteButton = new Button("Löschen");
 		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		deleteButton.addClickHandler(new DeleteClickHandler());
+		deleteButton.addClickHandler(new DeleteClickHandler()); /** Click Handler für Button erstellen */ 
 		buttonsPanel.add(deleteButton);
 
 		Button newButton = new Button("Neu");
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		newButton.addClickHandler(new NewClickHandler());
+		newButton.addClickHandler(new NewClickHandler()); /** Click Handler für Button erstellen */ 
 		buttonsPanel.add(newButton);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
-
+		
+		if(ausschreibender == false) {
+			nameTb.setEnabled(false);
+			startDb.setEnabled(false);
+			endDb.setEnabled(false);
+			beschreibungTb.setEnabled(false);
+			buttonsPanel.setVisible(false);
+		}
 	}
 
 	void setSelected(Projekt pr) {
@@ -159,10 +174,11 @@ public class ProjektForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
+			/** wird beim Klick auf den Button "Löschen" ausgeführt */ 
 			if (prToDisplay != null) {
 				pa.delete(prToDisplay, new DeleteProjektCallback(prToDisplay));
 			} else {
-				Window.alert("Es wurde nichts ausgewählt.");
+				Window.alert("Es wurde nichts ausgewählt.");      /** Fehlermeldung wird als Popup ausgegen */
 			}
 		}
 	}
@@ -191,6 +207,7 @@ public class ProjektForm extends Showcase {
 
 	private class NewClickHandler implements ClickHandler {
 
+		/** wird beim Klick auf den Button "Neu" ausgeführt */ 
 		@Override
 		public void onClick(ClickEvent event) {
 
@@ -199,7 +216,8 @@ public class ProjektForm extends Showcase {
 	}
 	
 	class CreateProjektCallback implements AsyncCallback<Projekt> {
-
+		
+		/** wird beim Klick auf den Button "Anlegen" ausgeführt */ 
 		@Override
 		public void onFailure(Throwable caught) {
 
