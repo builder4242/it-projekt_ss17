@@ -75,9 +75,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		this.tMapper = TeamMapper.teamMapper();
 		this.uMapper = UnternehmenMapper.unternehmenMapper();
 
-		ProjektAdministrationImpl a = new ProjektAdministrationImpl();
-		a.init();
-		this.administration = a;
+		ProjektAdministrationImpl pa = new ProjektAdministrationImpl();
+		pa.init();
+		this.administration = pa;
 	}
 
 	protected ProjektAdministration getProjektAdministration() {
@@ -120,30 +120,30 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @throws IllegalArgumentException
 	 */
 
-	public AlleAusschreibungenReport createMatchingAusschreibungenReport(Partnerprofil pp)
-			throws IllegalArgumentException {
-		if (this.getProjektAdministration() == null)
-			return null;
-		AlleAusschreibungenReport result = new AlleAusschreibungenReport();
-		result.setTitle("Alle Ausschreibungen passend zum Partnerprofil");
-		result.setCreated(new Date());
-
-		CompositeParagraph header = new CompositeParagraph();
-		header.addSubParagraph(new SimpleParagraph("Profil ID:" + pp.getId()));
-		Row headline = new Row();
-
-		headline.addColumn(new Column("Ausschreibung"));
-
-		result.addRow(headline);
-		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungBy(pp);
-
-		for (Ausschreibung a : ausschreibung) {
-			Row ausschreibungRow = new Row();
-			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungBy(pp))));
-			result.addRow(ausschreibungRow);
-		}
-		return result;
-	}
+//	public AlleAusschreibungenReport createMatchingAusschreibungenReport(Partnerprofil pp)
+//			throws IllegalArgumentException {
+//		if (this.getProjektAdministration() == null)
+//			return null;
+//		AlleAusschreibungenReport result = new AlleAusschreibungenReport();
+//		result.setTitle("Alle Ausschreibungen passend zum Partnerprofil");
+//		result.setCreated(new Date());
+//
+//		CompositeParagraph header = new CompositeParagraph();
+//		header.addSubParagraph(new SimpleParagraph("Profil ID:" + pp.getId()));
+//		Row headline = new Row();
+//
+//		headline.addColumn(new Column("Ausschreibung"));
+//
+//		result.addRow(headline);
+//		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungBy(pp);
+//
+//		for (Ausschreibung a : ausschreibung) {
+//			Row ausschreibungRow = new Row();
+//			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungBy(pp))));
+//			result.addRow(ausschreibungRow);
+//		}
+//		return result;
+//	}
 
 	/**
 	 * Report über alle Bewerbungen auf eigene Ausschreibung
@@ -187,32 +187,32 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public AlleBewerbungenReport createbAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException {
-		if (this.getProjektAdministration() == null)
-			return null;
-		AlleBewerbungenReport result = new AlleBewerbungenReport();
-		result.setTitle("Ausschreibung zu Bewerbung");
-		result.setCreated(new Date());
-
-		CompositeParagraph header = new CompositeParagraph();
-		header.addSubParagraph(new SimpleParagraph("Ausschreibung zu Bewerbung"));
-		Row headline = new Row();
-
-		headline.addColumn(new Column("Ausschreibung"));
-		headline.addColumn(new Column("Bewerbung"));
-
-		result.addRow(headline);
-
-		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungBy(bw);
-
-		for (Ausschreibung a : ausschreibung) {
-			Row ausschreibungRow = new Row();
-			ausschreibungRow.addColumn(new Column(String.valueOf(bw)));
-			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungBy(bw))));
-			result.addRow(ausschreibungRow);
-		}
-		return result;
-	}
+//	public AlleBewerbungenReport createbAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException {
+//		if (this.getProjektAdministration() == null)
+//			return null;
+//		AlleBewerbungenReport result = new AlleBewerbungenReport();
+//		result.setTitle("Ausschreibung zu Bewerbung");
+//		result.setCreated(new Date());
+//
+//		CompositeParagraph header = new CompositeParagraph();
+//		header.addSubParagraph(new SimpleParagraph("Ausschreibung zu Bewerbung"));
+//		Row headline = new Row();
+//
+//		headline.addColumn(new Column("Ausschreibung"));
+//		headline.addColumn(new Column("Bewerbung"));
+//
+//		result.addRow(headline);
+//
+//		Vector<Ausschreibung> ausschreibung = this.administration.getAusschreibungBy(bw);
+//
+//		for (Ausschreibung a : ausschreibung) {
+//			Row ausschreibungRow = new Row();
+//			ausschreibungRow.addColumn(new Column(String.valueOf(bw)));
+//			ausschreibungRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungBy(bw))));
+//			result.addRow(ausschreibungRow);
+//		}
+//		return result;
+//	}
 
 	/**
 	 * Durchführung einer Fan-out-Analyse: Zu allen Teilnehmern kann
@@ -223,6 +223,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return
 	 */
 
+	@SuppressWarnings("null")
 	public AnzahlBewerbungenReport fanOutReport(Organisationseinheit oe) throws IllegalArgumentException {
 		if (this.getProjektAdministration() == null)
 			return null;
@@ -285,60 +286,60 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * werden.(Fan out gibt ab 1: n, fan in nimmt auf n:1 FAn in analyse
 	 * 
 	 */
-
-	public AnzahlAusschreibungenReport fanInAnalyse(Projekt pr) throws IllegalArgumentException  {
-
-		if (this.getProjektAdministration() == null)
-			return null;
-		AnzahlAusschreibungenReport result = new AnzahlAusschreibungenReport();
-		result.setTitle("Fan In Analyse");
-		result.setCreated(new Date());
-		
-		CompositeParagraph header = new CompositeParagraph();
-		header.addSubParagraph(new SimpleParagraph("Laufende Ausschreibungen:"));
-		Row headline = new Row();
-		//laufende Ausschreibungen anzeigen
-		headline.addColumn(new Column ("Ausschreibung"));
-		headline.addColumn(new Column ("Status"));
-		result.addRow(headline);
-	
-		Vector<Ausschreibung> laufende = this.administration.getAusschreibungFor(pr);
-				
-				for(Ausschreibung a : laufende){
-					Row laufendeRow = new Row();
-					laufendeRow.addColumn(new Column(String.valueOf(pr)));
-					laufendeRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungFor(pr))));
-				}
-		// erfolgreiche Ausschreibungen anzeigen
-		header.addSubParagraph(new SimpleParagraph("Erfolgreiche Ausschreibungen:"));
-		headline.addColumn(new Column("Ausschreibung"));
-		headline.addColumn(new Column("Erfolgreich"));
-		result.addRow(headline);
-		
-		Vector<Beteiligung> erfolgreich =  this.administration.getBeteiligungenFor(pr);
-				for ( Beteiligung b : erfolgreich){
-					Row erfolgreichRow = new Row();
-					erfolgreichRow.addColumn(new Column( String.valueOf(pr)));
-					erfolgreichRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(pr))));
-				}
-		// abgebrochene Ausschreibungen anzeigen 
-		header.addSubParagraph( new SimpleParagraph("Abgebrochene Ausschreibungen:"));
-		headline.addColumn(new Column("Ausschreibung"));
-		headline.addColumn(new Column("Abgebrochene"));
-		result.addRow(headline);
-		
-		Vector<Ausschreibung> abgebrochen = this.administration
-				
-			for (Ausschreibung a : abgebrochen){
-				Row abgebrochenRow = new Row();
-				abgebrochenRow.addColumn(new Column (String.valueOf(pr)));
-				abgebrochenRow.addColumn(new Column(String.valueOf(this.administration.)));// ergänzen!!!
-				result.addRow(headline);
-			}
-		
-		return result;
-
-	}
+//
+//	public AnzahlAusschreibungenReport fanInAnalyse(Projekt pr) throws IllegalArgumentException  {
+//
+//		if (this.getProjektAdministration() == null)
+//			return null;
+//		AnzahlAusschreibungenReport result = new AnzahlAusschreibungenReport();
+//		result.setTitle("Fan In Analyse");
+//		result.setCreated(new Date());
+//		
+//		CompositeParagraph header = new CompositeParagraph();
+//		header.addSubParagraph(new SimpleParagraph("Laufende Ausschreibungen:"));
+//		Row headline = new Row();
+//		//laufende Ausschreibungen anzeigen
+//		headline.addColumn(new Column ("Ausschreibung"));
+//		headline.addColumn(new Column ("Status"));
+//		result.addRow(headline);
+//	
+//		Vector<Ausschreibung> laufende = this.administration.getAusschreibungFor(pr);
+//				
+//				for(Ausschreibung a : laufende){
+//					Row laufendeRow = new Row();
+//					laufendeRow.addColumn(new Column(String.valueOf(pr)));
+//					laufendeRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungFor(pr))));
+//				}
+//		// erfolgreiche Ausschreibungen anzeigen
+//		header.addSubParagraph(new SimpleParagraph("Erfolgreiche Ausschreibungen:"));
+//		headline.addColumn(new Column("Ausschreibung"));
+//		headline.addColumn(new Column("Erfolgreich"));
+//		result.addRow(headline);
+//		
+//		Vector<Beteiligung> erfolgreich =  this.administration.getBeteiligungenFor(pr);
+//				for ( Beteiligung b : erfolgreich){
+//					Row erfolgreichRow = new Row();
+//					erfolgreichRow.addColumn(new Column( String.valueOf(pr)));
+//					erfolgreichRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(pr))));
+//				}
+//		// abgebrochene Ausschreibungen anzeigen 
+//		header.addSubParagraph( new SimpleParagraph("Abgebrochene Ausschreibungen:"));
+//		headline.addColumn(new Column("Ausschreibung"));
+//		headline.addColumn(new Column("Abgebrochene"));
+//		result.addRow(headline);
+//		
+//		Vector<Ausschreibung> abgebrochen = this.administration
+//				
+//			for (Ausschreibung a : abgebrochen){
+//				Row abgebrochenRow = new Row();
+//				abgebrochenRow.addColumn(new Column (String.valueOf(pr)));
+//				abgebrochenRow.addColumn(new Column(String.valueOf(this.administration.)));// ergänzen!!!
+//				result.addRow(headline);
+//			}
+//		
+//		return result;
+//
+//	}
 
 	/* (non-Javadoc)
 	 * @see de.hdm.it_projekt.shared.ReportGenerator#createAlleBewerbungenReport(de.hdm.it_projekt.shared.bo.Ausschreibung)
@@ -349,5 +350,38 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return null;
 	}
 	
-	public 
+	public AlleBewerbungenReport createProjektverflechtungenReport(Organisationseinheit oe)throws IllegalArgumentException{
+		if (this.getProjektAdministration()== null)
+			return null;
+		AlleBewerbungenReport result = new AlleBewerbungenReport();
+		result.setTitle("Projektverflechtungen");
+		result.setCreated(new Date());
+		
+		CompositeParagraph header = new CompositeParagraph();
+		header.addSubParagraph(new SimpleParagraph("Projektverflechtungen der Organisationseinheit "+ oe.getName()));
+		Row headline = new Row();
+		headline.addColumn(new Column("Beteiligungen"));
+		headline.addColumn(new Column());
+		
+		return null;
+				
+	}
+
+	/* (non-Javadoc)
+	 * @see de.hdm.it_projekt.shared.ReportGenerator#createbAusschreibungZuBewerbungReport(de.hdm.it_projekt.shared.bo.Bewerbung)
+	 */
+	@Override
+	public AlleBewerbungenReport createbAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.hdm.it_projekt.shared.ReportGenerator#fanInAnalyse(de.hdm.it_projekt.shared.bo.Projekt)
+	 */
+	@Override
+	public AnzahlAusschreibungenReport fanInAnalyse(Projekt pr) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
