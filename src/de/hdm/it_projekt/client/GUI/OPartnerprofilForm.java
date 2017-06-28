@@ -81,12 +81,21 @@ public class OPartnerprofilForm extends Showcase {
 							pa.createPartnerprofilFor(MyProjekt.loginInfo.getCurrentUser(),
 									new createPartnerprofilCallback());
 						}
-						leftcol.add(new Label("Partnerprofil"));
-						leftcol.add(new Label("angelegt: " + pp.getErstelldatum()));
-						leftcol.add(new Label("letzte Änderung " + pp.getAenderungsdatum()));
-						leftcol.add(new Label(""));
+						
+						Label PPLb = new Label("Partnerprofil");
+						Label ALb = new Label("angelegt: " + pp.getErstelldatum());
+						Label LALb = new Label("letzte Änderung: " + pp.getAenderungsdatum());
+						PPLb.setStyleName("h1");
+						ALb.setStyleName("myprojekt-opartnerprofil");
+						LALb.setStyleName("myprojekt-opartnerprofil");
+						
+						
+						leftcol.add(PPLb);
+						leftcol.add(ALb);
+						leftcol.add(LALb);
+						leftcol.add(new Label("   "));
 						leftcol.add(getEigenschaftCelllist());
-						leftcol.addStyleName("myprojekt-opartnerprofil");
+						leftcol.addStyleName("Eigenschaft-Cell");
 						content.add(new OEigenschaftForm());
 					}
 				});

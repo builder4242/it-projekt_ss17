@@ -41,9 +41,12 @@ public class LoginPanel extends Showcase {
 		VerticalPanel loginPanel = new VerticalPanel();
 		Label greeting = new Label();
 		
-		greeting.setText("Willkommen bei getLinked, der profesionellen Plattform für Projekte aller Art. Melden Sie sich an"
+		greeting.setText("Willkommen bei getLinked, der professionellen Plattform für Projekte aller Art. Melden Sie sich an"
 				+ " und entdecken Sie tausende von spannenden Projekten oder suchen Sie ganz einfach Mitarbeiter für Ihr eigenes Projekt."
 				+ " Mit getLinked wird jedes Projekt zu einem Erfolg!");
+	
+		
+		greeting.setStyleName("myprojekt-greeting");
 		
 		// Assemble login panel
 		RootPanel.get("content").clear();
