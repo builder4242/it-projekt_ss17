@@ -4,16 +4,7 @@ package de.hdm.it_projekt.server.report;
  * 
  * To be Done
  * createMatchingAusschreibungenReport - Methode die Vektor zurück gibt in Projektadministartion
- * createAusschreibungZuBewerbungReport - methode für das auslesen einer ausschreibung auf die sich beworben wurde
- * createAusschreibungZuBewerbungReport - fertig machen 
- * Abfrage von Projektverflechtungen (Teilnahmen und weitere Einreichungen/Bewerbungen) eines Bewerbers durch den Ausschreibenden. 
- * fan out - warten wie status von bewerbung ausgelesen werden kann 
- * fan in - methode auslesen der Ausschreibungen nach oe fehlt
- * 
- *
- * Durchführung einer Fan-in/Fan-out-Analyse: Zu allen Teilnehmern kann jeweils die Anzahl von Bewerbungen 
- * (laufende, abgelehnte, ange- nommene) (eine Art Fan-out) und deren Anzahl von Ausschreibungen (erfolgreich besetzte, ab- gebrochene, laufende, also Fan-in) 
- * tabellarisch aufgeführt werden.(Fan out gibt ab 1: n, fan in nimmt auf n:1 
+ * fan in analyse methode zum auslesen abgebrochener Ausschreibungen
  */
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -236,53 +227,55 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 header.addSubParagraph(new SimpleParagraph("Anzahl laufender, abgelehnter sowie angenommener Bewerbungen"));
 		 Row headline = new Row();
 		
-		 headline.addColumn(new Column("Bewerbung"));
-		 headline.addColumn(new Column("Laufende"));
-		
-		 result.addRow(headline);
-		
-		 Vector<Bewerbung> laufende = this.administration.
-		//
-		// for (Beteiligung b : laufende) {
-		// Row beteiligungRow = new Row();
-		// beteiligungRow.addColumn(new Column(String.valueOf(oe)));
-		// beteiligungRow.addColumn(new
-		// Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
-		// result.addRow(beteiligungRow);
-		// }
-		// headline = null;
-		//
-		// headline.addColumn(new Column("Ausschreibung"));
-		// headline.addColumn(new Column("Abgelehnt"));
-		// result.addRow(headline);
-		//
-		// Vector<Beteiligung> abgelehnt =
-		// this.administration.getBeteiligungenFor(oe);
-		//
-		// for (Beteiligung b : abgelehnt) {
-		// Row beteiligungRow = new Row();
-		// beteiligungRow.addColumn(new Column(String.valueOf(oe)));
-		// beteiligungRow.addColumn(new
-		// Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
-		// result.addRow(beteiligungRow);
-		// }
-		// headline = null;
-		//
-		// headline.addColumn(new Column("Ausschreibung"));
-		//
-		// result.addRow(headline);
-		//
-		// Vector<Beteiligung> beteiligung =
-		// this.administration.getBeteiligungenFor(oe);
-		//
-		// for (Beteiligung b : beteiligung) {
-		// Row beteiligungRow = new Row();
-		// beteiligungRow.addColumn(new Column(String.valueOf(oe)));
-		// beteiligungRow.addColumn(new
-		// Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
-		// result.addRow(beteiligungRow);
-		// }
-
+		int j=0;
+		 /**
+		 *Laufende ausschreibungen zählen 
+		 */
+		headline.addColumn(new Column ("Anzahl laufender Bewerbungen:"));
+			 
+			
+		Vector<Bewerbung> laufende = this.administration.
+					
+			for(int a; a< laufende.size();a++){
+					
+					j++;
+				}
+			headline.addColumn(new Column ("Anzahl: "+j));
+			result.addRow(headline);
+			j=0;
+		 /**
+		 *Laufende ausschreibungen zählen 
+		 */
+			
+		headline.addColumn(new Column ("Anzahl abgelehnter Bewerbungen:"));
+					 
+					
+		Vector<Bewerbung> abgelehnt = this.administration
+							
+			for(int a; a< laufende.size();a++){
+								
+					j++;
+				}
+				
+			headline.addColumn(new Column ("Anzahl: "+j));
+			result.addRow(headline);
+			j=0;
+				
+			 /**
+			 *Laufende ausschreibungen zählen 
+			 */
+			headline.addColumn(new Column ("Anzahl erfolgreicher Bewerbungen:"));
+						 
+						
+			Vector<Beteiligung> angenommen  = this.administration.getBeteiligungenFor(oe);
+								
+				for(int a; a< laufende.size();a++){
+									
+						j++;
+					}
+					
+			headline.addColumn(new Column ("Anzahl: "+j));
+			result.addRow(headline);
 		return result;
 	}
 
@@ -295,64 +288,85 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	public AnzahlAusschreibungenReport fanInAnalyse(Projekt pr) throws IllegalArgumentException  {
 
+		int i= 0;
+		
 		if (this.getProjektAdministration() == null)
 			return null;
+		
 		AnzahlAusschreibungenReport result = new AnzahlAusschreibungenReport();
+		
 		result.setTitle("Fan In Analyse");
+		
 		result.setCreated(new Date());
 		
 		CompositeParagraph header = new CompositeParagraph();
 		header.addSubParagraph(new SimpleParagraph("Laufende Ausschreibungen:"));
+		
 		Row headline = new Row();
-		//laufende Ausschreibungen anzeigen
-		headline.addColumn(new Column ("Ausschreibung"));
-		headline.addColumn(new Column ("Status"));
-		result.addRow(headline);
-	
+		
+		/**
+		 *Laufende ausschreibungen zählen 
+		 */
+		headline.addColumn(new Column ("Anzahl:"));
+		 
+		
 		Vector<Ausschreibung> laufende = this.administration.getAusschreibungFor(pr);
 				
-				for(Ausschreibung a : laufende){
-					Row laufendeRow = new Row();
-					laufendeRow.addColumn(new Column(String.valueOf(pr)));
-					laufendeRow.addColumn(new Column(String.valueOf(this.administration.getAusschreibungFor(pr))));
+				for(int a=0; a< laufende.size();a++){
+					
+					i++;
 				}
-		// erfolgreiche Ausschreibungen anzeigen
+				headline.addColumn(new Column ("Anzahl: "+i));
+				result.addRow(headline);
+				i=0;
+				
+				
+				/**
+				 *Laufende erfolgreiche zählen 
+				 */
 		header.addSubParagraph(new SimpleParagraph("Erfolgreiche Ausschreibungen:"));
-		headline.addColumn(new Column("Ausschreibung"));
-		headline.addColumn(new Column("Erfolgreich"));
-		result.addRow(headline);
+		
 		
 		Vector<Beteiligung> erfolgreich =  this.administration.getBeteiligungenFor(pr);
-				for ( Beteiligung b : erfolgreich){
-					Row erfolgreichRow = new Row();
-					erfolgreichRow.addColumn(new Column( String.valueOf(pr)));
-					erfolgreichRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(pr))));
+				
+		for (int a=0; a< erfolgreich.size();a++){
+					
+					i++;
 				}
-		// abgebrochene Ausschreibungen anzeigen 
+				headline.addColumn(new Column ("Anzahl: "+i));
+				result.addRow(headline);
+				i=0;
+				
+				/**
+				 *Laufende abgebrochene zählen 
+				 */
 		header.addSubParagraph( new SimpleParagraph("Abgebrochene Ausschreibungen:"));
-		headline.addColumn(new Column("Ausschreibung"));
-		headline.addColumn(new Column("Abgebrochene"));
+	
+		Vector<Ausschreibung> abgebrochen = this.administration.getAusschreibungFor(pr);
+				
+				for(Ausschreibung a: abgebrochen){
+					if (a.getBewerbungsfrist().before(result.getCreated())) 
+						i++;
+					else{
+						
+					}
+				}
+		headline.addColumn(new Column ("Anzahl: "+i));
 		result.addRow(headline);
 		
-		Vector<Ausschreibung> abgebrochen = this.administration
-				
-			for (Ausschreibung a : abgebrochen){
-				Row abgebrochenRow = new Row();
-				abgebrochenRow.addColumn(new Column (String.valueOf(pr)));
-				abgebrochenRow.addColumn(new Column(String.valueOf(this.administration.)));// ergänzen!!!
-				result.addRow(headline);
-			}
-		
+
 		return result;
 
 	}
-/** 
- * 
- * Report der alle Projektverflechtungen einer OE ausgibt 
- * @param oe
- * @return
- * @throws IllegalArgumentException
- */
+
+	/**
+	 * 
+	 * Report der alle Projektverflechtungen einer OE ausgibt
+	 * 
+	 * @param oe
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public AlleBewerbungenReport createProjektverflechtungenReport(Organisationseinheit oe)
 			throws IllegalArgumentException {
 		if (this.getProjektAdministration() == null)
@@ -368,7 +382,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Beteiligung an Projekt"));
 
 		result.addRow(headline);
-		
+
 		Vector<Beteiligung> beteiligung = this.administration.getBeteiligungenFor(oe);
 
 		for (Beteiligung b : beteiligung) {
@@ -376,8 +390,34 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			beteiligungRow.addColumn(new Column(oe.getName().toString()));
 			beteiligungRow.addColumn(new Column(String.valueOf(this.administration.getBeteiligungenFor(oe))));
 		}
-		
+
 		return result;
 
-	}	
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.hdm.it_projekt.shared.ReportGenerator#createAlleBewerbungenReport(de.
+	 * hdm.it_projekt.shared.bo.Ausschreibung)
+	 */
+	@Override
+	public AlleBewerbungenReport createAlleBewerbungenReport(Ausschreibung as) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.hdm.it_projekt.shared.ReportGenerator#
+	 * createbAusschreibungZuBewerbungReport(de.hdm.it_projekt.shared.bo.
+	 * Bewerbung)
+	 */
+	@Override
+	public AlleBewerbungenReport createbAusschreibungZuBewerbungReport(Bewerbung bw) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
