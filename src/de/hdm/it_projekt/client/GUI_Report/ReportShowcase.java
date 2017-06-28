@@ -9,7 +9,7 @@ import de.hdm.it_projekt.shared.ReportGeneratorAsync;
 
 public abstract class ReportShowcase extends VerticalPanel{
 
-	//ReportGeneratorAsync rp = ClientsideSettings.getReportGenerator();
+	ReportGeneratorAsync rp = ClientsideSettings.getReportGenerator();
 	
 	 
 }
