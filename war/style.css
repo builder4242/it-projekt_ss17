@@ -95,6 +95,16 @@
     max-width:450px;  
 }
 
+.Beteiligung-Cell{
+	font-weight: normal; 		
+    font-family: Verdana;
+    font-color: blue; 
+    font-size: 12px; 
+    margin-right: 5px;
+    min-width: 50px;
+    max-width: 350px;  
+}
+
 
 /* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
 /* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
