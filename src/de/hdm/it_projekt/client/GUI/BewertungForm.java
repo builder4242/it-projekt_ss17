@@ -26,16 +26,16 @@ import de.hdm.it_projekt.shared.bo.Bewertung;
 
 public class BewertungForm extends Showcase {
 
-	Bewertung bwtToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	private Bewertung bwtToDisplay = null;
+	private ProjektTreeViewModel ptvm = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
-	Label formTitel = new Label();
-	DateBox erstellDb = new DateBox();
-	TextArea textTb = new TextArea();
-	DoubleBox wertDb = new DoubleBox();
-	CheckBox beteiligenCb = new CheckBox();
+	private Label formTitel = new Label();
+	private DateBox erstellDb = new DateBox();
+	private TextArea textTb = new TextArea();
+	private DoubleBox wertDb = new DoubleBox();
+	private CheckBox beteiligenCb = new CheckBox();
 
 	public BewertungForm(boolean ausschreibender) {
 
