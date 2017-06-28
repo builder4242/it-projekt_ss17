@@ -16,6 +16,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
@@ -81,12 +82,21 @@ public class OPartnerprofilForm extends Showcase {
 							pa.createPartnerprofilFor(MyProjekt.loginInfo.getCurrentUser(),
 									new createPartnerprofilCallback());
 						}
-						leftcol.add(new Label("Partnerprofil"));
-						leftcol.add(new Label("angelegt: " + pp.getErstelldatum()));
-						leftcol.add(new Label("letzte Änderung " + pp.getAenderungsdatum()));
-						leftcol.add(new Label(""));
+						
+						Label PPLb = new Label("Partnerprofil");
+						Label ALb = new Label("angelegt: " + pp.getErstelldatum());
+						Label LALb = new Label("letzte Änderung: " + pp.getAenderungsdatum());
+						PPLb.setStyleName("h1");
+						ALb.setStyleName("myprojekt-opartnerprofil");
+						LALb.setStyleName("myprojekt-opartnerprofil");
+						
+						
+						leftcol.add(PPLb);
+						leftcol.add(ALb);
+						leftcol.add(LALb);
+						leftcol.add(new Label("   "));
 						leftcol.add(getEigenschaftCelllist());
-						leftcol.addStyleName("myprojekt-opartnerprofil");
+						leftcol.addStyleName("Eigenschaft-Cell");
 						content.add(new OEigenschaftForm());
 					}
 				});
@@ -149,6 +159,8 @@ public class OPartnerprofilForm extends Showcase {
 
 			pp = result;
 			MyProjekt.loginInfo.getCurrentUser().setPartnerprofilId(result.getId());
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(new OPartnerprofilForm());
 		}
 	}
 }

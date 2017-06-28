@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -18,12 +19,12 @@ public class LoginPanel extends Showcase {
 
 	private LoginInfo loginInfo = null;
 	
-	protected LoginPanel(LoginInfo loginInfo) {
+	public LoginPanel(LoginInfo loginInfo) {
 		this.loginInfo = loginInfo;
 	}
 
 	
-	protected void run() {
+	public void run() {
 
 		final Button loginButton = new Button("Login");
 		loginButton.setStyleName("myprojekt-loginbutton");
@@ -41,14 +42,22 @@ public class LoginPanel extends Showcase {
 		VerticalPanel loginPanel = new VerticalPanel();
 		Label greeting = new Label();
 		
-		greeting.setText("Willkommen bei getLinked, der profesionellen Plattform für Projekte aller Art. Melden Sie sich an"
+		greeting.setText("Willkommen bei getLinked, der professionellen Plattform für Projekte aller Art. Melden Sie sich an"
 				+ " und entdecken Sie tausende von spannenden Projekten oder suchen Sie ganz einfach Mitarbeiter für Ihr eigenes Projekt."
 				+ " Mit getLinked wird jedes Projekt zu einem Erfolg!");
+	
+		
+		greeting.setStyleName("myprojekt-greeting");
+		
+		
 		
 		// Assemble login panel
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(greeting);
-		
+		RootPanel.get("content").add(new HTML("<img src='square.png' alt='Logo' width='20%'>"
+				+ "<img src='square.png' alt='Logo' width='20%'>"
+				+ "<img src='square.png' alt='Logo' width='20%'>"
+				+ "<img src='square.png' alt='Logo' width='20%'>"));
 	}
 
 }

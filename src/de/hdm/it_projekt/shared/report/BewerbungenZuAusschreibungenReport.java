@@ -1,7 +1,7 @@
 package de.hdm.it_projekt.shared.report;
 
 
-public class AlleAusschreibungenReport 
+public class BewerbungenZuAusschreibungenReport 
 	extends SimpleReport {
 
   /**

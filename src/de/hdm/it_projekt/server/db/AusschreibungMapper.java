@@ -13,6 +13,7 @@ import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Projekt;
+import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 /**
  * Mapper-Klasse, die <code>Ausschreibung</code>-Objekte auf eine relationale
@@ -487,19 +488,78 @@ public class AusschreibungMapper {
 		// Ergebnisvektor zurueckgeben
 		return as;
 	}
-
+	
 	/**
-	 * @param oe
-	 */
-	public Vector<Ausschreibung> getByErsteller(Organisationseinheit oe) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
+	 * Erhalten einer Ausschreibung anhand eines Projektes
 	 * 
+	 * @param pr
+	 * @return
 	 */
-	public Vector<Ausschreibung> findByBewerbung(Bewerbung bw) {
-		return null;
+	public Vector<Ausschreibung> getByProjektmarktplatz(ProjektMarktplatz pm) {
+		
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Ausschreibung> result = new Vector<Ausschreibung>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT a.ID FROM ausschreibung as a"
+					+ " inner join projekt on projekt.ID=a.Projekt_ID"
+					+ "  WHERE projekt.Projektmarktplatz_ID=" + pm.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Ausschreibung-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("a.ID")));
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
 	}
+	
+	/**
+	 * Erhalten einer Ausschreibung anhand eines Projektes
+	 * 
+	 * @param pr
+	 * @return
+	 */
+	public Vector<Ausschreibung> getByProjektleiter(Organisationseinheit o) {
+		
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Ausschreibung> result = new Vector<Ausschreibung>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT a.ID from ausschreibung as a"
+					+ " inner join projekt on projekt.ID=a.Projekt_ID"
+					+ " WHERE Projektleiter_ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Ausschreibung-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+
+	
 }
