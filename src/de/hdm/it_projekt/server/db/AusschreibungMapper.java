@@ -278,53 +278,6 @@ public class AusschreibungMapper {
 		return as;
 	}
 
-	/**
-	 * Suchen einer Ausschreibung anhand der Bezeichnung
-	 * 
-	 * @param bezeichnung
-	 * @return
-	 */
-
-	public Vector<Ausschreibung> findByBezeichnung(String bezeichnung) {
-
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-
-		// Ergebnisvektor vorbereiten
-		Vector<Ausschreibung> result = new Vector<Ausschreibung>();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Bezeichnung, Ausschreibungstext, Bewerbungsfrist, Projekt_ID, Partnerprofil_ID FROM ausschreibung "
-							+ "WHERE Bezeichnung='" + bezeichnung + "' ORDER BY Bezeichnung");
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein
-			// Ausschreibung-Objekt
-			// erstellt
-			while (rs.next()) {
-				Ausschreibung as = new Ausschreibung();
-				as.setId(rs.getInt("ID"));
-				as.setBezeichnung(rs.getString("Bezeichnung"));
-				as.setAusschreibungstext(rs.getString("Ausschreibungstext"));
-				as.setBewerbungsfrist(rs.getDate("Bewerbungsfrist"));
-				as.setProjektId(rs.getInt("ID"));
-				as.setPartnerprofilId(rs.getInt("ID"));
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(as);
-			}
-		} catch (SQLException e6) {
-			e6.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-
-	}
 
 	/**
 	 * Suchen einer Ausschreibung durch eine Bewerbungsfrist
@@ -374,53 +327,6 @@ public class AusschreibungMapper {
 
 	}
 
-	/**
-	 * Auslesen einer Ausschreibung durch den Ausschreibungstext
-	 * 
-	 * @param ausschreibungstext
-	 * @return
-	 */
-
-	public Vector<Ausschreibung> findByAusschreibungstext(String ausschreibungstext) {
-
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-
-		// Ergebnisvektor vorbereiten
-		Vector<Ausschreibung> result = new Vector<Ausschreibung>();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Bezeichnung, Ausschreibungstext, Bewerbungsfrist, Projekt_ID, Partnerprofil_ID FROM ausschreibung "
-							+ "WHERE Ausschreibungstext='" + ausschreibungstext + "' ORDER BY Ausschreibungstext");
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein
-			// Ausschreibung-Objekt
-			// erstellt
-			while (rs.next()) {
-				Ausschreibung as = new Ausschreibung();
-				as.setId(rs.getInt("ID"));
-				as.setBezeichnung(rs.getString("Bezeichnung"));
-				as.setAusschreibungstext(rs.getString("Ausschreibungstext"));
-				as.setBewerbungsfrist(rs.getDate("Bewerbungsfrist"));
-				as.setProjektId(rs.getInt("ID"));
-				as.setPartnerprofilId(rs.getInt("ID"));
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(as);
-			}
-		} catch (SQLException e8) {
-			e8.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-
-	}
 
 	/**
 	 * Erhalten einer Ausschreibung anhand eines Projektes
@@ -462,6 +368,7 @@ public class AusschreibungMapper {
 	 * @param pp
 	 * @return
 	 */
+	
 	public Ausschreibung getByPartnerprofil(Partnerprofil pp) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
