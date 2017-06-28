@@ -263,87 +263,8 @@ public class BewertungMapper {
 		return null;
 	}
 
-	/**
-	 * Suchen einer Bewertung anhand einer Stellungnahme.
-	 * 
-	 * @param stellungnahme
-	 * @return result
-	 */
 
-	public Vector<Bewertung> findByStellungnahme(String stellungnahme) {
 
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-
-		// Ergebnisvektor vorbereiten
-		Vector<Bewertung> result = new Vector<Bewertung>();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung WHERE Stellungnahme='" + stellungnahme + "' ORDER BY Stellungnahme");
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
-			// erstellt
-			while (rs.next()) {
-				Bewertung bt = new Bewertung();
-				bt.setId(rs.getInt("ID"));
-				bt.setWert(rs.getFloat("Wert"));
-				bt.setStellungnahme(rs.getString("Stellungnahme"));
-				bt.setErstelldatum(rs.getDate("Erstelldatum"));
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(bt);
-			}
-		} catch (SQLException e6) {
-			e6.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-
-	}
-
-	/**
-	 * Suchen einer Bewertung anhand eines Wertes.
-	 * 
-	 * @param wert
-	 * @return result
-	 */
-	public Vector<Bewertung> findByWert(float wert) {
-
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung "
-					+ "WHERE Wert=" + wert + " ORDER BY Wert");
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
-			// erstellt
-			while (rs.next()) {
-				Bewertung bt = new Bewertung();
-				bt.setId(rs.getInt("ID"));
-				bt.setWert(rs.getFloat("Wert"));
-				bt.setStellungnahme(rs.getString("Stellungnahme"));
-				bt.setErstelldatum(rs.getDate("Erstelldatum"));
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(bt);
-			}
-		} catch (SQLException e7) {
-			e7.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-	}
 
 	/**
 	 * Auslesen einer Bewertung anhand einer Bewerbung.
