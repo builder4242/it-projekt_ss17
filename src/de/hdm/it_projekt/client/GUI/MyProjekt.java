@@ -236,7 +236,7 @@ public class MyProjekt implements EntryPoint {
 		});
 		
 		Button reportGeneratorButton = new Button("Report Generator");
-		reportGeneratorButton.setStyleName("myprojekt-menubutton");
+		reportGeneratorButton.setStyleName("myprojekt-reportmenubutton");
 		reportGeneratorButton.addClickHandler(new ClickHandler() {
 
 			@Override

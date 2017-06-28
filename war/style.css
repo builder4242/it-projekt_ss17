@@ -279,6 +279,31 @@
     top: 2px;
 }
 
+.myprojekt-reportmenubutton{
+    font-family: Verdana;
+    background-color: #008CBA;
+    border: none;
+    /* border-radius: 2px; */
+    color: #ff0000;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    margin-right:2px;
+
+
+}
+
+.myprojekt-reportmenubutton:active{
+    position: relative;
+    top: 2px;
+}
+
+
+
 .myprojekt-menubutton:hover{
     background-color: #5fb3ba; /* blau */
     color: white;
@@ -385,6 +410,31 @@
 }
 
 .myprojekt-reportbutton:hover{
+    background-color: #5fb3ba; /* blau */
+    color: white;
+}
+
+.myprojekt-switchreportbutton{
+	font-family: Verdana;
+    background-color: #008CBA ;
+    color: #ff0000;
+    border: none;
+    border-radius: 2px;
+    padding: 8px 10px; 
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 2px; 
+    margin-right:2px;
+    margin-bottom: 3px; 
+    width: 180px; 
+}
+
+.myprojekt-switchreportbutton:active{
+    position: relative;
+    top: 1px;
+}
+
+.myprojekt-switchreportbutton:hover{
     background-color: #5fb3ba; /* blau */
     color: white;
 }
