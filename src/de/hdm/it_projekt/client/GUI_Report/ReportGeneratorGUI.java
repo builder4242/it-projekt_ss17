@@ -107,7 +107,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 		zugehoerigeProjekteButton.setStyleName("myprojekt-reportbutton");
 
 		Button pmGUIButton = new Button("zum ProjektMarktplatz");
-		pmGUIButton.setStyleName("myprojekt-reportbutton");
+		pmGUIButton.setStyleName("myprojekt-switchreportbutton");
 		pmGUIButton.addClickHandler(new pmClickHandler());
 
 		/**
