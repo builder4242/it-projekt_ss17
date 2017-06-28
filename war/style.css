@@ -164,7 +164,7 @@
     transition: width 0.4s ease-in-out; 
 }
 
-.myproject-anmeldentextfield:focus {
+.myproject-anlegentextfield:focus {
     background-color: lightblue;
     border: 3px solid #555;
     
