@@ -15,10 +15,10 @@ import de.hdm.it_projekt.shared.bo.Eigenschaft;
 
 public class OEigenschaftForm extends Showcase {
 
-	Eigenschaft eToDisplay = null;
+	private Eigenschaft eToDisplay = null;
 
-	TextBox nameTb = new TextBox();
-	TextBox wertTb = new TextBox();
+	private TextBox nameTb = new TextBox();
+	private TextBox wertTb = new TextBox();
 
 	public OEigenschaftForm() {
 

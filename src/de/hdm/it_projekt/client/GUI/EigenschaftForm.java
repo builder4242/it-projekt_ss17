@@ -22,12 +22,12 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class EigenschaftForm extends Showcase {
 
-	Eigenschaft eToDisplay = null;
-	PartnerprofilTreeViewModel pptvm = null;
+	private Eigenschaft eToDisplay = null;
+	private PartnerprofilTreeViewModel pptvm = null;
 
-	Label formTitel = new Label();
-	TextBox nameTb = new TextBox();
-	TextBox wertTb = new TextBox();
+	private Label formTitel = new Label();
+	private TextBox nameTb = new TextBox();
+	private TextBox wertTb = new TextBox();
 
 	public EigenschaftForm(boolean ausschreibender) {
 
