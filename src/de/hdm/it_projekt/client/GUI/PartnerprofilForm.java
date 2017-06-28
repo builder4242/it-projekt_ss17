@@ -60,17 +60,22 @@ public class PartnerprofilForm extends Showcase {
 		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 		Button deleteButton = new Button("Löschen");
 		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
-		Button newButton = new Button("Neu");
+		Button newButton = new Button("Anlegen");
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
-		buttonsPanel.addStyleName("myprojekt-buttonspanel");
+		
+		Button newEigenschaft = new Button("Neue Eigenschaft");
+		newEigenschaft.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		newEigenschaft.addClickHandler(new NewEigenschaftClickHandler());
+		buttonsPanel.add(newEigenschaft);
 		
 		if(ausschreibender == false) {
 			buttonsPanel.setVisible(false);
@@ -92,6 +97,17 @@ public class PartnerprofilForm extends Showcase {
 
 	void setPartnerprofilTreeViewModel(PartnerprofilTreeViewModel pptvm) {
 		this.pptvm = pptvm;
+	}
+	
+	private class NewEigenschaftClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			pptvm.partnerprofilForm.setVisible(false);
+			pptvm.eigenschaftForm.setVisible(true);
+			
+		}
+		
 	}
 
 	private class DeleteClickHandler implements ClickHandler {

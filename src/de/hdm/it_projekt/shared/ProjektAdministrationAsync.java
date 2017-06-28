@@ -144,5 +144,7 @@ public interface ProjektAdministrationAsync {
 
 	void createBeteiligungFor(Bewerbung bw, AsyncCallback<Beteiligung> callback);
 
+	void getAusschreibungByMatch(Partnerprofil pp, AsyncCallback<Vector<Ausschreibung>> callback);
+
 
 }

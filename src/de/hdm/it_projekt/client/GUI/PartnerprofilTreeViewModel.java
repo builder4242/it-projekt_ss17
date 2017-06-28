@@ -79,10 +79,12 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 
 	public void setPartnerprofilForm(PartnerprofilForm pf) {
 		partnerprofilForm = pf;
+		partnerprofilForm.setVisible(true);
 	}
 
 	public void setEigenschaftForm(EigenschaftForm ef) {
 		eigenschaftForm = ef;
+		eigenschaftForm.setVisible(false);
 	}
 	
 	Ausschreibung getSelectedAusschreibung() {
@@ -93,9 +95,11 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 
 		selectedPartnerprofil = pp;
 		partnerprofilForm.setSelected(pp);
+		partnerprofilForm.setVisible(true);
 
 		selectedEigenschaft = null;
 		eigenschaftForm.setSelected(null);
+		eigenschaftForm.setVisible(false);
 	}
 
 	Partnerprofil getSelectedPartnerprofil() {
@@ -105,6 +109,7 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 	void setSelectedEigenschaft(Eigenschaft e) {
 		selectedEigenschaft = e;
 		eigenschaftForm.setSelected(e);
+		eigenschaftForm.setVisible(true);
 
 		pa.getPartnerprofilById(e.getPartnerprofilId(), new AsyncCallback<Partnerprofil>() {
 
@@ -118,6 +123,7 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 			public void onSuccess(Partnerprofil partnerprofil) {
 				selectedPartnerprofil = partnerprofil;
 				partnerprofilForm.setSelected(partnerprofil);
+				partnerprofilForm.setVisible(false);
 			}
 		});
 	}

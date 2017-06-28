@@ -57,30 +57,53 @@ public class AusschreibungForm extends Showcase {
 		form.setWidget(2, 1, astextgTb);						/** TextBox im Grid platzieren */ 
 		astextgTb.setStyleName("myprojekt-textarea");			/** CSS Klasse auf TextBox anwenden */ 
 
+
 		HorizontalPanel buttonsPanel = new HorizontalPanel();	/** HorizontalPanel für Buttons anlegen */ 
+
+		
+
 		this.add(buttonsPanel);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
-		Button changeButton = new Button("Ändern");				/** Aendern Button erstellen */ 
-		changeButton.setStyleName("myprojekt-formbutton"); 		/** Verknüft CSS Klasse auf Button */
-		changeButton.addClickHandler(new ChangeClickHandler());	/** ClickHandler für Button erstellen */ 
-		buttonsPanel.add(changeButton);							/** Button zum Panel hinzufügen */ 
 
-		Button deleteButton = new Button("Löschen");			/** Loeschen Button erstellen */ 
-		deleteButton.setStyleName("myprojekt-formbutton"); 		/** Verknüft CSS Klasse auf Button */
-		deleteButton.addClickHandler(new DeleteClickHandler());	/** ClickHandler für Button erstellen */ 
-		buttonsPanel.add(deleteButton);							/** Button zum Panel hinzufügen */ 
 
-		Button newButton = new Button("Neu");				/** Neu Button erstellen */ 
-		newButton.setStyleName("myprojekt-formbutton"); 	/** Verknüft CSS Klasse auf Button */
-		newButton.addClickHandler(new NewClickHandler());	/** ClickHandler für Button erstellen */ 
-		buttonsPanel.add(newButton);						/** Button zum Panel hinzufügen */ 
-		buttonsPanel.addStyleName("myprojekt-buttonspanel");	/** CSS Klasse auf ButtonOanel anwenden */ 
+		Button changeButton = new Button("Ändern");
+		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		changeButton.addClickHandler(new ChangeClickHandler());
+		buttonsPanel.add(changeButton);
+
+		Button deleteButton = new Button("Löschen");
+		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		deleteButton.addClickHandler(new DeleteClickHandler());
+		buttonsPanel.add(deleteButton);
+
+		Button newButton = new Button("Anlegen");
+		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		newButton.addClickHandler(new NewClickHandler());
+		buttonsPanel.add(newButton);
+
+		HorizontalPanel buttonOPanel = new HorizontalPanel();
+		this.add(buttonOPanel);
+		Button newBewerbungButton = new Button("Bewerbung anlegen");
+		newBewerbungButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		newBewerbungButton.addClickHandler(new NewBewerbungClickHandler());
+		buttonOPanel.add(newBewerbungButton);
+		
+		Button showPartnerprofilButton = new Button();
+		showPartnerprofilButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		showPartnerprofilButton.addClickHandler(new showPartnerprofilClickHandler());
+		buttonOPanel.add(showPartnerprofilButton);
+
 
 		if(ausschreibender == false) {
 			bezeichnungTb.setEnabled(false);
 			fristDb.setEnabled(false);
 			astextgTb.setEnabled(false);
 			buttonsPanel.setVisible(false);
+			showPartnerprofilButton.setText("Partnerprofil anzeigen");
+			this.add(newBewerbungButton);
+		} else {
+			showPartnerprofilButton.setText("Partnerprofil verwalten");
 		}
 	}
 
@@ -100,6 +123,25 @@ public class AusschreibungForm extends Showcase {
 
 	void setProjektTreeViewModel(ProjektTreeViewModel ptvm) {
 		this.ptvm = ptvm;
+	}
+	
+	private class NewBewerbungClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ptvm.ausschreibungForm.setVisible(false);
+			ptvm.bewerbungForm.setVisible(true);
+		}		
+	}
+	
+	private class showPartnerprofilClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ptvm.ausschreibungForm.setVisible(false);
+			ptvm.showPartnerprofilTree();
+		}
+		
 	}
 
 	private class ChangeClickHandler implements ClickHandler {
