@@ -23,10 +23,10 @@ import de.hdm.it_projekt.shared.bo.*;
 
 public class PartnerprofilTreeViewModel implements TreeViewModel {
 
-	ProjektAdministrationAsync pa = null;
+	private ProjektAdministrationAsync pa = null;
 
-	PartnerprofilForm partnerprofilForm = null;
-	EigenschaftForm eigenschaftForm = null;
+	protected PartnerprofilForm partnerprofilForm = null;
+	protected EigenschaftForm eigenschaftForm = null;
 
 	private Ausschreibung selectedAusschreibung = null;
 	private Partnerprofil selectedPartnerprofil = null;

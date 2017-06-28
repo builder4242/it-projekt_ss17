@@ -20,9 +20,8 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class NewProjektMarktplatzForm extends Showcase {
 
-	ProjektMarktplatz pm = null;
 	
-	TextBox bezeichnungTextBox = new TextBox();
+	private TextBox bezeichnungTextBox = new TextBox();
 	
 	
 	public NewProjektMarktplatzForm() {
