@@ -6,8 +6,9 @@
     text-aligin: center; 	/*ï¿½berschriften zentreiren*/
     font-family: Verdana;
     font-size: 17px; 		/* Schriftgröße */ 
-    margin-top: 10px; 		/* Abstand oben */ 
+    margin-top: 10px; 		/* Abstand oben */  
     margin-bottom: 5px; 	/* Abstand unten */ 
+    margin-left: 2px;		/* Abstand links */ 
 }
 
 /* 16px blaue Überschrift mit 10px Abstand nach oben und 5px Abstand nach unten. */ 
@@ -19,6 +20,7 @@
     font-size: 16px; 		/* Schriftröße */ 
     margin-top: 10px; 		/* Abstand oben */ 
     margin-bottom: 5px; 	/* Abstand unten */ 
+    margin-left: 2px;		/* Abstand links */ 
 }
 
 .h2_margin-top{
@@ -31,6 +33,7 @@
     margin-bottom: 5px; 	/* Abstand unten */ 
 }
 
+/* CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN */
 /* CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN */
 
 .ProjektMarktplatz-Cell{
@@ -92,6 +95,16 @@
     max-width:450px;  
 }
 
+.Beteiligung-Cell{
+	font-weight: normal; 		
+    font-family: Verdana;
+    font-color: blue; 
+    font-size: 12px; 
+    margin-right: 5px;
+    min-width: 50px;
+    max-width: 350px;  
+}
+
 
 /* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
 /* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
@@ -132,9 +145,9 @@
 /* Syle für Textfelder, die beim anklicken blau hinterlehgt und 100px breiter werden */ 
 .myproject-textfield{
 	font-family: Verdana;
-	color: red; 				/* Schriftfarbe */ 
+	color: #404040; 				/* Schriftfarbe */ 
 	display: inline-block; 
-	width: 200px; 				/* Breite */ 
+	width: 250px; 				/* Breite */ 
 	padding: 5px 8px;			
     margin: 2px 0;				/* Abstand */ 
     box-sizing: border-box; 
@@ -145,15 +158,15 @@
 .myproject-textfield:focus {
     background-color: lightblue;
     border: 3px solid #555;
-    width: 202px; 
+    width: 252px; 
 }
 
 /* Textfeld, dass beim anklicken blau hinterlegt aber nicht breiter wird. */ 
 .myproject-anlegentextfield{
 	font-family: Verdana;
-	color: blue; 
+	color: #404040; 
 	display: inline-block; 
-	width: 200px; 
+	width: 250px; 
 	padding: 5px 8px;
     margin: 2px 0;
     margin-right: 5px; 
@@ -161,7 +174,7 @@
     transition: width 0.4s ease-in-out; 
 }
 
-.myproject-anmeldentextfield:focus {
+.myproject-anlegentextfield:focus {
     background-color: lightblue;
     border: 3px solid #555;
     
@@ -170,10 +183,10 @@
 /* TextArea die beim Anklicken nach rechts und unten ausfährt. */ 
 .myprojekt-textarea{
 	font-family: Verdana;
-	color: red; 
+	color: #404040; 
 	display: inline-block; 
-	width: 200px; 
-	height: 250px;
+	width: 250px; 
+	height: 160px;
 	padding: 5px 8px;
     margin: 2px 0;
     box-sizing: border-box;
@@ -190,8 +203,8 @@
 .myprojekt-textarea:focus {
     background-color: lightblue;
     border: 3px solid #555;
-    height: 260px;
-    width: 202px; 
+    height: 162px;
+    width: 252px; 
      
 }
 
@@ -310,7 +323,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    margin-left: 372px; 
+    margin-left: 262px; 
  	
 }
 
@@ -377,6 +390,17 @@
 }
 
 /* LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL  */ 
+/* LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL  */ 
+
+.myprojekt-greeting{
+	font-family: Verdana;
+	color: #004080;
+	display: center; 
+	font-size: 18px; 
+	margin: 6px; 
+	margin-left: 40px; 
+	margin-right: 40px; 
+}
 
 .myprojekt-label{
 	font-family: Verdana;
@@ -387,6 +411,7 @@
 	font-family: Verdana;
 	color: #004080;
 	display: center; 
+	margin-left: 5px; 
 	
 }
 
@@ -407,8 +432,10 @@
 .myprojekt-opartnerprofil{
 	font-family: Verdana;
 	color: #004080;
-	margin-right: 20px; 
-	font-size: 15px; 
+	margin-right: 20px;
+	margin-bottom: 5px;  
+	font-size: 17px; 
+	
 }
 
 /* Sie befinden sich im Parktplatz.... */ 
@@ -424,6 +451,7 @@
 	color: #004080;
 	display: center; 
 	margin-right: 5px; 
+	margin-left: 5px; 
 	font-size: 16px; 
 
 }
