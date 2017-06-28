@@ -506,8 +506,8 @@ public class AusschreibungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT as.ID FROM ausschreibung as as"
-					+ " inner join projekt on projekt.ID=as.Projekt_ID"
+			ResultSet rs = stmt.executeQuery("SELECT a.ID FROM ausschreibung as a"
+					+ " inner join projekt on projekt.ID=a.Projekt_ID"
 					+ "  WHERE projekt.Projektmarktplatz_ID=" + pm.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -515,7 +515,43 @@ public class AusschreibungMapper {
 			while (rs.next()) {
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(findById(rs.getInt("as.ID")));
+				result.addElement(findById(rs.getInt("a.ID")));
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return result;
+	}
+	
+	/**
+	 * Erhalten einer Ausschreibung anhand eines Projektes
+	 * 
+	 * @param pr
+	 * @return
+	 */
+	public Vector<Ausschreibung> getByProjektleiter(Organisationseinheit o) {
+		
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Vector<Ausschreibung> result = new Vector<Ausschreibung>();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT a.ID from ausschreibung as a"
+					+ " inner join projekt on projekt.ID=a.Projekt_ID"
+					+ " WHERE Projektleiter_ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Ausschreibung-Objekt erstellt.
+			while (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				result.addElement(findById(rs.getInt("ID")));
 			}
 		} catch (SQLException e9) {
 			e9.printStackTrace();

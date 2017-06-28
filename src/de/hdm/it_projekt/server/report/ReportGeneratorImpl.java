@@ -22,6 +22,16 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
+import de.hdm.it_projekt.shared.report.BewerbungenZuAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.Column;
+import de.hdm.it_projekt.shared.report.CompositeParagraph;
+import de.hdm.it_projekt.shared.report.PassendeAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.ProjektverflechtungenReport;
+import de.hdm.it_projekt.shared.report.Report;
+import de.hdm.it_projekt.shared.report.Row;
+import de.hdm.it_projekt.shared.report.SimpleParagraph;
+import de.hdm.it_projekt.shared.report.SimpleReport;
+
 import java.util.Date;
 import java.util.Vector;
 
@@ -40,8 +50,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	private TeamMapper tMapper = null;
 	private UnternehmenMapper uMapper = null;
 
-	private ProjektAdministration pa = null;
-
+	private ProjektAdministrationImpl pa = null;
+	
 	public ReportGeneratorImpl() throws IllegalArgumentException {
 
 	}
@@ -59,39 +69,96 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		this.pmMapper = ProjektMarktplatzMapper.projektMarktplatzMapper();
 		this.tMapper = TeamMapper.teamMapper();
 		this.uMapper = UnternehmenMapper.unternehmenMapper();
-
-		ProjektAdministrationImpl pa = new ProjektAdministrationImpl();
+		
+		pa = new ProjektAdministrationImpl();
 		pa.init();
 	}
 
+	
+	
 	@Override
-	public String getAlleAusschreibungenReport(ProjektMarktplatz pm) throws IllegalArgumentException {
+	public AlleAusschreibungenReport createAlleAusschreibungenReport(ProjektMarktplatz pm) throws IllegalArgumentException {
 		
-		AlleAusschreibungenReport report = new AlleAusschreibungenReport(asMapper.getByProjektmarktplatz(pm));
+		AlleAusschreibungenReport report = new AlleAusschreibungenReport();
 		
-		return report.runHTMLReport();
+		report.setTitle("Alle Ausschreibungen Report");
+		report.setHeaderData(new SimpleParagraph("Projektmarktplatz: " + pm.getBezeichnung()));
+		report.setCreated(new Date());
+		
+		Vector<Ausschreibung> asV = getAlleAusschreibungenFor(pm);
+		
+		for(Ausschreibung as : asV) {
+			Row row = new Row();
+			row.addColumn(new Column(as.getBezeichnung()));
+			report.addRow(row);
+		}
+		
+		return report;
 	}
-
+	
 	@Override
-	public String getMatchingAusschreibungenReport(Organisationseinheit o) throws IllegalArgumentException {
+	public PassendeAusschreibungenReport createPassendeAusschreibungenReport(Organisationseinheit o)
+			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getBewerbungenAufAusschreibungReport(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public BewerbungenZuAusschreibungenReport createBewerbungenZuAusschreibungenReport(Organisationseinheit o)
+			throws IllegalArgumentException {
+
+		BewerbungenZuAusschreibungenReport report = new BewerbungenZuAusschreibungenReport();
+		
+		report.setTitle("Bewerbungen auf Ausschreibungen Report");
+		report.setHeaderData(new SimpleParagraph("Ausschreibender: " + o.getName()));
+		report.setCreated(new Date());
+		
+		Vector<Ausschreibung> asV = getAusschreibungFor(o);
+		
+		for(Ausschreibung as : asV) {
+			Row asRow = new Row();
+			asRow.addColumn(new Column(as.getBezeichnung()));
+			report.addRow(asRow);
+			
+			Vector<Bewerbung> bwV = getBewerbungenFor(as);
+			
+			for(Bewerbung bw : bwV) {
+				
+				Organisationseinheit bewerber = pa.getBewerberFor(bw);
+				
+				Row row = new Row();
+				row.addColumn(new Column(" -> von :" + bewerber.getName()));
+				report.addRow(row);
+			}
+		}
+		
+		return report;
 	}
 
 	@Override
-	public String getBewerbungenReport(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public AlleBewerbungenReport createAlleBewerbungenReport(Organisationseinheit o) throws IllegalArgumentException {
+
+		AlleBewerbungenReport report = new AlleBewerbungenReport();
+		
+		report.setTitle("Meine Bewerbungen Report");
+		report.setHeaderData(new SimpleParagraph("Bewerbungen von: " + o.getName()));
+		report.setCreated(new Date());
+		
+		Vector<Bewerbung> bwV = getBewerbungenFrom(o);
+		
+		for(Bewerbung bw : bwV) {
+			Row row = new Row();
+			Ausschreibung a = pa.getAusschreibungById(bw.getAusschreibungId());
+			row.addColumn(new Column(a.getBezeichnung()));
+			report.addRow(row);
+		}
+		
+		return report;
 	}
 
 	@Override
-	public String getProjektverflechtungenReport(Organisationseinheit o) throws IllegalArgumentException {
+	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit o)
+			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -103,36 +170,29 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	@Override
-	public Vector<Ausschreibung> getMatchingAusschreibungenFor(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Vector<Ausschreibung> getAusschreibungFor(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return asMapper.getByProjektleiter(o);
 	}
 
 	@Override
 	public Vector<Bewerbung> getBewerbungenFor(Ausschreibung as) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return bwMapper.getByAusschreibung(as);
 	}
 
 	@Override
-	public Vector<Bewerbung> getBewerbungenFor(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Vector<Bewerbung> getBewerbungenFrom(Organisationseinheit o) throws IllegalArgumentException {
+		return bwMapper.getByOrganisationseinheit(o);
 	}
 
 	@Override
 	public Vector<Organisationseinheit> getBewerberForAusschreibenden(Organisationseinheit o)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-
-
+	@Override
+	public Vector<Ausschreibung> getMatchingAusschreibungenFor(Organisationseinheit o) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -4,18 +4,12 @@ import java.util.List;
 import java.util.Vector;
 
 import com.google.gwt.cell.client.Cell;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -26,12 +20,12 @@ import de.hdm.it_projekt.client.GUI.Cell.ProjektMarktplatzCell;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
-public class ReportMarktuebersicht extends ReportShowcase {
+public class ReportMarktuebersicht extends VerticalPanel {
 
 
 	final Label ausgabe = new Label();
 	
-	ReportGenerator reportgenerator = null;
+	ReportGeneratorGUI reportgenerator = null;
 	
 	ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
@@ -45,7 +39,7 @@ public class ReportMarktuebersicht extends ReportShowcase {
 		}		
 	};
 
-	public ReportMarktuebersicht(ReportGenerator rp) {
+	public ReportMarktuebersicht(ReportGeneratorGUI rp) {
 		
 		reportgenerator = rp;
 
@@ -61,7 +55,7 @@ public class ReportMarktuebersicht extends ReportShowcase {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 
-				ReportGenerator.cpm = pmSelectionModel.getSelectedObject();
+				ReportGeneratorGUI.cpm = pmSelectionModel.getSelectedObject();
 				
 				reportgenerator.menuPanel.setVisible(true);
 				reportgenerator.contentPanel.clear();

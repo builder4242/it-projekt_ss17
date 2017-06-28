@@ -19,12 +19,12 @@ public class LoginPanel extends Showcase {
 
 	private LoginInfo loginInfo = null;
 	
-	protected LoginPanel(LoginInfo loginInfo) {
+	public LoginPanel(LoginInfo loginInfo) {
 		this.loginInfo = loginInfo;
 	}
 
 	
-	protected void run() {
+	public void run() {
 
 		final Button loginButton = new Button("Login");
 		loginButton.setStyleName("myprojekt-loginbutton");

@@ -9,23 +9,26 @@ import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
+import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
+import de.hdm.it_projekt.shared.report.BewerbungenZuAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.PassendeAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.ProjektverflechtungenReport;
 
 @RemoteServiceRelativePath("reportgenerator")
 public interface ReportGenerator extends RemoteService {
 
 	public void init() throws IllegalArgumentException;
-
 	
-	public String getAlleAusschreibungenReport(ProjektMarktplatz pm) throws IllegalArgumentException;
+	public AlleAusschreibungenReport createAlleAusschreibungenReport(ProjektMarktplatz pm) throws IllegalArgumentException;
 	
-	public String getMatchingAusschreibungenReport(Organisationseinheit o) throws IllegalArgumentException;
+	public PassendeAusschreibungenReport createPassendeAusschreibungenReport(Organisationseinheit o) throws IllegalArgumentException;
 	
-	public String getBewerbungenAufAusschreibungReport(Organisationseinheit o) throws IllegalArgumentException;
+	public BewerbungenZuAusschreibungenReport createBewerbungenZuAusschreibungenReport(Organisationseinheit o) throws IllegalArgumentException;
 	
-	public String getBewerbungenReport(Organisationseinheit o) throws IllegalArgumentException;
+	public AlleBewerbungenReport createAlleBewerbungenReport(Organisationseinheit o) throws IllegalArgumentException;
 	
-	public String getProjektverflechtungenReport(Organisationseinheit o) throws IllegalArgumentException;
-	
+	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit o) throws IllegalArgumentException;
 	
 	public Vector<Ausschreibung> getAlleAusschreibungenFor(ProjektMarktplatz pm) throws IllegalArgumentException;
 	
@@ -35,7 +38,7 @@ public interface ReportGenerator extends RemoteService {
 	
 	public Vector<Bewerbung> getBewerbungenFor(Ausschreibung as) throws IllegalArgumentException;
 	
-	public Vector<Bewerbung> getBewerbungenFor(Organisationseinheit o) throws IllegalArgumentException;
+	public Vector<Bewerbung> getBewerbungenFrom(Organisationseinheit o) throws IllegalArgumentException;
 	
 	public Vector<Organisationseinheit> getBewerberForAusschreibenden(Organisationseinheit o) throws IllegalArgumentException;
 	

@@ -16,6 +16,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
@@ -158,6 +159,8 @@ public class OPartnerprofilForm extends Showcase {
 
 			pp = result;
 			MyProjekt.loginInfo.getCurrentUser().setPartnerprofilId(result.getId());
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(new OPartnerprofilForm());
 		}
 	}
 }

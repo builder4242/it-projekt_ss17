@@ -36,9 +36,7 @@ public class MyProjekt implements EntryPoint {
 	protected static LoginInfo loginInfo = null;
 	protected static ProjektMarktplatz cpm = null;
 
-	static interface ProjektTreeResources extends CellTree.Resources {
 
-	}
 	/* Ende Attribute fuer Login */
 
 	/**
@@ -236,11 +234,24 @@ public class MyProjekt implements EntryPoint {
 
 			}
 		});
+		
+		Button reportGeneratorButton = new Button("Report Generator");
+		reportGeneratorButton.setStyleName("myprojekt-menubutton");
+		reportGeneratorButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+
+				Window.Location.assign(GWT.getHostPageBaseURL() + "reportgenerator.html");
+
+			}
+		});
 
 		menu.add(marktplaetzeButton);
 		menu.add(projekteButton);
 		menu.add(bewerbungButton);
 		menu.add(profilButton);
+		menu.add(reportGeneratorButton);
 
 		if (loginInfo.getCurrentUser() == null) {
 			pa.findByGoogleId(loginInfo, new AsyncCallback<Person>() {
