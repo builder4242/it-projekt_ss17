@@ -1,5 +1,9 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse LoginPanel dient dem Aufbau der Startseite für nicht eingeloggte User. Der User wird 
+ * durch einen Text begrüßt und hat die Möglichkeit über den Anmeldebutton zum Login bzw. zur Registrierung
+ * zu gelangem. Das Design wird durch einbinden von CSS angepasst.  */
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
