@@ -20,9 +20,9 @@ public class BeteiligungCell extends AbstractCell<Beteiligung> {
 		if (value == null)
 			return;
 
-		sb.appendHtmlConstant("<div class='xx-Cell'>"); // Test CSS Klasse
+		sb.appendHtmlConstant("<div class='Beteiligung-Cell'>"); // Test CSS Klasse
 		sb.appendEscaped("Beteiligung: " + Integer.toString(context.getIndex()+1));
-		sb.appendHtmlConstant("</div class='xx-Cell'>"); // Test CSS Klasse
+		sb.appendHtmlConstant("</div class='Beteiligung-Cell'>"); // Test CSS Klasse
 	}
 
 	String getNameFor(Beteiligung value) {

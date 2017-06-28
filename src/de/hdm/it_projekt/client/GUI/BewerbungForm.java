@@ -76,7 +76,7 @@ public class BewerbungForm extends Showcase {
 		newButton.setVisible(false);
 		buttonsPanel.add(newButton);
 
-		Button bewertenButton = new Button("Bewerben");
+		Button bewertenButton = new Button("Bewerten");
 		bewertenButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		bewertenButton.addClickHandler(new BewertenClickHandler());
 		buttonsPanel.add(bewertenButton);
