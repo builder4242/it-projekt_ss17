@@ -373,35 +373,5 @@ public class UnternehmenMapper {
 		return result;
 	}
 
-	public Vector<Unternehmen> getByProjektMarktplatz(ProjektMarktplatz pm) {
-
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-		Vector<Unternehmen> result = new Vector<Unternehmen>();
-
-		try {
-
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT o.ID AS ID FROM organisationseinheit AS o "
-					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit_ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID "
-					+ "WHERE projektmarktplatz_ID= " + pm.getId());
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein
-			// Unternehmen-Objekt erstellt.
-			while (rs.next()) {
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(findById(rs.getInt("ID")));
-			}
-		} catch (SQLException e9) {
-			e9.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-	}
 
 }
