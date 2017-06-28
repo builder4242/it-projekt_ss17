@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -48,10 +49,15 @@ public class LoginPanel extends Showcase {
 		
 		greeting.setStyleName("myprojekt-greeting");
 		
+		
+		
 		// Assemble login panel
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(greeting);
-		
+		RootPanel.get("content").add(new HTML("<img src='square.png' alt='Logo' width='20%'>"
+				+ "<img src='square.png' alt='Logo' width='20%'>"
+				+ "<img src='square.png' alt='Logo' width='20%'>"
+				+ "<img src='square.png' alt='Logo' width='20%'>"));
 	}
 
 }
