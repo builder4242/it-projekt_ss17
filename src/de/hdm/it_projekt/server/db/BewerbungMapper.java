@@ -321,51 +321,6 @@ public class BewerbungMapper {
 
 	}
 
-	/**
-	 * Suchen einer Bewerbung anhand des Bewerbungstextes
-	 * 
-	 * @param bewerbungstext
-	 * @return
-	 */
-
-	public Vector<Bewerbung> findByBewerbungstext(String bewerbungstext) {
-
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-
-		// Ergebnisvektor vorbereiten
-		Vector<Bewerbung> result = new Vector<Bewerbung>();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Erstelldatum, Bewerbungstext, Ausschreibung_ID, Organisationseinheit_ID FROM bewerbung "
-							+ "WHERE Bewerbungstext='" + bewerbungstext + "' ORDER BY Bewerbungstext");
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewerbung-Objekt
-			// erstellt
-			while (rs.next()) {
-				Bewerbung bw = new Bewerbung();
-				bw.setId(rs.getInt("ID"));
-				bw.setErstelldatum(rs.getDate("Erstelldatum"));
-				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
-				bw.setAusschreibungId(rs.getInt("ID"));
-				bw.setOrganisationseinheitId(rs.getInt("ID"));
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(bw);
-			}
-		} catch (SQLException e6) {
-			e6.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-
-	}
 
 	/**
 	 * Auslesen der Bewerbung anhand der Ausschreibung.
@@ -375,6 +330,9 @@ public class BewerbungMapper {
 	 */
 	public Vector<Bewerbung> getByAusschreibung(Ausschreibung as) {
 
+		if(as == null)
+			return null;
+		
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Bewerbung> result = new Vector<Bewerbung>();

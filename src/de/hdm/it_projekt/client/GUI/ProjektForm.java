@@ -28,18 +28,18 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 
 public class ProjektForm extends Showcase {
 
-	Projekt prToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	private Projekt prToDisplay = null;
+	private ProjektTreeViewModel ptvm = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");   
+	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");   
 	
-	Label formTitel = new Label();     /** Label deklarieren */
-	TextBox nameTb = new TextBox();		/** TextBox deklarieren */
-	DateBox startDb = new DateBox();    /** DateBox (Date picker) deklarieren */ 
-	DateBox endDb = new DateBox();		 /** DateBox (Date picker) deklarieren */ 
+	private Label formTitel = new Label();     /** Label deklarieren */
+	private TextBox nameTb = new TextBox();		/** TextBox deklarieren */
+	private DateBox startDb = new DateBox();    /** DateBox (Date picker) deklarieren */ 
+	private DateBox endDb = new DateBox();		 /** DateBox (Date picker) deklarieren */ 
 
-	Label projektLeiterL = new Label("nicht angelegt");		/** Label deklarieren  und Text hinzugefügt*/
-	TextArea beschreibungTb = new TextArea();				/** TextArea deklariert */ 
+	private Label projektLeiterL = new Label("nicht angelegt");		/** Label deklarieren  und Text hinzugefügt*/
+	private TextArea beschreibungTb = new TextArea();				/** TextArea deklariert */ 
 
 	public ProjektForm(boolean ausschreibender) {
 		

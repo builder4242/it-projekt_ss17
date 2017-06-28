@@ -52,7 +52,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	private UnternehmenMapper uMapper = null;
 
 	private ProjektAdministrationImpl pa = null;
-	
+
 	public ReportGeneratorImpl() throws IllegalArgumentException {
 
 	}
@@ -70,51 +70,57 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		this.pmMapper = ProjektMarktplatzMapper.projektMarktplatzMapper();
 		this.tMapper = TeamMapper.teamMapper();
 		this.uMapper = UnternehmenMapper.unternehmenMapper();
-		
+
 		pa = new ProjektAdministrationImpl();
 		pa.init();
 	}
 
-	
-	
 	@Override
-	public AlleAusschreibungenReport createAlleAusschreibungenReport(ProjektMarktplatz pm) throws IllegalArgumentException {
-		
+	public AlleAusschreibungenReport createAlleAusschreibungenReport(ProjektMarktplatz pm)
+			throws IllegalArgumentException {
+
 		AlleAusschreibungenReport report = new AlleAusschreibungenReport();
-		
+
 		report.setTitle("Alle Ausschreibungen Report");
 		report.setHeaderData(new SimpleParagraph("Projektmarktplatz: " + pm.getBezeichnung()));
 		report.setCreated(new Date());
-		
+
 		Vector<Ausschreibung> asV = getAlleAusschreibungenFor(pm);
-		
-		for(Ausschreibung as : asV) {
+
+		for (Ausschreibung as : asV) {
 			Row row = new Row();
 			row.addColumn(new Column(as.getBezeichnung()));
 			report.addRow(row);
 		}
-		
+
 		return report;
 	}
-	
+
 	@Override
 	public PassendeAusschreibungenReport createPassendeAusschreibungenReport(Organisationseinheit o)
 			throws IllegalArgumentException {
-		
+
 		PassendeAusschreibungenReport report = new PassendeAusschreibungenReport();
-				
+
 		report.setTitle("Dem eigenen Partnerprofil entsprechende Ausschreibungen");
 		report.setHeaderData(new SimpleParagraph("Partnerprofilvergleich für: " + o.getName()));
 		report.setCreated(new Date());
-		
+
 		Vector<Ausschreibung> asMatch = pa.getAusschreibungByMatch(o);
-		
-		for(Ausschreibung as : asMatch) {
+
+		if (asMatch == null) {
 			Row row = new Row();
-			row.addColumn(new Column(as.getBezeichnung()));
+			row.addColumn(new Column("Es wurden keine passenden Ausschreibungen gefunden."));
 			report.addRow(row);
+		} else {
+
+			for (Ausschreibung as : asMatch) {
+				Row row = new Row();
+				row.addColumn(new Column(as.getBezeichnung()));
+				report.addRow(row);
+			}
 		}
-		
+
 		return report;
 	}
 
@@ -123,40 +129,40 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			throws IllegalArgumentException {
 
 		BewerbungenZuAusschreibungenReport report = new BewerbungenZuAusschreibungenReport();
-		
+
 		report.setTitle("Bewerbungen auf Ausschreibungen Report");
 		report.setHeaderData(new SimpleParagraph("Ausschreibender: " + o.getName()));
 		report.setCreated(new Date());
-		
+
 		Vector<Ausschreibung> asV = getAusschreibungFor(o);
-		
-		for(Ausschreibung as : asV) {
+
+		for (Ausschreibung as : asV) {
 			Row asRow = new Row();
 			asRow.addColumn(new Column(as.getBezeichnung()));
 			report.addRow(asRow);
-			
-			Vector<Bewerbung> bwV = getBewerbungenFor(as);
-			
-			for(Bewerbung bw : bwV) {
-				
-				Organisationseinheit bewerber = pa.getBewerberFor(bw);
-				
-				Row row = new Row();
-				row.addColumn(new Column(" -> von :" + bewerber.getName()));
-				report.addRow(row);
-			}
 
-			if(bwV.size() == 0) {
+			Vector<Bewerbung> bwV = getBewerbungenFor(as);
+
+			if (bwV.size() == 0) {
 				Row row = new Row();
 				row.addColumn(new Column("<i>keine Bewerbungen..</i>"));
 				report.addRow(row);
+			} else {
+				for (Bewerbung bw : bwV) {
+
+					Organisationseinheit bewerber = pa.getBewerberFor(bw);
+
+					Row row = new Row();
+					row.addColumn(new Column(" -> von :" + bewerber.getName()));
+					report.addRow(row);
+				}
 			}
-			
+
 			Row gabRow = new Row();
 			gabRow.addColumn(new Column(" "));
 			report.addRow(gabRow);
 		}
-		
+
 		return report;
 	}
 
@@ -164,20 +170,20 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	public AlleBewerbungenReport createAlleBewerbungenReport(Organisationseinheit o) throws IllegalArgumentException {
 
 		AlleBewerbungenReport report = new AlleBewerbungenReport();
-		
+
 		report.setTitle("Meine Bewerbungen Report");
 		report.setHeaderData(new SimpleParagraph("Bewerbungen von: " + o.getName()));
 		report.setCreated(new Date());
-		
+
 		Vector<Bewerbung> bwV = getBewerbungenFrom(o);
-		
-		for(Bewerbung bw : bwV) {
+
+		for (Bewerbung bw : bwV) {
 			Row row = new Row();
 			Ausschreibung a = pa.getAusschreibungById(bw.getAusschreibungId());
 			row.addColumn(new Column(a.getBezeichnung()));
 			report.addRow(row);
 		}
-		
+
 		return report;
 	}
 
@@ -190,12 +196,32 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Projektverflechtungen");
 		report.setHeaderData(new SimpleParagraph("Verflechtungen von: " + o.getName()));
 		report.setCreated(new Date());
+
+		Vector<Bewerbung> bwO = getBewerbungenFrom(o);
+		Vector<Beteiligung> btO = getBeteiligungenFor(o);
+		
+		if(bwO.size() != 0) {
+			for(Bewerbung bw : bwO) {
+				Ausschreibung as = pa.getAusschreibungById(bw.getAusschreibungId());
+				Row row = new Row();
+				row.addColumn(new Column("Bewerbung: "));
+				row.addColumn(new Column(as.getBezeichnung()));
+				report.addRow(row);
+			}
+		}
+		
+		if(btO.size() != 0){
+			for(Beteiligung bt : btO) {
+				Projekt pr = pa.getProjektById(bt.getProjektId());
+				Row row = new Row();
+				row.addColumn(new Column("Projekt: "));
+				row.addColumn(new Column(pr.getName()));
+			}
+		}
 		
 		return report;
 	}
 
-	
-	
 	@Override
 	public Vector<Ausschreibung> getAlleAusschreibungenFor(ProjektMarktplatz pm) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -225,6 +251,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	@Override
 	public Vector<Ausschreibung> getMatchingAusschreibungenFor(Organisationseinheit o) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Vector<Beteiligung> getBeteiligungenFor(Organisationseinheit o) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

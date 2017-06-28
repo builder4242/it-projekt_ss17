@@ -30,18 +30,18 @@ import de.hdm.it_projekt.shared.bo.Person;
  */
 public class NewPersonForm extends Showcase {
 
-	Organisationseinheit organisationseinheitToDisplay = null;
-	Widget menu = null;
+	private Organisationseinheit organisationseinheitToDisplay = null;
+	private Widget menu = null;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
-	TextBox firstNameTextBox = new TextBox();
-	TextBox lastNameTextBox = new TextBox();
-	TextBox emailTextBox = new TextBox();
-	TextBox telTextBox = new TextBox();
-	TextBox strasseTextBox = new TextBox();
-	TextBox plzTextBox = new TextBox();
-	TextBox ortTextBox = new TextBox();
+	private TextBox firstNameTextBox = new TextBox();
+	private TextBox lastNameTextBox = new TextBox();
+	private TextBox emailTextBox = new TextBox();
+	private TextBox telTextBox = new TextBox();
+	private TextBox strasseTextBox = new TextBox();
+	private TextBox plzTextBox = new TextBox();
+	private TextBox ortTextBox = new TextBox();
 
 	/*
 	 * Im Konstruktor werden die anderen Widgets erzeugt. Alle werden in einem

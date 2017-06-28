@@ -555,9 +555,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public Organisationseinheit getBewerberFor(Bewerbung bw) throws IllegalArgumentException {
 
-		Person p = pMapper.findById(bw.getId());
-		Team t = tMapper.findById(bw.getId());
-		Unternehmen u = uMapper.findById(bw.getId());
+		Person p = pMapper.findById(bw.getOrganisationseinheitId());
+		Team t = tMapper.findById(bw.getOrganisationseinheitId());
+		Unternehmen u = uMapper.findById(bw.getOrganisationseinheitId());
 
 		Organisationseinheit o = null;
 
@@ -644,23 +644,28 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		Vector<Eigenschaft> oPP = eMapper.getByPartnerprofil(pp);
 		Vector<Ausschreibung> asV = asMapper.findAll();
 
+		if (oPP == null || asV == null)
+			return null;
+
 		Vector<Ausschreibung> asMatch = new Vector<Ausschreibung>();
 
 		for (Ausschreibung as : asV) {
 			Partnerprofil asPP = ppMapper.findById(as.getPartnerprofilId());
 			Vector<Eigenschaft> eV = eMapper.getByPartnerprofil(asPP);
 
-			for (Eigenschaft e : eV) {
-				for (Eigenschaft eO : oPP) {
-					if (e.getName() == eO.getName() && e.getWert() == eO.getWert()) {
-						if (!asMatch.contains(as)) {
-							asMatch.add(as);
+			if (eV != null) {
+				for (Eigenschaft e : eV) {
+					for (Eigenschaft eO : oPP) {
+						if (e.getName() == eO.getName() && e.getWert() == eO.getWert()) {
+							if (!asMatch.contains(as)) {
+								asMatch.add(as);
+							}
 						}
 					}
 				}
 			}
 		}
-		
+
 		return asMatch;
 	}
 }
