@@ -77,6 +77,7 @@
 
 
 /* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
+/* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
 
 .myprojekt-headline{
     font-weight: bold; 		/*ï¿½berschriften fett */
@@ -109,6 +110,7 @@
 }
 
 /* TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD */ 
+/* TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD */ 
 
 /* Syle für Textfelder, die beim anklicken blau hinterlehgt und 100px breiter werden */ 
 .myproject-textfield{
@@ -126,7 +128,7 @@
 .myproject-textfield:focus {
     background-color: lightblue;
     border: 3px solid #555;
-    width: 300px; 
+    width: 202px; 
 }
 
 /* Textfeld, dass beim anklicken blau hinterlegt aber nicht breiter wird. */ 
@@ -171,11 +173,12 @@
     background-color: lightblue;
     border: 3px solid #555;
     height: 150px;
-    width:300px; 
+    width: 202px; 
      
 }
 
 
+/* Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels */ 
 /* Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels */ 
 
 .myprojekt-horizontalpanel{
@@ -190,6 +193,7 @@
 }
 
 
+/* BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS */ 
 /* BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS */ 
 
 
@@ -288,7 +292,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    margin-left: 445px; 
+    margin-left: 372px; 
  	
 }
 
@@ -340,6 +344,7 @@
     font-size: 12px;
     border-radius: 2px; 
     margin-right:2px;
+    margin-bottom: 3px; 
     width: 180px; 
 }
 
@@ -403,6 +408,14 @@
 	margin-right: 5px; 
 	font-size: 16px; 
 
+}
+
+.myprojekt-loginlabel{
+	font-family: Verdana;
+	margin-left: 22px; 
+	font-size: 16px; 
+	color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
+    text-aligin: center; 	/*ï¿½berschriften zentreiren*/
 }
 
 
