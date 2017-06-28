@@ -21,7 +21,13 @@ import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
-import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
+import de.hdm.it_projekt.shared.report.Column;
+import de.hdm.it_projekt.shared.report.CompositeParagraph;
+import de.hdm.it_projekt.shared.report.Report;
+import de.hdm.it_projekt.shared.report.Row;
+import de.hdm.it_projekt.shared.report.SimpleParagraph;
+import de.hdm.it_projekt.shared.report.SimpleReport;
+
 import java.util.Date;
 import java.util.Vector;
 
@@ -40,8 +46,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	private TeamMapper tMapper = null;
 	private UnternehmenMapper uMapper = null;
 
-	private ProjektAdministration pa = null;
-
 	public ReportGeneratorImpl() throws IllegalArgumentException {
 
 	}
@@ -59,41 +63,27 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		this.pmMapper = ProjektMarktplatzMapper.projektMarktplatzMapper();
 		this.tMapper = TeamMapper.teamMapper();
 		this.uMapper = UnternehmenMapper.unternehmenMapper();
-
-		ProjektAdministrationImpl pa = new ProjektAdministrationImpl();
-		pa.init();
 	}
 
+	
 	@Override
-	public String getAlleAusschreibungenReport(ProjektMarktplatz pm) throws IllegalArgumentException {
+	public AlleAusschreibungenReport createAlleAusschreibungenReport(ProjektMarktplatz pm) throws IllegalArgumentException {
 		
-		AlleAusschreibungenReport report = new AlleAusschreibungenReport(asMapper.getByProjektmarktplatz(pm));
+		AlleAusschreibungenReport report = new AlleAusschreibungenReport();
 		
-		return report.runHTMLReport();
-	}
-
-	@Override
-	public String getMatchingAusschreibungenReport(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getBewerbungenAufAusschreibungReport(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getBewerbungenReport(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getProjektverflechtungenReport(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		report.setTitle("Alle Ausschreibungen Report");
+		report.setHeaderData(new SimpleParagraph("Projektmarktplatz: " + pm.getBezeichnung()));
+		report.setCreated(new Date());
+		
+		Vector<Ausschreibung> asV = getAlleAusschreibungenFor(pm);
+		
+		for(Ausschreibung as : asV) {
+			Row row = new Row();
+			row.addColumn(new Column(as.getBezeichnung()));
+			report.addRow(row);
+		}
+		
+		return report;
 	}
 
 	@Override
@@ -121,7 +111,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	@Override
-	public Vector<Bewerbung> getBewerbungenFor(Organisationseinheit o) throws IllegalArgumentException {
+	public Vector<Bewerbung> getBewerbungenFrom(Organisationseinheit o) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

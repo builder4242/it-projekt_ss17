@@ -9,11 +9,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.it_projekt.client.ClientsideSettings;
-import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.*;
 
-public class ReportGenerator implements EntryPoint {
+public class ReportGeneratorGUI implements EntryPoint {
 
 	/**
 	 * Begin Attribute fuer Login
@@ -24,7 +22,6 @@ public class ReportGenerator implements EntryPoint {
 	HorizontalPanel hPanel = null;
 	VerticalPanel menuPanel = null;
 	VerticalPanel contentPanel = null;
-
 	
 	public void onModuleLoad() {
 
@@ -48,8 +45,7 @@ public class ReportGenerator implements EntryPoint {
 
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(hPanel);
-		
-		
+				
 		/**
 		 * Button Definitionen
 		 */
@@ -75,6 +71,7 @@ public class ReportGenerator implements EntryPoint {
 		Button zugehoerigeProjekteButton = new Button("Zeige Projektverflechtungen meiner Bewerber");
 		zugehoerigeProjekteButton.setStyleName("myprojekt-reportbutton");
 
+		
 		/**
 		 * Hinzufuegen der Buttons zum vertikel Panel
 		 */
@@ -97,7 +94,7 @@ public class ReportGenerator implements EntryPoint {
 		public void onClick(ClickEvent event) {
 
 			contentPanel.clear();
-			contentPanel.add(new AlleAusschreibungenReportForm(cpm));
+			contentPanel.add(new AlleAusschreibungenHTML());
 
 		}
 	}
