@@ -16,9 +16,20 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
  */
 public class AlleAusschreibungenReport extends SimpleReport {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	private Vector<Ausschreibung> ausschreibungen = null;
+	
+	public AlleAusschreibungenReport(Vector<Ausschreibung> as) {
+		super("Alle Ausschreibungen Report");
+		this.ausschreibungen = as;
+		
+		run();
+	}
+	
+	private void run() {
+		for(Ausschreibung as : ausschreibungen) {
+			this.addRow(as.getBezeichnung());
+		}
+	}
 }

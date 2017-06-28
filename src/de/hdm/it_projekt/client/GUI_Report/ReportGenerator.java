@@ -1,28 +1,17 @@
 package de.hdm.it_projekt.client.GUI_Report;
 
-import java.util.Vector;
-
 import com.google.gwt.core.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
-import de.hdm.it_projekt.server.report.*;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
-import de.hdm.it_projekt.shared.ReportGeneratorAsync;
 import de.hdm.it_projekt.shared.bo.*;
-import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
-import de.hdm.it_projekt.shared.report.Row;
-import de.hdm.it_projekt.shared.report.SimpleReport;
 
 public class ReportGenerator implements EntryPoint {
 
@@ -36,8 +25,7 @@ public class ReportGenerator implements EntryPoint {
 	VerticalPanel menuPanel = null;
 	VerticalPanel contentPanel = null;
 
-	ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
-
+	
 	public void onModuleLoad() {
 
 		/**
@@ -67,31 +55,25 @@ public class ReportGenerator implements EntryPoint {
 		 */
 		Button alleAusschreibungenButton = new Button("Zeige Alle Ausschreibungen");
 		alleAusschreibungenButton.setStyleName("myprojekt-reportbutton");
-		alleAusschreibungenButton.addClickHandler(new ChangeClickhandler());
+		alleAusschreibungenButton.addClickHandler(new AlleAusschreibungenClickhandler());
 
-		Button passendeAusschreibungenButton = new Button("Zeige passende Ausschreibungen");
+		Button passendeAusschreibungenButton = new Button("Zeige zu mir passende Ausschreibungen");
 		passendeAusschreibungenButton.setStyleName("myprojekt-reportbutton");
-		passendeAusschreibungenButton.addClickHandler(new ChangeClickhandler());
 
-		Button bewerbungAufAusschreibungenButton = new Button("Zeige Bewerbungen für Ausschreibung");
+		Button bewerbungAufAusschreibungenButton = new Button("Zeige Bewerbungen für meine Ausschreibungen");
 		bewerbungAufAusschreibungenButton.setStyleName("myprojekt-reportbutton");
-		bewerbungAufAusschreibungenButton.addClickHandler(new ChangeClickhandler());
 
-		Button ausschreibungenAufBewerbungButton = new Button("Zeige Ausschreibung zur Bewerbung");
+		Button ausschreibungenAufBewerbungButton = new Button("Zeige meine Bewerbungen");
 		ausschreibungenAufBewerbungButton.setStyleName("myprojekt-reportbutton");
-		ausschreibungenAufBewerbungButton.addClickHandler(new ChangeClickhandler());
 
 		Button fanOutButton = new Button("Zeige Fan Out");
 		fanOutButton.setStyleName("myprojekt-reportbutton");
-		fanOutButton.addClickHandler(new ChangeClickhandler());
 
 		Button fanInButton = new Button("Zeige Fan In");
 		fanInButton.setStyleName("myprojekt-reportbutton");
-		fanInButton.addClickHandler(new ChangeClickhandler());
 
-		Button zugehoerigeProjekteButton = new Button("Zeige zugehoerige Projekte");
+		Button zugehoerigeProjekteButton = new Button("Zeige Projektverflechtungen meiner Bewerber");
 		zugehoerigeProjekteButton.setStyleName("myprojekt-reportbutton");
-		zugehoerigeProjekteButton.addClickHandler(new ChangeClickhandler());
 
 		/**
 		 * Hinzufuegen der Buttons zum vertikel Panel
@@ -109,14 +91,13 @@ public class ReportGenerator implements EntryPoint {
 			contentPanel.add(new ReportMarktuebersicht(this));
 			menuPanel.setVisible(false);
 		} 
-
 	}
 
-	private class ChangeClickhandler implements ClickHandler {
+	private class AlleAusschreibungenClickhandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
 
 			contentPanel.clear();
-			contentPanel.add(new AlleAusschreibungenReportForm());
+			contentPanel.add(new AlleAusschreibungenReportForm(cpm));
 
 		}
 	}

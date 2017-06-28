@@ -28,8 +28,7 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class ReportMarktuebersicht extends ReportShowcase {
 
-	final HorizontalPanel headerInfo = new HorizontalPanel();
-		
+
 	final Label ausgabe = new Label();
 	
 	ReportGenerator reportgenerator = null;
@@ -89,7 +88,6 @@ public class ReportMarktuebersicht extends ReportShowcase {
 				for(ProjektMarktplatz pm : result) {
 					pmL.add(pm);
 				}
-
 			}
 		});
 		
