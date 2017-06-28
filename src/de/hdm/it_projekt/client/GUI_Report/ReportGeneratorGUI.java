@@ -26,15 +26,12 @@ public class ReportGeneratorGUI implements EntryPoint {
 	protected static LoginInfo loginInfo = null;
 	protected static ProjektMarktplatz cpm = null;
 
-
 	ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
-	
-	
+
 	HorizontalPanel hPanel = null;
 	VerticalPanel menuPanel = null;
 	VerticalPanel contentPanel = null;
-	
-	
+
 	/**
 	 * Methode welche beim Seitenaufruf geladen wird und prueft ob User
 	 * eingeloggt ist. Falls ja wird Methode loadMyProjekt() aufgerufen, falls
@@ -58,7 +55,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 			}
 		});
 	}
-	
+
 	public void loadMyProjekt() {
 
 		/**
@@ -78,10 +75,9 @@ public class ReportGeneratorGUI implements EntryPoint {
 		hPanel.add(menuPanel);
 		hPanel.add(contentPanel);
 
-
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(hPanel);
-				
+
 		/**
 		 * Button Definitionen
 		 */
@@ -91,6 +87,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		Button passendeAusschreibungenButton = new Button("Zeige zu mir passende Ausschreibungen");
 		passendeAusschreibungenButton.setStyleName("myprojekt-reportbutton");
+		passendeAusschreibungenButton.addClickHandler(new PassendeAusschreibungClickHandler());
 
 		Button bewerbungAufAusschreibungenButton = new Button("Zeige Bewerbungen für meine Ausschreibungen");
 		bewerbungAufAusschreibungenButton.setStyleName("myprojekt-reportbutton");
@@ -124,12 +121,11 @@ public class ReportGeneratorGUI implements EntryPoint {
 		menuPanel.add(fanInButton);
 		menuPanel.add(zugehoerigeProjekteButton);
 		menuPanel.add(pmGUIButton);
-		
-		
-		if(cpm == null) {
+
+		if (cpm == null) {
 			contentPanel.add(new ReportMarktuebersicht(this));
 			menuPanel.setVisible(false);
-		} 
+		}
 	}
 
 	private class AlleAusschreibungenClickhandler implements ClickHandler {
@@ -140,7 +136,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		}
 	}
-	
+
 	private class AlleBewerbungenClickhandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
 
@@ -149,7 +145,24 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		}
 	}
-	
+
+	private class PassendeAusschreibungClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+
+			if (loginInfo.getCurrentUser().getPartnerprofilId() == 0) {
+				Window.alert("Sie besitzen noch kein Partnerprofil.");
+			} else {
+				contentPanel.clear();
+				contentPanel.add(new PassendeAusschreibungenHTML(loginInfo.getCurrentUser()));
+
+			}
+
+		}
+
+	}
+
 	private class BewerbungenZuAusschreibungenClickhandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
 
@@ -158,38 +171,38 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		}
 	}
-	
+
 	private class LoginCallback implements AsyncCallback<Person> {
 
 		@Override
 		public void onFailure(Throwable caught) {
 
 			Window.alert("Es ist ein Fehler aufgetreten.");
-			
+
 		}
 
 		@Override
 		public void onSuccess(Person result) {
 
-			if(result != null) {
+			if (result != null) {
 				loginInfo.setCurrentUser(result);
 				loadMyProjekt();
 			} else {
 				Window.alert("Sie besitzen noch kein Benutzerkonto bei uns, bitte legen Sie erst eins an.");
-				Window.Location.assign(GWT.getHostPageBaseURL() + "projektmarktplatz.html"); 
+				Window.Location.assign(GWT.getHostPageBaseURL() + "projektmarktplatz.html");
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	private class pmClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.Location.assign(GWT.getHostPageBaseURL() + "projektmarktplatz.html");
 		}
-		
+
 	}
 
 }

@@ -450,11 +450,11 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 				delete(e);
 			}
 		}
-		
+
 		Ausschreibung as = getAusschreibungby(pp);
 		as.setPartnerprofilId(0);
 		save(as);
-		
+
 		this.ppMapper.delete(pp);
 	}
 
@@ -611,7 +611,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		bw.setErstelldatum(new Date());
 		bw.setOrganisationseinheitId(o.getId());
 		bw.setBewerbungstext(bewerbungstext);
-		
+
 		return bwMapper.insert(bw);
 	}
 
@@ -623,23 +623,44 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Beteiligung createBeteiligungFor(Bewerbung bw) throws IllegalArgumentException {
-		
+
 		Ausschreibung as = getAusschreibungBy(bw);
 		Beteiligung bt = new Beteiligung();
-		
+
 		bt.setId(1);
 		bt.setProjektId(as.getProjektId());
 		bt.setOrganisationseinheitId(bw.getOrganisationseinheitId());
 		bt.setEnddatum(null);
 		bt.setStartdatum(null);
 		bt.setPersonentage(0);
-		
+
 		return btMapper.insert(bt);
 	}
 
 	@Override
-	public Vector<Ausschreibung> getAusschreibungByMatch(Partnerprofil pp) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Vector<Ausschreibung> getAusschreibungByMatch(Organisationseinheit o) throws IllegalArgumentException {
+
+		Partnerprofil pp = ppMapper.findById(o.getPartnerprofilId());
+		Vector<Eigenschaft> oPP = eMapper.getByPartnerprofil(pp);
+		Vector<Ausschreibung> asV = asMapper.findAll();
+
+		Vector<Ausschreibung> asMatch = new Vector<Ausschreibung>();
+
+		for (Ausschreibung as : asV) {
+			Partnerprofil asPP = ppMapper.findById(as.getPartnerprofilId());
+			Vector<Eigenschaft> eV = eMapper.getByPartnerprofil(asPP);
+
+			for (Eigenschaft e : eV) {
+				for (Eigenschaft eO : oPP) {
+					if (e.getName() == eO.getName() && e.getWert() == eO.getWert()) {
+						if (!asMatch.contains(as)) {
+							asMatch.add(as);
+						}
+					}
+				}
+			}
+		}
+		
+		return asMatch;
 	}
 }
