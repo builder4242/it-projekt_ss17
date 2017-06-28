@@ -18,7 +18,7 @@ import de.hdm.it_projekt.shared.bo.*;
 
 public class ProjektBeteiligungListView extends Showcase {
 
-	BeteiligungForm beteiligungForm = null;
+	private BeteiligungForm beteiligungForm = null;
 
 	private Projekt selectedProjekt = null;
 	private Beteiligung selectedBeteiligung = null;

@@ -26,14 +26,14 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class PartnerprofilForm extends Showcase {
 
-	Partnerprofil ppToDisplay = null;
-	PartnerprofilTreeViewModel pptvm = null;
+	private Partnerprofil ppToDisplay = null;
+	private PartnerprofilTreeViewModel pptvm = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
-	Label formTitel = new Label();
-	DateBox erstellDb = new DateBox();
-	DateBox aenderungDb = new DateBox();
+	private Label formTitel = new Label();
+	private DateBox erstellDb = new DateBox();
+	private DateBox aenderungDb = new DateBox();
 
 	public PartnerprofilForm(boolean ausschreibender) {
 

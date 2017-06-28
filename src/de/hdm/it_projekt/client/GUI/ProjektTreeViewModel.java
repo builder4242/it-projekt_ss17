@@ -26,13 +26,13 @@ import de.hdm.it_projekt.shared.bo.*;
 
 public class ProjektTreeViewModel implements TreeViewModel {
 
-	ProjektAdministrationAsync pa = null;
+	private ProjektAdministrationAsync pa = null;
 
-	ProjektForm projektForm = null;
-	AusschreibungForm ausschreibungForm = null;
-	BewerbungForm bewerbungForm = null;
-	BewertungForm bewertungForm = null;
-	VerticalPanel rightPanel = null;
+	protected ProjektForm projektForm = null;
+	protected AusschreibungForm ausschreibungForm = null;
+	protected BewerbungForm bewerbungForm = null;
+	protected BewertungForm bewertungForm = null;
+	private VerticalPanel rightPanel = null;
 
 	private Projekt selectedProjekt = null;
 	private Ausschreibung selectedAusschreibung = null;
