@@ -76,6 +76,11 @@ public class BewerbungForm extends Showcase {
 		newButton.setVisible(false);
 		buttonsPanel.add(newButton);
 
+		Button bewertenButton = new Button("Bewerten");
+		bewertenButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		bewertenButton.addClickHandler(new BewertenClickHandler());
+		buttonsPanel.add(bewertenButton);
+		
 		if(ausschreibender == false) {
 			textTb.setEnabled(true);
 			bewerberLb.setText(MyProjekt.loginInfo.getCurrentUser().getName());
@@ -131,6 +136,16 @@ public class BewerbungForm extends Showcase {
 			else
 				Window.alert("Es wurde nichts ausgewählt.");
 		}
+	}
+	
+	private class BewertenClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ptvm.bewerbungForm.setVisible(false);
+			ptvm.bewertungForm.setVisible(true);
+		}
+		
 	}
 	
 	class DeleteCallback implements AsyncCallback<Void> {

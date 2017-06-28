@@ -32,7 +32,7 @@ public class ReportMarktuebersicht extends ReportShowcase {
 		
 	final Label ausgabe = new Label();
 	
-	Widget menuBar = null;
+	ReportGenerator reportgenerator = null;
 	
 	ProjektAdministrationAsync pa = ClientsideSettings.getProjektAdministration();
 
@@ -46,9 +46,9 @@ public class ReportMarktuebersicht extends ReportShowcase {
 		}		
 	};
 
-	public ReportMarktuebersicht(Widget mb) {
+	public ReportMarktuebersicht(ReportGenerator rp) {
 		
-		menuBar = mb;
+		reportgenerator = rp;
 
 		Cell<ProjektMarktplatz> pmCell = new ProjektMarktplatzCell();
 		
@@ -64,7 +64,8 @@ public class ReportMarktuebersicht extends ReportShowcase {
 
 				ReportGenerator.cpm = pmSelectionModel.getSelectedObject();
 				
-				menuBar.setVisible(true);
+				reportgenerator.menuPanel.setVisible(true);
+				reportgenerator.contentPanel.clear();
 			}			
 		});
 		

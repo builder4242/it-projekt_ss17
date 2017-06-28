@@ -106,7 +106,7 @@ public class ReportGenerator implements EntryPoint {
 		
 		
 		if(cpm == null) {
-			contentPanel.add(new ReportMarktuebersicht(menuPanel));
+			contentPanel.add(new ReportMarktuebersicht(this));
 			menuPanel.setVisible(false);
 		} 
 
