@@ -38,27 +38,38 @@
     font-family: Verdana;
     font-color: blue; 
     font-size: 18px; 
+    margin-right: 28px; 
 }
 
 .Eigenschaft-Cell{
-	font-weight: bold; 		/*�berschriften fett */
+	font-weight: normal;	
     font-family: Verdana;
     font-color: blue; 
-    font-size: 18px; 
+    font-size: 16px; 
+    margin-right: 28px; 
+    min-width: 150px;
+    max-width:450px; 
 }
 
 .Ausschreibung-Cell{
 	font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
     font-color: blue; 
-    font-size: 18px; 
+    font-size: 16px; 
+    margin-right: 28px; 
+    min-width: 150px;
+    max-width:450px; 
 }
 
 .Partnerprofil-Cell{
-	font-weight: bold; 		/*�berschriften fett */
+	font-weight: normal; 		
     font-family: Verdana;
     font-color: blue; 
-    font-size: 18px; 
+    font-size: 16px; 
+    margin-right: 28px; 
+    margin-top: 7px; 
+    min-width: 150px;
+    max-width:450px;  
 }
 
 .Projekt-Cell{
@@ -66,13 +77,19 @@
     font-family: Verdana;
     font-color: blue; 
     font-size: 18px; 
+    margin-right: 28px; 
+    min-width: 150px;
+    max-width:450px; 
 }
 
 .Projektleiter-Cell{
-	font-weight: bold; 		/*�berschriften fett */
+	font-weight: normal; 		
     font-family: Verdana;
     font-color: blue; 
     font-size: 18px; 
+    margin-right: 28px;
+    min-width: 150px;
+    max-width:450px;  
 }
 
 
@@ -173,7 +190,7 @@
 .myprojekt-textarea:focus {
     background-color: lightblue;
     border: 3px solid #555;
-    height: 2600px;
+    height: 260px;
     width: 202px; 
      
 }
