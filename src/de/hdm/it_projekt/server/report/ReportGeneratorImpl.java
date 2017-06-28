@@ -15,6 +15,7 @@ import de.hdm.it_projekt.shared.ReportGenerator;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Beteiligung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
+import de.hdm.it_projekt.shared.bo.Eigenschaft;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
@@ -99,8 +100,22 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public PassendeAusschreibungenReport createPassendeAusschreibungenReport(Organisationseinheit o)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PassendeAusschreibungenReport report = new PassendeAusschreibungenReport();
+				
+		report.setTitle("Dem eigenen Partnerprofil entsprechende Ausschreibungen");
+		report.setHeaderData(new SimpleParagraph("Partnerprofilvergleich für: " + o.getName()));
+		report.setCreated(new Date());
+		
+		Vector<Ausschreibung> asMatch = pa.getAusschreibungByMatch(o);
+		
+		for(Ausschreibung as : asMatch) {
+			Row row = new Row();
+			row.addColumn(new Column(as.getBezeichnung()));
+			report.addRow(row);
+		}
+		
+		return report;
 	}
 
 	@Override
@@ -130,6 +145,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				row.addColumn(new Column(" -> von :" + bewerber.getName()));
 				report.addRow(row);
 			}
+
+			if(bwV.size() == 0) {
+				Row row = new Row();
+				row.addColumn(new Column("<i>keine Bewerbungen..</i>"));
+				report.addRow(row);
+			}
+			
+			Row gabRow = new Row();
+			gabRow.addColumn(new Column(" "));
+			report.addRow(gabRow);
 		}
 		
 		return report;
@@ -159,10 +184,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit o)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+
+		ProjektverflechtungenReport report = new ProjektverflechtungenReport();
+
+		report.setTitle("Projektverflechtungen");
+		report.setHeaderData(new SimpleParagraph("Verflechtungen von: " + o.getName()));
+		report.setCreated(new Date());
+		
+		return report;
 	}
 
+	
+	
 	@Override
 	public Vector<Ausschreibung> getAlleAusschreibungenFor(ProjektMarktplatz pm) throws IllegalArgumentException {
 		// TODO Auto-generated method stub

@@ -75,7 +75,7 @@ public interface ProjektAdministration extends RemoteService {
 	
 	public Vector<Bewerbung> getBewerbungBy(Ausschreibung as) throws IllegalArgumentException;
 	
-	public Vector<Ausschreibung> getAusschreibungByMatch(Partnerprofil pp) throws IllegalArgumentException;
+	public Vector<Ausschreibung> getAusschreibungByMatch(Organisationseinheit o) throws IllegalArgumentException;
 	
 	
 	
