@@ -31,6 +31,8 @@ public class OEigenschaftForm extends Showcase {
 
 		form.setWidget(1, 0, nameTb);
 		form.setWidget(1, 1, wertTb);
+		nameTb.setStyleName("myproject-textfield");
+		wertTb.setStyleName("myproject-textfield"); 
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
