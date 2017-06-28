@@ -1,5 +1,7 @@
 package de.hdm.it_projekt.shared.report;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -86,7 +88,7 @@ public class HTMLReportWriter extends ReportWriter {
   public String getTrailer() {
     return "</body></html>";
   }
-
+  
   /**
    * Prozessieren des übergebenen Reports und Ablage im Zielformat. Ein Auslesen
    * des Ergebnisses kann später mittels <code>getReportText()</code> erfolgen.
@@ -94,7 +96,7 @@ public class HTMLReportWriter extends ReportWriter {
    * @param r der zu prozessierende Report
    */
   @Override
-public void process(AlleAusschreibungenReport r) {
+public void process(SimpleReport r) {
     // Zunächst löschen wir das Ergebnis vorhergehender Prozessierungen.
     this.resetReportText();
 
@@ -112,7 +114,7 @@ public void process(AlleAusschreibungenReport r) {
     result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
     result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData())
         + "</b></td>");
-    result.append("</tr><tr><td></td><td>" + r.getCreated().toString()
+    result.append("</tr><tr><td></td><td>" + r.getCreated()
         + "</td></tr></table>");
 
     Vector<Row> rows = r.getRows();

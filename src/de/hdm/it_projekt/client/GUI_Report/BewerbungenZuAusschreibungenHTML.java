@@ -3,19 +3,21 @@ package de.hdm.it_projekt.client.GUI_Report;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
+import de.hdm.it_projekt.client.ClientsideSettings;
+import de.hdm.it_projekt.shared.ReportGeneratorAsync;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.BewerbungenZuAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.HTMLReportWriter;
 
 
-public class AlleAusschreibungenHTML extends Showcase {
+public class BewerbungenZuAusschreibungenHTML extends Showcase {
 
-	private ProjektMarktplatz pm = null;
+	private Organisationseinheit o = null;
 	
-	public AlleAusschreibungenHTML(ProjektMarktplatz cpm) {
-		this.pm = cpm;
+	public BewerbungenZuAusschreibungenHTML(Organisationseinheit o) {
+		this.o = o;
 	}
-	
 	/**
 	 * Jeder Showcase muss die <code>run()</code>-Methode implementieren. Sie
 	 * ist eine "Einschubmethode", die von einer Methode der Basisklasse
@@ -24,15 +26,15 @@ public class AlleAusschreibungenHTML extends Showcase {
 	@Override
 	protected void run() {
 
-		if (this.pm != null) {
-			rp.createAlleAusschreibungenReport(this.pm, new AlleAusschreibungenReportCallback(this));
+		if (o != null) {
+			rp.createBewerbungenZuAusschreibungenReport(o, new BewerbungenZuAusschreibungenReportCallback(this));
 		}
 	}
 
-	class AlleAusschreibungenReportCallback implements AsyncCallback<AlleAusschreibungenReport> {
+	class BewerbungenZuAusschreibungenReportCallback implements AsyncCallback<BewerbungenZuAusschreibungenReport> {
 		private Showcase showcase = null;
 
-		public AlleAusschreibungenReportCallback(Showcase c) {
+		public BewerbungenZuAusschreibungenReportCallback(Showcase c) {
 			this.showcase = c;
 		}
 
@@ -42,7 +44,7 @@ public class AlleAusschreibungenHTML extends Showcase {
 		}
 
 		@Override
-		public void onSuccess(AlleAusschreibungenReport report) {
+		public void onSuccess(BewerbungenZuAusschreibungenReport report) {
 			if (report != null) {
 				HTMLReportWriter writer = new HTMLReportWriter();
 				writer.process(report);

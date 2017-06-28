@@ -36,9 +36,7 @@ public class MyProjekt implements EntryPoint {
 	protected static LoginInfo loginInfo = null;
 	protected static ProjektMarktplatz cpm = null;
 
-	static interface ProjektTreeResources extends CellTree.Resources {
 
-	}
 	/* Ende Attribute fuer Login */
 
 	/**
