@@ -109,7 +109,10 @@ public class ReportGeneratorGUI implements EntryPoint {
 		Button zugehoerigeProjekteButton = new Button("Zeige Projektverflechtungen meiner Bewerber");
 		zugehoerigeProjekteButton.setStyleName("myprojekt-reportbutton");
 
-		
+		Button pmGUIButton = new Button("zum ProjektMarktplatz");
+		pmGUIButton.setStyleName("myprojekt-reportbutton");
+		pmGUIButton.addClickHandler(new pmClickHandler());
+
 		/**
 		 * Hinzufuegen der Buttons zum vertikel Panel
 		 */
@@ -120,6 +123,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 		menuPanel.add(fanOutButton);
 		menuPanel.add(fanInButton);
 		menuPanel.add(zugehoerigeProjekteButton);
+		menuPanel.add(pmGUIButton);
 		
 		
 		if(cpm == null) {
@@ -175,6 +179,15 @@ public class ReportGeneratorGUI implements EntryPoint {
 				Window.Location.assign(GWT.getHostPageBaseURL() + "projektmarktplatz.html"); 
 			}
 			
+		}
+		
+	}
+	
+	private class pmClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			Window.Location.assign(GWT.getHostPageBaseURL() + "projektmarktplatz.html");
 		}
 		
 	}

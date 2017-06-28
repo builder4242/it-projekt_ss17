@@ -422,7 +422,7 @@ public class BewerbungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM organisationseinheit WHERE organisationseinheit.ID=" + o.getId());
+					.executeQuery("SELECT ID FROM bewerbung WHERE Organisationseinheit_ID=" + o.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewerbungs-Objekt erstellt.

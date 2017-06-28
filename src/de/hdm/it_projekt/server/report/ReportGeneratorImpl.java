@@ -170,12 +170,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	@Override
-	public Vector<Ausschreibung> getMatchingAusschreibungenFor(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Vector<Ausschreibung> getAusschreibungFor(Organisationseinheit o) throws IllegalArgumentException {
 		return asMapper.getByProjektleiter(o);
 	}
@@ -193,6 +187,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public Vector<Organisationseinheit> getBewerberForAusschreibenden(Organisationseinheit o)
 			throws IllegalArgumentException {
+		return null;
+	}
+
+	@Override
+	public Vector<Ausschreibung> getMatchingAusschreibungenFor(Organisationseinheit o) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }
