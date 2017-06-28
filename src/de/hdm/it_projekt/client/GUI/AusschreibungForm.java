@@ -79,7 +79,7 @@ public class AusschreibungForm extends Showcase {
 
 		HorizontalPanel buttonOPanel = new HorizontalPanel();
 		this.add(buttonOPanel);
-		Button newBewerbungButton = new Button("Bewerbung anlegen");
+		Button newBewerbungButton = new Button();
 		newBewerbungButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newBewerbungButton.addClickHandler(new NewBewerbungClickHandler());
 		buttonOPanel.add(newBewerbungButton);
@@ -95,9 +95,11 @@ public class AusschreibungForm extends Showcase {
 			astextgTb.setEnabled(false);
 			buttonsPanel.setVisible(false);
 			showPartnerprofilButton.setText("Partnerprofil anzeigen");
+			newBewerbungButton.setText("Bewerbung anlegen");
 			this.add(newBewerbungButton);
 		} else {
 			showPartnerprofilButton.setText("Partnerprofil verwalten");
+			newBewerbungButton.setText("Bewerbung anzeigen");
 		}
 	}
 
