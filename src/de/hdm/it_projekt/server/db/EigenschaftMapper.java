@@ -348,6 +348,10 @@ public class EigenschaftMapper {
 
 	public Vector<Eigenschaft> getByPartnerprofil(Partnerprofil pp) {
 
+		if(pp == null)
+			return null;
+		
+		
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Eigenschaft> result = new Vector<Eigenschaft>();

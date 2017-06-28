@@ -644,12 +644,20 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		Vector<Eigenschaft> oPP = eMapper.getByPartnerprofil(pp);
 		Vector<Ausschreibung> asV = asMapper.findAll();
 
+		if(oPP == null || asV == null)
+			return null;
+		
+		
 		Vector<Ausschreibung> asMatch = new Vector<Ausschreibung>();
 
+		next:
 		for (Ausschreibung as : asV) {
 			Partnerprofil asPP = ppMapper.findById(as.getPartnerprofilId());
 			Vector<Eigenschaft> eV = eMapper.getByPartnerprofil(asPP);
-
+			
+			if(asPP == null || eV.size() == 0)
+				break next;
+			
 			for (Eigenschaft e : eV) {
 				for (Eigenschaft eO : oPP) {
 					if (e.getName() == eO.getName() && e.getWert() == eO.getWert()) {
