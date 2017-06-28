@@ -29,38 +29,43 @@ public class AusschreibungForm extends Showcase {
 
 	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
-	Label formTitel = new Label();
-	TextBox bezeichnungTb = new TextBox();
-	DateBox fristDb = new DateBox();
-	TextArea astextgTb = new TextArea();
+	Label formTitel = new Label();				/** Label für die Formularüberschrift */ 
+	TextBox bezeichnungTb = new TextBox();		/** TextBox für die Bezeichung */ 
+	DateBox fristDb = new DateBox();			/** DateBox für die Bewerbungsfrist */ 
+	TextArea astextgTb = new TextArea();		/** TextArea für den Ausschreibungstext */ 
 
 	public AusschreibungForm(boolean ausschreibender) {
 
-		formTitel.setText("Ausschreibung");
-		formTitel.setStyleName("h1");
-		this.add(formTitel);
+		formTitel.setText("Ausschreibung");     /** Text für Überschrift setzen */ 
+		formTitel.setStyleName("h1");			/** CSS Klasse h1 auf Überschrift anwenden */ 
+		this.add(formTitel);					/** Überschrift zum Panel hinzufügen */ 
 
-		Grid form = new Grid(3, 2);
-		form.addStyleName("myprojekt-formlabel");
-		this.add(form);
+		Grid form = new Grid(3, 2);						/** Grid zur Anordung erstellen */ 
+		form.addStyleName("myprojekt-formlabel");		/** CSS Klasse anwenden */ 
+		this.add(form);									/** Überschrift zum Panel hinzufügen */ 
 
-		form.setWidget(0, 0, new Label("Bezeichnung"));
-		form.setWidget(0, 1, bezeichnungTb);
-		bezeichnungTb.setStyleName("myproject-textfield");
+		form.setWidget(0, 0, new Label("Bezeichnung"));		/** Nues Label erstellen und positionieren */ 
+		form.setWidget(0, 1, bezeichnungTb);				/** Textbox im Grid positionieren */ 
+		bezeichnungTb.setStyleName("myproject-textfield");	/** CSS Klasse auf Textfeld anwenden */ 
 
-		form.setWidget(1, 0, new Label("Bewerbungsfrist"));
-		form.setWidget(1, 1, fristDb);
-		fristDb.setStyleName("myproject-textfield");
-		fristDb.setFormat(new DateBox.DefaultFormat(fmt));
+		form.setWidget(1, 0, new Label("Bewerbungsfrist"));	/** Neues Label erstellen und positionieren */ 
+		form.setWidget(1, 1, fristDb);						/** DateBox im Grif positionieren */ 
+		fristDb.setStyleName("myproject-textfield");		/** CSS Klasse auf DateBox anwenden */ 
+		fristDb.setFormat(new DateBox.DefaultFormat(fmt));	/** Format für DateBox festlegen */ 
 
-		form.setWidget(2, 0, new Label("Ausschreibungstext"));
-		form.setWidget(2, 1, astextgTb);
-		astextgTb.setStyleName("myprojekt-textarea");
+		form.setWidget(2, 0, new Label("Ausschreibungstext"));	/** Neues Label erstellen und positionieren */ 
+		form.setWidget(2, 1, astextgTb);						/** TextBox im Grid platzieren */ 
+		astextgTb.setStyleName("myprojekt-textarea");			/** CSS Klasse auf TextBox anwenden */ 
+
+
+		HorizontalPanel buttonsPanel = new HorizontalPanel();	/** HorizontalPanel für Buttons anlegen */ 
 
 		
-		HorizontalPanel buttonsPanel = new HorizontalPanel();
+
 		this.add(buttonsPanel);
 		buttonsPanel.addStyleName("myprojekt-buttonspanel");
+
+
 
 		Button changeButton = new Button("Ändern");
 		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
@@ -88,6 +93,7 @@ public class AusschreibungForm extends Showcase {
 		showPartnerprofilButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		showPartnerprofilButton.addClickHandler(new showPartnerprofilClickHandler());
 		buttonOPanel.add(showPartnerprofilButton);
+
 
 		if(ausschreibender == false) {
 			bezeichnungTb.setEnabled(false);
