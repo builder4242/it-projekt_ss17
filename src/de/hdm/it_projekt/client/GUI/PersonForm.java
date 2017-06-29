@@ -164,7 +164,7 @@ private class DeleteClickHandler implements ClickHandler {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			
+			pa.delete(ps, callback);
 			
 		}
 		
