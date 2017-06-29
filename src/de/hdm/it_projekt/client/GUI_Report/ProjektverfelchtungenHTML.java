@@ -13,9 +13,11 @@ import de.hdm.it_projekt.shared.report.ProjektverflechtungenReport;
 public class ProjektverfelchtungenHTML extends Showcase {
 
 	private Organisationseinheit o = null;
+	private ProjektMarktplatz cpm = null;
 	
-	public ProjektverfelchtungenHTML(Organisationseinheit o) {
+	public ProjektverfelchtungenHTML(Organisationseinheit o, ProjektMarktplatz pm) {
 		this.o = o;
+		this.cpm = pm;
 	}
 	
 	/**
@@ -26,8 +28,8 @@ public class ProjektverfelchtungenHTML extends Showcase {
 	@Override
 	protected void run() {
 
-		if (this.o != null) {
-			rp.createProjektverflechtungenReport(this.o, new ProjektverflechtungenReportCallback(this));
+		if (this.o != null && cpm != null) {
+			rp.createProjektverflechtungenReport(this.o, this.cpm, new ProjektverflechtungenReportCallback(this));
 		}
 	}
 

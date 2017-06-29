@@ -210,8 +210,8 @@ public class BewerbungMapper {
 				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
-				bw.setAusschreibungId(rs.getInt("ID"));
-				bw.setOrganisationseinheitId(rs.getInt("ID"));
+				bw.setAusschreibungId(rs.getInt("Ausschreibung_ID"));
+				bw.setOrganisationseinheitId(rs.getInt("Organisationseinheit_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bw);

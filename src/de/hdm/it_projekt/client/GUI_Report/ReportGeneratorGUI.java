@@ -177,8 +177,9 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			contentPanel.clear();
-			contentPanel.add(new ProjektverfelchtungenHTML(loginInfo.getCurrentUser()));
+			contentPanel.add(new ProjektverfelchtungenHTML(loginInfo.getCurrentUser(), cpm));
 
 		}
 		

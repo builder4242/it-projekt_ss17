@@ -29,7 +29,7 @@ public interface ReportGenerator extends RemoteService {
 	
 	public AlleBewerbungenReport createAlleBewerbungenReport(Organisationseinheit o) throws IllegalArgumentException;
 	
-	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit o) throws IllegalArgumentException;
+	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit o, ProjektMarktplatz pm) throws IllegalArgumentException;
 	
 	public Vector<Ausschreibung> getAlleAusschreibungenFor(ProjektMarktplatz pm) throws IllegalArgumentException;
 	

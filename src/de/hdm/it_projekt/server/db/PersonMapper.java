@@ -221,6 +221,9 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
+				
+				if(rs.getString("Partnerprofil_ID") != "NULL")
+					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(p);
@@ -272,6 +275,9 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
+
+				if(rs.getString("Partnerprofil_ID") != "NULL")
+					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
 		} catch (SQLException e5) {
