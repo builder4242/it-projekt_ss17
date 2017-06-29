@@ -116,9 +116,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public ProjektMarktplatz createProjektMarktplatz(String bez) throws IllegalArgumentException {
+	public ProjektMarktplatz createProjektMarktplatz(String bez, int adminID) throws IllegalArgumentException {
 		ProjektMarktplatz pm = new ProjektMarktplatz();
 		pm.setBezeichnung(bez);
+		pm.setAdminId(adminID);
 
 		pm.setId(1);
 
@@ -324,12 +325,6 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public void projektmarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o)
-			throws IllegalArgumentException {
-		this.pmMapper.projektMarktplatzBeitreten(pm, o);
-	}
-
-	@Override
 	public void save(ProjektMarktplatz pm) throws IllegalArgumentException {
 
 		this.pmMapper.update(pm);
@@ -404,6 +399,11 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(ProjektMarktplatz pm) throws IllegalArgumentException {
 
+		Vector<Projekt> prV = getAlleProjekteFor(pm);
+		for(Projekt pr : prV) {
+			delete(pr);
+		}
+		
 		this.pmMapper.delete(pm);
 	}
 
@@ -437,6 +437,11 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		if (pp != null)
 			delete(pp);
 
+		Vector<Bewerbung> bwV = getBewerbungFor(as);
+		for(Bewerbung bw : bwV) {
+			delete(bw);
+		}
+		
 		this.asMapper.delete(as);
 	}
 
@@ -461,7 +466,6 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Eigenschaft e) throws IllegalArgumentException {
 
-		save(getPartnerprofilById(e.getPartnerprofilId()));
 		this.eMapper.delete(e);
 	}
 

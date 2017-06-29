@@ -95,13 +95,12 @@ public class ProjektMarktplatzMapper {
 				 * Primaerschluessel.
 				 */
 				pm.setId(rs.getInt("maxid") + 1);
-				System.out.println(pm.getId());
-
+				
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO projektmarktplatz (ID, Bezeichnung, Admin_ID) " + "VALUES ('" + pm.getId() + "','"
-						+ pm.getBezeichnung() + "','" + pm.getAdminId() + "')");
+				stmt.executeUpdate("INSERT INTO projektmarktplatz (ID, Bezeichnung, Admin_ID) VALUES (" + pm.getId() + ",'"
+						+ pm.getBezeichnung() + "'," + pm.getAdminId() + ")");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -126,8 +125,8 @@ public class ProjektMarktplatzMapper {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("UPDATE projektmarktplatz " + "SET Bezeichnung=\"" + pm.getBezeichnung() + "\""
-					+ "Admin_ID=\"" + pm.getAdminId()
-					+ "WHERE ID=" + pm.getId());
+					+ " Admin_ID=" + pm.getAdminId()
+					+ " WHERE ID=" + pm.getId());
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -188,6 +187,7 @@ public class ProjektMarktplatzMapper {
 				ProjektMarktplatz pm = new ProjektMarktplatz();
 				pm.setId(rs.getInt("ID"));
 				pm.setBezeichnung(rs.getString("Bezeichnung"));
+				pm.setAdminId(rs.getInt("Admin_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pm);
@@ -234,6 +234,7 @@ public class ProjektMarktplatzMapper {
 				ProjektMarktplatz pm = new ProjektMarktplatz();
 				pm.setId(rs.getInt("ID"));
 				pm.setBezeichnung(rs.getString("Bezeichnung"));
+				pm.setAdminId(rs.getInt("Admin_ID"));
 
 				return pm;
 			}
@@ -263,7 +264,7 @@ public class ProjektMarktplatzMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT pm.ID, pm.Bezeichnung FROM projektmarktplatz AS pm "
+			ResultSet rs = stmt.executeQuery("SELECT pm.ID, pm.Admin_ID, pm.Bezeichnung FROM projektmarktplatz AS pm "
 					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON pm.id=Projektmarktplatz_ID "
 					+ "WHERE Organisationseinheit_ID= " + o.getId());
 
@@ -276,6 +277,7 @@ public class ProjektMarktplatzMapper {
 				ProjektMarktplatz pm = new ProjektMarktplatz();
 				pm.setId(rs.getInt("pm.ID"));
 				pm.setBezeichnung(rs.getString("pm.Bezeichnung"));
+				pm.setAdminId(rs.getInt("pm.Admin_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(pm);
@@ -287,28 +289,4 @@ public class ProjektMarktplatzMapper {
 		// Ergebnisvektor zurueckgeben
 		return result;
 	}
-
-	/**
-	 * 
-	 * @param pm
-	 * @param o
-	 */
-	public void projektMarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o) {
-
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate(
-					"INSERT INTO projektmarktplatz_has_organisationseinheit (Projektmarktplatz_ID, Organisationseinheit_ID) "
-							+ "VALUES ('" + pm.getId() + "','" + o.getId() + "')");
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 }

@@ -15,6 +15,7 @@ import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSe
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -32,7 +33,10 @@ public class Marktuebersicht extends Showcase {
 	final HorizontalPanel headerInfo = new HorizontalPanel();
 		
 	final Label ausgabe = new Label();
-	final VerticalPanel prVp= new VerticalPanel();
+	
+	HorizontalPanel hP = new HorizontalPanel();
+	VerticalPanel vP = new VerticalPanel();
+	VerticalPanel formPanel = new VerticalPanel();
 	
 	final ProvidesKey<ProjektMarktplatz> KEY_PROVIDER = new ProvidesKey<ProjektMarktplatz>() {
 
@@ -44,7 +48,6 @@ public class Marktuebersicht extends Showcase {
 	};
 
 	public Marktuebersicht() {
-
 
 		Cell<ProjektMarktplatz> pmCell = new ProjektMarktplatzCell();
 		
@@ -67,6 +70,18 @@ public class Marktuebersicht extends Showcase {
 				Label pmLabel = new Label(MyProjekt.cpm.getBezeichnung());	
 				pmLabel.setStyleName("myprojekt-infoleistelabelbold");
 				headerInfo.add(pmLabel);
+								
+				if(MyProjekt.cpm.getAdminId() == MyProjekt.loginInfo.getCurrentUser().getId()) {
+					
+					Button deleteButton = new Button("löschen");
+					deleteButton.addClickHandler(new DeleteClickHandler(MyProjekt.cpm));
+					headerInfo.add(deleteButton);
+					
+					Button updateButton = new Button("ändern");
+					updateButton.addClickHandler(new UpdateClickHandler(MyProjekt.cpm));
+					headerInfo.add(updateButton);
+
+				}
 					
 				RootPanel.get("pminfo").clear();
 				RootPanel.get("pminfo").add(headerInfo);
@@ -75,7 +90,7 @@ public class Marktuebersicht extends Showcase {
 				RootPanel.get("content").add(new Projektuebersicht());
 			}			
 		});
-		
+
 		
 		ListDataProvider<ProjektMarktplatz> pmDataProvider = new ListDataProvider<ProjektMarktplatz>();
 		pmDataProvider.addDataDisplay(memberPmCl);
@@ -100,15 +115,87 @@ public class Marktuebersicht extends Showcase {
 			}
 		});
 		
+		hP.add(vP);
+		hP.add(formPanel);
 		
+		Button newPm = new Button("Marktplatz anlegen");
+		newPm.addClickHandler(new NewPmClickHandler());
+		vP.add(memberPmCl);
+		vP.add(newPm);
 		ausgabe.setText("Bitte wählen Sie einen Marktplatz aus:");
 		ausgabe.setStyleName("h2"); 
-
 		this.add(ausgabe);
-		this.add(memberPmCl);
-		this.add(prVp);
-		this.add(new ProjektMarktplatzForm());
 
+		this.add(hP);		
+
+	}
+	
+	public void showMarktplatzForm(ProjektMarktplatz pm) {
+		ProjektMarktplatzForm pmf = new ProjektMarktplatzForm();
+		pmf.setSelected(pm);
+		formPanel.clear();
+		formPanel.add(pmf);
+	}
+	
+	private class NewPmClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			ProjektMarktplatzForm pmf = new ProjektMarktplatzForm();
+			pmf.setSelected(null);
+			formPanel.clear();
+			formPanel.add(pmf);			
+		}		
+	}
+	
+	private class DeleteClickHandler implements ClickHandler {
+
+		ProjektMarktplatz pm = null;
+		public DeleteClickHandler(ProjektMarktplatz pm) {
+			this.pm = pm;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			if(pm != null) {
+				pa.delete(pm, new DeleteCallback());
+			}
+		}		
+	}
+	
+	private class DeleteCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+
+			RootPanel.get("pminfo").clear();
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(new Marktuebersicht());
+			
+		}		
+	}
+	
+	private class UpdateClickHandler implements ClickHandler {
+
+		ProjektMarktplatz pm = null;
+		
+		public UpdateClickHandler(ProjektMarktplatz pm) {
+			this.pm = pm;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Marktuebersicht mu = new Marktuebersicht();
+			mu.showMarktplatzForm(pm);
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(mu);
+		}
+		
 	}
 }
 
