@@ -107,7 +107,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 		zugehoerigeProjekteButton.setStyleName("myprojekt-reportbutton");
 		zugehoerigeProjekteButton.addClickHandler(new ProjektverflechtungenClickHandler());
 
-		Button pmGUIButton = new Button("zum ProjektMarktplatz");
+		Button pmGUIButton = new Button("zum Projektmarktplatz");
 		pmGUIButton.setStyleName("myprojekt-switchreportbutton");
 		pmGUIButton.addClickHandler(new pmClickHandler());
 
@@ -177,8 +177,9 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			contentPanel.clear();
-			contentPanel.add(new ProjektverfelchtungenHTML(loginInfo.getCurrentUser()));
+			contentPanel.add(new ProjektverfelchtungenHTML(loginInfo.getCurrentUser(), cpm));
 
 		}
 		

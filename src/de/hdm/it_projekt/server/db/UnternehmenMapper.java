@@ -220,6 +220,9 @@ public class UnternehmenMapper {
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
 
+				if(rs.getString("Partnerprofil_ID") != "NULL")
+					u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(u);
 			}
@@ -269,6 +272,10 @@ public class UnternehmenMapper {
 				u.setPlz(rs.getInt("PLZ"));
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
+				
+				if(rs.getString("Partnerprofil_ID") != "NULL")
+					u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+
 
 			}
 		} catch (SQLException e5) {

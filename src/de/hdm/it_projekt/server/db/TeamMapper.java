@@ -186,7 +186,6 @@ public class TeamMapper {
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -223,7 +222,8 @@ public class TeamMapper {
 				t.setPlz(rs.getInt("PLZ"));
 				t.setOrt(rs.getString("Ort"));
 				t.setTel(rs.getString("Tel"));
-				t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+				if(rs.getString("Partnerprofil_ID") != "NULL")
+					t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(t);
@@ -273,8 +273,10 @@ public class TeamMapper {
 				t.setStrasse(rs.getString("Strasse"));
 				t.setPlz(rs.getInt("PLZ"));
 				t.setOrt(rs.getString("Ort"));
-				t.setTel(rs.getString("Tel"));
-				t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+				t.setTel(rs.getString("Tel"));			
+				
+				if(rs.getString("Partnerprofil_ID") != "NULL")
+					t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				return t;
 			}

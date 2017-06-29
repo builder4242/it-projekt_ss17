@@ -85,6 +85,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setHeaderData(new SimpleParagraph("Projektmarktplatz: " + pm.getBezeichnung()));
 		report.setCreated(new Date());
 
+		Row headline = new Row();
+		headline.addColumn(new Column("Ausschreibung"));
+		report.addRow(headline);
+
 		Vector<Ausschreibung> asV = getAlleAusschreibungenFor(pm);
 
 		for (Ausschreibung as : asV) {
@@ -108,7 +112,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		Vector<Ausschreibung> asMatch = pa.getAusschreibungByMatch(o);
 
-		if (asMatch == null) {
+		Row headline = new Row();
+		headline.addColumn(new Column("Ausschreibung"));
+		report.addRow(headline);
+
+		if (asMatch.size() == 0) {
 			Row row = new Row();
 			row.addColumn(new Column("Es wurden keine passenden Ausschreibungen gefunden."));
 			report.addRow(row);
@@ -134,10 +142,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setHeaderData(new SimpleParagraph("Ausschreibender: " + o.getName()));
 		report.setCreated(new Date());
 
+		Row headline = new Row();
+		headline.addColumn(new Column("Objekt"));
+		headline.addColumn(new Column("Name"));
+		report.addRow(headline);
+
+		
 		Vector<Ausschreibung> asV = getAusschreibungFor(o);
 
 		for (Ausschreibung as : asV) {
 			Row asRow = new Row();
+			asRow.addColumn(new Column("Ausschreibung"));
 			asRow.addColumn(new Column(as.getBezeichnung()));
 			report.addRow(asRow);
 
@@ -145,6 +160,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			if (bwV.size() == 0) {
 				Row row = new Row();
+				row.addColumn(new Column(" "));
 				row.addColumn(new Column("<i>keine Bewerbungen..</i>"));
 				report.addRow(row);
 			} else {
@@ -153,12 +169,14 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 					Organisationseinheit bewerber = pa.getBewerberFor(bw);
 
 					Row row = new Row();
-					row.addColumn(new Column(" -> von :" + bewerber.getName()));
+					row.addColumn(new Column("Bewerbung von :"));
+					row.addColumn(new Column(bewerber.getName()));
 					report.addRow(row);
 				}
 			}
 
 			Row gabRow = new Row();
+			gabRow.addColumn(new Column(" "));
 			gabRow.addColumn(new Column(" "));
 			report.addRow(gabRow);
 		}
@@ -177,6 +195,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		Vector<Bewerbung> bwV = getBewerbungenFrom(o);
 
+		Row headline = new Row();
+		headline.addColumn(new Column("Ausschreibung"));
+		report.addRow(headline);
+
 		for (Bewerbung bw : bwV) {
 			Row row = new Row();
 			Ausschreibung a = pa.getAusschreibungById(bw.getAusschreibungId());
@@ -188,7 +210,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	@Override
-	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit o)
+	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit o, ProjektMarktplatz pm)
 			throws IllegalArgumentException {
 
 		ProjektverflechtungenReport report = new ProjektverflechtungenReport();
@@ -196,12 +218,19 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Projektverflechtungen");
 		report.setHeaderData(new SimpleParagraph("Verflechtungen von: " + o.getName()));
 		report.setCreated(new Date());
-
+		
+		Vector<Projekt> prV = pa.getProjektByProjektleiter((Person)o, pm);
+		
 		Vector<Bewerbung> bwO = getBewerbungenFrom(o);
 		Vector<Beteiligung> btO = getBeteiligungenFor(o);
-		
-		if(bwO.size() != 0) {
-			for(Bewerbung bw : bwO) {
+
+		Row headline = new Row();
+		headline.addColumn(new Column("Objekt"));
+		headline.addColumn(new Column("Name"));
+		report.addRow(headline);
+
+		if (bwO.size() != 0) {
+			for (Bewerbung bw : bwO) {
 				Ausschreibung as = pa.getAusschreibungById(bw.getAusschreibungId());
 				Row row = new Row();
 				row.addColumn(new Column("Bewerbung: "));
@@ -209,16 +238,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				report.addRow(row);
 			}
 		}
-		
-		if(btO.size() != 0){
-			for(Beteiligung bt : btO) {
+
+		if (btO.size() != 0) {
+			for (Beteiligung bt : btO) {
 				Projekt pr = pa.getProjektById(bt.getProjektId());
 				Row row = new Row();
 				row.addColumn(new Column("Projekt: "));
 				row.addColumn(new Column(pr.getName()));
+				report.addRow(row);
 			}
 		}
-		
+
 		return report;
 	}
 
@@ -254,10 +284,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public Vector<Beteiligung> getBeteiligungenFor(Organisationseinheit o) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return btMapper.getByOrganisationseinheit(o);
 	}
 }

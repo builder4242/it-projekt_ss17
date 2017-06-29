@@ -9,6 +9,7 @@
     margin-top: 10px; 		/* Abstand oben */  
     margin-bottom: 5px; 	/* Abstand unten */ 
     margin-left: 2px;		/* Abstand links */ 
+    padding-left: 6px;		/* Abstand links */ 
 }
 
 /* 16px blaue Überschrift mit 10px Abstand nach oben und 5px Abstand nach unten. */ 
@@ -21,6 +22,7 @@
     margin-top: 10px; 		/* Abstand oben */ 
     margin-bottom: 5px; 	/* Abstand unten */ 
     margin-left: 2px;		/* Abstand links */ 
+    padding-left: 6px; 		/*Abstand links */ 
 }
 
 .h2_margin-top{
@@ -31,6 +33,7 @@
     font-size: 16px; 		/* Schriftröße */ 
     margin-top: 28px; 		/* Abstand oben */ 
     margin-bottom: 5px; 	/* Abstand unten */ 
+    padding-left: 6px;      /* Abstand links */ 
 }
 
 /* CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN */
@@ -39,10 +42,18 @@
 .ProjektMarktplatz-Cell{
 	font-weight: bold; 		/*ï¿½berschriften fett */
     font-family: Verdana;
-    font-color: #008CBA; 
-    font-size: 18px; 
-    margin-right: 28px; 
+    color: #000000; 
+    font-size: 20px;
+    width: 550px; 
+    background-color: #ffffff; 
+    padding-left: 20px; 
 }
+
+.ProjektMarktplatz-Cell:hover{
+	color: #008CBA; 
+}
+
+
 
 .Eigenschaft-Cell{
 	font-weight: normal;	
@@ -274,6 +285,11 @@
 
 }
 
+.myprojekt-menubutton:hover{
+    background-color: #5fb3ba; /* blau */
+    color: white;
+}
+
 .myprojekt-menubutton:active{
     position: relative;
     top: 2px;
@@ -348,7 +364,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    margin-left: 262px; 
+    margin-left: 200px; 
  	
 }
 
@@ -399,7 +415,7 @@
     display: inline-block;
     font-size: 12px;
     border-radius: 2px; 
-    margin-right:2px;
+    margin-right:20px;
     margin-bottom: 3px; 
     width: 180px; 
 }
@@ -447,9 +463,7 @@
 	color: #004080;
 	display: center; 
 	font-size: 18px; 
-	margin: 6px; 
-	margin-left: 40px; 
-	margin-right: 40px; 
+	padding: 5px; 
 }
 
 .myprojekt-label{
@@ -462,6 +476,7 @@
 	color: #004080;
 	display: center; 
 	margin-left: 5px; 
+	padding-left: 4px; 
 	
 }
 
@@ -485,6 +500,7 @@
 	margin-right: 20px;
 	margin-bottom: 5px;  
 	font-size: 17px; 
+	padding-left: 5px; 
 	
 }
 
@@ -494,6 +510,7 @@
 	color: #0498b7;  
 	font-size: 15px; 
 	margin-right: 2px; 
+	padding-left: 8px; 
 }
 
 .myprojekt-infoleistelabelbold{
@@ -502,6 +519,7 @@
 	color: #0498b7;  
 	font-size: 15px; 
 	margin-right: 2px; 
+	
 }
 
 .myprojekt-bezichungmarktplatzlabel{
@@ -511,6 +529,7 @@
 	margin-right: 5px; 
 	margin-left: 5px; 
 	font-size: 16px; 
+	padding-left: 20px; 
 
 }
 

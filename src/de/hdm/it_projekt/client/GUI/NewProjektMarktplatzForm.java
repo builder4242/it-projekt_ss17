@@ -44,7 +44,7 @@ public class NewProjektMarktplatzForm extends Showcase {
 		bezeichnungTextBox.setStyleName("myproject-anlegentextfield");
 	
 		
-		Button newBtn = new Button("anlegen");
+		Button newBtn = new Button("Anlegen");
 		newBtn.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		insertHp.add(newBtn);
 		
