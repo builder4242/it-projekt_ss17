@@ -164,11 +164,8 @@ private class DeleteClickHandler implements ClickHandler {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			if (asToDisplay != null) {
-				pa.delete(asToDisplay, new DeletePersonCallback(asToDisplay, ptvm.getSelectedProjekt()));
-			} else {
-				Window.alert("Es wurde nichts ausgewählt.");
-			}
+			pa.delete(ps, callback);
+			
 		}
 		
 	}
