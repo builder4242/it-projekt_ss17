@@ -39,7 +39,7 @@ public class Projektuebersicht extends Showcase {
 		
 		// einfuehrungHTML.setText(""); 
 		
-	//Test1
+
 		
 		this.add(einfuehrungHTML);
 		
