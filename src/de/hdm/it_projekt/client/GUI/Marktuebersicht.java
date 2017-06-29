@@ -107,7 +107,7 @@ public class Marktuebersicht extends Showcase {
 		this.add(ausgabe);
 		this.add(memberPmCl);
 		this.add(prVp);
-		this.add(new NewProjektMarktplatzForm());
+		this.add(new ProjektMarktplatzForm());
 
 	}
 }
