@@ -39,10 +39,17 @@
 .ProjektMarktplatz-Cell{
 	font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
-    font-color: #008CBA; 
-    font-size: 18px; 
-    margin-right: 28px; 
+    color: #000000; 
+    font-size: 20px;
+    width: 550px; 
+    background-color: #ffffff; 
 }
+
+.ProjektMarktplatz-Cell:hover{
+	color: #008CBA; 
+}
+
+
 
 .Eigenschaft-Cell{
 	font-weight: normal;	
@@ -274,6 +281,11 @@
 
 }
 
+.myprojekt-menubutton:hover{
+    background-color: #5fb3ba; /* blau */
+    color: white;
+}
+
 .myprojekt-menubutton:active{
     position: relative;
     top: 2px;
@@ -348,7 +360,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    margin-left: 262px; 
+    margin-left: 200px; 
  	
 }
 
