@@ -100,8 +100,8 @@ public class ProjektMarktplatzMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO projektmarktplatz (ID, Bezeichnung) " + "VALUES ('" + pm.getId() + "','"
-						+ pm.getBezeichnung() + "')");
+				stmt.executeUpdate("INSERT INTO projektmarktplatz (ID, Bezeichnung, Admin_ID) " + "VALUES ('" + pm.getId() + "','"
+						+ pm.getBezeichnung() + "','" + pm.getAdminId() + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -125,7 +125,8 @@ public class ProjektMarktplatzMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE projektmarktplatz " + "SET Bezeichnung=\"" + pm.getBezeichnung() + "\" "
+			stmt.executeUpdate("UPDATE projektmarktplatz " + "SET Bezeichnung=\"" + pm.getBezeichnung() + "\""
+					+ "Admin_ID=\"" + pm.getAdminId()
 					+ "WHERE ID=" + pm.getId());
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -178,7 +179,7 @@ public class ProjektMarktplatzMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Bezeichnung, Admin_ID FROM projektmarktplatz");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Projektmarktplatz-Objekt erstellt.
@@ -220,7 +221,7 @@ public class ProjektMarktplatzMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Bezeichnung FROM projektmarktplatz WHERE ID=" + id + " ORDER BY ID");
+					.executeQuery("SELECT ID, Bezeichnung, Admin_ID FROM projektmarktplatz WHERE ID=" + id + " ORDER BY ID");
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
