@@ -105,6 +105,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		Button zugehoerigeProjekteButton = new Button("Zeige Projektverflechtungen meiner Bewerber");
 		zugehoerigeProjekteButton.setStyleName("myprojekt-reportbutton");
+		zugehoerigeProjekteButton.addClickHandler(new ProjektverflechtungenClickHandler());
 
 		Button pmGUIButton = new Button("zum ProjektMarktplatz");
 		pmGUIButton.setStyleName("myprojekt-switchreportbutton");
@@ -170,6 +171,17 @@ public class ReportGeneratorGUI implements EntryPoint {
 			contentPanel.add(new BewerbungenZuAusschreibungenHTML(loginInfo.getCurrentUser()));
 
 		}
+	}
+	
+	private class ProjektverflechtungenClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			contentPanel.clear();
+			contentPanel.add(new ProjektverfelchtungenHTML(loginInfo.getCurrentUser()));
+
+		}
+		
 	}
 
 	private class LoginCallback implements AsyncCallback<Person> {

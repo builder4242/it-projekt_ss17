@@ -5,6 +5,7 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Beteiligung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
@@ -42,5 +43,6 @@ public interface ReportGeneratorAsync {
 
 	void createProjektverflechtungenReport(Organisationseinheit o, AsyncCallback<ProjektverflechtungenReport> callback);
 
+	void getBeteiligungenFor(Organisationseinheit o, AsyncCallback<Vector<Beteiligung>> callback);
 
 }

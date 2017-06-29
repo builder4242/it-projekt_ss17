@@ -451,14 +451,14 @@ public class AusschreibungMapper {
 
 			ResultSet rs = stmt.executeQuery("SELECT a.ID from ausschreibung as a"
 					+ " inner join projekt on projekt.ID=a.Projekt_ID"
-					+ " WHERE Projektleiter_ID=" + o.getId());
+					+ " WHERE projekt.Projektleiter_ID=" + o.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Ausschreibung-Objekt erstellt.
 			while (rs.next()) {
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(findById(rs.getInt("ID")));
+				result.addElement(findById(rs.getInt("a.ID")));
 			}
 		} catch (SQLException e9) {
 			e9.printStackTrace();

@@ -330,6 +330,9 @@ public class BewerbungMapper {
 	 */
 	public Vector<Bewerbung> getByAusschreibung(Ausschreibung as) {
 
+		if(as == null)
+			return null;
+		
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Bewerbung> result = new Vector<Bewerbung>();
