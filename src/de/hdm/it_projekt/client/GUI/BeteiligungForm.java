@@ -21,16 +21,16 @@ import de.hdm.it_projekt.shared.bo.Person;
 
 public class BeteiligungForm extends Showcase {
 
-	Beteiligung btToDisplay = null;
-	ProjektBeteiligungListView pblv = null;
+	private Beteiligung btToDisplay = null;
+	private ProjektBeteiligungListView pblv = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
-	Label formTitel = new Label();
+	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	private Label formTitel = new Label();
 	
-	IntegerBox pTageIb = new IntegerBox();
-	DateBox startDb = new DateBox();
-	DateBox endDb = new DateBox();
-	Label beteiligterLb = new Label();
+	private IntegerBox pTageIb = new IntegerBox();
+	private DateBox startDb = new DateBox();
+	private DateBox endDb = new DateBox();
+	private Label beteiligterLb = new Label();
 
 	public BeteiligungForm(boolean ausschreibender) {
 

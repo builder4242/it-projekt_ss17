@@ -26,15 +26,15 @@ import de.hdm.it_projekt.shared.bo.Person;
 
 public class BewerbungForm extends Showcase {
 
-	Bewerbung bwToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	private Bewerbung bwToDisplay = null;
+	private ProjektTreeViewModel ptvm = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
-	Label formTitel = new Label();
-	DateBox erstellDb = new DateBox();
-	TextArea textTb = new TextArea();
-	Label bewerberLb = new Label("nicht angelegt");
+	private Label formTitel = new Label();
+	private DateBox erstellDb = new DateBox();
+	private TextArea textTb = new TextArea();
+	private Label bewerberLb = new Label("nicht angelegt");
 
 	public BewerbungForm(boolean ausschreibender) {
 

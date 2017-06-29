@@ -24,15 +24,15 @@ import de.hdm.it_projekt.shared.bo.Projekt;
 
 public class AusschreibungForm extends Showcase {
 
-	Ausschreibung asToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	private Ausschreibung asToDisplay = null;
+	private ProjektTreeViewModel ptvm = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
-	Label formTitel = new Label();				/** Label für die Formularüberschrift */ 
-	TextBox bezeichnungTb = new TextBox();		/** TextBox für die Bezeichung */ 
-	DateBox fristDb = new DateBox();			/** DateBox für die Bewerbungsfrist */ 
-	TextArea astextgTb = new TextArea();		/** TextArea für den Ausschreibungstext */ 
+	private Label formTitel = new Label();				/** Label für die Formularüberschrift */ 
+	private TextBox bezeichnungTb = new TextBox();		/** TextBox für die Bezeichung */ 
+	private DateBox fristDb = new DateBox();			/** DateBox für die Bewerbungsfrist */ 
+	private TextArea astextgTb = new TextArea();		/** TextArea für den Ausschreibungstext */ 
 
 	public AusschreibungForm(boolean ausschreibender) {
 
