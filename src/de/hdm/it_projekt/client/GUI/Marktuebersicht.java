@@ -64,7 +64,8 @@ public class Marktuebersicht extends Showcase {
 				pmTextLabel.setStyleName("myprojekt-infoleistelabel");
 				headerInfo.add(pmTextLabel);
 				
-				Label pmLabel = new Label(MyProjekt.cpm.getBezeichnung());				
+				Label pmLabel = new Label(MyProjekt.cpm.getBezeichnung());	
+				pmLabel.setStyleName("myprojekt-infoleistelabelbold");
 				headerInfo.add(pmLabel);
 					
 				RootPanel.get("pminfo").clear();

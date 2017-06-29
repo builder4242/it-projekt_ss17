@@ -39,7 +39,7 @@
 .ProjektMarktplatz-Cell{
 	font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
-    font-color: blue; 
+    font-color: #008CBA; 
     font-size: 18px; 
     margin-right: 28px; 
 }
@@ -47,7 +47,7 @@
 .Eigenschaft-Cell{
 	font-weight: normal;	
     font-family: Verdana;
-    font-color: blue; 
+    font-color: #008CBA; 
     font-size: 16px; 
     margin-right: 28px; 
     min-width: 150px;
@@ -57,7 +57,7 @@
 .Ausschreibung-Cell{
 	font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
-    font-color: blue; 
+    font-color: #008CBA; 
     font-size: 16px; 
     margin-right: 28px; 
     min-width: 150px;
@@ -67,7 +67,7 @@
 .Partnerprofil-Cell{
 	font-weight: normal; 		
     font-family: Verdana;
-    font-color: blue; 
+    font-color: #008CBA; 
     font-size: 16px; 
     margin-right: 28px; 
     margin-top: 7px; 
@@ -78,7 +78,7 @@
 .Projekt-Cell{
 	font-weight: bold; 		/*�berschriften fett */
     font-family: Verdana;
-    font-color: blue; 
+    font-color: #008CBA; 
     font-size: 18px; 
     margin-right: 28px; 
     min-width: 150px;
@@ -88,7 +88,7 @@
 .Projektleiter-Cell{
 	font-weight: normal; 		
     font-family: Verdana;
-    font-color: blue; 
+    font-color: #008CBA; 
     font-size: 18px; 
     margin-right: 28px;
     min-width: 150px;
@@ -98,7 +98,7 @@
 .Beteiligung-Cell{
 	font-weight: normal; 		
     font-family: Verdana;
-    font-color: blue; 
+    font-color: #008CBA; 
     font-size: 12px; 
     margin-right: 5px;
     min-width: 50px;
@@ -284,7 +284,7 @@
     background-color: #008CBA;
     border: none;
     /* border-radius: 2px; */
-    color: #ff0000;
+    color: #c0c0c0;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -304,7 +304,7 @@
 
 
 
-.myprojekt-menubutton:hover{
+.myprojekt-reportmenubutton:hover{
     background-color: #5fb3ba; /* blau */
     color: white;
 }
@@ -417,7 +417,7 @@
 .myprojekt-switchreportbutton{
 	font-family: Verdana;
     background-color: #008CBA ;
-    color: #ff0000;
+    color: #c0c0c0;
     border: none;
     border-radius: 2px;
     padding: 8px 10px; 
@@ -491,6 +491,14 @@
 /* Sie befinden sich im Parktplatz.... */ 
 .myprojekt-infoleistelabel{
 	font-family: Verdana;
+	color: #0498b7;  
+	font-size: 15px; 
+	margin-right: 2px; 
+}
+
+.myprojekt-infoleistelabelbold{
+	font-family: Verdana;
+	font-weight: bold;
 	color: #0498b7;  
 	font-size: 15px; 
 	margin-right: 2px; 
