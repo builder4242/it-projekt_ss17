@@ -94,13 +94,6 @@ public class PersonForm extends Showcase {
 		HorizontalPanel customerButtonsPanel = new HorizontalPanel();
 		this.add(customerButtonsPanel);
 
-
-		Button newButton = new Button("Neu");
-		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		newButton.addClickHandler(new NewClickHandler());
-		customerButtonsPanel.add(newButton);
-		customerButtonsPanel.add(newButton);
-		
 		Button changeButton = new Button("Ändern");
 		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		changeButton.addClickHandler(new ChangeClickHandler());
@@ -164,7 +157,7 @@ private class DeleteClickHandler implements ClickHandler {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			pa.delete(ps, callback);
+			
 			
 		}
 		
