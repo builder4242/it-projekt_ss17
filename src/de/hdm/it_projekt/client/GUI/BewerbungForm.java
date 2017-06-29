@@ -70,13 +70,13 @@ public class BewerbungForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 		
-		Button newButton = new Button("Neu");
+		Button newButton = new Button("Bewerben");
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		newButton.setVisible(false);
 		buttonsPanel.add(newButton);
 
-		Button bewertenButton = new Button("Bewerten");
+		Button bewertenButton = new Button("Bewertung anlegen");
 		bewertenButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		bewertenButton.addClickHandler(new BewertenClickHandler());
 		buttonsPanel.add(bewertenButton);
@@ -85,7 +85,9 @@ public class BewerbungForm extends Showcase {
 			textTb.setEnabled(true);
 			bewerberLb.setText(MyProjekt.loginInfo.getCurrentUser().getName());
 			newButton.setVisible(true);
+			bewertenButton.setVisible(false);
 		}
+		
 	}
 
 	void setSelected(Bewerbung bw) {
