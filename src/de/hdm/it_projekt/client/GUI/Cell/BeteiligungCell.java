@@ -1,5 +1,9 @@
 package de.hdm.it_projekt.client.GUI.Cell;
 
+/** Die Klasse Beteiligung Cell dient der Erstellung einer CellList 
+ * in der Beteiligungen angeziegt werden. 
+ */
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;

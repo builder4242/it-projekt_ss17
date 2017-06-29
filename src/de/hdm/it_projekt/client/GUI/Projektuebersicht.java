@@ -1,5 +1,11 @@
 package de.hdm.it_projekt.client.GUI;
 
+/** Die Klasse Projektuebersicht dient dem Ausgeben eines Infotextes, nachdem ein Marktplatz
+ * ausgewählt wurde. Der Name des Markplatzes wird über die Methode getBezeichnung aufgerufen 
+ * und in den Text der als HTML realisiert ist mit eingefügt. Im HTML Element kann der Text 
+ * direkt über HTML Tags angepasst werden. Zuätzlich wird eine CSS Klasse eingebunden um die 
+ * Optik anzupassen. */ 
+
 import java.util.List;
 import java.util.Vector;
 

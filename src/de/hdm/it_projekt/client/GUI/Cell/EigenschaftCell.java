@@ -1,5 +1,7 @@
 package de.hdm.it_projekt.client.GUI.Cell;
 
+/** */ 
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.Button;
