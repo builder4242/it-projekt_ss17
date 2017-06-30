@@ -434,6 +434,12 @@ public class PersonMapper {
 
 	}
 
+	/***
+	 * Auslesen einer Person anhand einer bestimmten GoogleID.
+	 * 
+	 * @param googleID
+	 * @return
+	 */
 	public Person findByGoogleId(String googleID) {
 
 		// DB-Verbindung herstellen
