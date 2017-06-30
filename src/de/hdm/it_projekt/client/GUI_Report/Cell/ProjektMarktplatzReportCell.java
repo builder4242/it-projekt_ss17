@@ -1,7 +1,7 @@
 /** 
  * 
  * */ 
-package de.hdm.it_projekt.client.GUI.Cell;
+package de.hdm.it_projekt.client.GUI_Report.Cell;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;

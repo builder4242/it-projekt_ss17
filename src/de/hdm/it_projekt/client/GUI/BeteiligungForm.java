@@ -66,7 +66,7 @@ public class BeteiligungForm extends Showcase {
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
 
-		Button changeButton = new Button("Ändern");
+		Button changeButton = new Button("Speichern");
 		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		changeButton.addClickHandler(new ChangeClickHandler());
 		buttonsPanel.add(changeButton);

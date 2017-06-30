@@ -81,7 +81,7 @@ public class BewertungForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
-		Button newButton = new Button("Neu");
+		Button newButton = new Button("Anlegen");
 		newButton.setStyleName(
 				"myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());

@@ -5,8 +5,6 @@
  * */
 package de.hdm.it_projekt.client.GUI;
 
-
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -47,10 +45,11 @@ public class ProjektMarktplatzForm extends Showcase {
 		Button changeButton = new Button("Speichern");
 		changeButton.setStyleName(
 				"myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		changeButton.addClickHandler(
-				new ChangeClickHandler()); /**
-											 * Click Handler für Button erstellen
-											 */
+		changeButton
+				.addClickHandler(new ChangeClickHandler()); /**
+															 * Click Handler für
+															 * Button erstellen
+															 */
 		this.add(changeButton);
 
 	}
@@ -79,7 +78,8 @@ public class ProjektMarktplatzForm extends Showcase {
 		public void onClick(ClickEvent event) {
 
 			if (pmToDisplay == null) {
-				pa.createProjektMarktplatz(bezeichnungTextBox.getText(), MyProjekt.loginInfo.getCurrentUser().getId(), new CreatePmCallback());
+				pa.createProjektMarktplatz(bezeichnungTextBox.getText(), MyProjekt.loginInfo.getCurrentUser().getId(),
+						new CreatePmCallback());
 			} else {
 				pmToDisplay.setBezeichnung(bezeichnungTextBox.getText());
 				pa.save(pmToDisplay, new SavePmCallback());
@@ -91,8 +91,7 @@ public class ProjektMarktplatzForm extends Showcase {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
+			Window.alert("Es ist ein Fehler aufgetreten.");
 		}
 
 		@Override
@@ -107,7 +106,7 @@ public class ProjektMarktplatzForm extends Showcase {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
+			Window.alert("Es ist ein Fehler aufgetreten.");
 
 		}
 
