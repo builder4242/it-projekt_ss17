@@ -37,11 +37,11 @@ public class Projektuebersicht extends Showcase {
 		pmHTML.setStyleName("myprojekt-infoleistelabel");
 		
 		HTML einfuehrungHTML = new HTML("</br><p align='justify'>Herzlich willkommen im Projektmarktplatz <b>" + pmHTML +
-				 "</b> </br> Wenn Sie ein neues Projekt oder eine Ausschreibung anlegen wollen "
+				 "</b> </br> Wenn Sie ein neues Projekt oder eine Ausschreibung anlegen wollen, "
 				 + "gehen Sie zu <u>Meine Ausschreibungen</u>.</br> Wenn Sie sich auf eine Ausschreibung"
-				 + " bewerben wollen gehen Sie bitte zu <u>Meine Bewerbungen</u>."
-				 + "</br>Möchten Sie Ihr Partnerprofil verwalten gehen Sie einfach zu <u>Mein Profil "
-				 + "verwalten</u>. </br>Um Reports zu generieren gehen Sie zu <u>Report Generator</u>"
+				 + " bewerben wollen, gehen Sie bitte zu <u>Meine Bewerbungen</u>."
+				 + "</br>Möchten Sie Ihr Partnerprofil verwalten, gehen Sie einfach zu <u>Mein Profil "
+				 + "verwalten</u>. </br>Um Reports zu generieren, gehen Sie zu <u>Report Generator</u>"
 				 + "</br> </br> Wir freuen uns, dass Sie sich für getLinked entschieden haben.</p>"); 
 		einfuehrungHTML.setStyleName("myprojekt-infoleistelabel");
 		
