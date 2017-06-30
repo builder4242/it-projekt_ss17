@@ -467,6 +467,103 @@ public class AusschreibungMapper {
 		// Ergebnisvektor zurueckgeben
 		return result;
 	}
+	
+	public int countBesetzte(Organisationseinheit o) {
+		
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		int count = 0;
 
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("select count(*) as ct from ausschreibung "
+					+ "inner join projekt on projekt.ID=ausschreibung.Projekt_ID "
+					+ "inner join bewerbung on bewerbung.Ausschreibung_ID=ausschreibung.ID "
+					+ "inner join beteiligung on beteiligung.Projekt_ID=projekt.ID "
+					+ "where projekt.Projektleiter_ID=" + o.getId()
+					+ " AND beteiligung.Organisationseinheit_ID=bewerbung.Organisationseinheit_ID");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Ausschreibung-Objekt erstellt.
+			if (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				count = rs.getInt("ct");
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return count;
+	}
+
+	public int countLaufende(Organisationseinheit o) {
+		
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		int count = 0;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("select count(*) as ct "
+					+ "from ausschreibung "
+					+ "inner join projekt on projekt.ID=ausschreibung.Projekt_ID "
+					+ "where projekt.Projektleiter_ID=" + o.getId()
+					+ " AND ausschreibung.Bewerbungsfrist > CURDATE()");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Ausschreibung-Objekt erstellt.
+			if (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				count = rs.getInt("ct");
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return count;
+	}
+	
+	public int countAbgebrochen(Organisationseinheit o) {
+		
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		int count = 0;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("select count(*) as ct "
+					+ "from ausschreibung "
+					+ "inner join projekt on projekt.ID=ausschreibung.Projekt_ID "
+					+ "where projekt.Projektleiter_ID=" + o.getId()
+					+ " AND ausschreibung.ID not in (select Ausschreibung_ID from bewerbung) "
+					+ "AND ausschreibung.Bewerbungsfrist < CURDATE()");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Ausschreibung-Objekt erstellt.
+			if (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				count = rs.getInt("ct");
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return count;
+	}
 	
 }
