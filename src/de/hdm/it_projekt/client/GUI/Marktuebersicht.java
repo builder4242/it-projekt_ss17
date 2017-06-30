@@ -1,8 +1,9 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse Marktplatzuebersicht dient der Darstellung und Auswahl der Projektmarktplätze
  * auf der Seite "Projektmarktplätze" der GUI. Die Marktplätze werden in einer CellList angezeigt,
  * die Überschrift ist als Label realisiert. Die Optik wird über das einbinden von CSS angepasst. */ 
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import java.util.List;
 import java.util.Vector;
@@ -73,11 +74,13 @@ public class Marktuebersicht extends Showcase {
 								
 				if(MyProjekt.cpm.getAdminId() == MyProjekt.loginInfo.getCurrentUser().getId()) {
 					
-					Button deleteButton = new Button("löschen");
+					Button deleteButton = new Button("Löschen");
+					deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 					deleteButton.addClickHandler(new DeleteClickHandler(MyProjekt.cpm));
 					headerInfo.add(deleteButton);
 					
-					Button updateButton = new Button("ändern");
+					Button updateButton = new Button("Ändern");
+					updateButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 					updateButton.addClickHandler(new UpdateClickHandler(MyProjekt.cpm));
 					headerInfo.add(updateButton);
 
@@ -119,6 +122,7 @@ public class Marktuebersicht extends Showcase {
 		hP.add(formPanel);
 		
 		Button newPm = new Button("Marktplatz anlegen");
+		newPm.setStyleName("myprojekt-formbutton");
 		newPm.addClickHandler(new NewPmClickHandler());
 		vP.add(memberPmCl);
 		vP.add(newPm);

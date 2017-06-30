@@ -147,7 +147,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Name"));
 		report.addRow(headline);
 
-		
 		Vector<Ausschreibung> asV = getAusschreibungFor(o);
 
 		for (Ausschreibung as : asV) {
@@ -210,43 +209,71 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	@Override
-	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit o, ProjektMarktplatz pm)
+	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit oAs, ProjektMarktplatz pm)
 			throws IllegalArgumentException {
 
 		ProjektverflechtungenReport report = new ProjektverflechtungenReport();
 
 		report.setTitle("Projektverflechtungen");
-		report.setHeaderData(new SimpleParagraph("Verflechtungen von: " + o.getName()));
+		report.setHeaderData(new SimpleParagraph("Alle Projekte von: " + oAs.getName()));
 		report.setCreated(new Date());
-		
-		Vector<Projekt> prV = pa.getProjektByProjektleiter((Person)o, pm);
-		
-		Vector<Bewerbung> bwO = getBewerbungenFrom(o);
-		Vector<Beteiligung> btO = getBeteiligungenFor(o);
 
 		Row headline = new Row();
 		headline.addColumn(new Column("Objekt"));
 		headline.addColumn(new Column("Name"));
 		report.addRow(headline);
 
-		if (bwO.size() != 0) {
-			for (Bewerbung bw : bwO) {
-				Ausschreibung as = pa.getAusschreibungById(bw.getAusschreibungId());
-				Row row = new Row();
-				row.addColumn(new Column("Bewerbung: "));
-				row.addColumn(new Column(as.getBezeichnung()));
-				report.addRow(row);
-			}
-		}
+		Vector<Projekt> prV = pa.getProjektByProjektleiter((Person) oAs, pm);
 
-		if (btO.size() != 0) {
-			for (Beteiligung bt : btO) {
-				Projekt pr = pa.getProjektById(bt.getProjektId());
-				Row row = new Row();
-				row.addColumn(new Column("Projekt: "));
-				row.addColumn(new Column(pr.getName()));
-				report.addRow(row);
+		for (Projekt pr : prV) {
+
+			Row prRow = new Row();
+			prRow.addColumn(new Column("Projekt: "));
+			prRow.addColumn(new Column(pr.getBeschreibung()));
+			report.addRow(prRow);
+
+			Vector<Organisationseinheit> oV = getProjektOs(pr);
+
+			for (Organisationseinheit o : oV) {
+
+				Row oRow = new Row();
+				oRow.addColumn(new Column("&nbsp;&nbsp; " + o.getName() + ":"));
+				oRow.addColumn(new Column(" "));
+				report.addRow(oRow);
+			
+				Vector<Bewerbung> bwO = getBewerbungenFrom(o);
+				Vector<Beteiligung> btO = getBeteiligungenFor(o);
+
+				if (bwO.size() != 0) {
+					for (Bewerbung bw : bwO) {
+						Ausschreibung as = pa.getAusschreibungById(bw.getAusschreibungId());
+						Row row = new Row();
+						row.addColumn(new Column("&nbsp;&nbsp;&nbsp; Beworben auf Ausschreibung: "));
+						row.addColumn(new Column(as.getBezeichnung()));
+						report.addRow(row);
+					}
+				}
+
+				if (btO.size() != 0) {
+					for (Beteiligung bt : btO) {
+						Projekt prBt = pa.getProjektById(bt.getProjektId());
+						Row row = new Row();
+						row.addColumn(new Column("&nbsp;&nbsp;&nbsp;  Beteiligt bei Projekts: "));
+						row.addColumn(new Column(prBt.getName()));
+						report.addRow(row);
+					}
+				}
+				
+				Row gabRow = new Row();
+				gabRow.addColumn(new Column(" "));
+				gabRow.addColumn(new Column(" "));
+				report.addRow(gabRow);
 			}
+
+			Row gabRow = new Row();
+			gabRow.addColumn(new Column(" "));
+			gabRow.addColumn(new Column(" "));
+			report.addRow(gabRow);
 		}
 
 		return report;
@@ -288,5 +315,36 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public Vector<Beteiligung> getBeteiligungenFor(Organisationseinheit o) throws IllegalArgumentException {
 		return btMapper.getByOrganisationseinheit(o);
+	}
+
+	public Vector<Organisationseinheit> getProjektOs(Projekt pr) {
+
+		Vector<Organisationseinheit> oV = new Vector<Organisationseinheit>();
+
+		Vector<Beteiligung> btV = pa.getBeteiligungenFor(pr);
+
+		for (Beteiligung bt : btV) {
+
+			Organisationseinheit o = pa.getBeteiligterFor(bt);
+
+			if (!oV.contains(o))
+				oV.add(o);
+		}
+
+		Vector<Ausschreibung> asV = pa.getAusschreibungFor(pr);
+
+		for (Ausschreibung as : asV) {
+			Vector<Bewerbung> bwV = pa.getBewerbungBy(as);
+
+			for (Bewerbung bw : bwV) {
+
+				Organisationseinheit o = pa.getBewerberFor(bw);
+
+				if (!oV.contains(o))
+					oV.add(o);
+			}
+		}
+
+		return oV;
 	}
 }

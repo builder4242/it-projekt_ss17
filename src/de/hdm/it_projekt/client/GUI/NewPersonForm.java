@@ -1,14 +1,13 @@
-/**
- * 
- */
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse NewPersonForm wird benötigt um ein Profil an zu legen, wenn sich ein Nutzer zum
  *  ersten mal einloggt. Die Klasse stellt 7 TextBoxes für Informationen wie Name und Adresse bereit. 
  *  Über den Button Neu, mit zugehörigem ClickHandler, werden die Daten aus den Textfelden in die Datenbank
  *  gespeichert und der Nutzer wird zur Marktplatzübersicht weitergeleitet. Die Optik wird druch das 
  *  einbinden von CSS angepasst.   */
+package de.hdm.it_projekt.client.GUI;
 
+
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -21,6 +20,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.hdm.it_projekt.shared.LoginService;
+import de.hdm.it_projekt.shared.LoginServiceAsync;
+import de.hdm.it_projekt.shared.bo.LoginInfo;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
 
@@ -32,6 +34,7 @@ public class NewPersonForm extends Showcase {
 
 	private Organisationseinheit organisationseinheitToDisplay = null;
 	private Widget menu = null;
+	static LoginInfo loginInfo = null;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
@@ -53,12 +56,14 @@ public class NewPersonForm extends Showcase {
 	}
 
 	public NewPersonForm(String googleId, Widget m) {
+		
+	
 
 		menu = m;
 		this.add(new Label(
 				"Sie besitzen noch kein Benutzerprofil bei uns, bitte geben Sie in nachfolgendem Formular Ihre Daten ein."));
 		this.addStyleName("myprojekt-formlabel");
-		
+
 		Grid organisationseinheitGrid = new Grid(9, 2);
 		this.add(organisationseinheitGrid);
 
@@ -96,10 +101,22 @@ public class NewPersonForm extends Showcase {
 		HorizontalPanel customerButtonsPanel = new HorizontalPanel();
 		this.add(customerButtonsPanel);
 
-		Button newButton = new Button("Neu");
-		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		Button newButton = new Button("Anlegen");
+		newButton.setStyleName(
+				"myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		customerButtonsPanel.add(newButton);
+		
+		Button abmeldungButton = new Button("Abmelden");
+		abmeldungButton.setStyleName("myprojekt-abmeldebutton");
+		abmeldungButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+
+				Window.Location.assign(loginInfo.getLogoutUrl());
+			}
+		});
 
 	}
 
@@ -125,17 +142,23 @@ public class NewPersonForm extends Showcase {
 		@Override
 		public void onSuccess(Person result) {
 
-			Window.alert("Person angelegt");
+			if (result == null) {
+				Window.alert("Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
+			} else {
+				Window.alert("Ihr Konto wurde erfolgreich angelegt.");
 
-			MyProjekt.loginInfo.setCurrentUser(result);
+				MyProjekt.loginInfo.setCurrentUser(result);
+				
+				Label infoLabel = new Label(MyProjekt.loginInfo.toString()); 
+				infoLabel.addStyleName("myprojekt-loginlabel");
+				RootPanel.get("userinfo").add(infoLabel);
+				
 
-			RootPanel.get("userinfo").add(new Label(MyProjekt.loginInfo.toString()));
-			
-			Showcase showcase = new Marktuebersicht();
-			RootPanel.get("content").clear();
-			RootPanel.get("content").add(showcase);
-			menu.setVisible(true);
-			
+				Showcase showcase = new Marktuebersicht();
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(showcase);
+				menu.setVisible(true);
+			}
 
 		}
 

@@ -1,11 +1,12 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse MyProjekt stellt den EntryPoint dar, hier beginnt der Aufbau der GUI. 
  * Neben der Implementierung des Logins ist hier vor allem die Menüleiste zu finden,
  * die sich aus vier Buttons zusammensetzt und der Navigation zwischen den Einzelnen 
  * Seiten der GUI dient. Desweiteren ist hier der Abmeldebutton für den Logout zu finden. 
  * Die Optik wird durch das Einbinden von CSS angepasst. 
  */
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.core.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
