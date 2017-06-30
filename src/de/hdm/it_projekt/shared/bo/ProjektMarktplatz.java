@@ -1,7 +1,5 @@
 package de.hdm.it_projekt.shared.bo;
 
-import java.util.Vector;
-
 /***
  * 
  * @author Tugba Bulat
@@ -9,9 +7,15 @@ import java.util.Vector;
  */
 public class ProjektMarktplatz extends BusinessObject {
 
-	private static final long serialVersionUID = 1L;
-
+	/**
+	 * Bezeichnung des Projektmarktplatzes
+	 */
 	private String bezeichnung;
+	  /**
+	   * Fremschluesselbeziehung zu Orgnaisationseinheit
+	   */
+	  private int adminId = 0;
+
 
 	/**
 	 * 
@@ -27,6 +31,20 @@ public class ProjektMarktplatz extends BusinessObject {
 	 */
 	public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
+	}
+	
+	/**
+	 * @return the adminId
+	 */
+	public int getAdminId() {
+		return adminId;
+	}
+
+	/**
+	 * @param adminId the adminId to set
+	 */
+	public void setAdminId(int adminId) {
+		this.adminId = adminId;
 	}
 	
 	/**

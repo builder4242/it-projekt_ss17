@@ -77,7 +77,8 @@ public class Column implements Serializable {
    * 
    * @see java.lang.Object
    */
-  public String toString() {
+  @Override
+public String toString() {
     return this.value;
   }
 }

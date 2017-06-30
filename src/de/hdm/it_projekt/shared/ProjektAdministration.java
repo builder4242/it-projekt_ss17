@@ -23,19 +23,33 @@ public interface ProjektAdministration extends RemoteService {
 
 	public Vector<ProjektMarktplatz> getAlleProjektMarktplaetze() throws IllegalArgumentException;
 
+	public Organisationseinheit getBewerberFor(Bewerbung bw) throws IllegalArgumentException;
+	
+	public Beteiligung createBeteiligungFor(Bewerbung bw) throws IllegalArgumentException;
+	
+	public Organisationseinheit getBeteiligterFor(Beteiligung bt) throws IllegalArgumentException;
+	
 	public ProjektMarktplatz getProjektMarktplatzById(int id) throws IllegalArgumentException;
 
 	public Vector<Projekt> getAlleProjekteFor(ProjektMarktplatz pm) throws IllegalArgumentException;
+	
+	public Vector<Projekt> getProjektByProjektleiter(Organisationseinheit p, ProjektMarktplatz pm) throws IllegalArgumentException;
 
 	public Vector<Projekt> getProjektByName(String name) throws IllegalArgumentException;
+	
+	public Beteiligung getBeteiligungFor(Bewerbung bw) throws IllegalArgumentException;
 
 	public Projekt getProjektById(int id) throws IllegalArgumentException;
 
 	public Vector<Ausschreibung> getAusschreibungFor(Projekt pr) throws IllegalArgumentException;
 
 	public Ausschreibung getAusschreibungById(int id) throws IllegalArgumentException;
+	
+	public Ausschreibung getAusschreibungby(Partnerprofil pp) throws IllegalArgumentException;
 
 	public Partnerprofil getPartnerprofilById(int id) throws IllegalArgumentException;
+	
+	public Partnerprofil getPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException;
 
 	public Vector<Eigenschaft> getEigenschaftenFor(Partnerprofil pr) throws IllegalArgumentException;
 
@@ -48,20 +62,38 @@ public interface ProjektAdministration extends RemoteService {
 	public Vector<Beteiligung> getBeteiligungenFor(Organisationseinheit o) throws IllegalArgumentException;
 	
 	public Vector<ProjektMarktplatz> getProjektMarktplaetzeByOrganisation(Organisationseinheit o) throws IllegalArgumentException;
-
+	
+	public Organisationseinheit findByGoogleId(LoginInfo li) throws IllegalArgumentException;
+	
+	public Person getProjektleiterFor(Projekt pr) throws IllegalArgumentException;
+	
+	public Bewertung createBewertungFor(Bewerbung bw, float wert, String stellungnahme) throws IllegalArgumentException;
+	
+	public Ausschreibung getAusschreibungBy(Bewerbung bw) throws IllegalArgumentException;
+	
+	public Bewerbung getBewerbungById(int id) throws IllegalArgumentException;
+	
+	public Vector<Bewerbung> getBewerbungBy(Ausschreibung as) throws IllegalArgumentException;
+	
+	public Vector<Ausschreibung> getAusschreibungByMatch(Organisationseinheit o) throws IllegalArgumentException;
+	
+	
+	
 	/**
 	 * 
 	 * @param bez
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public ProjektMarktplatz createProjektMarktplatz(String bez) throws IllegalArgumentException;
+	public ProjektMarktplatz createProjektMarktplatz(String bez, int adminID) throws IllegalArgumentException;
 
 	public Projekt createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum,
-			String beschreibung) throws IllegalArgumentException;
+			String beschreibung, Organisationseinheit projektleiter) throws IllegalArgumentException;
 
 	public Ausschreibung createAusschreibungFor(Projekt pr, String bezeichnung, Date bewerbungsfrist,
-			String ausschreibungstext, Partnerprofil profil) throws IllegalArgumentException;
+			String ausschreibungstext) throws IllegalArgumentException;
+	
+	public Bewerbung createBewerbungFor(Ausschreibung as, Organisationseinheit o, String bewerbungstext) throws IllegalArgumentException;
 
 	public Partnerprofil createPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException;
 
@@ -84,9 +116,6 @@ public interface ProjektAdministration extends RemoteService {
 	public Bewertung bewerten(Bewerbung bw, String stellungnahme, float wert) throws IllegalArgumentException;
 
 	public Beteiligung beteiligen(Projekt pr, Organisationseinheit or, int personentage, Date startdatum, Date enddatum)
-			throws IllegalArgumentException;
-
-	public void projektmarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o)
 			throws IllegalArgumentException;
 
 	public void save(ProjektMarktplatz pm) throws IllegalArgumentException;

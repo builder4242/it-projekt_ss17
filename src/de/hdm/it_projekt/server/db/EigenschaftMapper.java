@@ -98,8 +98,10 @@ public class EigenschaftMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-				stmt.executeUpdate("INSERT INTO eigenschaft (ID, Wert) " + "VALUES ('" + e.getId() + "','" + e.getName()
-						+ "','" + e.getWert() + "')");
+				stmt.executeUpdate(
+						"INSERT INTO eigenschaft (ID, Name, Wert, Partnerprofil_ID) " + "VALUES ('" + e.getId() + "','"
+								+ e.getName() + "','" + e.getWert() + "','" + e.getPartnerprofilId() + "')");
+
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -126,8 +128,7 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("UPDATE eigenschaft " + "SET Name=\"" + e.getName() + "\"," + "Wert=\"" + e.getWert()
-					+ "WHERE ID=" + e.getId());
+			stmt.executeUpdate("UPDATE eigenschaft SET Name='" + e.getName() + "', Wert='" + e.getWert() + "' WHERE ID=" + e.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -154,7 +155,7 @@ public class EigenschaftMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM eigenschaft" + "WHERE ID=" + e.getId());
+			stmt.executeUpdate("DELETE FROM eigenschaft " + "WHERE ID=" + e.getId());
 		} catch (SQLException e3) {
 			e3.printStackTrace();
 		}
@@ -181,7 +182,8 @@ public class EigenschaftMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert " + "FROM eigenschaft " + " ORDER BY ID");
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft " + " ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschaft-Objekt erstellt.
@@ -190,6 +192,7 @@ public class EigenschaftMapper {
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
+				e.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(e);
@@ -200,6 +203,54 @@ public class EigenschaftMapper {
 
 		// Ergebnisvektor zurueckgeben
 		return result;
+	}
+
+	/**
+	 * Suchen einer Eigenschaft mit vorgegebener ID. Da diese eindeutig ist,
+	 * wird genau ein Objekt zurueckgegeben.
+	 * 
+	 * @param id
+	 *            Primaerschluesselattribut in DB
+	 * @return Eigenschaft-Objekt, das dem uebergebenen Schluessel entspricht,
+	 *         null bei nicht vorhandenem DB-Tupel.
+	 */
+
+	public Eigenschaft findById(int id) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE ID= " + id);
+
+			/*
+			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
+			 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+			 */
+
+			if (rs.next()) {
+
+				// Ergebnis-Tupel in Objekt umwandeln
+				Eigenschaft e = new Eigenschaft();
+				e.setId(rs.getInt("ID"));
+				e.setName(rs.getString("Name"));
+				e.setWert(rs.getString("Wert"));
+				e.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+
+				return e;
+			}
+		} catch (SQLException e4) {
+			e4.printStackTrace();
+			return null;
+		}
+
+		return null;
 	}
 
 	/**
@@ -226,7 +277,7 @@ public class EigenschaftMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Wert FROM eigenschaft " + "WHERE Name LIKE '" + name + "'ORDER BY Name");
+					"SELECT ID, Name, Wert, Partnerprofil_ID FROM eigenschaft WHERE name='" + name + "' ORDER BY name");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschaft-Objekt
@@ -236,6 +287,7 @@ public class EigenschaftMapper {
 				e.setId(rs.getInt("ID"));
 				e.setName(rs.getString("Name"));
 				e.setWert(rs.getString("Wert"));
+				e.setPartnerprofilId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Eigenschafts zum Ergebnisvektor
 				result.addElement(e);
@@ -248,52 +300,13 @@ public class EigenschaftMapper {
 		return result;
 	}
 
-	/**
-	 * Auslesen aller Eigenschaften mit gegebenem Wert
-	 * 
-	 * @param wert
-	 * @return Ein Vektor mit Eigenschaft-Objekten, die saemtliche Eigenschaften
-	 *         mit dem gesuchten Wert repraesentieren. Bei evtl. Exceptions wird
-	 *         ein partiell gefuellter oder ggf. auch leerer Vetor
-	 *         zurueckgeliefert.
-	 */
 
-	public Vector<Eigenschaft> findByWert(String wert) {
-
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-		Vector<Eigenschaft> result = new Vector<Eigenschaft>();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfüllen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert FROM eigenschaft"
-					+ "WHERE Wert LIKE '" + wert + "' ORDER BY Wert");
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein
-			// Eigenschhaft-Objekt
-			// erstellt.
-			while (rs.next()) {
-				Eigenschaft e = new Eigenschaft();
-				e.setId(rs.getInt("ID"));
-				e.setName(rs.getString("Name"));
-				e.setWert(rs.getString("Wert"));
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(e);
-			}
-		} catch (SQLException e6) {
-			e6.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-	}
-	
 	public Vector<Eigenschaft> getByPartnerprofil(Partnerprofil pp) {
 
+		if(pp == null)
+			return null;
+		
+		
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Eigenschaft> result = new Vector<Eigenschaft>();
@@ -303,28 +316,23 @@ public class EigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfüllen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Wert FROM eigenschaft"
-					+ "WHERE Partnerprofil_ID=" + pp.getId());
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM eigenschaft WHERE Partnerprofil_ID=" + pp.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Eigenschhaft-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Eigenschaft e = new Eigenschaft();
-				e.setId(rs.getInt("ID"));
-				e.setName(rs.getString("Name"));
-				e.setWert(rs.getString("Wert"));
-
+				
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(e);
+				result.addElement(findById(rs.getInt("ID")));
 			}
-		} catch (SQLException e6) {
-			e6.printStackTrace();
+		} catch (SQLException e7) {
+			e7.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
 		return result;
 	}
-	
-	
+
 }

@@ -100,7 +100,7 @@ public class BewertungMapper {
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 				stmt.executeUpdate("INSERT INTO bewertung (ID, Wert, Stellungnahme, Erstelldatum, Bewerbung_ID)"
-						+ "VALUES ('" + bt.getId() + "','" + bt.getWert() + "','" + bt.getStellungnahme() + "','"
+						+ "VALUES (" + bt.getId() + ",'" + Float.toString(bt.getWert()) + "','" + bt.getStellungnahme() + "','"
 						+ DBConnection.convertToSQLDateString(bt.getErstelldatum()) + "','" + bt.getBewerbungId()
 						+ "')");
 
@@ -132,7 +132,7 @@ public class BewertungMapper {
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 			stmt.executeUpdate("UPDATE bewertung " + "SET Wert=\"" + bt.getWert() + "\"," + "Stellungnahme=\""
-					+ bt.getStellungnahme() + "\", " + "Erstelldatum=\"" + bt.getErstelldatum() + "\" " + "WHERE ID="
+					+ bt.getStellungnahme() + "\", " + "Erstelldatum=\"" + DBConnection.convertToSQLDateString(bt.getErstelldatum()) + "\" " + "WHERE ID="
 					+ bt.getId());
 
 		} catch (SQLException e2) {
@@ -189,7 +189,7 @@ public class BewertungMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung ORDER BY Wert");
+					.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum, Bewerbung_ID FROM bewertung ORDER BY Wert");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewertung-Objekt erstellt.
@@ -200,6 +200,7 @@ public class BewertungMapper {
 				bt.setWert(rs.getFloat("Wert"));
 				bt.setStellungnahme(rs.getString("Stellungnahme"));
 				bt.setErstelldatum(rs.getDate("Erstelldatum"));
+				bt.setBewerbungId(rs.getInt("Bewerbung_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bt);
@@ -234,7 +235,7 @@ public class BewertungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung WHERE ID= " + id + " ORDER BY ID");
+					"SELECT ID, Wert, Stellungnahme, Erstelldatum, Bewerbung_ID FROM bewertung WHERE ID=" + id);
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -245,12 +246,12 @@ public class BewertungMapper {
 
 				// Umwandlung des Ergebnis-Tupel in ein Objekt und
 				// Ausgabe des Ergebnis-Objekts.
-
 				Bewertung bt = new Bewertung();
 				bt.setId(rs.getInt("ID"));
 				bt.setWert(rs.getFloat("Wert"));
 				bt.setStellungnahme(rs.getString("Stellungnahme"));
 				bt.setErstelldatum(rs.getDate("Erstelldatum"));
+				bt.setBewerbungId(rs.getInt("Bewerbung_ID"));
 
 				return bt;
 			}
@@ -262,87 +263,8 @@ public class BewertungMapper {
 		return null;
 	}
 
-	/**
-	 * Suchen einer Bewertung anhand einer Stellungnahme.
-	 * 
-	 * @param stellungnahme
-	 * @return result
-	 */
 
-	public Vector<Bewertung> findByStellungnahme(String stellungnahme) {
 
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-
-		// Ergebnisvektor vorbereiten
-		Vector<Bewertung> result = new Vector<Bewertung>();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung WHERE Stellungnahme='" + stellungnahme + "' ORDER BY Stellungnahme");
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
-			// erstellt
-			while (rs.next()) {
-				Bewertung bt = new Bewertung();
-				bt.setId(rs.getInt("ID"));
-				bt.setWert(rs.getFloat("Wert"));
-				bt.setStellungnahme(rs.getString("Stellungnahme"));
-				bt.setErstelldatum(rs.getDate("Erstelldatum"));
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(bt);
-			}
-		} catch (SQLException e6) {
-			e6.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-
-	}
-
-	/**
-	 * Suchen einer Bewertung anhand eines Wertes.
-	 * 
-	 * @param wert
-	 * @return result
-	 */
-	public Vector<Bewertung> findByWert(float wert) {
-
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Wert, Stellungnahme, Erstelldatum FROM bewertung "
-					+ "WHERE Wert=" + wert + " ORDER BY Wert");
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewertung-Objekt
-			// erstellt
-			while (rs.next()) {
-				Bewertung bt = new Bewertung();
-				bt.setId(rs.getInt("ID"));
-				bt.setWert(rs.getFloat("Wert"));
-				bt.setStellungnahme(rs.getString("Stellungnahme"));
-				bt.setErstelldatum(rs.getDate("Erstelldatum"));
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(bt);
-			}
-		} catch (SQLException e7) {
-			e7.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-	}
 
 	/**
 	 * Auslesen einer Bewertung anhand einer Bewerbung.
@@ -362,7 +284,7 @@ public class BewertungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM bewertung WHERE Bewerbung_ID= " + bw.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM bewertung WHERE Bewerbung_ID=" + bw.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewertungs-Objekt erstellt.

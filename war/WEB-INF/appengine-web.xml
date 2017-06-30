@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-  <application>thies-bankproject</application>
+  <application>itprojekt-170113</application>
   <version>1</version>
 
   <!--

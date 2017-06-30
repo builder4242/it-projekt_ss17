@@ -1,6 +1,6 @@
 package de.hdm.it_projekt.shared.bo;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * <p>
@@ -20,16 +20,15 @@ import java.io.Serializable;
  * @author thies
  * @version 1.0
  */
-public abstract class BusinessObject implements Serializable {
+public abstract class BusinessObject implements IsSerializable {
 
-  private static final long serialVersionUID = 1L;
 
-  /**
+   /**
    * Die eindeutige Identifikationsnummer einer Instanz dieser Klasse.
    */
   private int id = 0;
 
-  /**
+/**
    * Auslesen der ID.
    */
   public int getId() {
@@ -51,7 +50,7 @@ public abstract class BusinessObject implements Serializable {
     /*
      * Wir geben den Klassennamen gefolgt von der ID des Objekts zurück.
      */
-    return this.getClass().getName() + " #" + this.id;
+    return " #" + this.id;
   }
 
   /**

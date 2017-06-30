@@ -3,7 +3,7 @@
  */
 package de.hdm.it_projekt.server.db;
 
-import java.sql.Connection; 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -105,8 +105,12 @@ public class BewerbungMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext, Ausschreibung_ID, Organisationseinheit_ID) " + "VALUES ('" + bw.getId()
-						+ "','" + DBConnection.convertToSQLDateString(bw.getErstelldatum()) + "','" + bw.getBewerbungstext() + "','" + bw.getAusschreibungId() + "','" + bw.getOrganisationseinheitId() + "')");
+				stmt.executeUpdate(
+						"INSERT INTO bewerbung (ID, Erstelldatum, Bewerbungstext, Ausschreibung_ID, Organisationseinheit_ID) "
+								+ "VALUES ('" + bw.getId() + "','"
+								+ DBConnection.convertToSQLDateString(bw.getErstelldatum()) + "','"
+								+ bw.getBewerbungstext() + "','" + bw.getAusschreibungId() + "','"
+								+ bw.getOrganisationseinheitId() + "')");
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -133,8 +137,11 @@ public class BewerbungMapper {
 			Statement stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
-			stmt.executeUpdate("UPDATE bewerbung" + "SET Erstelldatum=\"" + bw.getErstelldatum() + "\","
-					+ "Bewerbungstext=\"" + bw.getBewerbungstext() + "WHERE ID=" + bw.getId());
+			stmt.executeUpdate("UPDATE bewerbung " + "SET Erstelldatum=\"" + bw.getErstelldatum() + "\", "
+					+ "Bewerbungstext=\"" + bw.getBewerbungstext() + "\", " + "Ausschreibung_ID=\""
+					+ bw.getAusschreibungId() + "\", " + "Organisationseinheit_ID=\"" + bw.getOrganisationseinheitId()
+					+ "\" " + "WHERE ID=" + bw.getId());
+
 		}
 
 		catch (SQLException e2) {
@@ -150,7 +157,7 @@ public class BewerbungMapper {
 	 * 
 	 * @param bw
 	 *            das aus der DB zu loeschende Objekt
-	 * @return 
+	 * @return
 	 * @return
 	 */
 
@@ -163,7 +170,7 @@ public class BewerbungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM bewerbung" + "WHERE ID=" + bw.getId());
+			stmt.executeUpdate("DELETE FROM bewerbung " + "WHERE ID=" + bw.getId());
 		}
 
 		catch (SQLException e3) {
@@ -193,7 +200,8 @@ public class BewerbungMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Erstelldatum, Bewerbungstext " + "FROM bewerbung " + " ORDER BY ID");
+					.executeQuery("SELECT ID, Erstelldatum, Bewerbungstext, Ausschreibung_ID, Organisationseinheit_ID"
+							+ "FROM bewerbung " + "ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewerbung-Objekt erstellt.
@@ -202,6 +210,8 @@ public class BewerbungMapper {
 				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
+				bw.setAusschreibungId(rs.getInt("Ausschreibung_ID"));
+				bw.setOrganisationseinheitId(rs.getInt("Organisationseinheit_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bw);
@@ -236,7 +246,8 @@ public class BewerbungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Erstelldatum, Bewerbungstext FROM bewerbung " + "WHERE ID=" + id + "ORDER BY ID");
+					"SELECT ID, Erstelldatum, Bewerbungstext, Ausschreibung_ID, Organisationseinheit_ID FROM bewerbung WHERE ID= "
+							+ id + " ORDER BY ID");
 
 			/*
 			 * Da id der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -251,6 +262,8 @@ public class BewerbungMapper {
 				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
+				bw.setAusschreibungId(rs.getInt("Ausschreibung_ID"));
+				bw.setOrganisationseinheitId(rs.getInt("Organisationseinheit_ID"));
 
 				return bw;
 			}
@@ -282,8 +295,9 @@ public class BewerbungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Erstelldatum, Bewerbungstext FROM bewerbung "
-					+ "WHERE Erstelldatum=" + erstelldatum + " ORDER BY Erstelldatum");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Erstelldatum, Bewerbungstext, Ausschreibung_ID, Organisationseinheit_ID FROM bewerbung "
+							+ "WHERE Erstelldatum=" + erstelldatum + " ORDER BY Erstelldatum");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewerbung-Objekt
 			// erstellt
@@ -292,6 +306,8 @@ public class BewerbungMapper {
 				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
+				bw.setAusschreibungId(rs.getInt("ID"));
+				bw.setOrganisationseinheitId(rs.getInt("ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bw);
@@ -305,48 +321,6 @@ public class BewerbungMapper {
 
 	}
 
-	/**
-	 * Suchen einer Bewerbung anhand des Bewerbungstextes
-	 * 
-	 * @param bewerbungstext
-	 * @return
-	 */
-
-	public Vector<Bewerbung> findByBewerbungstext(String bewerbungstext) {
-
-		// DB-Verbindung herstellen
-		Connection con = DBConnection.connection();
-
-		// Ergebnisvektor vorbereiten
-		Vector<Bewerbung> result = new Vector<Bewerbung>();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID, Erstelldatum, Bewerbungstext FROM bewerbung "
-					+ "WHERE Bewerbungstext='" + bewerbungstext + "' ORDER BY Bewerbungstext");
-
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein Bewerbung-Objekt
-			// erstellt
-			while (rs.next()) {
-				Bewerbung bw = new Bewerbung();
-				bw.setId(rs.getInt("ID"));
-				bw.setErstelldatum(rs.getDate("Erstelldatum"));
-				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
-
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(bw);
-			}
-		} catch (SQLException e6) {
-			e6.printStackTrace();
-		}
-
-		// Ergebnisvektor zurueckgeben
-		return result;
-
-	}
 
 	/**
 	 * Auslesen der Bewerbung anhand der Ausschreibung.
@@ -356,6 +330,9 @@ public class BewerbungMapper {
 	 */
 	public Vector<Bewerbung> getByAusschreibung(Ausschreibung as) {
 
+		if(as == null)
+			return null;
+		
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Bewerbung> result = new Vector<Bewerbung>();
@@ -366,7 +343,7 @@ public class BewerbungMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT ID FROM ausschreibung WHERE ausschreibung.ID=" + as.getId());
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM bewerbung WHERE Ausschreibung_ID=" + as.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewerbungs-Objekt erstellt.
@@ -403,7 +380,7 @@ public class BewerbungMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM organisationseinheit WHERE organisationseinheit.ID=" + o.getId());
+					.executeQuery("SELECT ID FROM bewerbung WHERE Organisationseinheit_ID=" + o.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Bewerbungs-Objekt erstellt.
@@ -418,6 +395,93 @@ public class BewerbungMapper {
 
 		// Ergebnisvektor zurueckgeben
 		return result;
+	}
+	
+	public int countBewerbungLaufende(Organisationseinheit o) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		int count = 0;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT count(*) as ct from bewerbung where ID not in (select Bewerbung_ID from bewertung) AND Organisationseinheit_ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Bewerbungs-Objekt erstellt.
+			if (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				count = rs.getInt("ct");
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return count;
+	}
+	
+	public int countBewerbungAngenommen(Organisationseinheit o) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		int count = 0;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT count(*) as ct from bewerbung where ID in (select Bewerbung_ID from bewertung where Wert != 0) AND Organisationseinheit_ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Bewerbungs-Objekt erstellt.
+			if (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				count = rs.getInt("ct");
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return count;
+	}
+	
+	public int countBewerbungAbgelehnt(Organisationseinheit o) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		int count = 0;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT count(*) as ct from bewerbung where ID in (select Bewerbung_ID from bewertung where Wert = 0) AND Organisationseinheit_ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Bewerbungs-Objekt erstellt.
+			if (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				count = rs.getInt("ct");
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return count;
 	}
 
 }
