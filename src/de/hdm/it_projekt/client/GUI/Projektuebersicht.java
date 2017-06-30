@@ -42,7 +42,7 @@ public class Projektuebersicht extends Showcase {
 				 + " bewerben wollen, gehen Sie bitte zu <u>Meine Bewerbungen</u>."
 				 + "</br>Möchten Sie Ihr Partnerprofil verwalten, gehen Sie einfach zu <u>Mein Profil "
 				 + "verwalten</u>. </br>Um Reports zu generieren, gehen Sie zu <u>Report Generator</u>"
-				 + "</br> </br> Wir freuen uns, dass Sie sich für getLinked entschieden haben.</p>"); 
+				 + "</br> </br> Wir freuen uns, dass Sie sich für <b>getLinked</b> entschieden haben.</p>"); 
 		einfuehrungHTML.setStyleName("myprojekt-infoleistelabel");
 		
 		// einfuehrungHTML.setText(""); 
