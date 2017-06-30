@@ -1,8 +1,9 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse Marktplatzuebersicht dient der Darstellung und Auswahl der Projektmarktplätze
  * auf der Seite "Projektmarktplätze" der GUI. Die Marktplätze werden in einer CellList angezeigt,
  * die Überschrift ist als Label realisiert. Die Optik wird über das einbinden von CSS angepasst. */ 
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import java.util.List;
 import java.util.Vector;

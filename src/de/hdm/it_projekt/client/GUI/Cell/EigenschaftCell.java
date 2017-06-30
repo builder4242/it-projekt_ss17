@@ -1,6 +1,6 @@
 package de.hdm.it_projekt.client.GUI.Cell;
 
-/** */ 
+/** Die Klasse EigenschaftForm  */ 
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
