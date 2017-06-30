@@ -31,6 +31,8 @@ public class BewerbungForm extends Showcase {
 
 	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
+	private boolean ausschreibender; 
+	private Button newButton = new Button("Bewerben");
 	private Label formTitel = new Label();
 	private DateBox erstellDb = new DateBox();
 	private TextArea textTb = new TextArea();
@@ -38,6 +40,8 @@ public class BewerbungForm extends Showcase {
 
 	public BewerbungForm(boolean ausschreibender) {
 
+		this.ausschreibender = ausschreibender;
+		
 		formTitel.setText("Bewerbung");
 		formTitel.setStyleName("h1");
 		this.add(formTitel);
@@ -70,10 +74,9 @@ public class BewerbungForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 		
-		Button newButton = new Button("Bewerben");
+				
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
-		newButton.setVisible(false);
 		buttonsPanel.add(newButton);
 
 		Button bewertenButton = new Button("Bewertung anlegen");
@@ -88,14 +91,12 @@ public class BewerbungForm extends Showcase {
 		
 		if(ausschreibender == false) {
 			textTb.setEnabled(true);
-			bewerberLb.setText(MyProjekt.loginInfo.getCurrentUser().getName());
-			newButton.setVisible(true);
+			bewerberLb.setText(MyProjekt.loginInfo.getCurrentUser().getName());	
 			bewertenButton.setVisible(false);
 			partnerprofilButton.setVisible(false);
-		}		
-		
-		if(ptvm.getSelectedBewerbung() == null)
+		} else {
 			newButton.setVisible(false);
+		}
 	}
 
 	void setSelected(Bewerbung bw) {
@@ -104,7 +105,7 @@ public class BewerbungForm extends Showcase {
 			this.bwToDisplay = bw;
 			erstellDb.setValue(bwToDisplay.getErstelldatum());
 			textTb.setText(bwToDisplay.getBewerbungstext());
-
+			newButton.setVisible(false);
 			pa.getBewerberFor(bwToDisplay, new AsyncCallback<Organisationseinheit>() {
 
 				@Override
@@ -130,6 +131,9 @@ public class BewerbungForm extends Showcase {
 			erstellDb.setValue(null);
 			textTb.setText("");
 			bewerberLb.setText("");
+			
+			if(ausschreibender == false)
+				newButton.setVisible(true);
 		}
 	}
 
