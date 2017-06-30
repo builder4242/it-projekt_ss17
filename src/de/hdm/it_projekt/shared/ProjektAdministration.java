@@ -85,7 +85,7 @@ public interface ProjektAdministration extends RemoteService {
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public ProjektMarktplatz createProjektMarktplatz(String bez) throws IllegalArgumentException;
+	public ProjektMarktplatz createProjektMarktplatz(String bez, int adminID) throws IllegalArgumentException;
 
 	public Projekt createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum,
 			String beschreibung, Person projektleiter) throws IllegalArgumentException;
@@ -116,9 +116,6 @@ public interface ProjektAdministration extends RemoteService {
 	public Bewertung bewerten(Bewerbung bw, String stellungnahme, float wert) throws IllegalArgumentException;
 
 	public Beteiligung beteiligen(Projekt pr, Organisationseinheit or, int personentage, Date startdatum, Date enddatum)
-			throws IllegalArgumentException;
-
-	public void projektmarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o)
 			throws IllegalArgumentException;
 
 	public void save(ProjektMarktplatz pm) throws IllegalArgumentException;

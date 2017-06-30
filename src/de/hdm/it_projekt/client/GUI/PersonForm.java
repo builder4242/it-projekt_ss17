@@ -15,8 +15,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-import de.hdm.it_projekt.client.GUI.NewPersonForm.CreatePersonCallback;
-import de.hdm.it_projekt.client.GUI.NewPersonForm.NewClickHandler;
+import de.hdm.it_projekt.client.GUI.AusschreibungForm.DeleteAusschreibungCallback;
+import de.hdm.it_projekt.client.GUI.AusschreibungForm.SaveCallback;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
 
@@ -31,6 +31,8 @@ public class PersonForm extends Showcase {
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
+	private Person asToDisplay = null;
+	
 	private TextBox firstNameTextBox = new TextBox();
 	private TextBox lastNameTextBox = new TextBox();
 	private TextBox emailTextBox = new TextBox();
@@ -92,10 +94,15 @@ public class PersonForm extends Showcase {
 		HorizontalPanel customerButtonsPanel = new HorizontalPanel();
 		this.add(customerButtonsPanel);
 
-		Button newButton = new Button("Neu");
-		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		newButton.addClickHandler(new NewClickHandler());
-		customerButtonsPanel.add(newButton);
+		Button changeButton = new Button("Ändern");
+		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		changeButton.addClickHandler(new ChangeClickHandler());
+		customerButtonsPanel.add(changeButton);
+		
+		Button deleteButton = new Button("Löschen");
+		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		deleteButton.addClickHandler(new DeleteClickHandler());
+		customerButtonsPanel.add(deleteButton);
 
 	}
 
@@ -108,6 +115,52 @@ public class PersonForm extends Showcase {
 					strasseTextBox.getText(), Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(),
 					telTextBox.getText(), new CreatePersonCallback());
 		}
+	}
+	
+	private class ChangeClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			if (asToDisplay != null) {
+				asToDisplay.setVorname(firstNameTextBox.getText());
+				asToDisplay.setName(lastNameTextBox.getText());
+				asToDisplay.setTel(telTextBox.getText());
+				asToDisplay.setStrasse(strasseTextBox.getText());
+				asToDisplay.setPlz(Integer.parseInt(plzTextBox.getText()));   
+				asToDisplay.setOrt(ortTextBox.getText());
+				
+				
+
+				pa.save(asToDisplay, new SaveCallback());
+				Window.alert("Änderungen gespeichert.");
+			} else
+				Window.alert("Es wurde nichts ausgewählt");
+		}
+		
+		
+	}
+	
+	class SaveCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Es ist ein Fehler aufgetreten.");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// ptvm.updateAusschreibung(asToDisplay);
+		}
+	}
+	
+private class DeleteClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			
+		}
+		
 	}
 
 	private class CreatePersonCallback implements AsyncCallback<Person> {
