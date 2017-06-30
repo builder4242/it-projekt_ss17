@@ -6,6 +6,7 @@ package de.hdm.it_projekt.client.GUI.Cell;
 
 
 import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.dom.builder.shared.SpanBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -24,6 +25,7 @@ public class BeteiligungCell extends AbstractCell<Beteiligung> {
 
 		if (value == null)
 			return;
+
 
 		sb.appendHtmlConstant("<div class='Eigenschaft-Cell'>"); // Test CSS Klasse
 		sb.appendEscaped(Integer.toString(context.getIndex()+1) + ". Beteiligung");

@@ -69,6 +69,7 @@ public class OPartnerprofilForm extends Showcase {
 		p.add(content);
 
 		final Button deleteButton = new Button("Partnerprofil löschen");
+		deleteButton.setStyleName("myprojekt-formbutton");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 
 		if (this.editable == false) {
