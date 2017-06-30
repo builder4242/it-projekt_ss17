@@ -1,8 +1,9 @@
-package de.hdm.it_projekt.client.GUI.Cell;
-
 /** Die Klasse Ausschreibung Cell dient der Erstellung einer CellList in der 
  * Ausschreibungen angezeigt werden. 
  */
+package de.hdm.it_projekt.client.GUI.Cell;
+
+
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;

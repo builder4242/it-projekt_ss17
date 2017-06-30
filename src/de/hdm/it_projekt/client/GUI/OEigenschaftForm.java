@@ -1,5 +1,5 @@
 /**
- * 
+ * Die Klasse OEigenschaftForm dient dem Aufbau und der Interaktion mit dem Formular Eigenschften.
  */
 package de.hdm.it_projekt.client.GUI;
 

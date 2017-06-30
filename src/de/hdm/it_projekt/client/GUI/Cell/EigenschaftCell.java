@@ -1,6 +1,9 @@
+/** Die Klasse EigenschaftForm 
+ * 
+ */ 
 package de.hdm.it_projekt.client.GUI.Cell;
 
-/** Die Klasse EigenschaftForm  */ 
+
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -18,9 +21,9 @@ public class EigenschaftCell extends AbstractCell<Eigenschaft>{
 			return;
 		
 		
-		sb.appendHtmlConstant("<div class='Eigenschaft-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("<div class='Eigenschaft-Cell'>");  //Einbinden der CSS Klasse
 		sb.appendEscaped("Eigenschaft: " + value.getName() + " -> " + value.getWert());
-		sb.appendHtmlConstant("</div class='Eigenschaft-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("</div class='Eigenschaft-Cell'>");  //Einbinden der CSS Klasse
 		
 	}
 
