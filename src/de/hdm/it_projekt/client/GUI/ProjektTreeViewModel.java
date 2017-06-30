@@ -209,6 +209,10 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		bewerbungForm.setSelected(bw);
 		bewerbungForm.setVisible(true);
 
+		if(ausschreibender == true) {
+			showPartnerprofilBewerber();
+		}
+		
 		pa.getAusschreibungBy(bw, new AsyncCallback<Ausschreibung>() {
 
 			@Override
@@ -361,6 +365,27 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		rightPanel.add(hP);
 	}
 
+	void showPartnerprofilBewerber() {
+
+		pa.getOrganisationseinheitById(selectedBewerbung.getOrganisationseinheitId(), new AsyncCallback<Organisationseinheit>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Organisationseinheit result) {
+				OPartnerprofilForm pF = new OPartnerprofilForm(result, false);
+				rightPanel.clear();
+				rightPanel.add(pF);
+				
+			}
+		});
+		
+	}
+	
 	void addProjekt(Projekt pr) {
 		projektDataProvider.getList().add(pr);
 		selectionModel.setSelected(pr, true);
@@ -379,6 +404,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		ausschreibungDataProviders.remove(pr);
 		bewerbungDataProviders.remove(pr);
 		bewertungDataProviders.remove(pr);
+		projektDataProvider.refresh();
 	}
 
 	void addAusschreibungForProjekt(Ausschreibung as, Projekt pr) {
@@ -391,6 +417,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			ausschreibungProvider.getList().add(as);
 
 		setSelectedAusschreibung(as);
+		ausschreibungDataProviders.get(pr).refresh();
 		selectionModel.setSelected(as, true);
 	}
 
@@ -445,6 +472,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			bewerbungProvider.getList().add(bw);
 		}
 		setSelectedBewerbung(bw);
+		bewerbungDataProviders.get(as).refresh();
 		selectionModel.setSelected(as, true);
 	}
 
@@ -454,6 +482,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			return;
 
 		bewerbungDataProviders.get(as).getList().remove(bw);
+		bewerbungDataProviders.get(as).refresh();
 		selectionModel.setSelected(as, true);
 	}
 
@@ -467,6 +496,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		if (!bewertungtProvider.getList().contains(bwt))
 			bewertungtProvider.getList().add(bwt);
 
+		bewertungDataProviders.get(bw).refresh();
 		selectionModel.setSelected(bwt, true);
 	}
 

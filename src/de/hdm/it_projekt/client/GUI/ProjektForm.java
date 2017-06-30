@@ -42,6 +42,8 @@ public class ProjektForm extends Showcase {
 	private Label projektLeiterL = new Label("nicht angelegt");		/** Label deklarieren  und Text hinzugefügt*/
 	private TextArea beschreibungTb = new TextArea();				/** TextArea deklariert */ 
 
+	private HorizontalPanel buttonsOPanel = new HorizontalPanel();
+	
 	public ProjektForm(boolean ausschreibender) {
 		
 		formTitel.setText("Projekt");      /** Form Titel festgelegt */ 
@@ -95,8 +97,8 @@ public class ProjektForm extends Showcase {
 		newButton.addClickHandler(new NewClickHandler()); /** Click Handler für Button erstellen */ 
 		buttonsPanel.add(newButton);
 		
-		HorizontalPanel buttonsOPanel = new HorizontalPanel();
 		this.add(buttonsOPanel);
+		buttonsOPanel.setVisible(false);
 		
 		Button newAusschreibung = new Button("Ausschreibung anlegen");
 		newAusschreibung.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
@@ -126,6 +128,7 @@ public class ProjektForm extends Showcase {
 			startDb.setValue(pr.getStartdatum());
 			endDb.setValue(pr.getEnddatum());
 			beschreibungTb.setText(pr.getBeschreibung());
+			buttonsOPanel.setVisible(true);
 			
 			pa.getProjektleiterFor(prToDisplay, new AsyncCallback<Person>() {
 
@@ -147,6 +150,7 @@ public class ProjektForm extends Showcase {
 			endDb.setValue(null);
 			beschreibungTb.setText("");
 			projektLeiterL.setText("");
+			buttonsOPanel.setVisible(false);
 		}
 	}
 

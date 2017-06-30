@@ -644,6 +644,25 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	public Partnerprofil getPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException {
 		return ppMapper.getByAusschreibung(as);
 	}
+	
+	@Override
+	public Organisationseinheit getOrganisationseinheitById(int id) throws IllegalArgumentException {
+		
+		Person p = pMapper.findById(id);
+		Team t = tMapper.findById(id);
+		Unternehmen u = uMapper.findById(id);
+
+		Organisationseinheit o = null;
+
+		if (p != null)
+			o = p;
+		if (t != null)
+			o = t;
+		if (u != null)
+			o = u;
+
+		return o;
+	}
 
 	@Override
 	public Organisationseinheit getBeteiligterFor(Beteiligung bt) throws IllegalArgumentException {

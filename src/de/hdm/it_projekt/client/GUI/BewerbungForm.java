@@ -82,11 +82,17 @@ public class BewerbungForm extends Showcase {
 		bewertenButton.addClickHandler(new BewertenClickHandler());
 		buttonsPanel.add(bewertenButton);
 		
+		Button partnerprofilButton = new Button("Partnerprofil anzeigen");
+		bewertenButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		bewertenButton.addClickHandler(new PartnerprofilClickHandler());
+		this.add(bewertenButton);
+		
 		if(ausschreibender == false) {
 			textTb.setEnabled(true);
 			bewerberLb.setText(MyProjekt.loginInfo.getCurrentUser().getName());
 			newButton.setVisible(true);
 			bewertenButton.setVisible(false);
+			partnerprofilButton.setVisible(false);
 		}
 		
 	}
@@ -208,6 +214,15 @@ public class BewerbungForm extends Showcase {
 
 			if(ausschreibung != null && bewerbung != null)
 				ptvm.addBewerbungForAusschreibung(ausschreibung, bewerbung);
+			
+		}		
+	}
+	
+	private class PartnerprofilClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+
 			
 		}
 		
