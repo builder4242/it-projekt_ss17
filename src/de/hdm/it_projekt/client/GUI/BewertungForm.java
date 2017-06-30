@@ -62,7 +62,8 @@ public class BewertungForm extends Showcase {
 		form.setWidget(2, 1, textTb);
 		textTb.setStyleName("myprojekt-textarea");		
 
-		form.setWidget(3, 0, new Label("beteiligen"));
+		Label beteiligenL =  new Label("beteiligen");
+		form.setWidget(3, 0, beteiligenL);
 		form.setWidget(3, 1, beteiligenCb);
 		beteiligenCb.setValue(false);
 
@@ -92,9 +93,9 @@ public class BewertungForm extends Showcase {
 			wertDb.setEnabled(false);
 			textTb.setEnabled(false);
 			beteiligenCb.setVisible(false);
+			beteiligenL.setVisible(false);			
 			buttonsPanel.setVisible(false);
-		}
-		
+		}		
 	}
 
 	void setSelected(Bewertung bwt) {

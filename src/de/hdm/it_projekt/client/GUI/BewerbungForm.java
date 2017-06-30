@@ -17,7 +17,6 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
@@ -94,6 +93,9 @@ public class BewerbungForm extends Showcase {
 			bewertenButton.setVisible(false);
 			partnerprofilButton.setVisible(false);
 		}		
+		
+		if(ptvm.getSelectedBewerbung() == null)
+			newButton.setVisible(false);
 	}
 
 	void setSelected(Bewerbung bw) {

@@ -612,7 +612,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 				@Override
 				public void onSuccess(Vector<Bewerbung> bewerbungen) {
 					for (Bewerbung bw : bewerbungen) {
-						if(MyProjekt.loginInfo.getCurrentUser().getId() == bw.getOrganisationseinheitId())
+						if(MyProjekt.loginInfo.getCurrentUser().getId() == bw.getOrganisationseinheitId() || ausschreibender)
 							bewerbungProvider.getList().add(bw);
 					}
 				}
