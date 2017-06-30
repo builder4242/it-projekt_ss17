@@ -12,6 +12,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -137,6 +138,10 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		beteiligungForm.setProjektBeteiligungListView(pblv);
 		pblv.setBeteiligungForm(beteiligungForm);
 		
+		
+		Label pBet = new Label("Projektbeteiligungen:");
+		pBet.setStyleName("h1");
+		vP.add(pBet);
 		vP.add(pblv.getBeteiligungenCellList());
 		hP.add(vP);
 		hP.add(beteiligungForm);
