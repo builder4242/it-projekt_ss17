@@ -58,7 +58,7 @@ public class NewPersonForm extends Showcase {
 		this.add(new Label(
 				"Sie besitzen noch kein Benutzerprofil bei uns, bitte geben Sie in nachfolgendem Formular Ihre Daten ein."));
 		this.addStyleName("myprojekt-formlabel");
-		
+
 		Grid organisationseinheitGrid = new Grid(9, 2);
 		this.add(organisationseinheitGrid);
 
@@ -96,8 +96,9 @@ public class NewPersonForm extends Showcase {
 		HorizontalPanel customerButtonsPanel = new HorizontalPanel();
 		this.add(customerButtonsPanel);
 
-		Button newButton = new Button("Neu");
-		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		Button newButton = new Button("Anlegen");
+		newButton.setStyleName(
+				"myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		customerButtonsPanel.add(newButton);
 
@@ -125,17 +126,20 @@ public class NewPersonForm extends Showcase {
 		@Override
 		public void onSuccess(Person result) {
 
-			Window.alert("Person angelegt");
+			if (result == null) {
+				Window.alert("Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
+			} else {
+				Window.alert("Ihr Konto wurde erfolgreich angelegt.");
 
-			MyProjekt.loginInfo.setCurrentUser(result);
+				MyProjekt.loginInfo.setCurrentUser(result);
 
-			RootPanel.get("userinfo").add(new Label(MyProjekt.loginInfo.toString()));
-			
-			Showcase showcase = new Marktuebersicht();
-			RootPanel.get("content").clear();
-			RootPanel.get("content").add(showcase);
-			menu.setVisible(true);
-			
+				RootPanel.get("userinfo").add(new Label(MyProjekt.loginInfo.toString()));
+
+				Showcase showcase = new Marktuebersicht();
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(showcase);
+				menu.setVisible(true);
+			}
 
 		}
 
