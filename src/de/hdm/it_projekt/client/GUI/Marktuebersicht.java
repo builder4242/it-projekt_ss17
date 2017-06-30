@@ -75,12 +75,12 @@ public class Marktuebersicht extends Showcase {
 				if(MyProjekt.cpm.getAdminId() == MyProjekt.loginInfo.getCurrentUser().getId()) {
 					
 					Button deleteButton = new Button("Löschen");
-					deleteButton.addStyleName("myprojekt-formbutton");
+					deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 					deleteButton.addClickHandler(new DeleteClickHandler(MyProjekt.cpm));
 					headerInfo.add(deleteButton);
 					
 					Button updateButton = new Button("Ändern");
-					updateButton.addStyleName("myprojekt-formbutton");
+					updateButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 					updateButton.addClickHandler(new UpdateClickHandler(MyProjekt.cpm));
 					headerInfo.add(updateButton);
 
