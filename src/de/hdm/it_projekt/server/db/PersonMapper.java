@@ -447,7 +447,7 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE Email='"
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE Email='"
 							+ googleID + "' AND Typ='" + SQLTYP + "'");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -459,6 +459,7 @@ public class PersonMapper {
 				p = new Person();
 				p.setId(rs.getInt("ID"));
 				p.setName(rs.getString("Name"));
+				p.setVorname(rs.getString("Vorname"));
 				p.setEmail(rs.getString("Email"));
 				p.setStrasse(rs.getString("Strasse"));
 				p.setPlz(rs.getInt("PLZ"));
