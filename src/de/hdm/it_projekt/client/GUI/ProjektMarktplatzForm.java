@@ -1,10 +1,9 @@
 /** Die Klasse NewProjektMarktplatzForm dient dem Aufbau und der Interaktion mit dem Formular zum Anlegen 
  * eines neuen Marktplatzes auf der Startseite "Projektmarktplätze" der GUI. Es wird eine TextBox für die 
  * Bezeichung einens neuen Marktplatzes sowie ein Button mit zugeörigem ClickHandler zum Anlegen bereitgestellt.
- * Die Optik wird durch das Einbinden von CSS angepasst. */
+ * Die Optik wird durch das Einbinden von CSS angepasst. 
+ * */
 package de.hdm.it_projekt.client.GUI;
-
-
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -28,6 +27,7 @@ public class ProjektMarktplatzForm extends Showcase {
 	/** Label deklarieren */
 	private TextBox bezeichnungTextBox = new TextBox();
 
+	
 	public ProjektMarktplatzForm() {
 
 		formTitel.setText("ProjektMarktplatz"); /** Form Titel festgelegt */
@@ -45,10 +45,11 @@ public class ProjektMarktplatzForm extends Showcase {
 		Button changeButton = new Button("Speichern");
 		changeButton.setStyleName(
 				"myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
-		changeButton.addClickHandler(
-				new ChangeClickHandler()); /**
-											 * Click Handler für Button erstellen
-											 */
+		changeButton
+				.addClickHandler(new ChangeClickHandler()); /**
+															 * Click Handler für
+															 * Button erstellen
+															 */
 		this.add(changeButton);
 
 	}
@@ -69,11 +70,16 @@ public class ProjektMarktplatzForm extends Showcase {
 
 	private class ChangeClickHandler implements ClickHandler {
 
+		/**
+		 * Wird beim Klick auf den Ändern Button ausgeführt und ändert die Daten im TreeView und in der Datenbank.
+		 * Dafür werden Create-, Set- und Get-Methoden verwendet, sowie AsyncCallbacks erstellt. 
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 
 			if (pmToDisplay == null) {
-				pa.createProjektMarktplatz(bezeichnungTextBox.getText(), MyProjekt.loginInfo.getCurrentUser().getId(), new CreatePmCallback());
+				pa.createProjektMarktplatz(bezeichnungTextBox.getText(), MyProjekt.loginInfo.getCurrentUser().getId(),
+						new CreatePmCallback());
 			} else {
 				pmToDisplay.setBezeichnung(bezeichnungTextBox.getText());
 				pa.save(pmToDisplay, new SavePmCallback());
@@ -85,8 +91,7 @@ public class ProjektMarktplatzForm extends Showcase {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
+			Window.alert("Es ist ein Fehler aufgetreten.");
 		}
 
 		@Override
@@ -101,7 +106,7 @@ public class ProjektMarktplatzForm extends Showcase {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
+			Window.alert("Es ist ein Fehler aufgetreten.");
 
 		}
 

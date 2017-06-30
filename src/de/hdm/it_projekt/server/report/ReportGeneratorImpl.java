@@ -26,6 +26,8 @@ import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
 import de.hdm.it_projekt.shared.report.BewerbungenZuAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.Column;
 import de.hdm.it_projekt.shared.report.CompositeParagraph;
+import de.hdm.it_projekt.shared.report.FanInReport;
+import de.hdm.it_projekt.shared.report.FanOutReport;
 import de.hdm.it_projekt.shared.report.PassendeAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.ProjektverflechtungenReport;
 import de.hdm.it_projekt.shared.report.Report;
@@ -276,6 +278,72 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			report.addRow(gabRow);
 		}
 
+		return report;
+	}
+	
+
+	@Override
+	public FanOutReport createFanOutReport(Organisationseinheit o) throws IllegalArgumentException {
+
+		FanOutReport report = new FanOutReport();
+		
+		report.setTitle("FanOut Report");
+		report.setHeaderData(new SimpleParagraph("FanIn Analyse für: " + o.getName()));
+		report.setCreated(new Date());
+		
+		Row headline = new Row();
+		headline.addColumn(new Column("Bewerbungen"));
+		headline.addColumn(new Column("Anzahl"));
+		report.addRow(headline);
+
+		Row laufendeRow = new Row();
+		laufendeRow.addColumn(new Column("laufende:"));
+		laufendeRow.addColumn(new Column(String.valueOf(bwMapper.countBewerbungLaufende(o))));
+		report.addRow(laufendeRow);
+		
+		Row angenommenRow = new Row();
+		angenommenRow.addColumn(new Column("angenommen:"));
+		angenommenRow.addColumn(new Column(String.valueOf(bwMapper.countBewerbungAngenommen(o))));
+		report.addRow(angenommenRow);
+		
+		Row abgelehntRow = new Row();
+		abgelehntRow.addColumn(new Column("abgelehnt (Wert 0):"));
+		abgelehntRow.addColumn(new Column(String.valueOf(bwMapper.countBewerbungAbgelehnt(o))));
+		report.addRow(abgelehntRow);
+		
+		return report;
+		
+	}
+
+	@Override
+	public FanInReport createFanInReport(Organisationseinheit o) throws IllegalArgumentException {
+
+		FanInReport report = new FanInReport();
+
+		report.setTitle("FanIn Report");
+		report.setHeaderData(new SimpleParagraph("FanIn Analyse für: " + o.getName()));
+		report.setCreated(new Date());
+		
+		Row headline = new Row();
+		headline.addColumn(new Column("Bewerbungen"));
+		headline.addColumn(new Column("Anzahl"));
+		report.addRow(headline);
+
+		Row besetzteRow = new Row();
+		besetzteRow.addColumn(new Column("besetzte: "));
+		besetzteRow.addColumn(new Column(String.valueOf(asMapper.countBesetzte(o))));
+		report.addRow(besetzteRow);
+		
+		Row laufendeRow = new Row();
+		laufendeRow.addColumn(new Column("laufende: "));
+		laufendeRow.addColumn(new Column(String.valueOf(asMapper.countLaufende(o))));
+		report.addRow(laufendeRow);
+		
+		Row abgebrochenRow = new Row();
+		abgebrochenRow.addColumn(new Column("abgebrochen: "));
+		abgebrochenRow.addColumn(new Column(String.valueOf(asMapper.countAbgebrochen(o))));
+		report.addRow(abgebrochenRow);
+		
 		return report;
 	}
 

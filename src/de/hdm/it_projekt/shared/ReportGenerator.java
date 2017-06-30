@@ -13,6 +13,8 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
 import de.hdm.it_projekt.shared.report.BewerbungenZuAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.FanInReport;
+import de.hdm.it_projekt.shared.report.FanOutReport;
 import de.hdm.it_projekt.shared.report.PassendeAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.ProjektverflechtungenReport;
 
@@ -31,6 +33,10 @@ public interface ReportGenerator extends RemoteService {
 	
 	public ProjektverflechtungenReport createProjektverflechtungenReport(Organisationseinheit o, ProjektMarktplatz pm) throws IllegalArgumentException;
 	
+	public FanOutReport createFanOutReport(Organisationseinheit o) throws IllegalArgumentException;
+	
+	public FanInReport createFanInReport(Organisationseinheit o) throws IllegalArgumentException;
+	
 	public Vector<Ausschreibung> getAlleAusschreibungenFor(ProjektMarktplatz pm) throws IllegalArgumentException;
 	
 	public Vector<Ausschreibung> getMatchingAusschreibungenFor(Organisationseinheit o) throws IllegalArgumentException;
@@ -44,4 +50,5 @@ public interface ReportGenerator extends RemoteService {
 	public Vector<Organisationseinheit> getBewerberForAusschreibenden(Organisationseinheit o) throws IllegalArgumentException;
 	
 	public Vector<Beteiligung> getBeteiligungenFor(Organisationseinheit o) throws IllegalArgumentException;
+	
 }

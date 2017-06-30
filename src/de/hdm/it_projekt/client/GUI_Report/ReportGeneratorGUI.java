@@ -99,9 +99,11 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		Button fanOutButton = new Button("Zeige Fan Out");
 		fanOutButton.setStyleName("myprojekt-reportbutton");
+		fanOutButton.addClickHandler(new FanOutClickHandler());
 
 		Button fanInButton = new Button("Zeige Fan In");
 		fanInButton.setStyleName("myprojekt-reportbutton");
+		fanInButton.addClickHandler(new FanInClickHandler());
 
 		Button zugehoerigeProjekteButton = new Button("Zeige Projektverflechtungen meiner Bewerber");
 		zugehoerigeProjekteButton.setStyleName("myprojekt-reportbutton");
@@ -159,9 +161,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 				contentPanel.add(new PassendeAusschreibungenHTML(loginInfo.getCurrentUser()));
 
 			}
-
 		}
-
 	}
 
 	private class BewerbungenZuAusschreibungenClickhandler implements ClickHandler {
@@ -172,17 +172,34 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		}
 	}
-	
+
 	private class ProjektverflechtungenClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
+
 			contentPanel.clear();
 			contentPanel.add(new ProjektverfelchtungenHTML(loginInfo.getCurrentUser(), cpm));
 
 		}
-		
+	}
+
+	private class FanOutClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			contentPanel.clear();
+			contentPanel.add(new FanOutHTML(loginInfo.getCurrentUser()));
+		}
+	}
+	
+	private class FanInClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			contentPanel.clear();
+			contentPanel.add(new FanInHTML(loginInfo.getCurrentUser()));
+		}
 	}
 
 	private class LoginCallback implements AsyncCallback<Person> {
