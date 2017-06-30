@@ -218,8 +218,8 @@ public class BeteiligungMapper {
 				bet.setPersonentage(rs.getInt("Personentage"));
 				bet.setEnddatum(rs.getDate("Enddatum"));
 				bet.setEnddatum(rs.getDate("Startdatum"));
-				bet.setProjektId(rs.getInt("ID"));
-				bet.setOrganisationseinheitId(rs.getInt("ID"));
+				bet.setProjektId(rs.getInt("Projekt_ID"));
+				bet.setOrganisationseinheitId(rs.getInt("Organisationseinheit_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bet);
@@ -385,7 +385,7 @@ public class BeteiligungMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM organisationseinheit WHERE organisationseinheit.ID=" + o.getId());
+					.executeQuery("SELECT ID FROM beteiligung WHERE Organisationseinheit_ID=" + o.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Beteiligung-Objekt erstellt.

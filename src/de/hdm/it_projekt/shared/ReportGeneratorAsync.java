@@ -41,7 +41,7 @@ public interface ReportGeneratorAsync {
 	void createPassendeAusschreibungenReport(Organisationseinheit o,
 			AsyncCallback<PassendeAusschreibungenReport> callback);
 
-	void createProjektverflechtungenReport(Organisationseinheit o, AsyncCallback<ProjektverflechtungenReport> callback);
+	void createProjektverflechtungenReport(Organisationseinheit o, ProjektMarktplatz pm, AsyncCallback<ProjektverflechtungenReport> callback);
 
 	void getBeteiligungenFor(Organisationseinheit o, AsyncCallback<Vector<Beteiligung>> callback);
 

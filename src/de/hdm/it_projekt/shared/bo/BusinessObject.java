@@ -28,7 +28,7 @@ public abstract class BusinessObject implements IsSerializable {
    */
   private int id = 0;
 
-  /**
+/**
    * Auslesen der ID.
    */
   public int getId() {

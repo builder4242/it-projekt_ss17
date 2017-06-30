@@ -35,7 +35,7 @@ public interface ProjektAdministrationAsync {
 
 	void delete(Partnerprofil pp, AsyncCallback<Void> callback);
 
-	void createProjektMarktplatz(String bez, AsyncCallback<ProjektMarktplatz> callback);
+	void createProjektMarktplatz(String bez, int adminID, AsyncCallback<ProjektMarktplatz> callback);
 
 	void createTeam(String name, String email, String strasse, int plz, String ort, String tel,
 			AsyncCallback<Team> callback);
@@ -85,8 +85,6 @@ public interface ProjektAdministrationAsync {
 	void getProjektMarktplatzById(int id, AsyncCallback<ProjektMarktplatz> callback);
 
 	void init(AsyncCallback<Void> callback);
-
-	void projektmarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o, AsyncCallback<Void> callback);
 
 	void save(Person ps, AsyncCallback<Void> callback);
 

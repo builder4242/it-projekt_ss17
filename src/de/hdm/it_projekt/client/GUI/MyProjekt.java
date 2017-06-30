@@ -33,8 +33,8 @@ public class MyProjekt implements EntryPoint {
 	/**
 	 * Begin Attribute fuer Login
 	 */
-	protected static LoginInfo loginInfo = null;
-	protected static ProjektMarktplatz cpm = null;
+	static LoginInfo loginInfo = null;
+	static ProjektMarktplatz cpm = null;
 
 
 	/* Ende Attribute fuer Login */
