@@ -130,6 +130,9 @@ public class AusschreibungForm extends Showcase {
 	
 	private class NewBewerbungClickHandler implements ClickHandler {
 
+		/**
+		 * Beim Klick auf den Neu Button wird das Ausschreibungsformular ausgeblendet und das Bewerbungsformular eingebelendet
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 			ptvm.ausschreibungForm.setVisible(false);
@@ -149,6 +152,10 @@ public class AusschreibungForm extends Showcase {
 
 	private class ChangeClickHandler implements ClickHandler {
 
+		/**
+		 * Wird beim Klick auf den Ändern Button ausgeführt und ändert die Daten im TreeView und in der Datenbank.
+		 * Dafür werden Create-, Set- und Get-Methoden verwendet, sowie AsyncCallbacks erstellt. 
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 
