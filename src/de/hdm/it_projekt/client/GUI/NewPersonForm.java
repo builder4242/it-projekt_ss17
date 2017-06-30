@@ -7,6 +7,7 @@ package de.hdm.it_projekt.client.GUI;
 
 
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -19,6 +20,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.hdm.it_projekt.shared.LoginService;
+import de.hdm.it_projekt.shared.LoginServiceAsync;
+import de.hdm.it_projekt.shared.bo.LoginInfo;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
 
@@ -30,6 +34,7 @@ public class NewPersonForm extends Showcase {
 
 	private Organisationseinheit organisationseinheitToDisplay = null;
 	private Widget menu = null;
+	static LoginInfo loginInfo = null;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
@@ -51,6 +56,8 @@ public class NewPersonForm extends Showcase {
 	}
 
 	public NewPersonForm(String googleId, Widget m) {
+		
+	
 
 		menu = m;
 		this.add(new Label(
@@ -99,6 +106,17 @@ public class NewPersonForm extends Showcase {
 				"myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		customerButtonsPanel.add(newButton);
+		
+		Button abmeldungButton = new Button("Abmelden");
+		abmeldungButton.setStyleName("myprojekt-abmeldebutton");
+		abmeldungButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+
+				Window.Location.assign(loginInfo.getLogoutUrl());
+			}
+		});
 
 	}
 
@@ -130,8 +148,11 @@ public class NewPersonForm extends Showcase {
 				Window.alert("Ihr Konto wurde erfolgreich angelegt.");
 
 				MyProjekt.loginInfo.setCurrentUser(result);
-
-				RootPanel.get("userinfo").add(new Label(MyProjekt.loginInfo.toString()));
+				
+				Label infoLabel = new Label(MyProjekt.loginInfo.toString()); 
+				infoLabel.addStyleName("myprojekt-loginlabel");
+				RootPanel.get("userinfo").add(infoLabel);
+				
 
 				Showcase showcase = new Marktuebersicht();
 				RootPanel.get("content").clear();
