@@ -55,10 +55,7 @@ public class LoginPanel extends Showcase {
 		// Assemble login panel
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(greeting);
-		RootPanel.get("content").add(new HTML("<img src='square.png' alt='Logo' width='20%'>"
-				+ "<img src='square.png' alt='Logo' width='20%'>"
-				+ "<img src='square.png' alt='Logo' width='20%'>"
-				+ "<img src='square.png' alt='Logo' width='20%'>"));
+		RootPanel.get("content").add(new HTML("<img src='logo.png' alt='Logo' width='40%' align='center'>"));
 	}
 
 }
