@@ -93,8 +93,7 @@ public class BewerbungForm extends Showcase {
 			newButton.setVisible(true);
 			bewertenButton.setVisible(false);
 			partnerprofilButton.setVisible(false);
-		}
-		
+		}		
 	}
 
 	void setSelected(Bewerbung bw) {
