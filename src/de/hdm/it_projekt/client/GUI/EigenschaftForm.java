@@ -93,6 +93,10 @@ public class EigenschaftForm extends Showcase {
 
 	private class ChangeClickHandler implements ClickHandler {
 
+		/**
+		 * Wird beim Klick auf den Ändern Button ausgeführt und ändert die Daten im TreeView und in der Datenbank.
+		 * Dafür werden Create-, Set- und Get-Methoden verwendet, sowie AsyncCallbacks erstellt. 
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 
