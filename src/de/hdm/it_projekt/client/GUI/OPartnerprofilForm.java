@@ -34,7 +34,7 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class OPartnerprofilForm extends Showcase {
 
-	static Partnerprofil pp = null;
+	private Partnerprofil pp = null;
 
 	final HorizontalPanel p = new HorizontalPanel();
 	final VerticalPanel leftcol = new VerticalPanel();
@@ -65,7 +65,7 @@ public class OPartnerprofilForm extends Showcase {
 		p.add(leftcol);
 		p.add(content);
 		
-		Button deleteButton = new Button("Partnerprofil");
+		final Button deleteButton = new Button("Partnerprofil löschen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 
 		pa.getPartnerprofilById(MyProjekt.loginInfo.getCurrentUser().getPartnerprofilId(),
@@ -87,6 +87,7 @@ public class OPartnerprofilForm extends Showcase {
 							Label PPLb = new Label("Partnerprofil");
 							Label ALb = new Label("angelegt: " + pp.getErstelldatum());
 							Label LALb = new Label("letzte Änderung: " + pp.getAenderungsdatum());
+							
 							PPLb.setStyleName("h1");
 							ALb.setStyleName("myprojekt-opartnerprofil");
 							LALb.setStyleName("myprojekt-opartnerprofil");
@@ -95,10 +96,10 @@ public class OPartnerprofilForm extends Showcase {
 							leftcol.add(PPLb);
 							leftcol.add(ALb);
 							leftcol.add(LALb);
-							leftcol.add(new Label("   "));
 							leftcol.add(getEigenschaftCelllist());
 							leftcol.addStyleName("Eigenschaft-Cell");
-							content.add(new OEigenschaftForm());
+							leftcol.add(deleteButton);
+							content.add(new OEigenschaftForm(pp));
 						} 
 						
 						
@@ -119,7 +120,7 @@ public class OPartnerprofilForm extends Showcase {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 
-				OEigenschaftForm eForm = new OEigenschaftForm();
+				OEigenschaftForm eForm = new OEigenschaftForm(pp);
 				eForm.setSelected(eSelectionModel.getSelectedObject());
 
 				content.clear();
@@ -143,24 +144,22 @@ public class OPartnerprofilForm extends Showcase {
 				for (Eigenschaft e : result) {
 					eL.add(e);
 				}
-
 			}
 		});
 
 		return eCl;
-
 	}
 	
 	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			pa.delete(pp, new AsyncCallback<Void>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					Window.alert("Es ist ein Fehler aufgetreten.");
-					
+					Window.alert("Es ist ein Fehler beim löschen aufgetreten.");					
 				}
 
 				@Override

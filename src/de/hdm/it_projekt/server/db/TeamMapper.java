@@ -224,7 +224,7 @@ public class TeamMapper {
 				t.setOrt(rs.getString("Ort"));
 				t.setTel(rs.getString("Tel"));
 
-				if (rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
@@ -278,7 +278,7 @@ public class TeamMapper {
 				t.setOrt(rs.getString("Ort"));
 				t.setTel(rs.getString("Tel"));
 
-				if (rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				return t;
@@ -328,7 +328,7 @@ public class TeamMapper {
 				t.setOrt(rs.getString("Ort"));
 				t.setTel(rs.getString("Tel"));
 
-				if (rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					t.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}

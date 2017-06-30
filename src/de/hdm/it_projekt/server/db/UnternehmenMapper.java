@@ -221,7 +221,7 @@ public class UnternehmenMapper {
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
 
-				if (rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
@@ -275,7 +275,7 @@ public class UnternehmenMapper {
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
 
-				if (rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
@@ -418,7 +418,7 @@ public class UnternehmenMapper {
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
 
-				if (rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}

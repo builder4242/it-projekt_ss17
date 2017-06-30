@@ -222,7 +222,7 @@ public class PersonMapper {
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
 				
-				if(rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
@@ -276,7 +276,7 @@ public class PersonMapper {
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
 
-				if(rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
@@ -472,7 +472,7 @@ public class PersonMapper {
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
 				
-				if(rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}

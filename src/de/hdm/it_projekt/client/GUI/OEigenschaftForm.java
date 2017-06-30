@@ -15,17 +15,20 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class OEigenschaftForm extends Showcase {
 
+	private Partnerprofil selectedPartnerprofil = null;
 	private Eigenschaft eToDisplay = null;
 
 	private TextBox nameTb = new TextBox();
 	private TextBox wertTb = new TextBox();
 	private Label formTitel = new Label();
 
-	public OEigenschaftForm() {
+	public OEigenschaftForm(Partnerprofil pp) {
 
+		this.selectedPartnerprofil = pp;
 		formTitel.setText("Bewertung");
 		formTitel.setStyleName("h1");
 		this.add(formTitel);
@@ -136,7 +139,7 @@ public class OEigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			pa.createEigenschaftFor(OPartnerprofilForm.pp, nameTb.getText(), wertTb.getText(),
+			pa.createEigenschaftFor(selectedPartnerprofil, nameTb.getText(), wertTb.getText(),
 					new AsyncCallback<Eigenschaft>() {
 
 						@Override

@@ -400,10 +400,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	public void delete(ProjektMarktplatz pm) throws IllegalArgumentException {
 
 		Vector<Projekt> prV = getAlleProjekteFor(pm);
-		for(Projekt pr : prV) {
+		for (Projekt pr : prV) {
 			delete(pr);
 		}
-		
+
 		this.pmMapper.delete(pm);
 	}
 
@@ -438,10 +438,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 			delete(pp);
 
 		Vector<Bewerbung> bwV = getBewerbungFor(as);
-		for(Bewerbung bw : bwV) {
+		for (Bewerbung bw : bwV) {
 			delete(bw);
 		}
-		
+
 		this.asMapper.delete(as);
 	}
 
@@ -457,9 +457,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		}
 
 		Ausschreibung as = getAusschreibungby(pp);
-		as.setPartnerprofilId(0);
-		save(as);
-
+		if (as != null) {
+			as.setPartnerprofilId(0);
+			save(as);
+		}
 		this.ppMapper.delete(pp);
 	}
 
@@ -612,7 +613,8 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Vector<Projekt> getProjektByProjektleiter(Organisationseinheit p, ProjektMarktplatz pm) throws IllegalArgumentException {
+	public Vector<Projekt> getProjektByProjektleiter(Organisationseinheit p, ProjektMarktplatz pm)
+			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return prMapper.getByProjektleiter(p, pm);
 	}
