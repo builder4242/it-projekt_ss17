@@ -1,7 +1,8 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse PartnerprofilTreeViewModel dient der Darstellung von Informationen über das 
  * Partnerprofil.  */ 
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,10 +1,11 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse BewerbungForm dient dem Aufbau und der Interaktion mit dem Formular "Bewerber"
  * auf der Seite "Meine Ausschreibungen" der GUI. Die Klasse stellt eine DateBox
  * für das Erstelldatum, ein Label für den Bewerber sowie eine TextArea für den Ausschreibungstext
  * bereit. Über den Button "Löschen" mit zugehörigem ClickHandler kann eine Bewerbung gelöscht werden.
  * Die Optik wird über das Einbinden von CSS angepasst. */
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

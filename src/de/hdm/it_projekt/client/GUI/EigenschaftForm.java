@@ -1,9 +1,10 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse Eigenschaft Form  dient dem Aufbau und der Interaktion mit dem Formular "Eigenschaft" 
  * auf der Seite "Eigenes Profil verwalten* der GUI. Die Klasse beinhaltet zwei Textfelder für Name und Wert,
  * sowie drei Buttons mit zugehörigem ClickHandler zum Ändern, Löschen und Anlegen. Die Optik wird über
  * das Einbinden von CSS angepasst. */ 
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

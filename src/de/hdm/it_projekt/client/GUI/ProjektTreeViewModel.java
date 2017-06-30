@@ -1,3 +1,6 @@
+/** 
+ * 
+ * */ 
 package de.hdm.it_projekt.client.GUI;
 
 import java.util.HashMap;
