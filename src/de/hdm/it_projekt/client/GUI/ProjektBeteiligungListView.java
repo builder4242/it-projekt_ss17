@@ -67,7 +67,6 @@ public class ProjektBeteiligungListView extends Showcase {
 		btCl = new CellList<Beteiligung>(new BeteiligungCell());
 		btCl.setSelectionModel(selectionModel);
 		btCl.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-		
 		beteiligungDataProvider = new ListDataProvider<Beteiligung>();
 		beteiligungDataProvider.addDataDisplay(btCl);
 

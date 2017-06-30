@@ -29,7 +29,7 @@ public class BewerbungCell extends AbstractCell<Bewerbung> {
 
 		sb.appendHtmlConstant("<div class='Partnerprofil-Cell'>"); //Einbinden der CSS Klasse
 	
-		sb.appendEscaped(Integer.toString(context.getIndex()+1) + "Bewerber");
+		sb.appendEscaped(Integer.toString(context.getIndex()+1) + ". Bewerber");
 
 		sb.appendHtmlConstant("</div class='Partnerprofil-Cell'>"); //Einbinden der CSS Klasse
 

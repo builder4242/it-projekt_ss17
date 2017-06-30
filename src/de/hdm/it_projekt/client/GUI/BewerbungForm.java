@@ -199,7 +199,7 @@ public class BewerbungForm extends Showcase {
 		Ausschreibung ausschreibung = null;
 		
 		public CreateBewerbungCallback(Ausschreibung as) {
-			ausschreibung = as;
+			this.ausschreibung = as;
 		}
 		
 		@Override

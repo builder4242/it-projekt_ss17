@@ -25,33 +25,10 @@ public class BeteiligungCell extends AbstractCell<Beteiligung> {
 		if (value == null)
 			return;
 
-		sb.appendHtmlConstant("<div class='Beteiligung-Cell'>"); // Test CSS Klasse
-		sb.appendEscaped(Integer.toString(context.getIndex()+1) + "Beteiligung");
-		sb.appendHtmlConstant("</div class='Beteiligung-Cell'>"); // Test CSS Klasse
+		sb.appendHtmlConstant("<div class='Eigenschaft-Cell'>"); // Test CSS Klasse
+		sb.appendEscaped(Integer.toString(context.getIndex()+1) + ". Beteiligung");
+		sb.appendHtmlConstant("</div>"); // Test CSS Klasse
 	}
 
-	String getNameFor(Beteiligung value) {
-		
-		final StringBuffer name = new StringBuffer();
 
-		pa.getBeteiligterFor(value, new AsyncCallback<Organisationseinheit>() {
-
-			@Override
-			public void onSuccess(Organisationseinheit result) {
-				if(result instanceof Person) {
-					Person p = (Person) result;
-					name.append(p.getName() + ", " + p.getVorname());
-				} else {
-					name.append(result.getName());
-				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
-		});
-
-		return name.toString();
-	}
 }
