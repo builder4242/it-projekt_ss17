@@ -7,6 +7,11 @@ import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.report.FanOutReport;
 import de.hdm.it_projekt.shared.report.HTMLReportWriter;
 
+/**
+ * 
+ * @author Anlehnung an Thies
+ *
+ */
 public class FanOutHTML extends Showcase {
 
 	private Organisationseinheit o = null;

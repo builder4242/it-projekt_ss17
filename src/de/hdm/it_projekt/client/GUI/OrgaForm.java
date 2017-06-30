@@ -295,7 +295,7 @@ public class OrgaForm extends Showcase {
 			});	
 			
 		} else {
-			pPanel.add(new OPartnerprofilForm());
+			pPanel.add(new OPartnerprofilForm(MyProjekt.loginInfo.getCurrentUser(), true));
 		}
 	}
 	
@@ -311,7 +311,7 @@ public class OrgaForm extends Showcase {
 		public void onSuccess(Partnerprofil result) {
 			MyProjekt.loginInfo.getCurrentUser().setPartnerprofilId(result.getId());
 			pPanel.clear();
-			pPanel.add(new OPartnerprofilForm());
+			pPanel.add(new OPartnerprofilForm(MyProjekt.loginInfo.getCurrentUser(), true));
 		}
 		
 	}

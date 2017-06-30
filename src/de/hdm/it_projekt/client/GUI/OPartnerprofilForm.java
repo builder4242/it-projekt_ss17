@@ -2,15 +2,12 @@
  * "Eigens Profil verwalten" in der GUI.
  * Desweiteren gibt es Labeles für das Anlegedatum sowie das Datum der letzten
  * Änderung, diese werden automatisch gesetzt, in dem sie sich ihren Wert über Get-Methoden abfragen.
- * Die Optik der Lables, wird durch das Einbinden von CSS angepasst.   */ 
+ * Die Optik der Lables, wird durch das Einbinden von CSS angepasst.   */
 package de.hdm.it_projekt.client.GUI;
-
-
 
 import java.util.List;
 import java.util.Vector;
 
-import com.google.gwt.cell.client.Cell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellList;
@@ -30,12 +27,16 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.it_projekt.client.GUI.Cell.EigenschaftCell;
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class OPartnerprofilForm extends Showcase {
 
+	private Organisationseinheit o = null;
 	private Partnerprofil pp = null;
 
+	final boolean editable;
+	
 	final HorizontalPanel p = new HorizontalPanel();
 	final VerticalPanel leftcol = new VerticalPanel();
 	final VerticalPanel content = new VerticalPanel();
@@ -52,60 +53,66 @@ public class OPartnerprofilForm extends Showcase {
 	final CellList<Eigenschaft> eCl = new CellList<Eigenschaft>(new EigenschaftCell(), KEY_PROVIDER);
 
 	final SingleSelectionModel<Eigenschaft> eSelectionModel = new SingleSelectionModel<Eigenschaft>(KEY_PROVIDER);
-
+	
 	static ListDataProvider<Eigenschaft> eDataProvider = new ListDataProvider<Eigenschaft>();
 
 	final static List<Eigenschaft> eL = eDataProvider.getList();
 
-	public OPartnerprofilForm() {
+	public OPartnerprofilForm(Organisationseinheit o, final boolean editable) {
 
+		this.o = o;
+		this.editable = editable;
 
 		eL.clear();
-		
+
 		p.add(leftcol);
 		p.add(content);
-		
+
 		final Button deleteButton = new Button("Partnerprofil löschen");
 		deleteButton.setStyleName("myprojekt-formbutton");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 
-		pa.getPartnerprofilById(MyProjekt.loginInfo.getCurrentUser().getPartnerprofilId(),
-				new AsyncCallback<Partnerprofil>() {
+		if (this.editable == false) {
+			deleteButton.setVisible(false);
+		} else {
+			
+		}
 
-					@Override
-					public void onFailure(Throwable caught) {
+		pa.getPartnerprofilById(o.getPartnerprofilId(), new AsyncCallback<Partnerprofil>() {
 
-						Window.alert("Es ist leider ein Fehler aufgetreten.");
+			@Override
+			public void onFailure(Throwable caught) {
 
-					}
+				Window.alert("Es ist leider ein Fehler aufgetreten.");
 
-					@Override
-					public void onSuccess(Partnerprofil result) {
+			}
 
-						if (result != null) {
-							pp = result;
+			@Override
+			public void onSuccess(Partnerprofil result) {
 
-							Label PPLb = new Label("Partnerprofil");
-							Label ALb = new Label("angelegt: " + pp.getErstelldatum());
-							Label LALb = new Label("letzte Änderung: " + pp.getAenderungsdatum());
-							
-							PPLb.setStyleName("h1");
-							ALb.setStyleName("myprojekt-opartnerprofil");
-							LALb.setStyleName("myprojekt-opartnerprofil");
-							
-							
-							leftcol.add(PPLb);
-							leftcol.add(ALb);
-							leftcol.add(LALb);
-							leftcol.add(getEigenschaftCelllist());
-							leftcol.addStyleName("Eigenschaft-Cell");
-							leftcol.add(deleteButton);
-							content.add(new OEigenschaftForm(pp));
-						} 
-						
-						
-					}
-				});
+				if (result != null) {
+					pp = result;
+
+					Label PPLb = new Label("Partnerprofil");
+					Label ALb = new Label("angelegt: " + pp.getErstelldatum());
+					Label LALb = new Label("letzte Änderung: " + pp.getAenderungsdatum());
+
+					PPLb.setStyleName("h1");
+					ALb.setStyleName("myprojekt-opartnerprofil");
+					LALb.setStyleName("myprojekt-opartnerprofil");
+
+					leftcol.add(PPLb);
+					leftcol.add(ALb);
+					leftcol.add(LALb);
+					leftcol.add(getEigenschaftCelllist());
+					leftcol.addStyleName("Eigenschaft-Cell");
+					leftcol.add(deleteButton);
+					if (editable)
+						content.add(new OEigenschaftForm(pp));
+				}
+
+			}
+		});
 
 		this.add(p);
 
@@ -113,7 +120,9 @@ public class OPartnerprofilForm extends Showcase {
 
 	private Widget getEigenschaftCelllist() {
 
-		eCl.setSelectionModel(eSelectionModel);
+		if(editable)
+			eCl.setSelectionModel(eSelectionModel);
+		
 		eCl.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 		eSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
@@ -150,17 +159,17 @@ public class OPartnerprofilForm extends Showcase {
 
 		return eCl;
 	}
-	
+
 	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
+
 			pa.delete(pp, new AsyncCallback<Void>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					Window.alert("Es ist ein Fehler beim löschen aufgetreten.");					
+					Window.alert("Es ist ein Fehler beim löschen aufgetreten.");
 				}
 
 				@Override
@@ -171,6 +180,6 @@ public class OPartnerprofilForm extends Showcase {
 				}
 			});
 		}
-		
+
 	}
 }

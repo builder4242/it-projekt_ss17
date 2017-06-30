@@ -29,7 +29,7 @@ public class OEigenschaftForm extends Showcase {
 	public OEigenschaftForm(Partnerprofil pp) {
 
 		this.selectedPartnerprofil = pp;
-		formTitel.setText("Bewertung");
+		formTitel.setText("Eigenschaft");
 		formTitel.setStyleName("h1");
 		this.add(formTitel);
 

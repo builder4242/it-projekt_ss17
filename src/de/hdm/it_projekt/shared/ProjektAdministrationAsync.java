@@ -144,5 +144,7 @@ public interface ProjektAdministrationAsync {
 
 	void getAusschreibungByMatch(Organisationseinheit o, AsyncCallback<Vector<Ausschreibung>> callback);
 
+	void getOrganisationseinheitById(int id, AsyncCallback<Organisationseinheit> callback);
+
 
 }
