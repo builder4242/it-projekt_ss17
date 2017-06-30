@@ -18,7 +18,7 @@ public class Projektuebersicht extends Showcase {
 		HTML einfuehrungHTML = new HTML("</br><p align='justify'>Herzlich willkommen im Projektmarktplatz <b>" + pmHTML +
 				 "</b> </br> Wenn Sie ein neues Projekt oder eine Ausschreibung anlegen wollen, "
 				 + "gehen Sie zu <b>Meine Ausschreibungen</b>.</br> Wenn Sie sich auf eine Ausschreibung"
-				 + " bewerben wollen, gehen Sie bitte zu <u>Meine Bewerbungen</u>."
+				 + " bewerben wollen, gehen Sie bitte zu <b>Meine Bewerbungen</b>."
 
 				 + "</br>Möchten Sie Ihr Partnerprofil verwalten, gehen Sie einfach zu <b>Mein Profil "
 				 + "verwalten</b>. </br>Um Reports zu generieren, gehen Sie zu <b>Report Generator</b>"
