@@ -1,5 +1,5 @@
 /** 
- * 
+ * Die Klasse BeteiligungForm dient dem Aufbau und der Interaktion mit dem Formular Beteiligung. 
  * */ 
 package de.hdm.it_projekt.client.GUI;
 

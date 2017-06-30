@@ -1,6 +1,9 @@
+/**
+ * 
+ */
 package de.hdm.it_projekt.client.GUI.Cell;
 
-/** */ 
+
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -16,8 +19,8 @@ public class BewertungCell extends AbstractCell<Bewertung>{
 		if(value == null)
 			return;
 		
-		sb.appendHtmlConstant("<div class='Partnerprofil-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("<div class='Partnerprofil-Cell'>");  //Einbinden der CSS Klasse
 		sb.appendEscaped("Bewertung");
-		sb.appendHtmlConstant("</div class='Partnerprofil-Cell'>");  //Test CSS Klasse		
+		sb.appendHtmlConstant("</div class='Partnerprofil-Cell'>");  //Einbinden der CSS Klasse
 	}
 }
