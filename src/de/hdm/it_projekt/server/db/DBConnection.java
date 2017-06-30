@@ -6,6 +6,7 @@ import java.util.Date;
 
 import com.google.appengine.api.utils.SystemProperty;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -49,7 +50,6 @@ public class DBConnection {
 
 	private static String googleUrl = "jdbc:google:mysql://itprojekt-170113:itprojekt/projektmarktplatzdb?user=root";
 	private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";
-	/*private static String localUrl = "jdbc:mysql://127.0.0.1:3306/projektmarktplatzdb?user=projektmarktplatz&password=projektmarktplatz";*/
 
 	/**
 	 * Diese statische Methode kann aufgrufen werden durch
@@ -122,6 +122,20 @@ public class DBConnection {
 	public static String convertToSQLDateString(Date d) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		return sdf.format(d);
+	}
+	
+	public static Date convertFromSQLDateString(String d) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");	
+		
+		try {
+			return sdf.parse(d);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }
