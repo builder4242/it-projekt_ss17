@@ -10,8 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
+import de.hdm.it_projekt.shared.bo.Team;
 import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**
@@ -151,7 +153,10 @@ public class UnternehmenMapper {
 			pstmt.setInt(5, u.getPlz());
 			pstmt.setString(6, u.getOrt());
 			pstmt.setString(7, u.getTel());
-			pstmt.setInt(8, u.getPartnerprofilId());
+			if(u.getPartnerprofilId() == 0)
+				pstmt.setObject(9, null);
+			else
+				pstmt.setObject(9, u.getPartnerprofilId());
 			pstmt.setInt(9, u.getId());
 
 			pstmt.executeUpdate();
@@ -428,6 +433,36 @@ public class UnternehmenMapper {
 
 		// Ergebnisvektor zurueckgeben
 		return u;
+
+	}
+	
+	public Unternehmen getByPartnerprofil(Partnerprofil pp) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Unternehmen p = null;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("select ID from organisationseinheit where Typ='" + SQLTYP + "'  AND  Partnerprofil_ID=" + pp.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Team-Objekt erstellt.
+			if (rs.next()) {
+
+				p = findById(rs.getInt("ID"));
+
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return p;
 
 	}
 

@@ -29,9 +29,9 @@ public class OrgaForm extends Showcase {
 
 	private Organisationseinheit oToDisplay = null;
 
-	HorizontalPanel hPanel = new HorizontalPanel();
-	VerticalPanel oPanel = new VerticalPanel();
-	VerticalPanel pPanel = new VerticalPanel();
+	HorizontalPanel hPanel = null;
+	VerticalPanel oPanel = null;
+	VerticalPanel pPanel = null;
 	
 	Label firstNameLabel = new Label("Vorname");
 	Label lastNameLabel = new Label("Nachname");
@@ -47,11 +47,14 @@ public class OrgaForm extends Showcase {
 	public OrgaForm(Organisationseinheit o) {
 
 		oToDisplay = o;
+		hPanel = new HorizontalPanel();
+		oPanel = new VerticalPanel();
+		pPanel = new VerticalPanel();
 
 		this.add(hPanel);
 		hPanel.add(oPanel);
 		
-		hPanel.add(new OPartnerprofilForm());
+		hPanel.add(pPanel);
 		
 		Label textL = new Label("Hier können Sie ihr Benutzerprofil bearbeiten.");
 		
@@ -107,6 +110,7 @@ public class OrgaForm extends Showcase {
 		customerButtonsPanel.add(deleteButton);
 		
 		setSelected();
+		partnerprofilForm();
 	}
 
 	public void setSelected() {
@@ -266,10 +270,11 @@ public class OrgaForm extends Showcase {
 	public void deleteSession() {
 		
 		MyProjekt.cpm = null;
-		MyProjekt.loginInfo = null;
 				
 		Window.alert("Ihr konnto wurde gelöscht.");
-		Window.Location.assign(GWT.getHostPageBaseURL());
+		
+		Window.Location.assign(MyProjekt.loginInfo.getLogoutUrl());
+		
 	}
 	
 	void partnerprofilForm() {
@@ -287,7 +292,10 @@ public class OrgaForm extends Showcase {
 					pa.createPartnerprofilFor(MyProjekt.loginInfo.getCurrentUser(), new CreatePPCallback());
 					
 				}				
-			});			
+			});	
+			
+		} else {
+			pPanel.add(new OPartnerprofilForm());
 		}
 	}
 	

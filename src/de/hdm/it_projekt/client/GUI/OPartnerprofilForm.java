@@ -164,6 +164,7 @@ public class OPartnerprofilForm extends Showcase {
 
 				@Override
 				public void onSuccess(Void result) {
+					MyProjekt.loginInfo.getCurrentUser().setPartnerprofilId(0);
 					RootPanel.get("content").clear();
 					RootPanel.get("content").add(new OrgaForm(MyProjekt.loginInfo.getCurrentUser()));
 				}

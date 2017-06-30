@@ -461,6 +461,24 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 			as.setPartnerprofilId(0);
 			save(as);
 		}
+		
+		Person p = pMapper.getByPartnerprofil(pp);
+		Team t = tMapper.getByPartnerprofil(pp);
+		Unternehmen u = uMapper.getByPartnerprofil(pp);
+		
+		if(p != null) {
+			p.setPartnerprofilId(0);
+			save(p);
+		}
+		if(t != null) {
+			t.setPartnerprofilId(0);
+			save(t);
+		}
+		if(u != null) {
+			u.setPartnerprofilId(0);
+			save(u);
+		}
+		
 		this.ppMapper.delete(pp);
 	}
 
@@ -496,7 +514,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Person ps) throws IllegalArgumentException {
 
-		this.pMapper.update(ps);
+		this.pMapper.delete(ps);
 	}
 
 	@Override
