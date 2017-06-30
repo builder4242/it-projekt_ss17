@@ -74,11 +74,13 @@ public class Marktuebersicht extends Showcase {
 								
 				if(MyProjekt.cpm.getAdminId() == MyProjekt.loginInfo.getCurrentUser().getId()) {
 					
-					Button deleteButton = new Button("löschen");
+					Button deleteButton = new Button("Löschen");
+					deleteButton.addStyleName("myprojekt-formbutton");
 					deleteButton.addClickHandler(new DeleteClickHandler(MyProjekt.cpm));
 					headerInfo.add(deleteButton);
 					
-					Button updateButton = new Button("ändern");
+					Button updateButton = new Button("Ändern");
+					updateButton.addStyleName("myprojekt-formbutton");
 					updateButton.addClickHandler(new UpdateClickHandler(MyProjekt.cpm));
 					headerInfo.add(updateButton);
 
@@ -120,6 +122,7 @@ public class Marktuebersicht extends Showcase {
 		hP.add(formPanel);
 		
 		Button newPm = new Button("Marktplatz anlegen");
+		newPm.setStyleName("myprojekt-formbutton");
 		newPm.addClickHandler(new NewPmClickHandler());
 		vP.add(memberPmCl);
 		vP.add(newPm);
