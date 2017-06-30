@@ -285,7 +285,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanOutReport report = new FanOutReport();
 		
 		report.setTitle("FanOut Report");
-		report.setHeaderData(new SimpleParagraph("FanIn Analyse für: " + o.getName()));
+		report.setHeaderData(new SimpleParagraph("FanOut Analyse für: " + o.getName()));
 		report.setCreated(new Date());
 		
 		Row headline = new Row();
