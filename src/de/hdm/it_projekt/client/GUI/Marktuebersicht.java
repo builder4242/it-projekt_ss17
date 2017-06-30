@@ -16,7 +16,6 @@ import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSe
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -31,15 +30,13 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
 public class Marktuebersicht extends Showcase {
 
-	final HorizontalPanel headerInfo = new HorizontalPanel();
-		
-	final Label ausgabe = new Label();
+	private Label ausgabe = new Label();
 	
-	HorizontalPanel hP = new HorizontalPanel();
-	VerticalPanel vP = new VerticalPanel();
-	VerticalPanel formPanel = new VerticalPanel();
+	private HorizontalPanel hP = new HorizontalPanel();
+	private VerticalPanel vP = new VerticalPanel();
+	private VerticalPanel formPanel = new VerticalPanel();
 	
-	final ProvidesKey<ProjektMarktplatz> KEY_PROVIDER = new ProvidesKey<ProjektMarktplatz>() {
+	private ProvidesKey<ProjektMarktplatz> KEY_PROVIDER = new ProvidesKey<ProjektMarktplatz>() {
 
 		@Override
 		public Integer getKey(ProjektMarktplatz item) {
@@ -63,7 +60,9 @@ public class Marktuebersicht extends Showcase {
 			public void onSelectionChange(SelectionChangeEvent event) {
 
 				MyProjekt.cpm = pmSelectionModel.getSelectedObject();
-								
+							
+				HorizontalPanel headerInfo = new HorizontalPanel();
+				
 				Label pmTextLabel = new Label("Sie befinden sich aktuell im Projektmarktplatz: ");
 				pmTextLabel.setStyleName("myprojekt-infoleistelabel");
 				headerInfo.add(pmTextLabel);
@@ -83,7 +82,6 @@ public class Marktuebersicht extends Showcase {
 					updateButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 					updateButton.addClickHandler(new UpdateClickHandler(MyProjekt.cpm));
 					headerInfo.add(updateButton);
-
 				}
 					
 				RootPanel.get("pminfo").clear();

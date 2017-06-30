@@ -135,8 +135,10 @@ public class ProjektMapper {
 
 			// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation.
 			stmt.executeUpdate("UPDATE projekt " + "SET Name=\"" + pr.getName() + "\", " + "Startdatum=\""
+
 					+ DBConnection.convertToSQLDateString(pr.getStartdatum()) + "\", " + "Enddatum=\""
 					+ DBConnection.convertToSQLDateString(pr.getEnddatum()) + "\", " + "Beschreibung=\""
+
 					+ pr.getBeschreibung() + "\", " + "Projektmarktplatz_ID=\"" + pr.getProjektMarktplatzId() + "\", "
 					+ "Projektleiter_ID=\""	+ pr.getProjektleiterId() + "\" " + "WHERE ID=" + pr.getId());
 
@@ -357,7 +359,7 @@ public class ProjektMapper {
 	 * @param p
 	 * @return
 	 */
-	public Vector<Projekt> getByProjektleiter(Person p, ProjektMarktplatz pm) {
+	public Vector<Projekt> getByProjektleiter(Organisationseinheit p, ProjektMarktplatz pm) {
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
 		Vector<Projekt> result = new Vector<Projekt>();

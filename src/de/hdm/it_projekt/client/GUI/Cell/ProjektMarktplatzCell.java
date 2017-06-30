@@ -20,9 +20,9 @@ public class ProjektMarktplatzCell extends AbstractCell<ProjektMarktplatz>{
 
 
 		sb.appendHtmlConstant("<link type='text/css' rel='stylesheet' href='style.css'>");
-		sb.appendHtmlConstant("<div class='ProjektMarktplatz-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("<div class='ProjektMarktplatz-Cell'>");  //Einbinden der CSS Klasse
 		sb.appendEscaped(value.getBezeichnung());
-		sb.appendHtmlConstant("</div class='ProjektMarktplatz-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("</div class='ProjektMarktplatz-Cell'>");  //Einbinden der CSS Klasse
 		
 	}
 	

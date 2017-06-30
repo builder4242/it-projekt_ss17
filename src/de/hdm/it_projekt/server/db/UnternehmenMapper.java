@@ -10,7 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
+import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
+import de.hdm.it_projekt.shared.bo.Team;
 import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**
@@ -52,7 +55,7 @@ public class UnternehmenMapper {
 	}
 
 	/**
-	 * Diese statische Methode kann aufgrufen werden durch
+	 * Diese statische Methode kann aufgerufen werden durch
 	 * <code>UnternehmenMapper.unternehmenMapper()</code>. Sie stellt die
 	 * Singleton-Eigenschaft sicher, indem Sie dafuer sorgt, dass nur eine
 	 * einzige Instanz von <code>UnternehmenMapper</code> existiert.
@@ -105,9 +108,10 @@ public class UnternehmenMapper {
 
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 				stmt.executeUpdate(
-						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, GoogleID, Partnerprofil_ID, Typ) "
+						"INSERT INTO organisationseinheit (ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ) "
 								+ "VALUES ('" + u.getId() + "','" + u.getName() + "','" + u.getEmail() + "','"
-								+ u.getStrasse() + "','" + u.getPlz() + "','" + u.getOrt() + "','" + u.getTel() + "',NULL,'" + SQLTYP + "')");
+								+ u.getStrasse() + "','" + u.getPlz() + "','" + u.getOrt() + "','" + u.getTel()
+								+ "',NULL,'" + SQLTYP + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -149,7 +153,10 @@ public class UnternehmenMapper {
 			pstmt.setInt(5, u.getPlz());
 			pstmt.setString(6, u.getOrt());
 			pstmt.setString(7, u.getTel());
-			pstmt.setInt(8, u.getPartnerprofilId());
+			if(u.getPartnerprofilId() == 0)
+				pstmt.setObject(9, null);
+			else
+				pstmt.setObject(9, u.getPartnerprofilId());
 			pstmt.setInt(9, u.getId());
 
 			pstmt.executeUpdate();
@@ -203,9 +210,8 @@ public class UnternehmenMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ "
-							+ "FROM organisationseinheit WHERE Typ='" + SQLTYP + "' ORDER BY ID");
+			ResultSet rs = stmt.executeQuery("SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ "
+					+ "FROM organisationseinheit WHERE Typ='" + SQLTYP + "' ORDER BY ID");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Unternehmen-Objekt erstellt.
@@ -220,7 +226,7 @@ public class UnternehmenMapper {
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
 
-				if(rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
@@ -254,7 +260,8 @@ public class UnternehmenMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID="	+ id);
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE ID="
+							+ id);
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -272,10 +279,9 @@ public class UnternehmenMapper {
 				u.setPlz(rs.getInt("PLZ"));
 				u.setOrt(rs.getString("Ort"));
 				u.setTel(rs.getString("Tel"));
-				
-				if(rs.getString("Partnerprofil_ID") != "NULL")
-					u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
+				if(rs.getObject("Partnerprofil_ID") != null)
+					u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
 		} catch (SQLException e5) {
@@ -380,5 +386,84 @@ public class UnternehmenMapper {
 		return result;
 	}
 
+	/***
+	 * Auslesen eines Unternehmens anhand einer bestimmten GoogleID.
+	 * 
+	 * @param googleID
+	 * @return
+	 */
+	public Unternehmen findByGoogleId(String googleID) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Unternehmen u = null;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE Email='"
+							+ googleID + "' AND Typ='" + SQLTYP + "'");
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Unternehmen-Objekt erstellt.
+			if (rs.next()) {
+
+				// Umwandlung des Ergebnis-Tupel in ein Objekt und Ausgabe des
+				// Ergebnis-Objekts
+				u = new Unternehmen();
+				u.setId(rs.getInt("ID"));
+				u.setName(rs.getString("Name"));
+				u.setEmail(rs.getString("Email"));
+				u.setStrasse(rs.getString("Strasse"));
+				u.setPlz(rs.getInt("PLZ"));
+				u.setOrt(rs.getString("Ort"));
+				u.setTel(rs.getString("Tel"));
+
+				if(rs.getObject("Partnerprofil_ID") != null)
+					u.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return u;
+
+	}
+	
+	public Unternehmen getByPartnerprofil(Partnerprofil pp) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Unternehmen p = null;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("select ID from organisationseinheit where Typ='" + SQLTYP + "'  AND  Partnerprofil_ID=" + pp.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Team-Objekt erstellt.
+			if (rs.next()) {
+
+				p = findById(rs.getInt("ID"));
+
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return p;
+
+	}
 
 }
