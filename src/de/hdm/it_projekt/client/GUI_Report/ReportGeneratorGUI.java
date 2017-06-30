@@ -18,10 +18,16 @@ import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.*;
 
+
+/**
+ * EntryPoint des ReportGenerators 
+ * 
+ * @author Daniel
+ *
+ */
 public class ReportGeneratorGUI implements EntryPoint {
 
-	/**
-	 * Begin Attribute fuer Login
+	/*	 * Begin Attribute fuer Login
 	 */
 	protected static LoginInfo loginInfo = null;
 	protected static ProjektMarktplatz cpm = null;

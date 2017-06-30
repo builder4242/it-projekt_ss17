@@ -8,6 +8,12 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
+/**
+ * Cell-Klasse für das Business Object ProjektMarktplatz in der Auswahl Liste ProjektMarktplatz Report Generator
+ * 
+ * @author Daniel
+ *
+ */
 public class ProjektMarktplatzReportCell extends AbstractCell<ProjektMarktplatz>{
 
 	@Override

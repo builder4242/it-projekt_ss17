@@ -30,6 +30,12 @@ import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.client.ClientsideSettings;
 
+/**
+ * EntryPoint der GUI für die ProjektAdministration
+ * 
+ * @author Daniel
+ *
+ */
 public class MyProjekt implements EntryPoint {
 
 	/**
