@@ -74,7 +74,8 @@ public class SimpleParagraph extends Paragraph implements Serializable {
   /**
    * Umwandeln des <code>SimpleParagraph</code>-Objekts in einen String.
    */
-  public String toString() {
+  @Override
+public String toString() {
     return this.text;
   }
 }

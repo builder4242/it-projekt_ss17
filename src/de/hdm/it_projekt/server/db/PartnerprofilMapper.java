@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 /**
@@ -223,7 +224,7 @@ public class PartnerprofilMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Erstelldatum, Aenderungsdatum FROM partnerprofil WHERE ID= " + id + " ORDER BY ID");
+					"SELECT ID, Erstelldatum, Aenderungsdatum FROM partnerprofil WHERE ID=" + id);
 
 			/*
 			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
@@ -240,6 +241,45 @@ public class PartnerprofilMapper {
 				pp.setAenderungsdatum(rs.getDate("Aenderungsdatum"));
 
 				return pp;
+			}
+		} catch (SQLException e5) {
+			e5.printStackTrace();
+			return null;
+		}
+		return pp;
+	}
+	
+	public Partnerprofil getByAusschreibung(Ausschreibung as) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Partnerprofil pp = null;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement asStmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet asRs = asStmt.executeQuery(
+					"SELECT Partnerprofil_ID FROM ausschreibung WHERE ID=" + as.getId());
+
+			/*
+			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
+			 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+			 */
+			if (asRs.next()) {
+
+				// Leeres SQL-Statement (JDBC) anlegen
+				Statement stmt = con.createStatement();
+
+				// Statement ausfuellen und als Query an die DB schicken
+				ResultSet rs = stmt.executeQuery(
+						"SELECT ID FROM partnerprofil WHERE ID=" + asRs.getInt("Partnerprofil_ID"));
+				
+				if(rs.next())
+					pp = findById(rs.getInt("ID"));
+
 			}
 		} catch (SQLException e5) {
 			e5.printStackTrace();

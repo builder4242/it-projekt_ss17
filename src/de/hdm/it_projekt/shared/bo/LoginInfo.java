@@ -21,9 +21,16 @@ public class LoginInfo implements Serializable {
 	private String logoutUrl;
 	private String emailAddress;
 	private String nickname;
+	
+	private Person currentUser;
 	/**
 	 * Ende Attributdefinition 
 	 */
+	
+	public LoginInfo() {
+		this.currentUser = null;
+	}
+	
 	
 	public boolean isLoggedIn() {
 		return loggedIn;
@@ -92,8 +99,25 @@ public class LoginInfo implements Serializable {
 		this.loggedIn = loggedIn;
 	}
 	
+	/**
+	 * @return the currentUser
+	 */
+	public Person getCurrentUser() {
+		return currentUser;
+	}
+
+	/**
+	 * @param currentUser the currentUser to set
+	 */
+	public void setCurrentUser(Person currentUser) {
+		this.currentUser = currentUser;
+	}
+
 	public String toString() {
-		return this.getNickname() + " (" + this.getEmailAddress() + ")";
+		if(this.currentUser == null)
+			return this.getNickname() + " (" + this.getEmailAddress() + ")";
+		else
+			return this.currentUser.getName() + " (" + this.currentUser.getEmail() + ")";
 	}
 	
 
