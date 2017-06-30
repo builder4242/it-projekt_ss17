@@ -74,7 +74,8 @@ public class CompositeParagraph extends Paragraph implements Serializable {
    * Umwandeln eines <code>CompositeParagraph</code> in einen
    * <code>String</code>.
    */
-  public String toString() {
+  @Override
+public String toString() {
     /*
      * Wir legen einen leeren Buffer an, in den wir sukzessive sämtliche
      * String-Repräsentationen der Unterabschnitte eintragen.

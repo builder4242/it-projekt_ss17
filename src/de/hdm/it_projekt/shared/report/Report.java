@@ -26,13 +26,6 @@ public abstract class Report implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Ein kleines Impressum, das eine Art Briefkopf darstellt. Jedes Unternehmen
-   * einige Daten wie Firmenname, Adresse, Logo, etc. auf Geschäftsdokumenten
-   * ab. Dies gilt auch für die hier realisierten Reports.
-   */
-  private Paragraph imprint = null;
-
-  /**
    * Kopfdaten des Berichts.
    */
   private Paragraph headerData = null;
@@ -46,24 +39,6 @@ public abstract class Report implements Serializable {
    * Datum der Erstellung des Berichts.
    */
   private Date created = new Date();
-
-  /**
-   * Auslesen des Impressums.
-   * 
-   * @return Text des Impressums
-   */
-  public Paragraph getImprint() {
-    return this.imprint;
-  }
-
-  /**
-   * Setzen des Impressums.
-   * 
-   * @param imprint Text des Impressums
-   */
-  public void setImprint(Paragraph imprint) {
-    this.imprint = imprint;
-  }
 
   /**
    * Auslesen der Kopfdaten.
