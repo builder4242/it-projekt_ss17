@@ -47,6 +47,8 @@
     width: 550px; 
     background-color: #ffffff; 
     padding-left: 20px; 
+    padding-bottom: 5px; 
+    
 }
 
 .ProjektMarktplatz-Cell:hover{
@@ -518,7 +520,8 @@
 	font-weight: bold;
 	color: #0498b7;  
 	font-size: 15px; 
-	margin-right: 2px; 
+	margin-right: 25px; 
+
 	
 }
 
