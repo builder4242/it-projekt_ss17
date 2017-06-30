@@ -1,3 +1,7 @@
+/**
+ * Die Implementierungsklasse ProjektAdministrationImpl stellt Zusammenhäne dar und enthät die Applikationslogik. 
+ */
+
 package de.hdm.it_projekt.server;
 
 import java.util.Date;
@@ -12,6 +16,9 @@ import de.hdm.it_projekt.shared.bo.*;
 @SuppressWarnings("serial")
 public class ProjektAdministrationImpl extends RemoteServiceServlet implements ProjektAdministration {
 
+	/**
+	 * Mapper für die Datenbank werden referenziert. 
+	 */
 	private AusschreibungMapper asMapper = null;
 	private BeteiligungMapper btMapper = null;
 	private BewerbungMapper bwMapper = null;
@@ -31,6 +38,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void init() throws IllegalArgumentException {
 
+		/**
+		 * Mapper mit denen die Klasse mit der Datenbank kommunizieren kann. 
+		 */
 		this.asMapper = AusschreibungMapper.ausschreibungMapper();
 		this.btMapper = BeteiligungMapper.beteiligungMapper();
 		this.bwMapper = BewerbungMapper.bewerbungMapper();
@@ -44,6 +54,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		this.uMapper = UnternehmenMapper.unternehmenMapper();
 	}
 
+	/**
+	 * Daten werden über die Mapper aufgerufen und als Vektor zurückgeben 
+	 */
 	@Override
 	public Vector<ProjektMarktplatz> getProjektMarktplaetzeByOrganisation(Organisationseinheit o)
 			throws IllegalArgumentException {
@@ -115,6 +128,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return this.btMapper.getByOrganisationseinheit(o);
 	}
 
+	
+	/**
+	 * Daten werden an die Mapper übergeben und mit der insert Methode eingefügt.
+	 */
 	@Override
 	public ProjektMarktplatz createProjektMarktplatz(String bez, int adminID) throws IllegalArgumentException {
 		ProjektMarktplatz pm = new ProjektMarktplatz();
@@ -323,7 +340,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return this.btMapper.insert(bt);
 
 	}
-
+	
+	/**
+	 * Die Daten werden an die Mapper übergeben um sie über die update Methode in der Datenbank zu aktualisieren. 
+	 */
 	@Override
 	public void save(ProjektMarktplatz pm) throws IllegalArgumentException {
 
@@ -396,6 +416,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		this.tMapper.update(t);
 	}
 
+	
+	/**
+	 * Die delete Methode wird für das jeweilige Objekt aufgerufen um die entsprechenden Daten aus der Datenbank zu löschen. 
+	 */
 	@Override
 	public void delete(ProjektMarktplatz pm) throws IllegalArgumentException {
 
@@ -510,6 +534,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		this.tMapper.delete(t);
 	}
 
+	
+	/**
+	 * Datenbankabfragen
+	 */
 	@Override
 	public Person findByGoogleId(LoginInfo li) throws IllegalArgumentException {
 
@@ -527,6 +555,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return asMapper.getByPartnerprofil(pp);
 	}
 
+	/**
+	 * Daten werden an die Mapper übergeben und mit der insert Methode eingefügt.
+	 */
 	@Override
 	public Bewertung createBewertungFor(Bewerbung bw, float wert, String stellungnahme)
 			throws IllegalArgumentException {
@@ -541,6 +572,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return bwtMapper.insert(bwt);
 	}
 
+	/**
+	 * Datenbankabfragen
+	 */
 	@Override
 	public Ausschreibung getAusschreibungBy(Bewerbung bw) throws IllegalArgumentException {
 		return asMapper.findById(bw.getAusschreibungId());
@@ -605,6 +639,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return prMapper.getByProjektleiter(p, pm);
 	}
 
+	/**
+	 * Daten werden an die Mapper übergeben und mit der insert Methode eingefügt.
+	 */
 	@Override
 	public Bewerbung createBewerbungFor(Ausschreibung as, Organisationseinheit o, String bewerbungstext)
 			throws IllegalArgumentException {
@@ -619,12 +656,18 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return bwMapper.insert(bw);
 	}
 
+	/**
+	 * Datenbankabfragen
+	 */
 	@Override
 	public Beteiligung getBeteiligungFor(Bewerbung bw) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return btMapper.getByBewerbung(bw);
 	}
 
+	/**
+	 * Daten werden an die Mapper übergeben und mit der insert Methode eingefügt.
+	 */
 	@Override
 	public Beteiligung createBeteiligungFor(Bewerbung bw) throws IllegalArgumentException {
 
@@ -641,6 +684,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return btMapper.insert(bt);
 	}
 
+	/**
+	 * Datenbankabfragen
+	 */
 	@Override
 	public Vector<Ausschreibung> getAusschreibungByMatch(Organisationseinheit o) throws IllegalArgumentException {
 

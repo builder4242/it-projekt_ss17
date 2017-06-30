@@ -1,5 +1,5 @@
 /**
- * 
+ * Die Klasse PersonForm dient dem Aufbau und der Interaktion mit dem Formular Person, dass nach dem Login neuer User erscheint. 
  */
 package de.hdm.it_projekt.client.GUI;
 

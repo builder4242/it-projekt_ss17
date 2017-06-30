@@ -1,5 +1,5 @@
 /**
- * 
+ * Die Klasse ProjektBeteiligungListView dient der Erstellung einer ListView in der Beteiligungen angezeigt werden.
  */
 package de.hdm.it_projekt.client.GUI;
 
