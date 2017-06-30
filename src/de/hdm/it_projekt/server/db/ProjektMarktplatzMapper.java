@@ -124,7 +124,7 @@ public class ProjektMarktplatzMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE projektmarktplatz " + "SET Bezeichnung=\"" + pm.getBezeichnung() + "\""
+			stmt.executeUpdate("UPDATE projektmarktplatz " + "SET Bezeichnung=\"" + pm.getBezeichnung() + "\","
 					+ " Admin_ID=" + pm.getAdminId()
 					+ " WHERE ID=" + pm.getId());
 		} catch (SQLException e2) {
