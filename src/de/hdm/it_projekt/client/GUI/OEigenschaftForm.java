@@ -22,17 +22,22 @@ public class OEigenschaftForm extends Showcase {
 
 	private TextBox nameTb = new TextBox();
 	private TextBox wertTb = new TextBox();
+	private Label formTitel = new Label();
 
 	public OEigenschaftForm() {
+
+		formTitel.setText("Bewertung");
+		formTitel.setStyleName("h1");
+		this.add(formTitel);
 
 		Grid form = new Grid(2, 2);
 		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Name"));
-		form.setWidget(0, 1, new Label("Wert"));
+		form.setWidget(0, 1, nameTb);
 
-		form.setWidget(1, 0, nameTb);
+		form.setWidget(1, 0, new Label("Wert"));
 		form.setWidget(1, 1, wertTb);
 		nameTb.setStyleName("myproject-textfield");
 		wertTb.setStyleName("myproject-textfield"); 
@@ -50,7 +55,7 @@ public class OEigenschaftForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
-		Button newButton = new Button("Neu");
+		Button newButton = new Button("Anlegen");
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);

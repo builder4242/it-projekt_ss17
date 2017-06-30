@@ -202,7 +202,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 		}
 	}
 
-	private class LoginCallback implements AsyncCallback<Person> {
+	private class LoginCallback implements AsyncCallback<Organisationseinheit> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -212,7 +212,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 		}
 
 		@Override
-		public void onSuccess(Person result) {
+		public void onSuccess(Organisationseinheit result) {
 
 			if (result != null) {
 				loginInfo.setCurrentUser(result);

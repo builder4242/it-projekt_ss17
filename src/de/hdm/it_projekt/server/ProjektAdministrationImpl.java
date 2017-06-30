@@ -128,7 +128,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Projekt createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum,
-			String beschreibung, Person projektleiter) throws IllegalArgumentException {
+			String beschreibung, Organisationseinheit projektleiter) throws IllegalArgumentException {
 
 		Projekt pr = new Projekt();
 		pr.setName(name);
@@ -511,10 +511,22 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Person findByGoogleId(LoginInfo li) throws IllegalArgumentException {
+	public Organisationseinheit findByGoogleId(LoginInfo li) throws IllegalArgumentException {
 
-		return pMapper.findByGoogleId(li.getEmailAddress());
+		Person p = pMapper.findByGoogleId(li.getEmailAddress());
+		Team t = tMapper.findByGoogleId(li.getEmailAddress());
+		Unternehmen u = uMapper.findByGoogleId(li.getEmailAddress());
 
+		Organisationseinheit o = null;
+
+		if (p != null)
+			o = p;
+		if (t != null)
+			o = t;
+		if (u != null)
+			o = u;
+
+		return o;
 	}
 
 	@Override
@@ -600,7 +612,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Vector<Projekt> getProjektByProjektleiter(Person p, ProjektMarktplatz pm) throws IllegalArgumentException {
+	public Vector<Projekt> getProjektByProjektleiter(Organisationseinheit p, ProjektMarktplatz pm) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return prMapper.getByProjektleiter(p, pm);
 	}

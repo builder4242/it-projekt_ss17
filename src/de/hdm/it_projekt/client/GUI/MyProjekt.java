@@ -24,6 +24,7 @@ import de.hdm.it_projekt.shared.LoginService;
 import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.LoginInfo;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
@@ -231,7 +232,7 @@ public class MyProjekt implements EntryPoint {
 			public void onClick(ClickEvent event) {
 
 				RootPanel.get("content").clear();
-				RootPanel.get("content").add(new OPartnerprofilForm());
+				RootPanel.get("content").add(new OrgaForm(loginInfo.getCurrentUser()));
 
 			}
 		});
@@ -244,7 +245,6 @@ public class MyProjekt implements EntryPoint {
 			public void onClick(ClickEvent event) {
 
 				Window.Location.assign(GWT.getHostPageBaseURL() + "reportgenerator.html");
-
 			}
 		});
 
@@ -255,10 +255,10 @@ public class MyProjekt implements EntryPoint {
 		menu.add(reportGeneratorButton);
 
 		if (loginInfo.getCurrentUser() == null) {
-			pa.findByGoogleId(loginInfo, new AsyncCallback<Person>() {
+			pa.findByGoogleId(loginInfo, new AsyncCallback<Organisationseinheit>() {
 
 				@Override
-				public void onSuccess(Person result) {
+				public void onSuccess(Organisationseinheit result) {
 
 					Showcase showcase;
 

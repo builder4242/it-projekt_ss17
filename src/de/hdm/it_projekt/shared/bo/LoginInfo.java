@@ -22,7 +22,7 @@ public class LoginInfo implements Serializable {
 	private String emailAddress;
 	private String nickname;
 	
-	private Person currentUser;
+	private Organisationseinheit currentUser;
 	/**
 	 * Ende Attributdefinition 
 	 */
@@ -102,14 +102,14 @@ public class LoginInfo implements Serializable {
 	/**
 	 * @return the currentUser
 	 */
-	public Person getCurrentUser() {
+	public Organisationseinheit getCurrentUser() {
 		return currentUser;
 	}
 
 	/**
 	 * @param currentUser the currentUser to set
 	 */
-	public void setCurrentUser(Person currentUser) {
+	public void setCurrentUser(Organisationseinheit currentUser) {
 		this.currentUser = currentUser;
 	}
 

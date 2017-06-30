@@ -11,10 +11,13 @@ import java.util.List;
 import java.util.Vector;
 
 import com.google.gwt.cell.client.Cell;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -46,9 +49,7 @@ public class OPartnerprofilForm extends Showcase {
 		}
 	};
 
-	Cell<Eigenschaft> eCell = new EigenschaftCell();
-
-	final CellList<Eigenschaft> eCl = new CellList<Eigenschaft>(eCell, KEY_PROVIDER);
+	final CellList<Eigenschaft> eCl = new CellList<Eigenschaft>(new EigenschaftCell(), KEY_PROVIDER);
 
 	final SingleSelectionModel<Eigenschaft> eSelectionModel = new SingleSelectionModel<Eigenschaft>(KEY_PROVIDER);
 
@@ -58,10 +59,14 @@ public class OPartnerprofilForm extends Showcase {
 
 	public OPartnerprofilForm() {
 
+
 		eL.clear();
 		
 		p.add(leftcol);
 		p.add(content);
+		
+		Button deleteButton = new Button("Partnerprofil");
+		deleteButton.addClickHandler(new DeleteClickHandler());
 
 		pa.getPartnerprofilById(MyProjekt.loginInfo.getCurrentUser().getPartnerprofilId(),
 				new AsyncCallback<Partnerprofil>() {
@@ -79,26 +84,24 @@ public class OPartnerprofilForm extends Showcase {
 						if (result != null) {
 							pp = result;
 
-						} else {
-							pa.createPartnerprofilFor(MyProjekt.loginInfo.getCurrentUser(),
-									new createPartnerprofilCallback());
-						}
+							Label PPLb = new Label("Partnerprofil");
+							Label ALb = new Label("angelegt: " + pp.getErstelldatum());
+							Label LALb = new Label("letzte Änderung: " + pp.getAenderungsdatum());
+							PPLb.setStyleName("h1");
+							ALb.setStyleName("myprojekt-opartnerprofil");
+							LALb.setStyleName("myprojekt-opartnerprofil");
+							
+							
+							leftcol.add(PPLb);
+							leftcol.add(ALb);
+							leftcol.add(LALb);
+							leftcol.add(new Label("   "));
+							leftcol.add(getEigenschaftCelllist());
+							leftcol.addStyleName("Eigenschaft-Cell");
+							content.add(new OEigenschaftForm());
+						} 
 						
-						Label PPLb = new Label("Partnerprofil");
-						Label ALb = new Label("angelegt: " + pp.getErstelldatum());
-						Label LALb = new Label("letzte Änderung: " + pp.getAenderungsdatum());
-						PPLb.setStyleName("h1");
-						ALb.setStyleName("myprojekt-opartnerprofil");
-						LALb.setStyleName("myprojekt-opartnerprofil");
 						
-						
-						leftcol.add(PPLb);
-						leftcol.add(ALb);
-						leftcol.add(LALb);
-						leftcol.add(new Label("   "));
-						leftcol.add(getEigenschaftCelllist());
-						leftcol.addStyleName("Eigenschaft-Cell");
-						content.add(new OEigenschaftForm());
 					}
 				});
 
@@ -147,21 +150,26 @@ public class OPartnerprofilForm extends Showcase {
 		return eCl;
 
 	}
-
-	private class createPartnerprofilCallback implements AsyncCallback<Partnerprofil> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Es ist ein Fehler aufgetreten");
-		}
+	
+	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
-		public void onSuccess(Partnerprofil result) {
+		public void onClick(ClickEvent event) {
+			pa.delete(pp, new AsyncCallback<Void>() {
 
-			pp = result;
-			MyProjekt.loginInfo.getCurrentUser().setPartnerprofilId(result.getId());
-			RootPanel.get("content").clear();
-			RootPanel.get("content").add(new OPartnerprofilForm());
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Es ist ein Fehler aufgetreten.");
+					
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					RootPanel.get("content").clear();
+					RootPanel.get("content").add(new OrgaForm(MyProjekt.loginInfo.getCurrentUser()));
+				}
+			});
 		}
+		
 	}
 }
