@@ -114,10 +114,20 @@ public class LoginInfo implements Serializable {
 	}
 
 	public String toString() {
-		if(this.currentUser == null)
-			return this.getNickname() + " (" + this.getEmailAddress() + ")";
-		else
-			return this.currentUser.getName() + " (" + this.currentUser.getEmail() + ")";
+		
+		String r = "";
+		
+		if(this.currentUser == null) {
+			r = this.getNickname() + " (" + this.getEmailAddress() + ")";
+		} else {
+			if(currentUser instanceof Person) {
+				r = this.currentUser.getName() + ", " + ((Person)currentUser).getVorname() + " (" + this.currentUser.getEmail() + ")";
+			} else {
+				r = this.currentUser.getName() + " (" + this.currentUser.getEmail() + ")";
+			}			
+		}
+		
+		return r;
 	}
 	
 

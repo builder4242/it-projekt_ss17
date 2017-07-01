@@ -268,7 +268,8 @@ public class AusschreibungMapper {
 				as.setAusschreibungstext(rs.getString("Ausschreibungstext"));
 				as.setBewerbungsfrist(rs.getDate("Bewerbungsfrist"));
 				as.setProjektId(rs.getInt("Projekt_ID"));
-				if (rs.getString("Partnerprofil_ID") != "NULL")
+				
+				if (rs.getObject("Partnerprofil_ID") != null)
 					as.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
