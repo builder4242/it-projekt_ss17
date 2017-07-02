@@ -20,9 +20,9 @@ public class ProjektleiterCell extends AbstractCell<Person>{
 			return;
 		
 		sb.appendHtmlConstant("<link type='text/css' rel='stylesheet' href='style.css'>");
-		sb.appendHtmlConstant("<div class='Projektleiter-Cell'>");  //Test CSS Klasse (TEST)
+		sb.appendHtmlConstant("<div class='Projektleiter-Cell'>");  //Einbinden der CSS Klasse
 		sb.appendEscaped("Projektleiter: " + value.getName() + ", " + value.getVorname());
-		sb.appendHtmlConstant("</div class='Projektleiter-Cell'>");  //Test CSS Klasse (commit test)
+		sb.appendHtmlConstant("</div class='Projektleiter-Cell'>");  //Einbinden der CSS Klasse
 		
 	}
 

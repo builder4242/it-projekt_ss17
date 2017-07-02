@@ -138,6 +138,7 @@ public class AusschreibungMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
+
 			if (as.getPartnerprofilId() == 0) {
 				// Jetzt erst erfolgt die tatsaechliche Einfuegeoperation
 				stmt.executeUpdate("UPDATE ausschreibung " + "SET Bezeichnung=\"" + as.getBezeichnung() + "\", "
@@ -152,6 +153,7 @@ public class AusschreibungMapper {
 						+ as.getProjektId() + ", " + "Partnerprofil_ID=" + as.getPartnerprofilId() + " " + "WHERE ID="
 						+ as.getId());
 			}
+
 
 		}
 
@@ -266,7 +268,8 @@ public class AusschreibungMapper {
 				as.setAusschreibungstext(rs.getString("Ausschreibungstext"));
 				as.setBewerbungsfrist(rs.getDate("Bewerbungsfrist"));
 				as.setProjektId(rs.getInt("Projekt_ID"));
-				if (rs.getString("Partnerprofil_ID") != "NULL")
+				
+				if (rs.getObject("Partnerprofil_ID") != null)
 					as.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}

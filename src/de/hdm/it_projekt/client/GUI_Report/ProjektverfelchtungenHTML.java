@@ -9,7 +9,11 @@ import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.HTMLReportWriter;
 import de.hdm.it_projekt.shared.report.ProjektverflechtungenReport;
 
-
+/**
+ * 
+ * @author Anlehnung an Thies
+ *
+ */
 public class ProjektverfelchtungenHTML extends Showcase {
 
 	private Organisationseinheit o = null;

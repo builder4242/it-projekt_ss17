@@ -22,7 +22,7 @@ public class LoginInfo implements Serializable {
 	private String emailAddress;
 	private String nickname;
 	
-	private Person currentUser;
+	private Organisationseinheit currentUser;
 	/**
 	 * Ende Attributdefinition 
 	 */
@@ -102,22 +102,32 @@ public class LoginInfo implements Serializable {
 	/**
 	 * @return the currentUser
 	 */
-	public Person getCurrentUser() {
+	public Organisationseinheit getCurrentUser() {
 		return currentUser;
 	}
 
 	/**
 	 * @param currentUser the currentUser to set
 	 */
-	public void setCurrentUser(Person currentUser) {
+	public void setCurrentUser(Organisationseinheit currentUser) {
 		this.currentUser = currentUser;
 	}
 
 	public String toString() {
-		if(this.currentUser == null)
-			return this.getNickname() + " (" + this.getEmailAddress() + ")";
-		else
-			return this.currentUser.getName() + " (" + this.currentUser.getEmail() + ")";
+		
+		String r = "";
+		
+		if(this.currentUser == null) {
+			r = this.getNickname() + " (" + this.getEmailAddress() + ")";
+		} else {
+			if(currentUser instanceof Person) {
+				r = this.currentUser.getName() + ", " + ((Person)currentUser).getVorname() + " (" + this.currentUser.getEmail() + ")";
+			} else {
+				r = this.currentUser.getName() + " (" + this.currentUser.getEmail() + ")";
+			}			
+		}
+		
+		return r;
 	}
 	
 

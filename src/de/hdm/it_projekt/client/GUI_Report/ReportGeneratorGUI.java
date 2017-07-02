@@ -18,10 +18,16 @@ import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.*;
 
+
+/**
+ * EntryPoint des ReportGenerators 
+ * 
+ * @author Daniel
+ *
+ */
 public class ReportGeneratorGUI implements EntryPoint {
 
-	/**
-	 * Begin Attribute fuer Login
+	/*	 * Begin Attribute fuer Login
 	 */
 	protected static LoginInfo loginInfo = null;
 	protected static ProjektMarktplatz cpm = null;
@@ -202,7 +208,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 		}
 	}
 
-	private class LoginCallback implements AsyncCallback<Person> {
+	private class LoginCallback implements AsyncCallback<Organisationseinheit> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -212,7 +218,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 		}
 
 		@Override
-		public void onSuccess(Person result) {
+		public void onSuccess(Organisationseinheit result) {
 
 			if (result != null) {
 				loginInfo.setCurrentUser(result);

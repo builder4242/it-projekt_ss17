@@ -16,6 +16,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.it_projekt.shared.bo.LoginInfo;
 
+/**
+ * Implementierung der Google Authentifizierung und bereitstellen der benötigten Klasse um die Logindaten zu speichern
+ * 
+ * @author Daniel
+ *
+ */
 public class LoginPanel extends Showcase {
 
 	private LoginInfo loginInfo = null;

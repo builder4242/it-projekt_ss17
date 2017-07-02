@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
@@ -151,7 +152,10 @@ public class PersonMapper {
 			pstmt.setInt(6, p.getPlz());
 			pstmt.setString(7, p.getOrt());
 			pstmt.setString(8, p.getTel());
-			pstmt.setInt(9, p.getPartnerprofilId());
+			if(p.getPartnerprofilId() == 0)
+				pstmt.setObject(9, null);
+			else
+				pstmt.setObject(9, p.getPartnerprofilId());
 			pstmt.setInt(10, p.getId());
 
 			pstmt.executeUpdate();
@@ -222,7 +226,7 @@ public class PersonMapper {
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
 				
-				if(rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
@@ -276,7 +280,7 @@ public class PersonMapper {
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
 
-				if(rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
@@ -472,8 +476,38 @@ public class PersonMapper {
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
 				
-				if(rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
+
+			}
+		} catch (SQLException e9) {
+			e9.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return p;
+
+	}
+	
+	public Person getByPartnerprofil(Partnerprofil pp) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Person p = null;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("select ID from organisationseinheit where Typ='" + SQLTYP + "' AND Partnerprofil_ID="  + pp.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Team-Objekt erstellt.
+			if (rs.next()) {
+
+				p = findById(rs.getInt("ID"));
 
 			}
 		} catch (SQLException e9) {
