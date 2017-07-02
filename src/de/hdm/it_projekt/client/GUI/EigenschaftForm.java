@@ -1,9 +1,10 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse Eigenschaft Form  dient dem Aufbau und der Interaktion mit dem Formular "Eigenschaft" 
  * auf der Seite "Eigenes Profil verwalten* der GUI. Die Klasse beinhaltet zwei Textfelder für Name und Wert,
  * sowie drei Buttons mit zugehörigem ClickHandler zum Ändern, Löschen und Anlegen. Die Optik wird über
  * das Einbinden von CSS angepasst. */ 
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -60,7 +61,7 @@ public class EigenschaftForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
-		Button newButton = new Button("Neu");
+		Button newButton = new Button("Anlegen");
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
@@ -92,6 +93,10 @@ public class EigenschaftForm extends Showcase {
 
 	private class ChangeClickHandler implements ClickHandler {
 
+		/**
+		 * Wird beim Klick auf den Ändern Button ausgeführt und ändert die Daten im TreeView und in der Datenbank.
+		 * Dafür werden Create-, Set- und Get-Methoden verwendet, sowie AsyncCallbacks erstellt. 
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 

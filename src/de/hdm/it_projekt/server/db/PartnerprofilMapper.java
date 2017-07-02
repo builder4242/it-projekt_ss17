@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 /**
@@ -288,4 +289,36 @@ public class PartnerprofilMapper {
 		return pp;
 	}
 
+	public Partnerprofil getByOrganisationseinheitId(int id) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		Partnerprofil pp = null;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("select pp.ID from partnerprofil as pp "
+					+ "inner join organisationseinheit on pp.ID = organisationseinheit.Partnerprofil_ID "
+					+ "where organisationseinheit.ID=" + id);
+
+			/*
+			 * Da ID der Primaerschluessel ist, kann maximal nur ein Tupel
+			 * zurueckgegeben werden. Pruefung, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+
+				pp = findById(rs.getInt("pp.ID"));
+
+			}
+		} catch (SQLException e5) {
+			e5.printStackTrace();
+			return null;
+		}
+		return pp;
+	}
+	
 }

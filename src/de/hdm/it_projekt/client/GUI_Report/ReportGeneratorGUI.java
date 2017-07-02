@@ -18,10 +18,16 @@ import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.*;
 
+
+/**
+ * EntryPoint des ReportGenerators 
+ * 
+ * @author Daniel
+ *
+ */
 public class ReportGeneratorGUI implements EntryPoint {
 
-	/**
-	 * Begin Attribute fuer Login
+	/*	 * Begin Attribute fuer Login
 	 */
 	protected static LoginInfo loginInfo = null;
 	protected static ProjektMarktplatz cpm = null;
@@ -99,15 +105,17 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		Button fanOutButton = new Button("Zeige Fan Out");
 		fanOutButton.setStyleName("myprojekt-reportbutton");
+		fanOutButton.addClickHandler(new FanOutClickHandler());
 
 		Button fanInButton = new Button("Zeige Fan In");
 		fanInButton.setStyleName("myprojekt-reportbutton");
+		fanInButton.addClickHandler(new FanInClickHandler());
 
 		Button zugehoerigeProjekteButton = new Button("Zeige Projektverflechtungen meiner Bewerber");
 		zugehoerigeProjekteButton.setStyleName("myprojekt-reportbutton");
 		zugehoerigeProjekteButton.addClickHandler(new ProjektverflechtungenClickHandler());
 
-		Button pmGUIButton = new Button("zum Projektmarktplatz");
+		Button pmGUIButton = new Button("Zum Projektmarktplatz");
 		pmGUIButton.setStyleName("myprojekt-switchreportbutton");
 		pmGUIButton.addClickHandler(new pmClickHandler());
 
@@ -159,9 +167,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 				contentPanel.add(new PassendeAusschreibungenHTML(loginInfo.getCurrentUser()));
 
 			}
-
 		}
-
 	}
 
 	private class BewerbungenZuAusschreibungenClickhandler implements ClickHandler {
@@ -172,19 +178,37 @@ public class ReportGeneratorGUI implements EntryPoint {
 
 		}
 	}
-	
+
 	private class ProjektverflechtungenClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
+
 			contentPanel.clear();
-			contentPanel.add(new ProjektverfelchtungenHTML(loginInfo.getCurrentUser()));
+			contentPanel.add(new ProjektverfelchtungenHTML(loginInfo.getCurrentUser(), cpm));
 
 		}
-		
 	}
 
-	private class LoginCallback implements AsyncCallback<Person> {
+	private class FanOutClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			contentPanel.clear();
+			contentPanel.add(new FanOutHTML(loginInfo.getCurrentUser()));
+		}
+	}
+	
+	private class FanInClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			contentPanel.clear();
+			contentPanel.add(new FanInHTML(loginInfo.getCurrentUser()));
+		}
+	}
+
+	private class LoginCallback implements AsyncCallback<Organisationseinheit> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -194,7 +218,7 @@ public class ReportGeneratorGUI implements EntryPoint {
 		}
 
 		@Override
-		public void onSuccess(Person result) {
+		public void onSuccess(Organisationseinheit result) {
 
 			if (result != null) {
 				loginInfo.setCurrentUser(result);

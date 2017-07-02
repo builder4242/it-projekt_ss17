@@ -4,22 +4,22 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
-import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
+import de.hdm.it_projekt.shared.report.FanOutReport;
 import de.hdm.it_projekt.shared.report.HTMLReportWriter;
-import de.hdm.it_projekt.shared.report.PassendeAusschreibungenReport;
 
 /**
  * 
  * @author Anlehnung an Thies
  *
  */
-public class PassendeAusschreibungenHTML extends Showcase {
+public class FanOutHTML extends Showcase {
 
 	private Organisationseinheit o = null;
-	
-	public PassendeAusschreibungenHTML(Organisationseinheit o) {
+
+	public FanOutHTML(Organisationseinheit o) {
 		this.o = o;
 	}
+
 	/**
 	 * Jeder Showcase muss die <code>run()</code>-Methode implementieren. Sie
 	 * ist eine "Einschubmethode", die von einer Methode der Basisklasse
@@ -28,15 +28,15 @@ public class PassendeAusschreibungenHTML extends Showcase {
 	@Override
 	protected void run() {
 
-		if (o != null) {
-			rp.createPassendeAusschreibungenReport(o, new PassendeAusschreibungenReportCallback(this));
+		if (this.o != null) {
+			rp.createFanOutReport(this.o, new FanOutReportCallback(this));
 		}
 	}
 
-	class PassendeAusschreibungenReportCallback implements AsyncCallback<PassendeAusschreibungenReport> {
+	class FanOutReportCallback implements AsyncCallback<FanOutReport> {
 		private Showcase showcase = null;
 
-		public PassendeAusschreibungenReportCallback(Showcase c) {
+		public FanOutReportCallback(Showcase c) {
 			this.showcase = c;
 		}
 
@@ -46,7 +46,7 @@ public class PassendeAusschreibungenHTML extends Showcase {
 		}
 
 		@Override
-		public void onSuccess(PassendeAusschreibungenReport report) {
+		public void onSuccess(FanOutReport report) {
 			if (report != null) {
 				HTMLReportWriter writer = new HTMLReportWriter();
 				writer.process(report);

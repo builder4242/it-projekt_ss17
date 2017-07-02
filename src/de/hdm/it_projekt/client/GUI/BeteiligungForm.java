@@ -1,3 +1,6 @@
+/** 
+ * Die Klasse BeteiligungForm dient dem Aufbau und der Interaktion mit dem Formular Beteiligung. 
+ * */ 
 package de.hdm.it_projekt.client.GUI;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -63,7 +66,7 @@ public class BeteiligungForm extends Showcase {
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
 
-		Button changeButton = new Button("Ändern");
+		Button changeButton = new Button("Speichern");
 		changeButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		changeButton.addClickHandler(new ChangeClickHandler());
 		buttonsPanel.add(changeButton);
@@ -121,6 +124,10 @@ public class BeteiligungForm extends Showcase {
 
 	private class ChangeClickHandler implements ClickHandler {
 
+		/**
+		 * Wird beim Klick auf den Ändern Button ausgeführt und ändert die Daten im TreeView und in der Datenbank.
+		 * Dafür werden Create-, Set- und Get-Methoden verwendet, sowie AsyncCallbacks erstellt. 
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 

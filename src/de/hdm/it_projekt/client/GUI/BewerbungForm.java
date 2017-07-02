@@ -1,10 +1,11 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse BewerbungForm dient dem Aufbau und der Interaktion mit dem Formular "Bewerber"
  * auf der Seite "Meine Ausschreibungen" der GUI. Die Klasse stellt eine DateBox
  * für das Erstelldatum, ein Label für den Bewerber sowie eine TextArea für den Ausschreibungstext
  * bereit. Über den Button "Löschen" mit zugehörigem ClickHandler kann eine Bewerbung gelöscht werden.
  * Die Optik wird über das Einbinden von CSS angepasst. */
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -16,7 +17,6 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
@@ -31,6 +31,8 @@ public class BewerbungForm extends Showcase {
 
 	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
+	private boolean ausschreibender; 
+	private Button newButton = new Button("Bewerben");
 	private Label formTitel = new Label();
 	private DateBox erstellDb = new DateBox();
 	private TextArea textTb = new TextArea();
@@ -38,6 +40,8 @@ public class BewerbungForm extends Showcase {
 
 	public BewerbungForm(boolean ausschreibender) {
 
+		this.ausschreibender = ausschreibender;
+		
 		formTitel.setText("Bewerbung");
 		formTitel.setStyleName("h1");
 		this.add(formTitel);
@@ -70,10 +74,9 @@ public class BewerbungForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 		
-		Button newButton = new Button("Bewerben");
+				
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
-		newButton.setVisible(false);
 		buttonsPanel.add(newButton);
 
 		Button bewertenButton = new Button("Bewertung anlegen");
@@ -81,13 +84,19 @@ public class BewerbungForm extends Showcase {
 		bewertenButton.addClickHandler(new BewertenClickHandler());
 		buttonsPanel.add(bewertenButton);
 		
+		Button partnerprofilButton = new Button("Partnerprofil anzeigen");
+		bewertenButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		bewertenButton.addClickHandler(new PartnerprofilClickHandler());
+		this.add(bewertenButton);
+		
 		if(ausschreibender == false) {
 			textTb.setEnabled(true);
-			bewerberLb.setText(MyProjekt.loginInfo.getCurrentUser().getName());
-			newButton.setVisible(true);
+			bewerberLb.setText(MyProjekt.loginInfo.getCurrentUser().getName());	
 			bewertenButton.setVisible(false);
+			partnerprofilButton.setVisible(false);
+		} else {
+			newButton.setVisible(false);
 		}
-		
 	}
 
 	void setSelected(Bewerbung bw) {
@@ -96,7 +105,7 @@ public class BewerbungForm extends Showcase {
 			this.bwToDisplay = bw;
 			erstellDb.setValue(bwToDisplay.getErstelldatum());
 			textTb.setText(bwToDisplay.getBewerbungstext());
-
+			newButton.setVisible(false);
 			pa.getBewerberFor(bwToDisplay, new AsyncCallback<Organisationseinheit>() {
 
 				@Override
@@ -122,6 +131,9 @@ public class BewerbungForm extends Showcase {
 			erstellDb.setValue(null);
 			textTb.setText("");
 			bewerberLb.setText("");
+			
+			if(ausschreibender == false)
+				newButton.setVisible(true);
 		}
 	}
 
@@ -193,7 +205,7 @@ public class BewerbungForm extends Showcase {
 		Ausschreibung ausschreibung = null;
 		
 		public CreateBewerbungCallback(Ausschreibung as) {
-			ausschreibung = as;
+			this.ausschreibung = as;
 		}
 		
 		@Override
@@ -207,6 +219,15 @@ public class BewerbungForm extends Showcase {
 
 			if(ausschreibung != null && bewerbung != null)
 				ptvm.addBewerbungForAusschreibung(ausschreibung, bewerbung);
+			
+		}		
+	}
+	
+	private class PartnerprofilClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+
 			
 		}
 		

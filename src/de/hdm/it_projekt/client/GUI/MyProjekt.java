@@ -1,11 +1,12 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse MyProjekt stellt den EntryPoint dar, hier beginnt der Aufbau der GUI. 
  * Neben der Implementierung des Logins ist hier vor allem die Menüleiste zu finden,
  * die sich aus vier Buttons zusammensetzt und der Navigation zwischen den Einzelnen 
  * Seiten der GUI dient. Desweiteren ist hier der Abmeldebutton für den Logout zu finden. 
  * Die Optik wird durch das Einbinden von CSS angepasst. 
  */
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.core.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -23,18 +24,25 @@ import de.hdm.it_projekt.shared.LoginService;
 import de.hdm.it_projekt.shared.LoginServiceAsync;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.LoginInfo;
+import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.client.ClientsideSettings;
 
+/**
+ * EntryPoint der GUI für die ProjektAdministration
+ * 
+ * @author Daniel
+ *
+ */
 public class MyProjekt implements EntryPoint {
 
 	/**
 	 * Begin Attribute fuer Login
 	 */
-	protected static LoginInfo loginInfo = null;
-	protected static ProjektMarktplatz cpm = null;
+	static LoginInfo loginInfo = null;
+	static ProjektMarktplatz cpm = null;
 
 
 	/* Ende Attribute fuer Login */
@@ -230,7 +238,7 @@ public class MyProjekt implements EntryPoint {
 			public void onClick(ClickEvent event) {
 
 				RootPanel.get("content").clear();
-				RootPanel.get("content").add(new OPartnerprofilForm());
+				RootPanel.get("content").add(new OrgaForm(loginInfo.getCurrentUser()));
 
 			}
 		});
@@ -243,7 +251,6 @@ public class MyProjekt implements EntryPoint {
 			public void onClick(ClickEvent event) {
 
 				Window.Location.assign(GWT.getHostPageBaseURL() + "reportgenerator.html");
-
 			}
 		});
 
@@ -254,10 +261,10 @@ public class MyProjekt implements EntryPoint {
 		menu.add(reportGeneratorButton);
 
 		if (loginInfo.getCurrentUser() == null) {
-			pa.findByGoogleId(loginInfo, new AsyncCallback<Person>() {
+			pa.findByGoogleId(loginInfo, new AsyncCallback<Organisationseinheit>() {
 
 				@Override
-				public void onSuccess(Person result) {
+				public void onSuccess(Organisationseinheit result) {
 
 					Showcase showcase;
 

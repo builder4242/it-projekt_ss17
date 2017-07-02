@@ -16,10 +16,15 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.it_projekt.client.ClientsideSettings;
-import de.hdm.it_projekt.client.GUI.Cell.ProjektMarktplatzCell;
+import de.hdm.it_projekt.client.GUI_Report.Cell.ProjektMarktplatzReportCell;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
+/**
+ * 
+ * @author Anlehnung an Thies
+ *
+ */
 public class ReportMarktuebersicht extends VerticalPanel {
 
 
@@ -43,7 +48,7 @@ public class ReportMarktuebersicht extends VerticalPanel {
 		
 		reportgenerator = rp;
 
-		Cell<ProjektMarktplatz> pmCell = new ProjektMarktplatzCell();
+		Cell<ProjektMarktplatz> pmCell = new ProjektMarktplatzReportCell();
 		
 		final CellList<ProjektMarktplatz> memberPmCl = new CellList<ProjektMarktplatz>(pmCell, KEY_PROVIDER);
 		

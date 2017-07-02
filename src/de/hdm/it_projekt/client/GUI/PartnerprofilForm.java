@@ -1,5 +1,3 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse PartnerprofilForm dient dem Aufbau und der interaktion mit 
  * dem Formular "Partnerprofil" unter "Eigenes Profil verwalten" in der GUI
  * die Klasse stellt zwei Textfelder sowei drei Buttons bereit. 
@@ -9,6 +7,9 @@ package de.hdm.it_projekt.client.GUI;
  * was beim Drücken eines Buttons passiert.
  *  Die Optik von Lables, Textfeltern und Buttons wird durch das Einbinden von 
  * CSS umgestzt.   */ 
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

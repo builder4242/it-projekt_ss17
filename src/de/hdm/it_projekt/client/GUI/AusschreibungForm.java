@@ -1,10 +1,11 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse AusschreibungForm dient dem Aufbau und der Interaktion mit dem Formular "Ausschreibung
  * auf der Seite "Meine Ausschreibungen" in der GUI. Die Klasse beinhaltet eine TextBox für die Bezeichung
  * des Projekts, eine DateBox für die Bewerbungsfrist, sowie eine TextArea für den Ausschreibungstext.
  * Desweiteren gibt es drei Buttons mit jeweiligen ClickHandlern zum Ändern, Löschen und Anlegen. Die Optik würd 
  * über Einbinden von CSS angepasst.  */ 
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -84,7 +85,7 @@ public class AusschreibungForm extends Showcase {
 
 		HorizontalPanel buttonOPanel = new HorizontalPanel();
 		this.add(buttonOPanel);
-		Button newBewerbungButton = new Button();
+		Button newBewerbungButton = new Button("Bewerbung anlegen");
 		newBewerbungButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newBewerbungButton.addClickHandler(new NewBewerbungClickHandler());
 		buttonOPanel.add(newBewerbungButton);
@@ -94,18 +95,15 @@ public class AusschreibungForm extends Showcase {
 		showPartnerprofilButton.addClickHandler(new showPartnerprofilClickHandler());
 		buttonOPanel.add(showPartnerprofilButton);
 
-
 		if(ausschreibender == false) {
 			bezeichnungTb.setEnabled(false);
 			fristDb.setEnabled(false);
 			astextgTb.setEnabled(false);
 			buttonsPanel.setVisible(false);
 			showPartnerprofilButton.setText("Partnerprofil anzeigen");
-			newBewerbungButton.setText("Bewerbung anlegen");
-			this.add(newBewerbungButton);
 		} else {
 			showPartnerprofilButton.setText("Partnerprofil verwalten");
-			newBewerbungButton.setText("Bewerbung anzeigen");
+			newBewerbungButton.setVisible(false);
 		}
 	}
 
@@ -129,6 +127,9 @@ public class AusschreibungForm extends Showcase {
 	
 	private class NewBewerbungClickHandler implements ClickHandler {
 
+		/**
+		 * Beim Klick auf den Neu Button wird das Ausschreibungsformular ausgeblendet und das Bewerbungsformular eingebelendet
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 			ptvm.ausschreibungForm.setVisible(false);
@@ -148,6 +149,10 @@ public class AusschreibungForm extends Showcase {
 
 	private class ChangeClickHandler implements ClickHandler {
 
+		/**
+		 * Wird beim Klick auf den Ändern Button ausgeführt und ändert die Daten im TreeView und in der Datenbank.
+		 * Dafür werden Create-, Set- und Get-Methoden verwendet, sowie AsyncCallbacks erstellt. 
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 

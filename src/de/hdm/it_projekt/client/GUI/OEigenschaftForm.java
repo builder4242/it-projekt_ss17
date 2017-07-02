@@ -1,3 +1,6 @@
+/**
+ * Die Klasse OEigenschaftForm dient dem Aufbau und der Interaktion mit dem Formular Eigenschften.
+ */
 package de.hdm.it_projekt.client.GUI;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -12,24 +15,32 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.it_projekt.shared.bo.Eigenschaft;
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class OEigenschaftForm extends Showcase {
 
+	private Partnerprofil selectedPartnerprofil = null;
 	private Eigenschaft eToDisplay = null;
 
 	private TextBox nameTb = new TextBox();
 	private TextBox wertTb = new TextBox();
+	private Label formTitel = new Label();
 
-	public OEigenschaftForm() {
+	public OEigenschaftForm(Partnerprofil pp) {
+
+		this.selectedPartnerprofil = pp;
+		formTitel.setText("Eigenschaft");
+		formTitel.setStyleName("h1");
+		this.add(formTitel);
 
 		Grid form = new Grid(2, 2);
 		form.addStyleName("myprojekt-formlabel");
 		this.add(form);
 
 		form.setWidget(0, 0, new Label("Name"));
-		form.setWidget(0, 1, new Label("Wert"));
+		form.setWidget(0, 1, nameTb);
 
-		form.setWidget(1, 0, nameTb);
+		form.setWidget(1, 0, new Label("Wert"));
 		form.setWidget(1, 1, wertTb);
 		nameTb.setStyleName("myproject-textfield");
 		wertTb.setStyleName("myproject-textfield"); 
@@ -47,7 +58,7 @@ public class OEigenschaftForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
-		Button newButton = new Button("Neu");
+		Button newButton = new Button("Anlegen");
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
@@ -68,6 +79,10 @@ public class OEigenschaftForm extends Showcase {
 
 	private class ChangeClickHandler implements ClickHandler {
 
+		/**
+		 * Wird beim Klick auf den Ändern Button ausgeführt und ändert die Daten im TreeView und in der Datenbank.
+		 * Dafür werden Create-, Set- und Get-Methoden verwendet, sowie AsyncCallbacks erstellt. 
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 
@@ -124,7 +139,7 @@ public class OEigenschaftForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			pa.createEigenschaftFor(OPartnerprofilForm.pp, nameTb.getText(), wertTb.getText(),
+			pa.createEigenschaftFor(selectedPartnerprofil, nameTb.getText(), wertTb.getText(),
 					new AsyncCallback<Eigenschaft>() {
 
 						@Override

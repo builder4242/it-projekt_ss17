@@ -1,7 +1,6 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse PartnerprofilTreeViewModel dient der Darstellung von Informationen über das 
- * Partnerprofil.  */ 
+ * Partnerprofil.  */
+package de.hdm.it_projekt.client.GUI;
 
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +72,7 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 		boKeyProvider = new BusinessObjectKeyProvider();
 		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEventHandler());
-		
+
 		eigenschaftDataProviders = new HashMap<Partnerprofil, ListDataProvider<Eigenschaft>>();
 	}
 
@@ -86,7 +85,7 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 		eigenschaftForm = ef;
 		eigenschaftForm.setVisible(false);
 	}
-	
+
 	Ausschreibung getSelectedAusschreibung() {
 		return selectedAusschreibung;
 	}
@@ -132,7 +131,6 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 		return selectedEigenschaft;
 	}
 
-
 	void addPartnerprofilForAusschreibung(Partnerprofil pp) {
 
 		partnerprofilDataProviders.getList().add(pp);
@@ -154,6 +152,7 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 			return;
 
 		partnerprofilDataProviders.getList().remove(pp);
+		partnerprofilDataProviders.refresh();
 	}
 
 	void addEigenschaftForPartnerprofil(Eigenschaft e, Partnerprofil pp) {
@@ -165,9 +164,9 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 
 		if (!eigenschaftProvider.getList().contains(e))
 			eigenschaftProvider.getList().add(e);
-		
-		updatePartnerprofil(pp);
 
+		updatePartnerprofil(pp);
+		eigenschaftDataProviders.get(pp).refresh();
 		selectionModel.setSelected(e, true);
 	}
 
@@ -191,15 +190,16 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 
 		@Override
 		public void onSuccess(Partnerprofil partnerprofil) {
-			
-			if(eigenschaft != null && partnerprofil != null) {
+
+			if (eigenschaft != null && partnerprofil != null) {
 				List<Eigenschaft> eigenschaftList = eigenschaftDataProviders.get(partnerprofil).getList();
-				
-				if(!eigenschaftList.contains(eigenschaft)) 
+
+				if (!eigenschaftList.contains(eigenschaft))
 					eigenschaftList.set(eigenschaftList.indexOf(eigenschaft), eigenschaft);
-				
+
 				updatePartnerprofil(partnerprofil);
-				
+
+				eigenschaftDataProviders.get(partnerprofil).refresh();
 				selectionModel.setSelected(eigenschaft, true);
 			}
 
@@ -212,8 +212,8 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 			return;
 
 		eigenschaftDataProviders.get(pp).getList().remove(e);
-		eigenschaftDataProviders.get(pp).refresh();
 		updatePartnerprofil(pp);
+		eigenschaftDataProviders.get(pp).refresh();
 		selectionModel.setSelected(pp, true);
 	}
 
@@ -223,24 +223,25 @@ public class PartnerprofilTreeViewModel implements TreeViewModel {
 		if (value.equals("Root")) {
 
 			partnerprofilDataProviders = new ListDataProvider<Partnerprofil>();
-			
+
 			pa.getPartnerprofilFor(selectedAusschreibung, new AsyncCallback<Partnerprofil>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void onSuccess(Partnerprofil partnerprofil) {
 					partnerprofilDataProviders.getList().add(partnerprofil);
-					
+
 					selectionModel.setSelected(partnerprofil, true);
 				}
 			});
 
-			return new DefaultNodeInfo<Partnerprofil>(partnerprofilDataProviders, new PartnerprofilCell(), selectionModel, null);
+			return new DefaultNodeInfo<Partnerprofil>(partnerprofilDataProviders, new PartnerprofilCell(),
+					selectionModel, null);
 		}
 
 		if (value instanceof Partnerprofil) {

@@ -1,8 +1,9 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse LoginPanel dient dem Aufbau der Startseite für nicht eingeloggte User. Der User wird 
  * durch einen Text begrüßt und hat die Möglichkeit über den Anmeldebutton zum Login bzw. zur Registrierung
  * zu gelangem. Das Design wird durch einbinden von CSS angepasst.  */
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -15,6 +16,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.it_projekt.shared.bo.LoginInfo;
 
+/**
+ * Implementierung der Google Authentifizierung und bereitstellen der benötigten Klasse um die Logindaten zu speichern
+ * 
+ * @author Daniel
+ *
+ */
 public class LoginPanel extends Showcase {
 
 	private LoginInfo loginInfo = null;
@@ -54,10 +61,7 @@ public class LoginPanel extends Showcase {
 		// Assemble login panel
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(greeting);
-		RootPanel.get("content").add(new HTML("<img src='square.png' alt='Logo' width='20%'>"
-				+ "<img src='square.png' alt='Logo' width='20%'>"
-				+ "<img src='square.png' alt='Logo' width='20%'>"
-				+ "<img src='square.png' alt='Logo' width='20%'>"));
+		RootPanel.get("content").add(new HTML("<img src='logo.png' alt='Logo' width='40%' align='center'>"));
 	}
 
 }

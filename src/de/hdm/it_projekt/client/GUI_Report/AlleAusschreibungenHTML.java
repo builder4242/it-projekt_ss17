@@ -7,7 +7,11 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.HTMLReportWriter;
 
-
+/**
+ * 
+ * @author Anlehnung an Thies
+ *
+ */
 public class AlleAusschreibungenHTML extends Showcase {
 
 	private ProjektMarktplatz pm = null;

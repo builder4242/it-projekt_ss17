@@ -12,6 +12,8 @@ import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
 import de.hdm.it_projekt.shared.report.BewerbungenZuAusschreibungenReport;
+import de.hdm.it_projekt.shared.report.FanInReport;
+import de.hdm.it_projekt.shared.report.FanOutReport;
 import de.hdm.it_projekt.shared.report.PassendeAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.ProjektverflechtungenReport;
 
@@ -41,8 +43,12 @@ public interface ReportGeneratorAsync {
 	void createPassendeAusschreibungenReport(Organisationseinheit o,
 			AsyncCallback<PassendeAusschreibungenReport> callback);
 
-	void createProjektverflechtungenReport(Organisationseinheit o, AsyncCallback<ProjektverflechtungenReport> callback);
+	void createProjektverflechtungenReport(Organisationseinheit o, ProjektMarktplatz pm, AsyncCallback<ProjektverflechtungenReport> callback);
 
 	void getBeteiligungenFor(Organisationseinheit o, AsyncCallback<Vector<Beteiligung>> callback);
+
+	void createFanInReport(Organisationseinheit o, AsyncCallback<FanInReport> callback);
+
+	void createFanOutReport(Organisationseinheit o, AsyncCallback<FanOutReport> callback);
 
 }

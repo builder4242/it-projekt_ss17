@@ -111,14 +111,14 @@ public void process(SimpleReport r) {
      * ausgelesen und in HTML-Form übersetzt.
      */
     result.append("<H1>" + r.getTitle() + "</H1>");
-    result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
+    result.append("<table style=\"width:500px;border:1px solid silver\"><tr>");
     result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData())
         + "</b></td>");
     result.append("</tr><tr><td></td><td>" + r.getCreated()
         + "</td></tr></table>");
 
     Vector<Row> rows = r.getRows();
-    result.append("<table style=\"width:400px\">");
+    result.append("<table style=\"width:500px\">");
 
     for (int i = 0; i < rows.size(); i++) {
       Row row = rows.elementAt(i);

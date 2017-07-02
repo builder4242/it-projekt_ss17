@@ -210,8 +210,8 @@ public class BewerbungMapper {
 				bw.setId(rs.getInt("ID"));
 				bw.setErstelldatum(rs.getDate("Erstelldatum"));
 				bw.setBewerbungstext(rs.getString("Bewerbungstext"));
-				bw.setAusschreibungId(rs.getInt("ID"));
-				bw.setOrganisationseinheitId(rs.getInt("ID"));
+				bw.setAusschreibungId(rs.getInt("Ausschreibung_ID"));
+				bw.setOrganisationseinheitId(rs.getInt("Organisationseinheit_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(bw);
@@ -395,6 +395,93 @@ public class BewerbungMapper {
 
 		// Ergebnisvektor zurueckgeben
 		return result;
+	}
+	
+	public int countBewerbungLaufende(Organisationseinheit o) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		int count = 0;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT count(*) as ct from bewerbung where ID not in (select Bewerbung_ID from bewertung) AND Organisationseinheit_ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Bewerbungs-Objekt erstellt.
+			if (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				count = rs.getInt("ct");
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return count;
+	}
+	
+	public int countBewerbungAngenommen(Organisationseinheit o) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		int count = 0;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT count(*) as ct from bewerbung where ID in (select Bewerbung_ID from bewertung where Wert != 0) AND Organisationseinheit_ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Bewerbungs-Objekt erstellt.
+			if (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				count = rs.getInt("ct");
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return count;
+	}
+	
+	public int countBewerbungAbgelehnt(Organisationseinheit o) {
+
+		// DB-Verbindung herstellen
+		Connection con = DBConnection.connection();
+		int count = 0;
+
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT count(*) as ct from bewerbung where ID in (select Bewerbung_ID from bewertung where Wert = 0) AND Organisationseinheit_ID=" + o.getId());
+
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
+			// Bewerbungs-Objekt erstellt.
+			if (rs.next()) {
+
+				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
+				count = rs.getInt("ct");
+			}
+		} catch (SQLException e8) {
+			e8.printStackTrace();
+		}
+
+		// Ergebnisvektor zurueckgeben
+		return count;
 	}
 
 }

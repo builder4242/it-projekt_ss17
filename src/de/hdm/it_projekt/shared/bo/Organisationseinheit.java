@@ -13,7 +13,7 @@ public abstract class Organisationseinheit extends BusinessObject {
 	/**
 	 * Fremdschluesselbeziehung zu Partnerprofil
 	 */
-	private int partnerprofilId;
+	private int partnerprofilId = 0;
 	/*Ende Fremdschluesseldefinitionen*/
 
 	/**
@@ -50,7 +50,6 @@ public abstract class Organisationseinheit extends BusinessObject {
 	 * Default Konstruktor
 	 */
 	public Organisationseinheit () {
-		this.partnerprofilId = 0;
 	}
 	
 	/**
