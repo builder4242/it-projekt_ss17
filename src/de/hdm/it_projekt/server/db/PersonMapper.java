@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
@@ -151,7 +152,10 @@ public class PersonMapper {
 			pstmt.setInt(6, p.getPlz());
 			pstmt.setString(7, p.getOrt());
 			pstmt.setString(8, p.getTel());
-			pstmt.setInt(9, p.getPartnerprofilId());
+			if(p.getPartnerprofilId() == 0)
+				pstmt.setObject(9, null);
+			else
+				pstmt.setObject(9, p.getPartnerprofilId());
 			pstmt.setInt(10, p.getId());
 
 			pstmt.executeUpdate();
@@ -221,6 +225,9 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
+				
+				if(rs.getObject("Partnerprofil_ID") != null)
+					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
 				result.addElement(p);
@@ -272,6 +279,9 @@ public class PersonMapper {
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
+
+				if(rs.getObject("Partnerprofil_ID") != null)
+					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
 		} catch (SQLException e5) {
@@ -428,6 +438,12 @@ public class PersonMapper {
 
 	}
 
+	/***
+	 * Auslesen einer Person anhand einer bestimmten GoogleID.
+	 * 
+	 * @param googleID
+	 * @return
+	 */
 	public Person findByGoogleId(String googleID) {
 
 		// DB-Verbindung herstellen
@@ -441,7 +457,7 @@ public class PersonMapper {
 
 			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ID, Name, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE Email='"
+					"SELECT ID, Name, Vorname, Email, Strasse, PLZ, Ort, Tel, Partnerprofil_ID, Typ FROM organisationseinheit WHERE Email='"
 							+ googleID + "' AND Typ='" + SQLTYP + "'");
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
@@ -453,13 +469,14 @@ public class PersonMapper {
 				p = new Person();
 				p.setId(rs.getInt("ID"));
 				p.setName(rs.getString("Name"));
+				p.setVorname(rs.getString("Vorname"));
 				p.setEmail(rs.getString("Email"));
 				p.setStrasse(rs.getString("Strasse"));
 				p.setPlz(rs.getInt("PLZ"));
 				p.setOrt(rs.getString("Ort"));
 				p.setTel(rs.getString("Tel"));
 				
-				if(rs.getString("Partnerprofil_ID") != "NULL")
+				if(rs.getObject("Partnerprofil_ID") != null)
 					p.setPartnerprofilId(rs.getInt("Partnerprofil_ID"));
 
 			}
@@ -471,19 +488,12 @@ public class PersonMapper {
 		return p;
 
 	}
-
-	/**
-	 * Auslesen des zugehoerigen <code>Person</code>-Objekts zu einem gegebenen
-	 * Projektmarktplatz.
-	 * 
-	 * @param pm
-	 * @return
-	 */
-	public Vector<Person> getByProjektMarktplatz(ProjektMarktplatz pm) {
+	
+	public Person getByPartnerprofil(Partnerprofil pp) {
 
 		// DB-Verbindung herstellen
 		Connection con = DBConnection.connection();
-		Vector<Person> result = new Vector<Person>();
+		Person p = null;
 
 		try {
 
@@ -491,23 +501,23 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT o.ID AS ID FROM organisationseinheit AS o "
-					+ "INNER JOIN projektmarktplatz_has_organisationseinheit ON organisationseinheit_ID=projektmarktplatz_has_organisationseinheit.Organisationseinheit_ID "
-					+ "WHERE projektmarktplatz_ID= " + pm.getId());
+			ResultSet rs = stmt.executeQuery("select ID from organisationseinheit where Typ='" + SQLTYP + "' AND Partnerprofil_ID="  + pp.getId());
 
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
-			// Person-Objekt erstellt.
-			while (rs.next()) {
+			// Team-Objekt erstellt.
+			if (rs.next()) {
 
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(findById(rs.getInt("ID")));
+				p = findById(rs.getInt("ID"));
+
 			}
-		} catch (SQLException e10) {
-			e10.printStackTrace();
+		} catch (SQLException e9) {
+			e9.printStackTrace();
 		}
 
 		// Ergebnisvektor zurueckgeben
-		return result;
+		return p;
+
 	}
+
 
 }

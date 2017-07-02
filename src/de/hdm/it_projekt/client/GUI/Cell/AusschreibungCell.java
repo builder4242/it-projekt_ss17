@@ -1,4 +1,9 @@
+/** Die Klasse Ausschreibung Cell dient der Erstellung einer CellList in der 
+ * Ausschreibungen angezeigt werden. 
+ */
 package de.hdm.it_projekt.client.GUI.Cell;
+
+
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -19,9 +24,9 @@ public class AusschreibungCell extends AbstractCell<Ausschreibung>{
 			return;
 		
 		
-		sb.appendHtmlConstant("<div class='Ausschreibung-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("<div class='Ausschreibung-Cell'>");  //Einbinden der CSS Klasse
 		sb.appendEscaped("Ausschreibung: " + value.getBezeichnung());
-		sb.appendHtmlConstant("</div class='Ausschreibung-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("</div class='Ausschreibung-Cell'>");  //Einbinden CSS Klasse
 		
 	}
 

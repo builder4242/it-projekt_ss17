@@ -24,7 +24,7 @@ public interface ProjektAdministrationAsync {
 
 	void createPartnerprofilFor(Ausschreibung as, AsyncCallback<Partnerprofil> callback);
 
-	void createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum, String beschreibung, Person projektleiter,
+	void createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum, String beschreibung, Organisationseinheit projektleiter,
 			AsyncCallback<Projekt> callback);
 
 	void createPerson(String name, String vorname, String email, String strasse, int plz, String ort, String tel,
@@ -35,7 +35,7 @@ public interface ProjektAdministrationAsync {
 
 	void delete(Partnerprofil pp, AsyncCallback<Void> callback);
 
-	void createProjektMarktplatz(String bez, AsyncCallback<ProjektMarktplatz> callback);
+	void createProjektMarktplatz(String bez, int adminID, AsyncCallback<ProjektMarktplatz> callback);
 
 	void createTeam(String name, String email, String strasse, int plz, String ort, String tel,
 			AsyncCallback<Team> callback);
@@ -86,8 +86,6 @@ public interface ProjektAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void projektmarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o, AsyncCallback<Void> callback);
-
 	void save(Person ps, AsyncCallback<Void> callback);
 
 	void save(Projekt pr, AsyncCallback<Void> callback);
@@ -115,7 +113,7 @@ public interface ProjektAdministrationAsync {
 	void getProjektMarktplaetzeByOrganisation(Organisationseinheit o,
 			AsyncCallback<Vector<ProjektMarktplatz>> callback);
 
-	void findByGoogleId(LoginInfo li, AsyncCallback<Person> callback);
+	void findByGoogleId(LoginInfo li, AsyncCallback<Organisationseinheit> callback);
 
 	void getProjektleiterFor(Projekt pr, AsyncCallback<Person> callback);
 
@@ -135,7 +133,7 @@ public interface ProjektAdministrationAsync {
 
 	void getBeteiligterFor(Beteiligung bt, AsyncCallback<Organisationseinheit> callback);
 
-	void getProjektByProjektleiter(Person p, ProjektMarktplatz pm, AsyncCallback<Vector<Projekt>> callback);
+	void getProjektByProjektleiter(Organisationseinheit p, ProjektMarktplatz pm, AsyncCallback<Vector<Projekt>> callback);
 
 	void createBewerbungFor(Ausschreibung as, Organisationseinheit o, String bewerbungstext,
 			AsyncCallback<Bewerbung> callback);
@@ -143,6 +141,10 @@ public interface ProjektAdministrationAsync {
 	void getBeteiligungFor(Bewerbung bw, AsyncCallback<Beteiligung> callback);
 
 	void createBeteiligungFor(Bewerbung bw, AsyncCallback<Beteiligung> callback);
+
+	void getAusschreibungByMatch(Organisationseinheit o, AsyncCallback<Vector<Ausschreibung>> callback);
+
+	void getOrganisationseinheitById(int id, AsyncCallback<Organisationseinheit> callback);
 
 
 }

@@ -1,3 +1,6 @@
+/**
+ * Die Klasse ProjektBeteiligungListView dient der Erstellung einer ListView in der Beteiligungen angezeigt werden.
+ */
 package de.hdm.it_projekt.client.GUI;
 
 import java.util.HashMap;
@@ -18,7 +21,7 @@ import de.hdm.it_projekt.shared.bo.*;
 
 public class ProjektBeteiligungListView extends Showcase {
 
-	BeteiligungForm beteiligungForm = null;
+	private BeteiligungForm beteiligungForm = null;
 
 	private Projekt selectedProjekt = null;
 	private Beteiligung selectedBeteiligung = null;
@@ -64,7 +67,6 @@ public class ProjektBeteiligungListView extends Showcase {
 		btCl = new CellList<Beteiligung>(new BeteiligungCell());
 		btCl.setSelectionModel(selectionModel);
 		btCl.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-		
 		beteiligungDataProvider = new ListDataProvider<Beteiligung>();
 		beteiligungDataProvider.addDataDisplay(btCl);
 

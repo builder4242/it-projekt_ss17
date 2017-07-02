@@ -5,9 +5,11 @@
     color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
     text-aligin: center; 	/*ï¿½berschriften zentreiren*/
     font-family: Verdana;
-    font-size: 17px; 
-    margin-top: 10px; 
-    margin-bottom: 5px; 
+    font-size: 17px; 		/* Schriftgröße */ 
+    margin-top: 10px; 		/* Abstand oben */  
+    margin-bottom: 5px; 	/* Abstand unten */ 
+    margin-left: 2px;		/* Abstand links */ 
+    padding-left: 6px;		/* Abstand links */ 
 }
 
 /* 16px blaue Überschrift mit 10px Abstand nach oben und 5px Abstand nach unten. */ 
@@ -16,56 +18,108 @@
     color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
     text-aligin: center; 	/*ï¿½berschriften zentreiren*/
     font-family: Verdana;
-    font-size: 16px; 
-    margin-top: 10px; 
-    margin-bottom: 5px; 
+    font-size: 16px; 		/* Schriftröße */ 
+    margin-top: 10px; 		/* Abstand oben */ 
+    margin-bottom: 5px; 	/* Abstand unten */ 
+    margin-left: 2px;		/* Abstand links */ 
+    padding-left: 6px; 		/*Abstand links */ 
 }
 
+.h2_margin-top{
+	font-weight: bold; 		/*Überschriften fett */
+    color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
+    text-aligin: center; 	/*ï¿½berschriften zentreiren*/
+    font-family: Verdana;
+    font-size: 16px; 		/* Schriftröße */ 
+    margin-top: 28px; 		/* Abstand oben */ 
+    margin-bottom: 5px; 	/* Abstand unten */ 
+    padding-left: 6px;      /* Abstand links */ 
+}
+
+/* CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN */
 /* CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN   CSS CELL KLASSEN */
 
 .ProjektMarktplatz-Cell{
 	font-weight: bold; 		/*ï¿½berschriften fett */
     font-family: Verdana;
-    font-color: blue; 
-    font-size: 18px; 
+    color: #000000; 
+    font-size: 20px;
+    width: 550px; 
+    background-color: #ffffff; 
+    padding-left: 20px; 
+    padding-bottom: 5px; 
+    
 }
 
+.ProjektMarktplatz-Cell:hover{
+	color: #008CBA; 
+}
+
+
+
 .Eigenschaft-Cell{
-	font-weight: bold; 		/*ï¿½berschriften fett */
+	font-weight: normal;	
     font-family: Verdana;
-    font-color: blue; 
-    font-size: 18px; 
+    font-color: #008CBA; 
+    font-size: 16px; 
+    margin-right: 28px; 
+    min-width: 150px;
+    max-width:450px; 
 }
 
 .Ausschreibung-Cell{
 	font-weight: bold; 		/*ï¿½berschriften fett */
     font-family: Verdana;
-    font-color: blue; 
-    font-size: 18px; 
+    font-color: #008CBA; 
+    font-size: 16px; 
+    margin-right: 28px; 
+    min-width: 150px;
+    max-width:450px; 
 }
 
 .Partnerprofil-Cell{
-	font-weight: bold; 		/*ï¿½berschriften fett */
+	font-weight: normal; 		
     font-family: Verdana;
-    font-color: blue; 
-    font-size: 18px; 
+    font-color: #008CBA; 
+    font-size: 16px; 
+    margin-right: 28px; 
+    margin-top: 7px; 
+    min-width: 150px;
+    max-width:450px;  
 }
 
 .Projekt-Cell{
 	font-weight: bold; 		/*ï¿½berschriften fett */
     font-family: Verdana;
-    font-color: blue; 
+    font-color: #008CBA; 
     font-size: 18px; 
+    margin-right: 28px; 
+    min-width: 150px;
+    max-width:450px; 
 }
 
 .Projektleiter-Cell{
-	font-weight: bold; 		/*ï¿½berschriften fett */
+	font-weight: normal; 		
     font-family: Verdana;
-    font-color: blue; 
+    font-color: #008CBA; 
     font-size: 18px; 
+    margin-right: 28px;
+    min-width: 150px;
+    max-width:450px;  
+}
+
+.Beteiligung-Cell{
+	font-weight: normal; 		
+    font-family: Verdana;
+    font-color: #008CBA; 
+    font-size: 12px; 
+    margin-right: 5px;
+    min-width: 50px;
+    max-width: 350px;  
 }
 
 
+/* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
 /* TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT  */ 
 
 .myprojekt-headline{
@@ -99,15 +153,16 @@
 }
 
 /* TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD */ 
+/* TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD TEXTFELD */ 
 
 /* Syle für Textfelder, die beim anklicken blau hinterlehgt und 100px breiter werden */ 
 .myproject-textfield{
 	font-family: Verdana;
-	color: red; 
+	color: #404040; 				/* Schriftfarbe */ 
 	display: inline-block; 
-	width: 200px; 
-	padding: 5px 8px;
-    margin: 2px 0;
+	width: 250px; 				/* Breite */ 
+	padding: 5px 8px;			
+    margin: 2px 0;				/* Abstand */ 
     box-sizing: border-box; 
     transition: width 0.4s ease-in-out; 
     
@@ -116,15 +171,15 @@
 .myproject-textfield:focus {
     background-color: lightblue;
     border: 3px solid #555;
-    width: 300px; 
+    width: 252px; 
 }
 
 /* Textfeld, dass beim anklicken blau hinterlegt aber nicht breiter wird. */ 
 .myproject-anlegentextfield{
 	font-family: Verdana;
-	color: blue; 
+	color: #404040; 
 	display: inline-block; 
-	width: 200px; 
+	width: 250px; 
 	padding: 5px 8px;
     margin: 2px 0;
     margin-right: 5px; 
@@ -132,7 +187,7 @@
     transition: width 0.4s ease-in-out; 
 }
 
-.myproject-anmeldentextfield:focus {
+.myproject-anlegentextfield:focus {
     background-color: lightblue;
     border: 3px solid #555;
     
@@ -141,10 +196,10 @@
 /* TextArea die beim Anklicken nach rechts und unten ausfährt. */ 
 .myprojekt-textarea{
 	font-family: Verdana;
-	color: red; 
+	color: #404040; 
 	display: inline-block; 
-	width: 200px; 
-	height: 50px;
+	width: 250px; 
+	height: 160px;
 	padding: 5px 8px;
     margin: 2px 0;
     box-sizing: border-box;
@@ -157,15 +212,17 @@
 
 	}
 	
+	/* Beim klicken in die TextArea */ 
 .myprojekt-textarea:focus {
     background-color: lightblue;
     border: 3px solid #555;
-    height: 150px;
-    width:300px; 
+    height: 162px;
+    width: 252px; 
      
 }
 
 
+/* Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels */ 
 /* Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels Panels */ 
 
 .myprojekt-horizontalpanel{
@@ -181,14 +238,15 @@
 
 
 /* BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS */ 
+/* BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS BUTTONS */ 
 
 
 .myprojekt-button{
     font-family: Verdana;
-    background-color: #008CBA;
+    background-color: #008CBA;	/* Hingtergrundfarbe des Buttons */ 
     border: none;
-    border-radius: 2px;
-    color: white;
+    border-radius: 2px;		/* Abgerndete Ecken */ 
+    color: white;			/* Schriftfarbe */ 
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -200,7 +258,7 @@
 
 .myprojekt-button:active {
     position: relative;
-    top: 2px;
+    top: 2px;		/* Bewegung des Buttons beim Klicken */ 
 }
 
 .myprojekt-button:hover{
@@ -229,12 +287,42 @@
 
 }
 
+.myprojekt-menubutton:hover{
+    background-color: #5fb3ba; /* blau */
+    color: white;
+}
+
 .myprojekt-menubutton:active{
     position: relative;
     top: 2px;
 }
 
-.myprojekt-menubutton:hover{
+.myprojekt-reportmenubutton{
+    font-family: Verdana;
+    background-color: #008CBA;
+    border: none;
+    /* border-radius: 2px; */
+    color: #ff8000;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    margin-right:2px;
+
+
+}
+
+.myprojekt-reportmenubutton:active{
+    position: relative;
+    top: 2px;
+}
+
+
+
+.myprojekt-reportmenubutton:hover{
     background-color: #5fb3ba; /* blau */
     color: white;
 }
@@ -253,14 +341,15 @@
     font-size: 12px;
 }
 
-.myprojekt-abmeldebutton:active{
+.myprojekt-loginbutton:active{
     position: relative;
     top: 2px;
 }
 
-.myprojekt-abmeldebutton:hover{
+.myprojekt-loginbutton:hover{
     background-color: #00ff40; /* grün */
     color: white;
+    
 }
 
 
@@ -277,16 +366,20 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
+    margin-left: 200px; 
+ 	
 }
 
 .myprojekt-abmeldebutton:active{
     position: relative;
     top: 2px;
+  
 }
 
 .myprojekt-abmeldebutton:hover{
     background-color: #0A4766; /* blau */
     color: white;
+     
 }
 
 /* Style der Buttons die unter Fromularen verwendet werden. */ 
@@ -324,7 +417,8 @@
     display: inline-block;
     font-size: 12px;
     border-radius: 2px; 
-    margin-right:2px;
+    margin-right:20px;
+    margin-bottom: 3px; 
     width: 180px; 
 }
 
@@ -338,7 +432,41 @@
     color: white;
 }
 
+.myprojekt-switchreportbutton{
+	font-family: Verdana;
+    background-color: #008CBA ;
+    color: #ff8000;
+    border: none;
+    border-radius: 2px;
+    padding: 8px 10px; 
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 2px; 
+    margin-right:2px;
+    margin-bottom: 3px; 
+    width: 180px; 
+}
+
+.myprojekt-switchreportbutton:active{
+    position: relative;
+    top: 1px;
+}
+
+.myprojekt-switchreportbutton:hover{
+    background-color: #5fb3ba; /* blau */
+    color: white;
+}
+
 /* LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL  */ 
+/* LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL LABEL  */ 
+
+.myprojekt-greeting{
+	font-family: Verdana;
+	color: #004080;
+	display: center; 
+	font-size: 18px; 
+	padding: 5px; 
+}
 
 .myprojekt-label{
 	font-family: Verdana;
@@ -349,6 +477,8 @@
 	font-family: Verdana;
 	color: #004080;
 	display: center; 
+	margin-left: 5px; 
+	padding-left: 4px; 
 	
 }
 
@@ -369,8 +499,11 @@
 .myprojekt-opartnerprofil{
 	font-family: Verdana;
 	color: #004080;
-	margin-right: 20px; 
-	font-size: 15px; 
+	margin-right: 20px;
+	margin-bottom: 5px;  
+	font-size: 17px; 
+	padding-left: 5px; 
+	
 }
 
 /* Sie befinden sich im Parktplatz.... */ 
@@ -379,6 +512,17 @@
 	color: #0498b7;  
 	font-size: 15px; 
 	margin-right: 2px; 
+	padding-left: 8px; 
+}
+
+.myprojekt-infoleistelabelbold{
+	font-family: Verdana;
+	font-weight: bold;
+	color: #0498b7;  
+	font-size: 15px; 
+	margin-right: 25px; 
+
+	
 }
 
 .myprojekt-bezichungmarktplatzlabel{
@@ -386,7 +530,18 @@
 	color: #004080;
 	display: center; 
 	margin-right: 5px; 
+	margin-left: 5px; 
+	font-size: 16px; 
+	padding-left: 20px; 
 
+}
+
+.myprojekt-loginlabel{
+	font-family: Verdana;
+	margin-left: 22px; 
+	font-size: 16px; 
+	color: #0498b7;             /*Farbe der ï¿½berschrift blau*/
+    text-aligin: center; 		/*ï¿½berschriften zentreiren*/
 }
 
 

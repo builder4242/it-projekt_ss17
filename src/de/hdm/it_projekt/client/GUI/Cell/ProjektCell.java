@@ -1,4 +1,9 @@
+/** 
+ * 
+ * */ 
 package de.hdm.it_projekt.client.GUI.Cell;
+
+ 
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -15,9 +20,9 @@ public class ProjektCell extends AbstractCell<Projekt>{
 		
 		
 		sb.appendHtmlConstant("<link type='text/css' rel='stylesheet' href='style.css'>"); 
-		sb.appendHtmlConstant("<div class='Projekt-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("<div class='Projekt-Cell'>");  //Einbinden der CSS Klasse
 		sb.appendEscaped(value.getName());
-		sb.appendHtmlConstant("</div class='Projekt-Cell'>");  //Test CSS Klasse
+		sb.appendHtmlConstant("</div class='Projekt-Cell'>");  //Einbinden der CSS Klasse
 		
 	}
 

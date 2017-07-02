@@ -1,10 +1,11 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse  BewertungForm dient dem Aufbau und der Interaktion mit dem Formular "Bewertung"
  * auf der Seite "Meine Ausschreibungen" in der GUI. Die Klasse stellt eine DateBox für das Erstelldatum,
  * ein Textfeld für die Bewertung sowie eine TextArea für die Stellungsnahme bereit. Desweiteren 
  * gibt es drei Buttons mit jeweiligen ClickHandlern zum Ändern, Löschen und Anlegen. Die Optik würd 
  * über Einbinden von CSS angepasst. */
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -26,16 +27,16 @@ import de.hdm.it_projekt.shared.bo.Bewertung;
 
 public class BewertungForm extends Showcase {
 
-	Bewertung bwtToDisplay = null;
-	ProjektTreeViewModel ptvm = null;
+	private Bewertung bwtToDisplay = null;
+	private ProjektTreeViewModel ptvm = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
-	Label formTitel = new Label();
-	DateBox erstellDb = new DateBox();
-	TextArea textTb = new TextArea();
-	DoubleBox wertDb = new DoubleBox();
-	CheckBox beteiligenCb = new CheckBox();
+	private Label formTitel = new Label();
+	private DateBox erstellDb = new DateBox();
+	private TextArea textTb = new TextArea();
+	private DoubleBox wertDb = new DoubleBox();
+	private CheckBox beteiligenCb = new CheckBox();
 
 	public BewertungForm(boolean ausschreibender) {
 
@@ -61,7 +62,8 @@ public class BewertungForm extends Showcase {
 		form.setWidget(2, 1, textTb);
 		textTb.setStyleName("myprojekt-textarea");		
 
-		form.setWidget(3, 0, new Label("beteiligen"));
+		Label beteiligenL =  new Label("beteiligen");
+		form.setWidget(3, 0, beteiligenL);
 		form.setWidget(3, 1, beteiligenCb);
 		beteiligenCb.setValue(false);
 
@@ -80,7 +82,7 @@ public class BewertungForm extends Showcase {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
-		Button newButton = new Button("Neu");
+		Button newButton = new Button("Anlegen");
 		newButton.setStyleName(
 				"myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
@@ -91,9 +93,9 @@ public class BewertungForm extends Showcase {
 			wertDb.setEnabled(false);
 			textTb.setEnabled(false);
 			beteiligenCb.setVisible(false);
+			beteiligenL.setVisible(false);			
 			buttonsPanel.setVisible(false);
-		}
-		
+		}		
 	}
 
 	void setSelected(Bewertung bwt) {
@@ -173,6 +175,10 @@ public class BewertungForm extends Showcase {
 
 	private class ChangeClickHandler implements ClickHandler {
 
+		/**
+		 * Wird beim Klick auf den Ändern Button ausgeführt und ändert die Daten im TreeView und in der Datenbank.
+		 * Dafür werden Create-, Set- und Get-Methoden verwendet, sowie AsyncCallbacks erstellt. 
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 

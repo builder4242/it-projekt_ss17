@@ -1,14 +1,12 @@
-/**
- * 
- */
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse NewPersonForm wird benötigt um ein Profil an zu legen, wenn sich ein Nutzer zum
  *  ersten mal einloggt. Die Klasse stellt 7 TextBoxes für Informationen wie Name und Adresse bereit. 
  *  Über den Button Neu, mit zugehörigem ClickHandler, werden die Daten aus den Textfelden in die Datenbank
  *  gespeichert und der Nutzer wird zur Marktplatzübersicht weitergeleitet. Die Optik wird druch das 
  *  einbinden von CSS angepasst.   */
+package de.hdm.it_projekt.client.GUI;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -17,12 +15,17 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.hdm.it_projekt.shared.bo.LoginInfo;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.bo.Person;
+import de.hdm.it_projekt.shared.bo.Team;
+import de.hdm.it_projekt.shared.bo.Unternehmen;
 
 /**
  * @author Daniel Fleps
@@ -30,18 +33,21 @@ import de.hdm.it_projekt.shared.bo.Person;
  */
 public class NewPersonForm extends Showcase {
 
-	Organisationseinheit organisationseinheitToDisplay = null;
-	Widget menu = null;
+	private Widget menu = null;
+	static LoginInfo loginInfo = null;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
-	TextBox firstNameTextBox = new TextBox();
-	TextBox lastNameTextBox = new TextBox();
-	TextBox emailTextBox = new TextBox();
-	TextBox telTextBox = new TextBox();
-	TextBox strasseTextBox = new TextBox();
-	TextBox plzTextBox = new TextBox();
-	TextBox ortTextBox = new TextBox();
+	private Label firstNameLabel = new Label("Vorname");
+	private Label lastNameLabel = new Label("Nachname");
+	private TextBox firstNameTextBox = new TextBox();
+	private TextBox lastNameTextBox = new TextBox();
+	private TextBox emailTextBox = new TextBox();
+	private TextBox telTextBox = new TextBox();
+	private TextBox strasseTextBox = new TextBox();
+	private TextBox plzTextBox = new TextBox();
+	private TextBox ortTextBox = new TextBox();
+	private ListBox auswahlBox = new ListBox();
 
 	/*
 	 * Im Konstruktor werden die anderen Widgets erzeugt. Alle werden in einem
@@ -55,21 +61,29 @@ public class NewPersonForm extends Showcase {
 	public NewPersonForm(String googleId, Widget m) {
 
 		menu = m;
+
+		auswahlBox.addItem("Person", "P");
+		auswahlBox.addItem("Unternehmen", "U");
+		auswahlBox.addItem("Team", "T");
+		auswahlBox.addChangeHandler(new AuswahlChangeHandler());
+
 		this.add(new Label(
 				"Sie besitzen noch kein Benutzerprofil bei uns, bitte geben Sie in nachfolgendem Formular Ihre Daten ein."));
 		this.addStyleName("myprojekt-formlabel");
-		
+
 		Grid organisationseinheitGrid = new Grid(9, 2);
 		this.add(organisationseinheitGrid);
 
 		emailTextBox.setText(googleId);
 		emailTextBox.setEnabled(false);
 
-		Label firstNameLabel = new Label("Vorname");
+		Label auswahlLabel = new Label("Typ");
+		organisationseinheitGrid.setWidget(0, 0, auswahlLabel);
+		organisationseinheitGrid.setWidget(0, 1, auswahlBox);
+
 		organisationseinheitGrid.setWidget(1, 0, firstNameLabel);
 		organisationseinheitGrid.setWidget(1, 1, firstNameTextBox);
 
-		Label lastNameLabel = new Label("Nachname");
 		organisationseinheitGrid.setWidget(2, 0, lastNameLabel);
 		organisationseinheitGrid.setWidget(2, 1, lastNameTextBox);
 
@@ -96,11 +110,28 @@ public class NewPersonForm extends Showcase {
 		HorizontalPanel customerButtonsPanel = new HorizontalPanel();
 		this.add(customerButtonsPanel);
 
-		Button newButton = new Button("Neu");
-		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		Button newButton = new Button("Anlegen");
+		newButton.setStyleName(
+				"myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		customerButtonsPanel.add(newButton);
+	}
 
+	private class AuswahlChangeHandler implements ChangeHandler {
+
+		@Override
+		public void onChange(ChangeEvent event) {
+
+			if (auswahlBox.getSelectedValue() == "P") {
+				firstNameLabel.setVisible(true);
+				firstNameTextBox.setVisible(true);
+				lastNameLabel.setText("Nachname");
+			} else {
+				firstNameLabel.setVisible(false);
+				firstNameTextBox.setVisible(false);
+				lastNameLabel.setText("Name");
+			}
+		}
 	}
 
 	private class NewClickHandler implements ClickHandler {
@@ -108,9 +139,23 @@ public class NewPersonForm extends Showcase {
 		@Override
 		public void onClick(ClickEvent event) {
 
-			pa.createPerson(lastNameTextBox.getText(), firstNameTextBox.getText(), emailTextBox.getText(),
-					strasseTextBox.getText(), Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(),
-					telTextBox.getText(), new CreatePersonCallback());
+			if (auswahlBox.getSelectedValue() == "P") {
+				pa.createPerson(lastNameTextBox.getText(), firstNameTextBox.getText(), emailTextBox.getText(),
+						strasseTextBox.getText(), Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(),
+						telTextBox.getText(), new CreatePersonCallback());
+			}
+
+			if(auswahlBox.getSelectedValue() == "T") {
+				pa.createTeam(lastNameTextBox.getText(), emailTextBox.getText(),
+						strasseTextBox.getText(), Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(),
+						telTextBox.getText(), new CreateTeamCallback());			
+			}
+
+			if(auswahlBox.getSelectedValue() == "U") {
+				pa.createUnternehmen(lastNameTextBox.getText(), emailTextBox.getText(),
+						strasseTextBox.getText(), Integer.parseInt(plzTextBox.getText()), ortTextBox.getText(),
+						telTextBox.getText(), new CreateUnternehmenCallback());
+			}
 		}
 	}
 
@@ -125,19 +170,83 @@ public class NewPersonForm extends Showcase {
 		@Override
 		public void onSuccess(Person result) {
 
-			Window.alert("Person angelegt");
+			if (result == null) {
+				Window.alert("Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
+			} else {
 
-			MyProjekt.loginInfo.setCurrentUser(result);
+				setLoggedIn(result);
+			}
+		}
+	}
+	
+	private class CreateTeamCallback implements AsyncCallback<Team> {
 
-			RootPanel.get("userinfo").add(new Label(MyProjekt.loginInfo.toString()));
-			
-			Showcase showcase = new Marktuebersicht();
-			RootPanel.get("content").clear();
-			RootPanel.get("content").add(showcase);
-			menu.setVisible(true);
-			
+		@Override
+		public void onFailure(Throwable caught) {
 
+			Window.alert("Es ist ein Fehler aufgetreten.");
 		}
 
+		@Override
+		public void onSuccess(Team result) {
+
+			if (result == null) {
+				Window.alert("Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
+			} else {
+				setLoggedIn(result);
+			}
+		}
+	}
+	
+	private class CreateUnternehmenCallback implements AsyncCallback<Unternehmen> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+
+			Window.alert("Es ist ein Fehler aufgetreten.");
+		}
+
+		@Override
+		public void onSuccess(Unternehmen result) {
+
+			if (result == null) {
+				Window.alert("Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
+			} else {
+				setLoggedIn(result);
+			}
+		}
+	}
+	
+	private void setLoggedIn(Organisationseinheit o) {
+		
+		Window.alert("Ihr Konto wurde erfolgreich angelegt.");
+
+		MyProjekt.loginInfo.setCurrentUser(o);
+
+
+		Button abmeldungButton = new Button("Abmelden");
+		abmeldungButton.setStyleName("myprojekt-abmeldebutton");
+		abmeldungButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+
+				Window.Location.assign(loginInfo.getLogoutUrl());
+			}
+		});
+		
+		HorizontalPanel userinfo = new HorizontalPanel();
+		
+		Label infoLabel = new Label(MyProjekt.loginInfo.toString());
+		infoLabel.addStyleName("myprojekt-loginlabel");
+		userinfo.add(infoLabel);
+		userinfo.add(abmeldungButton);
+		RootPanel.get("content").clear();
+		RootPanel.get("userinfo").add(userinfo);		
+
+		Showcase showcase = new Marktuebersicht();
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(showcase);
+		menu.setVisible(true);
 	}
 }

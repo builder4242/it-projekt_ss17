@@ -1,5 +1,3 @@
-package de.hdm.it_projekt.client.GUI;
-
 /** Die Klasse PartnerprofilForm dient dem Aufbau und der interaktion mit 
  * dem Formular "Partnerprofil" unter "Eigenes Profil verwalten" in der GUI
  * die Klasse stellt zwei Textfelder sowei drei Buttons bereit. 
@@ -9,6 +7,9 @@ package de.hdm.it_projekt.client.GUI;
  * was beim Drücken eines Buttons passiert.
  *  Die Optik von Lables, Textfeltern und Buttons wird durch das Einbinden von 
  * CSS umgestzt.   */ 
+package de.hdm.it_projekt.client.GUI;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -26,14 +27,14 @@ import de.hdm.it_projekt.shared.bo.Partnerprofil;
 
 public class PartnerprofilForm extends Showcase {
 
-	Partnerprofil ppToDisplay = null;
-	PartnerprofilTreeViewModel pptvm = null;
+	private Partnerprofil ppToDisplay = null;
+	private PartnerprofilTreeViewModel pptvm = null;
 
-	DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+	private DateTimeFormat fmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 
-	Label formTitel = new Label();
-	DateBox erstellDb = new DateBox();
-	DateBox aenderungDb = new DateBox();
+	private Label formTitel = new Label();
+	private DateBox erstellDb = new DateBox();
+	private DateBox aenderungDb = new DateBox();
 
 	public PartnerprofilForm(boolean ausschreibender) {
 
@@ -60,17 +61,22 @@ public class PartnerprofilForm extends Showcase {
 		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
+		buttonsPanel.addStyleName("myprojekt-buttonspanel");
 
 		Button deleteButton = new Button("Löschen");
 		deleteButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		buttonsPanel.add(deleteButton);
 
-		Button newButton = new Button("Neu");
+		Button newButton = new Button("Anlegen");
 		newButton.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
 		newButton.addClickHandler(new NewClickHandler());
 		buttonsPanel.add(newButton);
-		buttonsPanel.addStyleName("myprojekt-buttonspanel");
+		
+		Button newEigenschaft = new Button("Neue Eigenschaft");
+		newEigenschaft.setStyleName("myprojekt-formbutton"); /** Verknüft CSS Klasse auf Button */
+		newEigenschaft.addClickHandler(new NewEigenschaftClickHandler());
+		buttonsPanel.add(newEigenschaft);
 		
 		if(ausschreibender == false) {
 			buttonsPanel.setVisible(false);
@@ -92,6 +98,17 @@ public class PartnerprofilForm extends Showcase {
 
 	void setPartnerprofilTreeViewModel(PartnerprofilTreeViewModel pptvm) {
 		this.pptvm = pptvm;
+	}
+	
+	private class NewEigenschaftClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			pptvm.partnerprofilForm.setVisible(false);
+			pptvm.eigenschaftForm.setVisible(true);
+			
+		}
+		
 	}
 
 	private class DeleteClickHandler implements ClickHandler {

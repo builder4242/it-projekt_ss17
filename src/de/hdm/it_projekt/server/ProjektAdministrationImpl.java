@@ -1,3 +1,4 @@
+
 package de.hdm.it_projekt.server;
 
 import java.util.Date;
@@ -9,9 +10,23 @@ import de.hdm.it_projekt.server.db.*;
 import de.hdm.it_projekt.shared.ProjektAdministration;
 import de.hdm.it_projekt.shared.bo.*;
 
+/**
+ * 
+ * ReportGeneratorImpl
+ * 
+ * In dieser Klasse werden die Serverseitigen Methoden der Applikationslogik
+ * implementiert. Diese stellen die Verbindung zwischen den Datenbankmappern und
+ * der GUI her um eine maximale "Separation of concerns" Logik bereitzustellen.
+ * 
+ * @author Daniel
+ *
+ */
 @SuppressWarnings("serial")
 public class ProjektAdministrationImpl extends RemoteServiceServlet implements ProjektAdministration {
 
+	/*
+	 * Mapper für die Datenbank werden referenziert.
+	 */
 	private AusschreibungMapper asMapper = null;
 	private BeteiligungMapper btMapper = null;
 	private BewerbungMapper bwMapper = null;
@@ -31,6 +46,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void init() throws IllegalArgumentException {
 
+		/*
+		 * Mapper mit denen die Klasse mit der Datenbank kommunizieren kann.
+		 */
 		this.asMapper = AusschreibungMapper.ausschreibungMapper();
 		this.btMapper = BeteiligungMapper.beteiligungMapper();
 		this.bwMapper = BewerbungMapper.bewerbungMapper();
@@ -44,32 +62,50 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		this.uMapper = UnternehmenMapper.unternehmenMapper();
 	}
 
+	/**
+	 * Daten werden über die Mapper aufgerufen und als Vektor zurückgeben
+	 */
 	@Override
 	public Vector<ProjektMarktplatz> getProjektMarktplaetzeByOrganisation(Organisationseinheit o)
 			throws IllegalArgumentException {
 		return this.pmMapper.getByOrganisation(o);
 	}
 
+	/**
+	 * Daten werden über die Mapper aufgerufen und als Vektor zurückgeben
+	 */
 	@Override
 	public Vector<ProjektMarktplatz> getAlleProjektMarktplaetze() throws IllegalArgumentException {
 		return this.pmMapper.findAll();
 	}
 
+	/**
+	 * Daten werden über die Mapper aufgerufen und als Vektor zurückgeben
+	 */
 	@Override
 	public ProjektMarktplatz getProjektMarktplatzById(int id) throws IllegalArgumentException {
 		return this.pmMapper.findById(id);
 	}
 
+	/**
+	 * Daten werden über die Mapper aufgerufen und als Vektor zurückgeben
+	 */
 	@Override
 	public Vector<Projekt> getAlleProjekteFor(ProjektMarktplatz pm) throws IllegalArgumentException {
 		return this.prMapper.getByProjektmarktplatz(pm);
 	}
 
+	/**
+	 * Daten werden über die Mapper aufgerufen und als Vektor zurückgeben
+	 */
 	@Override
 	public Vector<Projekt> getProjektByName(String name) throws IllegalArgumentException {
 		return this.prMapper.findByName(name);
 	}
 
+	/**
+	 * Daten werden über die Mapper aufgerufen und als Vektor zurückgeben
+	 */
 	@Override
 	public Projekt getProjektById(int id) throws IllegalArgumentException {
 		return this.prMapper.findById(id);
@@ -115,10 +151,15 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return this.btMapper.getByOrganisationseinheit(o);
 	}
 
+	/**
+	 * Daten werden an die Mapper übergeben und mit der insert Methode
+	 * eingefügt.
+	 */
 	@Override
-	public ProjektMarktplatz createProjektMarktplatz(String bez) throws IllegalArgumentException {
+	public ProjektMarktplatz createProjektMarktplatz(String bez, int adminID) throws IllegalArgumentException {
 		ProjektMarktplatz pm = new ProjektMarktplatz();
 		pm.setBezeichnung(bez);
+		pm.setAdminId(adminID);
 
 		pm.setId(1);
 
@@ -127,7 +168,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	@Override
 	public Projekt createProjektFor(ProjektMarktplatz pm, String name, Date startdatum, Date enddatum,
-			String beschreibung, Person projektleiter) throws IllegalArgumentException {
+			String beschreibung, Organisationseinheit projektleiter) throws IllegalArgumentException {
 
 		Projekt pr = new Projekt();
 		pr.setName(name);
@@ -323,12 +364,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 
 	}
 
-	@Override
-	public void projektmarktplatzBeitreten(ProjektMarktplatz pm, Organisationseinheit o)
-			throws IllegalArgumentException {
-		this.pmMapper.projektMarktplatzBeitreten(pm, o);
-	}
-
+	/**
+	 * Die Daten werden an die Mapper übergeben um sie über die update Methode
+	 * in der Datenbank zu aktualisieren.
+	 */
 	@Override
 	public void save(ProjektMarktplatz pm) throws IllegalArgumentException {
 
@@ -401,8 +440,17 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		this.tMapper.update(t);
 	}
 
+	/**
+	 * Die delete Methode wird für das jeweilige Objekt aufgerufen um die
+	 * entsprechenden Daten aus der Datenbank zu löschen.
+	 */
 	@Override
 	public void delete(ProjektMarktplatz pm) throws IllegalArgumentException {
+
+		Vector<Projekt> prV = getAlleProjekteFor(pm);
+		for (Projekt pr : prV) {
+			delete(pr);
+		}
 
 		this.pmMapper.delete(pm);
 	}
@@ -437,6 +485,11 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		if (pp != null)
 			delete(pp);
 
+		Vector<Bewerbung> bwV = getBewerbungFor(as);
+		for (Bewerbung bw : bwV) {
+			delete(bw);
+		}
+
 		this.asMapper.delete(as);
 	}
 
@@ -450,18 +503,36 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 				delete(e);
 			}
 		}
-		
+
 		Ausschreibung as = getAusschreibungby(pp);
-		as.setPartnerprofilId(0);
-		save(as);
-		
+		if (as != null) {
+			as.setPartnerprofilId(0);
+			save(as);
+		}
+
+		Person p = pMapper.getByPartnerprofil(pp);
+		Team t = tMapper.getByPartnerprofil(pp);
+		Unternehmen u = uMapper.getByPartnerprofil(pp);
+
+		if (p != null) {
+			p.setPartnerprofilId(0);
+			save(p);
+		}
+		if (t != null) {
+			t.setPartnerprofilId(0);
+			save(t);
+		}
+		if (u != null) {
+			u.setPartnerprofilId(0);
+			save(u);
+		}
+
 		this.ppMapper.delete(pp);
 	}
 
 	@Override
 	public void delete(Eigenschaft e) throws IllegalArgumentException {
 
-		save(getPartnerprofilById(e.getPartnerprofilId()));
 		this.eMapper.delete(e);
 	}
 
@@ -491,7 +562,7 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public void delete(Person ps) throws IllegalArgumentException {
 
-		this.pMapper.update(ps);
+		this.pMapper.delete(ps);
 	}
 
 	@Override
@@ -506,11 +577,26 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		this.tMapper.delete(t);
 	}
 
+	/**
+	 * Datenbankabfragen
+	 */
 	@Override
-	public Person findByGoogleId(LoginInfo li) throws IllegalArgumentException {
+	public Organisationseinheit findByGoogleId(LoginInfo li) throws IllegalArgumentException {
 
-		return pMapper.findByGoogleId(li.getEmailAddress());
+		Person p = pMapper.findByGoogleId(li.getEmailAddress());
+		Team t = tMapper.findByGoogleId(li.getEmailAddress());
+		Unternehmen u = uMapper.findByGoogleId(li.getEmailAddress());
 
+		Organisationseinheit o = null;
+
+		if (p != null)
+			o = p;
+		if (t != null)
+			o = t;
+		if (u != null)
+			o = u;
+
+		return o;
 	}
 
 	@Override
@@ -523,6 +609,10 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return asMapper.getByPartnerprofil(pp);
 	}
 
+	/**
+	 * Daten werden an die Mapper übergeben und mit der insert Methode
+	 * eingefügt.
+	 */
 	@Override
 	public Bewertung createBewertungFor(Bewerbung bw, float wert, String stellungnahme)
 			throws IllegalArgumentException {
@@ -537,6 +627,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		return bwtMapper.insert(bwt);
 	}
 
+	/**
+	 * Datenbankabfragen
+	 */
 	@Override
 	public Ausschreibung getAusschreibungBy(Bewerbung bw) throws IllegalArgumentException {
 		return asMapper.findById(bw.getAusschreibungId());
@@ -555,9 +648,9 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public Organisationseinheit getBewerberFor(Bewerbung bw) throws IllegalArgumentException {
 
-		Person p = pMapper.findById(bw.getId());
-		Team t = tMapper.findById(bw.getId());
-		Unternehmen u = uMapper.findById(bw.getId());
+		Person p = pMapper.findById(bw.getOrganisationseinheitId());
+		Team t = tMapper.findById(bw.getOrganisationseinheitId());
+		Unternehmen u = uMapper.findById(bw.getOrganisationseinheitId());
 
 		Organisationseinheit o = null;
 
@@ -574,6 +667,25 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	@Override
 	public Partnerprofil getPartnerprofilFor(Ausschreibung as) throws IllegalArgumentException {
 		return ppMapper.getByAusschreibung(as);
+	}
+
+	@Override
+	public Organisationseinheit getOrganisationseinheitById(int id) throws IllegalArgumentException {
+
+		Person p = pMapper.findById(id);
+		Team t = tMapper.findById(id);
+		Unternehmen u = uMapper.findById(id);
+
+		Organisationseinheit o = null;
+
+		if (p != null)
+			o = p;
+		if (t != null)
+			o = t;
+		if (u != null)
+			o = u;
+
+		return o;
 	}
 
 	@Override
@@ -596,11 +708,16 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 	}
 
 	@Override
-	public Vector<Projekt> getProjektByProjektleiter(Person p, ProjektMarktplatz pm) throws IllegalArgumentException {
+	public Vector<Projekt> getProjektByProjektleiter(Organisationseinheit p, ProjektMarktplatz pm)
+			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return prMapper.getByProjektleiter(p, pm);
 	}
 
+	/**
+	 * Daten werden an die Mapper übergeben und mit der insert Methode
+	 * eingefügt.
+	 */
 	@Override
 	public Bewerbung createBewerbungFor(Ausschreibung as, Organisationseinheit o, String bewerbungstext)
 			throws IllegalArgumentException {
@@ -611,29 +728,73 @@ public class ProjektAdministrationImpl extends RemoteServiceServlet implements P
 		bw.setErstelldatum(new Date());
 		bw.setOrganisationseinheitId(o.getId());
 		bw.setBewerbungstext(bewerbungstext);
-		
+
 		return bwMapper.insert(bw);
 	}
 
+	/**
+	 * Datenbankabfragen
+	 */
 	@Override
 	public Beteiligung getBeteiligungFor(Bewerbung bw) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return btMapper.getByBewerbung(bw);
 	}
 
+	/**
+	 * Daten werden an die Mapper übergeben und mit der insert Methode
+	 * eingefügt.
+	 */
 	@Override
 	public Beteiligung createBeteiligungFor(Bewerbung bw) throws IllegalArgumentException {
-		
+
 		Ausschreibung as = getAusschreibungBy(bw);
 		Beteiligung bt = new Beteiligung();
-		
+
 		bt.setId(1);
 		bt.setProjektId(as.getProjektId());
 		bt.setOrganisationseinheitId(bw.getOrganisationseinheitId());
 		bt.setEnddatum(null);
 		bt.setStartdatum(null);
 		bt.setPersonentage(0);
-		
+
 		return btMapper.insert(bt);
+	}
+
+	/**
+	 * Datenbankabfragen
+	 */
+	@Override
+	public Vector<Ausschreibung> getAusschreibungByMatch(Organisationseinheit o) throws IllegalArgumentException {
+
+		Partnerprofil pp = ppMapper.findById(o.getPartnerprofilId());
+		Vector<Eigenschaft> oPP = eMapper.getByPartnerprofil(pp);
+
+		Vector<Ausschreibung> asV = asMapper.findAll();
+
+		if (oPP == null || asV == null)
+			return null;
+
+		Vector<Ausschreibung> asMatch = new Vector<Ausschreibung>();
+
+		for (Ausschreibung as : asV) {
+
+			Partnerprofil asPP = ppMapper.findById(as.getPartnerprofilId());
+			Vector<Eigenschaft> eV = eMapper.getByPartnerprofil(asPP);
+
+			if (eV != null) {
+				for (Eigenschaft e : eV) {
+					for (Eigenschaft eO : oPP) {
+						if (e.getName().compareTo(eO.getName()) == 0 && e.getWert().compareTo(eO.getWert()) == 0) {
+							if(!asMatch.contains(as))
+								asMatch.addElement(as);
+
+						}
+					}
+				}
+			}
+		}
+
+		return asMatch;
 	}
 }
