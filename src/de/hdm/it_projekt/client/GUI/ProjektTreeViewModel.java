@@ -12,6 +12,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -128,14 +129,21 @@ public class ProjektTreeViewModel implements TreeViewModel {
 	
 	void showBeteiligungForm() {
 		HorizontalPanel hP = new HorizontalPanel();		
-		
+		VerticalPanel vP = new VerticalPanel();
+		vP.addStyleName("Eigenschaft-Cell");
+
 		BeteiligungForm beteiligungForm = new BeteiligungForm(ausschreibender);		
 		ProjektBeteiligungListView pblv = new ProjektBeteiligungListView(selectedProjekt);
 		
 		beteiligungForm.setProjektBeteiligungListView(pblv);
 		pblv.setBeteiligungForm(beteiligungForm);
 		
-		hP.add(pblv.getBeteiligungenCellList());
+		
+		Label pBet = new Label("Projektbeteiligungen:");
+		pBet.setStyleName("h1");
+		vP.add(pBet);
+		vP.add(pblv.getBeteiligungenCellList());
+		hP.add(vP);
 		hP.add(beteiligungForm);
 		
 		rightPanel.clear();
@@ -209,43 +217,55 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		bewerbungForm.setSelected(bw);
 		bewerbungForm.setVisible(true);
 
-		pa.getAusschreibungBy(bw, new AsyncCallback<Ausschreibung>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onSuccess(Ausschreibung ausschreibung) {
-				selectedAusschreibung = ausschreibung;
-				ausschreibungForm.setSelected(ausschreibung);
-				ausschreibungForm.setVisible(false);
-
-				pa.getProjektById(selectedAusschreibung.getProjektId(), new AsyncCallback<Projekt>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onSuccess(Projekt projekt) {
-						selectedProjekt = projekt;
-						projektForm.setSelected(projekt);
-						projektForm.setVisible(false);
-
-					}
-				});
-			}
-		});
+		if(ausschreibender == true) {
+			showPartnerprofilBewerber();
+		}
+		
+		pa.getAusschreibungBy(bw, new GetAusschreibungCallback(this));
 
 		selectedBewertung = null;
 		bewertungForm.setSelected(null);
 		bewertungForm.setVisible(false);
 		rightPanel.clear();
+	}
+	
+	private class GetAusschreibungCallback implements AsyncCallback<Ausschreibung> {
+		
+		ProjektTreeViewModel ptvm = null;
+		
+		public GetAusschreibungCallback(ProjektTreeViewModel ptvm) {
+			this.ptvm = ptvm;
+		}
+		
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(Ausschreibung ausschreibung) {
+			ptvm.selectedAusschreibung = ausschreibung;
+			ausschreibungForm.setSelected(ausschreibung);
+			ausschreibungForm.setVisible(false);
+			
+			pa.getProjektById(selectedAusschreibung.getProjektId(), new AsyncCallback<Projekt>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onSuccess(Projekt projekt) {
+					selectedProjekt = projekt;
+					projektForm.setSelected(projekt);
+					projektForm.setVisible(false);
+
+				}
+			});
+		}
 	}
 
 	Bewerbung getSelectedBewerbung() {
@@ -361,6 +381,27 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		rightPanel.add(hP);
 	}
 
+	void showPartnerprofilBewerber() {
+
+		pa.getOrganisationseinheitById(selectedBewerbung.getOrganisationseinheitId(), new AsyncCallback<Organisationseinheit>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Organisationseinheit result) {
+				OPartnerprofilForm pF = new OPartnerprofilForm(result, false);
+				rightPanel.clear();
+				rightPanel.add(pF);
+				
+			}
+		});
+		
+	}
+	
 	void addProjekt(Projekt pr) {
 		projektDataProvider.getList().add(pr);
 		selectionModel.setSelected(pr, true);
@@ -379,6 +420,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		ausschreibungDataProviders.remove(pr);
 		bewerbungDataProviders.remove(pr);
 		bewertungDataProviders.remove(pr);
+		projektDataProvider.refresh();
 	}
 
 	void addAusschreibungForProjekt(Ausschreibung as, Projekt pr) {
@@ -391,6 +433,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			ausschreibungProvider.getList().add(as);
 
 		setSelectedAusschreibung(as);
+		ausschreibungDataProviders.get(pr).refresh();
 		selectionModel.setSelected(as, true);
 	}
 
@@ -445,6 +488,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			bewerbungProvider.getList().add(bw);
 		}
 		setSelectedBewerbung(bw);
+		bewerbungDataProviders.get(as).refresh();
 		selectionModel.setSelected(as, true);
 	}
 
@@ -454,6 +498,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 			return;
 
 		bewerbungDataProviders.get(as).getList().remove(bw);
+		bewerbungDataProviders.get(as).refresh();
 		selectionModel.setSelected(as, true);
 	}
 
@@ -467,6 +512,7 @@ public class ProjektTreeViewModel implements TreeViewModel {
 		if (!bewertungtProvider.getList().contains(bwt))
 			bewertungtProvider.getList().add(bwt);
 
+		bewertungDataProviders.get(bw).refresh();
 		selectionModel.setSelected(bwt, true);
 	}
 
@@ -566,7 +612,8 @@ public class ProjektTreeViewModel implements TreeViewModel {
 				@Override
 				public void onSuccess(Vector<Bewerbung> bewerbungen) {
 					for (Bewerbung bw : bewerbungen) {
-						bewerbungProvider.getList().add(bw);
+						if(MyProjekt.loginInfo.getCurrentUser().getId() == bw.getOrganisationseinheitId() || ausschreibender)
+							bewerbungProvider.getList().add(bw);
 					}
 				}
 			});
