@@ -1,23 +1,14 @@
 package de.hdm.it_projekt.server.report;
 
-/**
- * 
- * To be Done
- * createMatchingAusschreibungenReport - Methode die Vektor zurück gibt in Projektadministartion
- * fan in analyse methode zum auslesen abgebrochener Ausschreibungen
- */
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.it_projekt.server.ProjektAdministrationImpl;
 import de.hdm.it_projekt.server.db.*;
-import de.hdm.it_projekt.shared.ProjektAdministration;
 import de.hdm.it_projekt.shared.ReportGenerator;
 import de.hdm.it_projekt.shared.bo.Ausschreibung;
 import de.hdm.it_projekt.shared.bo.Beteiligung;
 import de.hdm.it_projekt.shared.bo.Bewerbung;
-import de.hdm.it_projekt.shared.bo.Eigenschaft;
 import de.hdm.it_projekt.shared.bo.Organisationseinheit;
-import de.hdm.it_projekt.shared.bo.Partnerprofil;
 import de.hdm.it_projekt.shared.bo.Person;
 import de.hdm.it_projekt.shared.bo.Projekt;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
@@ -25,19 +16,25 @@ import de.hdm.it_projekt.shared.report.AlleAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
 import de.hdm.it_projekt.shared.report.BewerbungenZuAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.Column;
-import de.hdm.it_projekt.shared.report.CompositeParagraph;
 import de.hdm.it_projekt.shared.report.FanInReport;
 import de.hdm.it_projekt.shared.report.FanOutReport;
 import de.hdm.it_projekt.shared.report.PassendeAusschreibungenReport;
 import de.hdm.it_projekt.shared.report.ProjektverflechtungenReport;
-import de.hdm.it_projekt.shared.report.Report;
 import de.hdm.it_projekt.shared.report.Row;
 import de.hdm.it_projekt.shared.report.SimpleParagraph;
-import de.hdm.it_projekt.shared.report.SimpleReport;
-
 import java.util.Date;
 import java.util.Vector;
 
+/**
+ * ReportGeneratorImpl
+ * 
+ * In dieser Klasse werden die Serverseitigen Methoden der Applikationslogik implementiert.
+ * Diese stellen die Verbindung zwischen den Datenbankmappern und der GUI her um eine
+ * maximale "Separation of concerns" Logik bereitzustellen.
+ *  
+ * @author Daniel
+ *
+ */
 @SuppressWarnings("serial")
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
 

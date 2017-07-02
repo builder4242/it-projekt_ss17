@@ -20,6 +20,11 @@ import de.hdm.it_projekt.client.GUI_Report.Cell.ProjektMarktplatzReportCell;
 import de.hdm.it_projekt.shared.ProjektAdministrationAsync;
 import de.hdm.it_projekt.shared.bo.ProjektMarktplatz;
 
+/**
+ * 
+ * @author Anlehnung an Thies
+ *
+ */
 public class ReportMarktuebersicht extends VerticalPanel {
 
 

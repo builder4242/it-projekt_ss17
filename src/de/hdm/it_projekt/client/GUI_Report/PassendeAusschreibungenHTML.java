@@ -8,7 +8,11 @@ import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
 import de.hdm.it_projekt.shared.report.HTMLReportWriter;
 import de.hdm.it_projekt.shared.report.PassendeAusschreibungenReport;
 
-
+/**
+ * 
+ * @author Anlehnung an Thies
+ *
+ */
 public class PassendeAusschreibungenHTML extends Showcase {
 
 	private Organisationseinheit o = null;

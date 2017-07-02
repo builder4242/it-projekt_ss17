@@ -7,7 +7,11 @@ import de.hdm.it_projekt.shared.bo.Organisationseinheit;
 import de.hdm.it_projekt.shared.report.AlleBewerbungenReport;
 import de.hdm.it_projekt.shared.report.HTMLReportWriter;
 
-
+/**
+ * 
+ * @author Anlehnung an Thies
+ *
+ */
 public class AlleBewerbungenHTML extends Showcase {
 
 	private Organisationseinheit o = null;
